@@ -2,6 +2,7 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import header_en from "./locales/en/header.json";
 import header_ru from "./locales/ru/header.json";
+import header_ro from "./locales/ro/header.json";
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -10,6 +11,9 @@ i18n.use(initReactI18next).init({
     },
     ru: {
       header: header_ru,
+    },
+    ro: {
+      header: header_ro,
     },
   },
   lng: "en",

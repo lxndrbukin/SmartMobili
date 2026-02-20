@@ -1,0 +1,7 @@
+{
+  "nav": [
+    { "label": "Principala", "href": "/" },
+    { "label": "Catalog", "href": "/catalog" },
+    { "label": "Contacte", "href": "/contact" }
+  ]
+}
