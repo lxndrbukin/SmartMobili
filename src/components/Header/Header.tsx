@@ -1,4 +1,6 @@
 import { type JSX } from "react";
+import SelectLang from "./SelectLang";
+import HeaderProfile from "./HeaderProfile";
 
 export default function Header(): JSX.Element {
   return (
@@ -23,7 +25,10 @@ export default function Header(): JSX.Element {
             </li>
           </ul>
         </div>
-        <div className="header_user-links"></div>
+        <div className="header_user-links">
+          {/* <HeaderProfile /> */}
+          <SelectLang lang="en" />
+        </div>
       </header>
     </div>
   );
