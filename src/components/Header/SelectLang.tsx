@@ -1,5 +1,6 @@
-import type { JSX } from "react";
+import type { JSX, ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   type RootState,
   type AppDispatch,
@@ -7,9 +8,20 @@ import {
   setLanguage,
 } from "../../store";
 
-export default function SelectLang({ lang }: { lang: string }): JSX.Element {
+export default function SelectLang(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
   const current = useSelector((state: RootState) => state.language.current);
+
+  const { lang } = useParams();
+  const navigate = useNavigate();
+
+  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const newLang = e.target.value;
+    const currentPath = window.location.pathname;
+    const newPath = currentPath.replace(`/${lang}`, `/${newLang}`);
+    dispatch(setLanguage(e.target.value as Language));
+    navigate(newPath);
+  };
 
   const renderLangs = (): Array<JSX.Element> => {
     return ["en", "ro", "ru"].map((langCode) => {
@@ -24,7 +36,7 @@ export default function SelectLang({ lang }: { lang: string }): JSX.Element {
   return (
     <select
       value={current}
-      onChange={(e) => dispatch(setLanguage(e.target.value as Language))}
+      onChange={handleChange}
       className="header_lang-selector"
     >
       {renderLangs()}
