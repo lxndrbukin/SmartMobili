@@ -1,0 +1,29 @@
+{
+  "sections": {
+    "catalog": {
+      "label": "Каталог",
+      "links": [
+        { "label": "Кухни", "href": "/kitchens" },
+        { "label": "Прихожие", "href": "/living" },
+        { "label": "Офисы", "href": "/office" },
+        { "label": "Шкафы", "href": "/wardrobes" },
+        { "label": "Столы", "href": "/tables" }
+      ]
+    },
+    "info": {
+      "label": "Информация",
+      "links": [
+        { "label": "О нас", "href": "/about" },
+        { "label": "Услуги", "href": "/services" },
+        { "label": "Заказы", "href": "/orders" }
+      ]
+    },
+    "contacts": {
+      "label": "Контакты",
+      "links": [
+        { "label": "+373 69 923 028", "href": "tel:+373 69 923 028" },
+        { "label": "+373 79 684 094", "href": "tel:+373 79 684 094" }
+      ]
+    }
+  }
+}

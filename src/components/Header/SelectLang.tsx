@@ -12,10 +12,10 @@ export default function SelectLang({ lang }: { lang: string }): JSX.Element {
   const current = useSelector((state: RootState) => state.language.current);
 
   const renderLangs = (): Array<JSX.Element> => {
-    return ["en", "ro", "ru"].map((language) => {
+    return ["en", "ro", "ru"].map((langCode) => {
       return (
-        <option key={language} value={language} selected={lang == language}>
-          {language.toUpperCase()}
+        <option key={langCode} value={langCode} selected={lang == langCode}>
+          {langCode.toUpperCase()}
         </option>
       );
     });
@@ -23,6 +23,7 @@ export default function SelectLang({ lang }: { lang: string }): JSX.Element {
 
   return (
     <select
+      value={current}
       onChange={(e) => dispatch(setLanguage(e.target.value as Language))}
       className="header_lang-selector"
     >

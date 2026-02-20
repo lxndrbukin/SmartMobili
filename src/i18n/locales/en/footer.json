@@ -1,0 +1,29 @@
+{
+  "sections": {
+    "catalog": {
+      "label": "Catalog",
+      "links": [
+        { "label": "Kitchens", "href": "/kitchens" },
+        { "label": "Living Rooms", "href": "/living" },
+        { "label": "Offices", "href": "/office" },
+        { "label": "Wardrobes", "href": "/wardrobes" },
+        { "label": "Tables", "href": "/tables" }
+      ]
+    },
+    "info": {
+      "label": "Info",
+      "links": [
+        { "label": "About us", "href": "/about" },
+        { "label": "Services", "href": "/services" },
+        { "label": "Orders", "href": "/orders" }
+      ]
+    },
+    "contacts": {
+      "label": "Contacts",
+      "links": [
+        { "label": "+373 69 923 028", "href": "tel:+373699230028" },
+        { "label": "+373 79 684 094", "href": "tel:+373796840940" }
+      ]
+    }
+  }
+}

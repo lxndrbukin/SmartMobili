@@ -1,0 +1,29 @@
+{
+  "sections": {
+    "catalog": {
+      "label": "Catalog",
+      "links": [
+        { "label": "Bucatarii", "href": "/kitchens" },
+        { "label": "Living", "href": "/living" },
+        { "label": "Officii", "href": "/office" },
+        { "label": "Dulapuri", "href": "/wardrobes" },
+        { "label": "Mese", "href": "/tables" }
+      ]
+    },
+    "info": {
+      "label": "Informatia",
+      "links": [
+        { "label": "Despre noi", "href": "/about" },
+        { "label": "Servicii", "href": "/services" },
+        { "label": "Comanda", "href": "/orders" }
+      ]
+    },
+    "contacts": {
+      "label": "Contacte",
+      "links": [
+        { "label": "+373 69 923 028", "href": "tel:+373 69 923 028" },
+        { "label": "+373 79 684 094", "href": "tel:+373 79 684 094" }
+      ]
+    }
+  }
+}
