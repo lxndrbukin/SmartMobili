@@ -1,8 +1,24 @@
 import { type JSX } from "react";
+import { type NavLink } from "./types";
 import SelectLang from "./SelectLang";
-import HeaderProfile from "./HeaderProfile";
+// import HeaderProfile from "./HeaderProfile";
+import { useTranslation } from "react-i18next";
 
 export default function Header(): JSX.Element {
+  const { t } = useTranslation("header");
+
+  const navLinks = t("nav", { returnObjects: true }) as Array<NavLink>;
+
+  const renderNavLinks = (links: Array<NavLink>): Array<JSX.Element> => {
+    return links.map((link: NavLink) => {
+      return (
+        <li key={link.label}>
+          <a href={link.href}>{link.label}</a>
+        </li>
+      );
+    });
+  };
+
   return (
     <div className="header-wrapper">
       <header className="header">
@@ -13,17 +29,7 @@ export default function Header(): JSX.Element {
           </div>
         </a>
         <div className="header-links">
-          <ul>
-            <li>
-              <a href="/">Home</a>
-            </li>
-            <li>
-              <a href="/catalog">Catalog</a>
-            </li>
-            <li>
-              <a href="/contacts">Contacts</a>
-            </li>
-          </ul>
+          <ul>{renderNavLinks(navLinks)}</ul>
         </div>
         <div className="header_user-links">
           {/* <HeaderProfile /> */}

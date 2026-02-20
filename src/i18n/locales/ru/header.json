@@ -1,0 +1,7 @@
+{
+  "nav": [
+    { "label": "Главная", "href": "/" },
+    { "label": "Каталог", "href": "/catalog" },
+    { "label": "Контакты", "href": "/contact" }
+  ]
+}
