@@ -107,7 +107,7 @@ body a {
   background-color: var(--white);
   /* border-radius: 15px;
   padding: 0 30px; */
-  box-shadow: var(--shadow);
+  justify-self: center;
 }
 
 /* HEADER */
@@ -357,12 +357,14 @@ body a {
 
 .categories .categories-list {
   display: grid;
-  grid-template: repeat(3, minmax(auto, 300px)) / repeat(3, minmax(150px, auto));
+  grid-template: repeat(3, minmax(auto, 250px)) / repeat(3, minmax(150px, auto));
   grid-template-areas:
     ". table table"
     "kitchen kitchen hallway"
     "wardrobe office office";
   grid-gap: var(--spacing-md);
+  width: 85%;
+  justify-self: center;
 }
 
 .wardrobes {

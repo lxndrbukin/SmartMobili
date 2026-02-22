@@ -6,20 +6,26 @@ import header_ro from "./locales/ro/header.json";
 import footer_ru from "./locales/ru/footer.json";
 import footer_en from "./locales/en/footer.json";
 import footer_ro from "./locales/ro/footer.json";
+import categories_ru from "./locales/ru/categories.json";
+import categories_en from "./locales/en/categories.json";
+import categories_ro from "./locales/ro/categories.json";
 
 i18n.use(initReactI18next).init({
   resources: {
     en: {
       header: header_en,
       footer: footer_en,
+      categories: categories_en,
     },
     ru: {
       header: header_ru,
       footer: footer_ru,
+      categories: categories_ru,
     },
     ro: {
       header: header_ro,
       footer: footer_ro,
+      categories: categories_ro,
     },
   },
   lng: "en",

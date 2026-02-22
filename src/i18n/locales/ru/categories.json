@@ -1,0 +1,11 @@
+{
+  "header": "Каталог",
+  "sections": [
+    { "label": "Кухни", "href": "/kitchens", "tag": "kitchens" },
+    { "label": "Шкафы", "href": "/wardrobes", "tag": "wardrobes" },
+    { "label": "Офисы", "href": "/office", "tag": "offices" },
+    { "label": "Столы", "href": "/tables", "tag": "tables" },
+    { "label": "Гостиные", "href": "/living", "tag": "livings" },
+    { "label": "Прихожие", "href": "/hallway", "tag": "hallways" }
+  ]
+}

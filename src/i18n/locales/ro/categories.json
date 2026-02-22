@@ -1,0 +1,11 @@
+{
+  "header": "Catalog",
+  "sections": [
+    { "label": "Bucatarii", "href": "/kitchens", "tag": "kitchens" },
+    { "label": "Dulapuri", "href": "/wardrobes", "tag": "wardrobes" },
+    { "label": "Officii", "href": "/office", "tag": "offices" },
+    { "label": "Mese", "href": "/tables", "tag": "tables" },
+    { "label": "Living", "href": "/living", "tag": "livings" },
+    { "label": "Coridor", "href": "/hallway", "tag": "hallways" }
+  ]
+}

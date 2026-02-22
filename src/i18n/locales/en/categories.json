@@ -1,0 +1,35 @@
+{
+  "header": "Catalog",
+  "sections": [
+    {
+      "label": "Kitchens",
+      "href": "/kitchens",
+      "tag": "kitchens"
+    },
+    {
+      "label": "Wardrobes",
+      "href": "/wardrobes",
+      "tag": "wardrobes"
+    },
+    {
+      "label": "Offices",
+      "href": "/office",
+      "tag": "offices"
+    },
+    {
+      "label": "Tables",
+      "href": "/tables",
+      "tag": "tables"
+    },
+    {
+      "label": "Living Rooms",
+      "href": "/living",
+      "tag": "livings"
+    },
+    {
+      "label": "Hallways",
+      "href": "/hallway",
+      "tag": "hallways"
+    }
+  ]
+}
