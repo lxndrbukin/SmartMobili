@@ -1,4 +1,5 @@
 import "./i18n";
+import "@acrool/react-carousel/dist/index.css";
 import "./assets/styles.css";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
@@ -13,6 +14,6 @@ if (rootDiv) {
   root.render(
     <Provider store={store}>
       <RouterProvider router={router} />
-    </Provider>
+    </Provider>,
   );
 }
