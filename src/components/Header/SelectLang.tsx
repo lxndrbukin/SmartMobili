@@ -10,7 +10,7 @@ import {
 
 export default function SelectLang(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
-  const current = useSelector((state: RootState) => state.language.current);
+  const { currentLang } = useSelector((state: RootState) => state.system);
 
   const { lang } = useParams();
   const navigate = useNavigate();
@@ -35,7 +35,7 @@ export default function SelectLang(): JSX.Element {
 
   return (
     <select
-      value={current}
+      value={currentLang}
       onChange={handleChange}
       className="header_lang-selector"
     >

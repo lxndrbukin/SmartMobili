@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setLanguage } from "../store/slices/languageSlice";
+import { setLanguage } from "../store/slices/systemSlice";
 
 const SUPPORTED_LANGUAGES = ["en", "ru", "ro"];
 
