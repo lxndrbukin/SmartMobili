@@ -12,6 +12,7 @@
   "dependencies": {
     "@acrool/react-carousel": "^5.3.8",
     "@reduxjs/toolkit": "^2.11.2",
+    "axios": "^1.13.6",
     "i18next": "^25.8.12",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",

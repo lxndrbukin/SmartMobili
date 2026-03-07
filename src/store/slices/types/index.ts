@@ -4,9 +4,17 @@ export type SystemState = {
   currentLang: Language;
 };
 
+export type CategoryProps = {
+  id: number;
+  slug: string;
+  name: string;
+  language: string;
+};
+
 export type CatalogState = {
-  catalog: Array<ItemProps>;
+  items: Array<ItemProps>;
   currentItem: ItemProps | null;
+  categories: Array<CategoryProps>;
 };
 
 export type ItemProps = {
