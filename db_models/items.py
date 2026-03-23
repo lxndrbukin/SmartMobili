@@ -14,6 +14,7 @@ class Item(Base):
     category = relationship("Category", back_populates="items")
     images = relationship("ItemImage", back_populates="item", cascade="all, delete-orphan")
     translations = relationship("ItemTranslation", back_populates="item", cascade="all, delete-orphan")
+    inquiries = relationship("Inquiry", back_populates="item")
 
 class ItemTranslation(Base):
     __tablename__ = "item_translations"

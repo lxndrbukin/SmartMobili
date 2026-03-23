@@ -13,10 +13,15 @@ items_router = APIRouter(prefix="/items", tags=["items"])
 def get_items(
         skip: int = 0,
         limit: int = 10,
+        category_id: int | None = None,
         lang: Language = Language.ro,
         db: Session = Depends(get_db)
     ):
-    items = db.query(Item).options(joinedload(Item.images), joinedload(Item.translations)).offset(skip).limit(limit).all()
+    query = db.query(Item) \
+        .options(joinedload(Item.images), joinedload(Item.translations))
+    if category_id:
+        query = query.filter(Item.category_id == category_id)
+    items = query.offset(skip).limit(limit).all()
     result = []
     for item in items:
         translation = get_translation(item.translations, lang)
