@@ -1,5 +1,7 @@
 import "./assets/styles.css";
 import { type JSX, type SubmitEvent, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import useLocalePath from "../../hooks/useLocalePath";
 import { useDispatch, useSelector } from "react-redux";
 import {
   type RootState,
@@ -11,6 +13,8 @@ import {
 
 export default function CreateItem(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+  const to = useLocalePath();
 
   const { categories } = useSelector((state: RootState) => state.catalog);
 
@@ -18,7 +22,7 @@ export default function CreateItem(): JSX.Element {
     dispatch(getCategories());
   }, []);
 
-  const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
@@ -45,7 +49,8 @@ export default function CreateItem(): JSX.Element {
       price: parseFloat(price),
       category_id: Number(categoryId),
     };
-    dispatch(createItem(data));
+    await dispatch(createItem(data)).unwrap();
+    navigate(to("/catalog"));
   };
 
   const renderCategories = (categories: Array<CategoryProps>) => {
@@ -61,24 +66,27 @@ export default function CreateItem(): JSX.Element {
 
   return (
     <form onSubmit={handleSubmit} className="catalog-item-create">
+      <h3>New Item</h3>
       <div className="catalog-item-create-section">
+        <h4>Română</h4>
         <div className="form-field">
           <label>Title</label>
           <input name="titleRO" />
         </div>
         <div className="form-field">
           <label>Description</label>
-          <input name="descriptionRO" />
+          <textarea name="descriptionRO" />
         </div>
       </div>
       <div className="catalog-item-create-section">
+        <h4>Русский</h4>
         <div className="form-field">
           <label>Title</label>
           <input name="titleRU" />
         </div>
         <div className="form-field">
           <label>Description</label>
-          <input name="descriptionRU" />
+          <textarea name="descriptionRU" />
         </div>
       </div>
       <div className="form-field">

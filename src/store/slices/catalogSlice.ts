@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { CatalogState, ItemProps, CategoryProps } from "./types";
-import { getItems } from "../thunks/items";
+import { getItems, getItem } from "../thunks/items";
 import { getCategories } from "../thunks/categories";
 
 const initialState: CatalogState = {
@@ -18,6 +18,12 @@ const catalogSlice = createSlice({
       getItems.fulfilled,
       (state: CatalogState, action: PayloadAction<Array<ItemProps>>) => {
         state.items = action.payload;
+      },
+    );
+    builder.addCase(
+      getItem.fulfilled,
+      (state: CatalogState, action: PayloadAction<ItemProps>) => {
+        state.currentItem = action.payload;
       },
     );
     builder.addCase(

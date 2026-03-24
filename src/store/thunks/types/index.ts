@@ -1,4 +1,4 @@
-type TranslationProps = {
+type ItemTranslationProps = {
   language: string;
   title: string;
   description: string;
@@ -7,5 +7,15 @@ type TranslationProps = {
 export type ItemCreate = {
   price: number;
   category_id: number;
-  translations: Array<TranslationProps>;
+  translations: Array<ItemTranslationProps>;
+};
+
+export type CategoryTranslationProps = {
+  language: string;
+  name: string;
+};
+
+export type CategoryCreate = {
+  slug: string;
+  translations: Array<CategoryTranslationProps>;
 };

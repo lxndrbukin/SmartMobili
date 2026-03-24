@@ -3,7 +3,10 @@ import App from "../components/App";
 import Categories from "../components/Categories/Categories";
 import Carousel from "../components/Carousel/Carousel";
 import Catalog from "../components/Catalog/Catalog";
+import CatalogSection from "../components/Catalog/CatalogSection";
+import CatalogItemPage from "../components/Catalog/CatalogItemPage";
 import CreateItem from "../components/Catalog/CreateItem";
+import CreateCategory from "../components/Catalog/CreateCategory";
 
 export const router = createBrowserRouter([
   {
@@ -24,8 +27,20 @@ export const router = createBrowserRouter([
         element: <Catalog />,
       },
       {
-        path: "catalog/add",
+        path: "catalog/:catSlug",
+        element: <CatalogSection />,
+      },
+      {
+        path: "catalog/:catSlug/:itemId",
+        element: <CatalogItemPage />,
+      },
+      {
+        path: "catalog/item",
         element: <CreateItem />,
+      },
+      {
+        path: "catalog/category",
+        element: <CreateCategory />,
       },
     ],
   },

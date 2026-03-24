@@ -2,20 +2,37 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { type ItemCreate } from "./types";
 import axios from "axios";
 
-export const getItems = createAsyncThunk("items/getItems", async () => {
-  const response = await axios.get("http://localhost:8000/api/v1/items");
-  const { data } = response.data;
-  return data;
-});
-
+export const getItems = createAsyncThunk(
+  "items/getItems",
+  async ({
+    lang,
+    categoryId,
+    limit,
+  }: {
+    lang: string;
+    categoryId?: number;
+    limit?: number;
+  }) => {
+    const params = new URLSearchParams({ lang });
+    if (categoryId) {
+      params.append("category_id", categoryId.toString());
+    }
+    if (limit) {
+      params.append("limit", limit.toString());
+    }
+    const response = await axios.get(
+      `http://localhost:8000/api/v1/items?${params}`,
+    );
+    return response.data.data;
+  },
+);
 export const getItem = createAsyncThunk(
   "items/getItem",
-  async (itemId: number) => {
+  async (data: { itemId: number; lang: string | undefined }) => {
     const response = await axios.get(
-      `http://localhost:8000/api/v1items/${itemId}`,
+      `http://localhost:8000/api/v1/items/${data.itemId}?lang=${data.lang}`,
     );
-    const { data } = response.data;
-    return data;
+    return response.data;
   },
 );
 
