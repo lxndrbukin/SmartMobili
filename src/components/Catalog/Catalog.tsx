@@ -54,7 +54,7 @@ export default function Catalog(): JSX.Element {
       return (
         <div key={category.id} className="catalog-section">
           <h1 onClick={() => navigate(to(`/catalog/${category.slug}`))}>
-            {category.name}
+            {category.name} <i className="fa-solid fa-angle-right"></i>
           </h1>
           <div className="catalog-section-items">
             {categoryItems.length > 0 ? (
