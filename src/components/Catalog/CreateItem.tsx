@@ -1,6 +1,6 @@
 import "./assets/styles.css";
 import { type JSX, type SubmitEvent, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useLocalePath from "../../hooks/useLocalePath";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -15,11 +15,12 @@ export default function CreateItem(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const to = useLocalePath();
+  const { lang } = useParams<{ lang: string }>();
 
   const { categories } = useSelector((state: RootState) => state.catalog);
 
   useEffect(() => {
-    dispatch(getCategories());
+    dispatch(getCategories(lang!));
   }, []);
 
   const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {

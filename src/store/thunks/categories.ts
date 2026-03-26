@@ -4,8 +4,14 @@ import axios from "axios";
 
 export const getCategories = createAsyncThunk(
   "categories/getCategories",
-  async () => {
-    const response = await axios.get("http://localhost:8000/api/v1/categories");
+  async (lang?: string) => {
+    const params = new URLSearchParams();
+    if (lang) {
+      params.append("lang", lang);
+    }
+    const response = await axios.get(
+      `http://localhost:8000/api/v1/categories?${params}`,
+    );
     return response.data;
   },
 );

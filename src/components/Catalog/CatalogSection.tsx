@@ -1,4 +1,3 @@
-// CatalogSection.tsx
 import { type JSX, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -20,7 +19,7 @@ export default function CatalogSection(): JSX.Element {
   const [items, setItems] = useState<ItemProps[]>([]);
 
   useEffect(() => {
-    dispatch(getCategories());
+    dispatch(getCategories(lang!));
   }, [dispatch]);
 
   useEffect(() => {

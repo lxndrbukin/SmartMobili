@@ -10,6 +10,17 @@ export type ItemCreate = {
   translations: Array<ItemTranslationProps>;
 };
 
+export type ItemRequest = {
+  itemId: number;
+  lang: string | undefined;
+};
+
+export type ItemsRequest = {
+  lang: string | undefined;
+  categoryId?: number;
+  limit?: number;
+};
+
 export type CategoryTranslationProps = {
   language: string;
   name: string;
@@ -18,4 +29,9 @@ export type CategoryTranslationProps = {
 export type CategoryCreate = {
   slug: string;
   translations: Array<CategoryTranslationProps>;
+};
+
+export type CategoryRequest = {
+  id: number;
+  lang?: string;
 };

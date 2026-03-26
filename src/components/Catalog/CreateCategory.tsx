@@ -1,6 +1,6 @@
 import { type JSX, type FormEvent } from "react";
 import { useDispatch } from "react-redux";
-import { type RootState, type AppDispatch, createCategory } from "../../store";
+import { type AppDispatch, createCategory } from "../../store";
 
 export default function CreateCategory(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
@@ -32,15 +32,15 @@ export default function CreateCategory(): JSX.Element {
     <form onSubmit={handleSubmit} className="catalog-category-create">
       <h3>New Category</h3>
       <div className="form-field">
-        <label>Name</label>
+        <label>Titlu</label>
         <input name="nameRO" />
       </div>
       <div className="form-field">
-        <label>Name</label>
+        <label>Название</label>
         <input name="nameRU" />
       </div>
       <div className="form-field">
-        <label>Slug</label>
+        <label>URL (/tables)</label>
         <input name="slug" />
       </div>
       <button type="submit">Create</button>

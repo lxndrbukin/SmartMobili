@@ -1,5 +1,4 @@
 import { type JSX } from "react";
-import useLocalePath from "../../hooks/useLocalePath";
 import { useNavigate } from "react-router-dom";
 
 type CatalogItemProps = {
@@ -15,7 +14,6 @@ export default function CatalogItem({
   image,
   url,
 }: CatalogItemProps): JSX.Element {
-  const to = useLocalePath();
   const navigate = useNavigate();
 
   return (
