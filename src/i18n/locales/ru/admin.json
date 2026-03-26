@@ -1,0 +1,17 @@
+{
+  "createItem": {
+    "header": "Новый товар",
+    "title": "Заголовок",
+    "description": "Описание",
+    "price": "Цена",
+    "category": "Категория",
+    "images": "Изображения",
+    "submit": "Создать"
+  },
+  "createCategory": {
+    "header": "Новая категория",
+    "title": "Заголовок",
+    "url": "Ссылка",
+    "submit": "Создать"
+  }
+}

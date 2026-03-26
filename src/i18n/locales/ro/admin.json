@@ -1,0 +1,17 @@
+{
+  "createItem": {
+    "header": "Produs nou",
+    "title": "Titlu",
+    "description": "Descriere",
+    "price": "Preț",
+    "category": "Categorie",
+    "images": "Imagini",
+    "submit": "Crea"
+  },
+  "createCategory": {
+    "header": "Categorie nouă",
+    "title": "Titlu",
+    "url": "URL-ul",
+    "submit": "Crea"
+  }
+}

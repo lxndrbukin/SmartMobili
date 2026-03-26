@@ -1,9 +1,11 @@
 import { type JSX, type FormEvent } from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { type AppDispatch, createCategory } from "../../store";
 
 export default function CreateCategory(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
+  const { t } = useTranslation("admin");
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,20 +32,20 @@ export default function CreateCategory(): JSX.Element {
 
   return (
     <form onSubmit={handleSubmit} className="catalog-category-create">
-      <h3>New Category</h3>
+      <h3>{t("createCategory.header")}</h3>
       <div className="form-field">
-        <label>Titlu</label>
+        <label>{t("createCategory.title")} (RO)</label>
         <input name="nameRO" />
       </div>
       <div className="form-field">
-        <label>Название</label>
+        <label>{t("createCategory.title")} (RU)</label>
         <input name="nameRU" />
       </div>
       <div className="form-field">
-        <label>URL (/tables)</label>
+        <label>{t("createCategory.url")} (/tables)</label>
         <input name="slug" />
       </div>
-      <button type="submit">Create</button>
+      <button type="submit">{t("createCategory.submit")}</button>
     </form>
   );
 }

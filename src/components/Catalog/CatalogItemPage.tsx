@@ -1,4 +1,4 @@
-import { type JSX, useEffect } from "react";
+import { type JSX, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { type RootState, type AppDispatch, getItem } from "../../store";
@@ -11,12 +11,19 @@ export default function CatalogItemPage(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
 
   const { currentItem } = useSelector((state: RootState) => state.catalog);
+  const [currentImage, setCurrentImage] = useState<string>("");
 
   useEffect(() => {
     if (itemId) {
       dispatch(getItem({ itemId: parseInt(itemId), lang }));
     }
   }, [itemId, lang, dispatch]);
+
+  useEffect(() => {
+    if (currentItem && currentItem.images.length > 0) {
+      setCurrentImage(currentItem.images[0].image_url);
+    }
+  }, [currentItem]);
 
   if (!currentItem) {
     return <div className="catalog-item-page-loading">Loading...</div>;
@@ -28,7 +35,7 @@ export default function CatalogItemPage(): JSX.Element {
         <div className="catalog-item-page-gallery">
           {currentItem.images.length > 0 ? (
             <img
-              src={currentItem.images[0].image_url}
+              src={currentImage}
               alt={currentItem.title}
               className="catalog-item-page-main-image"
             />
@@ -46,6 +53,7 @@ export default function CatalogItemPage(): JSX.Element {
                   src={image.image_url}
                   alt={`${currentItem.title} - ${image.order}`}
                   className="catalog-item-page-thumbnail"
+                  onClick={() => setCurrentImage(image.image_url)}
                 />
               ))}
             </div>
@@ -54,9 +62,10 @@ export default function CatalogItemPage(): JSX.Element {
 
         <div className="catalog-item-page-info">
           <h1 className="catalog-item-page-title">{currentItem.title}</h1>
-
           <div className="catalog-item-page-price">
-            {currentItem.price.toFixed(2)} MDL
+            {currentItem.price
+              ? `${currentItem.price.toFixed(2)} MDL`
+              : t("noPrice")}
           </div>
 
           <div className="catalog-item-page-description">

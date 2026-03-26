@@ -5,8 +5,8 @@ import Carousel from "../components/Carousel/Carousel";
 import Catalog from "../components/Catalog/Catalog";
 import CatalogSection from "../components/Catalog/CatalogSection";
 import CatalogItemPage from "../components/Catalog/CatalogItemPage";
-import CreateItem from "../components/Catalog/CreateItem";
-import CreateCategory from "../components/Catalog/CreateCategory";
+import CreateItem from "../components/Admin/CreateItem";
+import CreateCategory from "../components/Admin/CreateCategory";
 
 export const router = createBrowserRouter([
   {
@@ -34,18 +34,18 @@ export const router = createBrowserRouter([
         path: "catalog/:catSlug/:itemId",
         element: <CatalogItemPage />,
       },
-    ],
-  },
-  {
-    path: "/admin",
-    children: [
       {
-        path: "items/create",
-        element: <CreateItem />,
-      },
-      {
-        path: "categories/create",
-        element: <CreateCategory />,
+        path: "admin",
+        children: [
+          {
+            path: "items/create",
+            element: <CreateItem />,
+          },
+          {
+            path: "categories/create",
+            element: <CreateCategory />,
+          },
+        ],
       },
     ],
   },

@@ -727,11 +727,12 @@ select {
 .catalog-item-create {
   max-width: 800px;
   margin: var(--space-10) auto;
-  padding: var(--space-8);
+  padding: var(--space-5) var(--space-8);
   background-color: var(--bg-tertiary);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
   border: 1px solid var(--border);
+  box-sizing: border-box;
 }
 
 .catalog-item-create-section {
@@ -744,13 +745,13 @@ select {
   border: 1px solid var(--border);
 }
 
-.catalog-item-create-section:first-of-type {
+/* .catalog-item-create-section:first-of-type {
   border-left: 3px solid var(--accent);
 }
 
 .catalog-item-create-section:nth-of-type(2) {
   border-left: 3px solid var(--accent-muted);
-}
+} */
 
 .form-field {
   display: flex;
@@ -795,6 +796,12 @@ select {
   box-shadow: 0 0 0 3px rgba(201, 122, 86, 0.1);
 }
 
+.form-field .price,
+.form-field .category-select,
+.form-field input[type="file"] {
+  width: 250px;
+}
+
 .catalog-item-create button[type="submit"],
 .catalog-category-create button[type="submit"] {
   width: 100%;
@@ -821,18 +828,37 @@ select {
   transform: translateY(-1px);
 }
 
-.catalog-item-create h4 {
-  margin: 0 0 var(--space-2);
-  font-family: var(--font-display);
-  font-weight: 400;
+.catalog-item-create h3 {
+  margin: 0 0 var(--space-5);
+  font-weight: 800;
   font-size: 1.3rem;
   color: var(--text-primary);
+  color: var(--text-secondary);
+}
+
+.catalog-item-create h4 {
+  margin-top: 0;
+  color: var(--text-secondary);
+}
+
+.catalog-item-create .selected-files {
+  margin-top: 8px;
+  padding: 8px;
+  background-color: var(--bg-color-three);
+  border-radius: 7px;
+  font-size: 0.9rem;
+}
+
+.catalog-item-create .selected-files span {
+  display: block;
+  padding: 4px 0;
+  color: var(--dark-one);
 }
 
 .catalog-category-create {
   max-width: 500px;
   margin: var(--space-10) auto;
-  padding: var(--space-8);
+  padding: var(--space-5) var(--space-8);
   background-color: var(--bg-tertiary);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
@@ -841,10 +867,9 @@ select {
 
 .catalog-category-create h3 {
   margin: 0 0 var(--space-5);
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: 1.8rem;
-  color: var(--text-primary);
+  font-weight: 800;
+  font-size: 1.3rem;
+  color: var(--text-secondary);
 }
 
 .catalog-category-create-section {

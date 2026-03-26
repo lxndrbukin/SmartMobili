@@ -1,5 +1,8 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
+import admin_en from "./locales/en/admin.json";
+import admin_ro from "./locales/ro/admin.json";
+import admin_ru from "./locales/ru/admin.json";
 import header_en from "./locales/en/header.json";
 import header_ru from "./locales/ru/header.json";
 import header_ro from "./locales/ro/header.json";
@@ -19,6 +22,7 @@ import itemPage_ro from "./locales/ro/itemPage.json";
 i18n.use(initReactI18next).init({
   resources: {
     en: {
+      admin: admin_en,
       header: header_en,
       footer: footer_en,
       categories: categories_en,
@@ -26,6 +30,7 @@ i18n.use(initReactI18next).init({
       itemPage: itemPage_en,
     },
     ru: {
+      admin: admin_ru,
       header: header_ru,
       footer: footer_ru,
       categories: categories_ru,
@@ -33,6 +38,7 @@ i18n.use(initReactI18next).init({
       itemPage: itemPage_ru,
     },
     ro: {
+      admin: admin_ro,
       header: header_ro,
       footer: footer_ro,
       categories: categories_ro,
