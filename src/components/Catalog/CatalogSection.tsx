@@ -19,8 +19,8 @@ export default function CatalogSection(): JSX.Element {
   const [items, setItems] = useState<ItemProps[]>([]);
 
   useEffect(() => {
-    dispatch(getCategories(lang!));
-  }, [dispatch]);
+    dispatch(getCategories(lang));
+  }, [dispatch, lang]);
 
   useEffect(() => {
     if (categories.length > 0 && catSlug) {

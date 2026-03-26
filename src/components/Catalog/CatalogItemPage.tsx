@@ -2,8 +2,10 @@ import { type JSX, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { type RootState, type AppDispatch, getItem } from "../../store";
+import { useTranslation } from "react-i18next";
 
 export default function CatalogItemPage(): JSX.Element {
+  const { t } = useTranslation("itemPage");
   const { itemId, lang } = useParams<{ itemId: string; lang: string }>();
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
@@ -31,7 +33,9 @@ export default function CatalogItemPage(): JSX.Element {
               className="catalog-item-page-main-image"
             />
           ) : (
-            <div className="catalog-item-page-no-image">No Image</div>
+            <div className="catalog-item-page-no-image">
+              <i className="fas fa-image"></i>
+            </div>
           )}
 
           {currentItem.images.length > 1 && (
@@ -52,11 +56,11 @@ export default function CatalogItemPage(): JSX.Element {
           <h1 className="catalog-item-page-title">{currentItem.title}</h1>
 
           <div className="catalog-item-page-price">
-            {currentItem.price.toFixed(2)} RON
+            {currentItem.price.toFixed(2)} MDL
           </div>
 
           <div className="catalog-item-page-description">
-            <h3>Description</h3>
+            <h3>{t("description")}</h3>
             <p>{currentItem.description}</p>
           </div>
 
@@ -65,7 +69,7 @@ export default function CatalogItemPage(): JSX.Element {
               className="button"
               onClick={() => navigate(`/${lang}/contact?item=${itemId}`)}
             >
-              Request Information
+              {t("call")}
             </button>
           </div>
         </div>

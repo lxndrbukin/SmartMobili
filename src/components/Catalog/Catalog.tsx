@@ -23,8 +23,8 @@ export default function Catalog(): JSX.Element {
   >({});
 
   useEffect(() => {
-    dispatch(getCategories());
-  }, [dispatch]);
+    dispatch(getCategories(lang));
+  }, [dispatch, lang]);
 
   useEffect(() => {
     if (categories.length > 0) {
@@ -45,7 +45,7 @@ export default function Catalog(): JSX.Element {
         }
       });
     }
-  }, [categories, dispatch]);
+  }, [categories, dispatch, lang]);
 
   const renderCategories = (categories: Array<CategoryProps>) => {
     return categories.map((category) => {
