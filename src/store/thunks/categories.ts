@@ -4,7 +4,7 @@ import axios from "axios";
 
 export const getCategories = createAsyncThunk(
   "categories/getCategories",
-  async (lang?: string) => {
+  async (lang: string | undefined) => {
     const params = new URLSearchParams();
     if (lang) {
       params.append("lang", lang);
