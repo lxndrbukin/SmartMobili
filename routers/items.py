@@ -66,7 +66,6 @@ def create_item(item: ItemCreate, db: Session = Depends(get_db)):
     db.add(db_item)
     db.commit()
     db.refresh(db_item)
-
     for translation in item.translations:
         db_translation = ItemTranslation(
             item_id=db_item.id,
@@ -128,7 +127,7 @@ def add_images(item_id: int, image: UploadFile = File(...), db: Session = Depend
     if not item:
         raise HTTPException(status_code=404, detail="Item not found")
     category = db.query(Category).get(item.category_id)
-    image_url = upload_item_image(image, category.name)
+    image_url = upload_item_image(image, category.slug)
     existing_count = db.query(ItemImage).filter(ItemImage.item_id == item_id).count()
     db_image = ItemImage(
         item_id=item.id,
