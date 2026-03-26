@@ -34,12 +34,17 @@ export const router = createBrowserRouter([
         path: "catalog/:catSlug/:itemId",
         element: <CatalogItemPage />,
       },
+    ],
+  },
+  {
+    path: "/admin",
+    children: [
       {
-        path: "catalog/item",
+        path: "items/create",
         element: <CreateItem />,
       },
       {
-        path: "catalog/category",
+        path: "categories/create",
         element: <CreateCategory />,
       },
     ],
