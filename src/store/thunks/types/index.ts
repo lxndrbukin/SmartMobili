@@ -10,6 +10,18 @@ export type ItemCreate = {
   translations: Array<ItemTranslationProps>;
 };
 
+export type ItemUpdate = {
+  id: number;
+  price: number | undefined;
+  category_id: number | undefined;
+  translations: Array<ItemTranslationProps> | undefined;
+};
+
+export type ItemImageUpdate = {
+  itemId: number;
+  image: FormData;
+};
+
 export type ItemRequest = {
   itemId: number;
   lang: string | undefined;
@@ -46,4 +58,17 @@ export type InquiryCreate = {
   telegram: boolean;
   viber: boolean;
   whatsapp: boolean;
+};
+
+export type InquiryUpdate = {
+  id: number;
+  name: string | undefined;
+  subject: string | undefined;
+  description: string | undefined;
+  phone: string | undefined;
+  email: string | undefined;
+  item_id: number | undefined;
+  telegram: boolean | undefined;
+  viber: boolean | undefined;
+  whatsapp: boolean | undefined;
 };

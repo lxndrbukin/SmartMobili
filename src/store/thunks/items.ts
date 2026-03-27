@@ -1,5 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import type { ItemCreate, ItemRequest, ItemsRequest } from "./types";
+import type {
+  ItemCreate,
+  ItemRequest,
+  ItemUpdate,
+  ItemsRequest,
+  ItemImageUpdate,
+} from "./types";
 import axios from "axios";
 
 export const getItems = createAsyncThunk(
@@ -39,5 +45,43 @@ export const createItem = createAsyncThunk(
       data,
     );
     return response.data;
+  },
+);
+
+export const updateItem = createAsyncThunk(
+  "items/updateItem",
+  async (data: ItemUpdate) => {
+    const response = await axios.put(
+      `http://localhost:8000/api/v1/items/${data.id}`,
+      data,
+    );
+    return response.data;
+  },
+);
+
+export const deleteItem = createAsyncThunk(
+  "items/deleteItem",
+  async (itemId: number) => {
+    await axios.delete(`http://localhost:8000/api/v1/items/${itemId}`);
+    return;
+  },
+);
+
+export const addImage = createAsyncThunk(
+  "items/updateImage",
+  async (data: ItemImageUpdate) => {
+    await fetch(`http://localhost:8000/api/v1/items/${data.itemId}/images`, {
+      method: "POST",
+      body: data.image,
+    });
+  },
+);
+
+export const deleteImage = createAsyncThunk(
+  "items/deleteImage",
+  async (data: { itemId: number; imageId: number }) => {
+    await axios.delete(
+      `http://localhost:8000/api/v1/items/${data.itemId}/images/${data.imageId}`,
+    );
   },
 );

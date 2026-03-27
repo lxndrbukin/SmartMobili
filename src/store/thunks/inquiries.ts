@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { type InquiryCreate } from "./types";
+import type { InquiryCreate, InquiryUpdate } from "./types";
 
 export const submitInquiry = createAsyncThunk(
   "inquiries/submitInquiry",
@@ -18,5 +18,34 @@ export const getInquiries = createAsyncThunk(
   async () => {
     const response = await axios.get("http://localhost:8000/api/v1/inquiries");
     return response.data;
+  },
+);
+
+export const getInquiry = createAsyncThunk(
+  "inquiries/getInquiry",
+  async (inquiryId: number) => {
+    const response = await axios.get(
+      `http://localhost:8000/api/v1/inquiries/${inquiryId}`,
+    );
+    return response.data;
+  },
+);
+
+export const updateInquiry = createAsyncThunk(
+  "inquiries/updateInquiry",
+  async (data: InquiryUpdate) => {
+    const response = await axios.put(
+      `http://localhost:8000/api/v1/inquiries/${data.id}`,
+      data,
+    );
+    return response.data;
+  },
+);
+
+export const deleteInquiry = createAsyncThunk(
+  "inquiries/deleteInquiry",
+  async (inquiryId: number) => {
+    await axios.delete(`http://localhost:8000/api/v1/inquiries/${inquiryId}`);
+    return;
   },
 );

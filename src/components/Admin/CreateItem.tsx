@@ -14,6 +14,7 @@ import {
   type CategoryProps,
   getCategories,
   createItem,
+  addImage,
 } from "../../store";
 
 export default function CreateItem(): JSX.Element {
@@ -67,10 +68,7 @@ export default function CreateItem(): JSX.Element {
         const imageFormData = new FormData();
         imageFormData.append("image", imageFile);
 
-        await fetch(`http://localhost:8000/api/v1/items/${itemId}/images`, {
-          method: "POST",
-          body: imageFormData,
-        });
+        addImage({ itemId, image: imageFormData });
       }
     }
     navigate(`/${lang}/catalog`);
