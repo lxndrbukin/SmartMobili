@@ -1,6 +1,10 @@
 import { type JSX, type FormEvent } from "react";
+import { useDispatch } from "react-redux";
+import { type AppDispatch, submitInquiry } from "../../store";
 
 export default function ContactForm(): JSX.Element {
+  const dispatch = useDispatch<AppDispatch>();
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -8,13 +12,26 @@ export default function ContactForm(): JSX.Element {
     const subject = formData.get("subject") as string;
     const description = formData.get("description") as string;
     const phone = formData.get("phone") as string;
+    const email = formData.get("email") as string;
     const telegram = formData.get("telegram") === "on";
     const viber = formData.get("viber") === "on";
     const whatsapp = formData.get("whatsapp") === "on";
+    const data = {
+      name,
+      subject,
+      description,
+      phone,
+      email,
+      item_id: undefined,
+      telegram,
+      viber,
+      whatsapp,
+    };
+    dispatch(submitInquiry(data));
   };
 
   return (
-    <form className="contact-form">
+    <form onSubmit={handleSubmit} className="contact-form">
       <h3>Contact Us</h3>
       <div className="input-field">
         <label>Name</label>
@@ -51,6 +68,7 @@ export default function ContactForm(): JSX.Element {
           <input type="checkbox" name="whatsapp" />
         </div>
       </div>
+      <button type="submit">Submit</button>
     </form>
   );
 }

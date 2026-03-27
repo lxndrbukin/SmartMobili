@@ -35,3 +35,15 @@ export type CategoryRequest = {
   id: number;
   lang?: string;
 };
+
+export type InquiryCreate = {
+  name: string;
+  subject: string;
+  description: string | undefined;
+  phone: string;
+  email: string | undefined;
+  item_id: number | undefined;
+  telegram: boolean;
+  viber: boolean;
+  whatsapp: boolean;
+};
