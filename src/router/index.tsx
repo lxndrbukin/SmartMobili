@@ -7,6 +7,7 @@ import CatalogSection from "../components/Catalog/CatalogSection";
 import CatalogItemPage from "../components/Catalog/CatalogItemPage";
 import CreateItem from "../components/Admin/CreateItem";
 import CreateCategory from "../components/Admin/CreateCategory";
+import ContactForm from "../components/Contact/ContactForm";
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ export const router = createBrowserRouter([
       {
         path: "catalog/:catSlug/:itemId",
         element: <CatalogItemPage />,
+      },
+      {
+        path: "contact",
+        element: <ContactForm />,
       },
       {
         path: "admin",

@@ -2,18 +2,22 @@
   "banners": [
     {
       "img": "https://smartmobili.vercel.app/imgs/menu_hallway.png",
-      "primaryText": "Custom Furniture SMARTMOBILI",
-      "secondaryText": "Unique interior solutions for home and office. Manufacture of cabinet and built-in products is the main specialization of our company. We create compositions for all residential areas."
+      "primaryText": "Mobila la comanda de la SmartMobili",
+      "secondaryText": "Soluții de interior unice pentru casă și birou. Fabricarea de cabinete și produse încorporate este principala specializare a companiei noastre. Cream compozitii pentru toate zonele rezidentiale."
     },
     {
       "img": "https://smartmobili.vercel.app/imgs/menu_wardrobe.png",
-      "primaryText": "Wardrobes",
+      "primaryText": "Dulapuri",
       "secondaryText": ""
     },
     {
       "img": "https://smartmobili.vercel.app/imgs/menu_office.png",
-      "primaryText": "Furniture for your office",
+      "primaryText": "Birouri",
       "secondaryText": ""
     }
-  ]
+  ],
+  "bannerLinks": {
+    "order": "Comanda",
+    "catalog": "Catalog"
+  }
 }

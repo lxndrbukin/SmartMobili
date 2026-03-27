@@ -2,7 +2,7 @@
   "banners": [
     {
       "img": "https://smartmobili.vercel.app/imgs/menu_hallway.png",
-      "primaryText": "Custom Furniture SMARTMOBILI",
+      "primaryText": "Custom Furniture SmartMobili",
       "secondaryText": "Unique interior solutions for home and office. Manufacture of cabinet and built-in products is the main specialization of our company. We create compositions for all residential areas."
     },
     {
@@ -15,5 +15,9 @@
       "primaryText": "Furniture for your office",
       "secondaryText": ""
     }
-  ]
+  ],
+  "bannerLinks": {
+    "order": "Order",
+    "catalog": "Catalog"
+  }
 }
