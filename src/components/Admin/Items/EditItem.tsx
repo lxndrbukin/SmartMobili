@@ -12,18 +12,34 @@ import {
   type RootState,
   type AppDispatch,
   type CategoryProps,
+  type ItemProps,
   getCategories,
-  createItem,
+  updateItem,
   addImage,
-} from "../../store";
+} from "../../../store";
+import axios from "axios";
 
-export default function CreateItem(): JSX.Element {
+export default function EditItem(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { t } = useTranslation("admin");
-  const { lang } = useParams();
+  const { lang, itemId } = useParams<{ lang: string; itemId: string }>();
   const { categories } = useSelector((state: RootState) => state.catalog);
+  const [itemRU, setItemRU] = useState<ItemProps | null>(null);
+  const [itemRO, setItemRO] = useState<ItemProps | null>(null);
   const [selectedImages, setSelectedImages] = useState<Array<File>>([]);
+
+  useEffect(() => {
+    if (itemId) {
+      axios
+        .get(`http://localhost:8000/api/v1/items/${itemId}?lang=ro`)
+        .then((res) => setItemRO(res.data));
+
+      axios
+        .get(`http://localhost:8000/api/v1/items/${itemId}?lang=ru`)
+        .then((res) => setItemRU(res.data));
+    }
+  }, [itemId]);
 
   useEffect(() => {
     dispatch(getCategories(lang));
@@ -60,15 +76,24 @@ export default function CreateItem(): JSX.Element {
       price: parseFloat(price),
       category_id: Number(categoryId),
     };
-    const result = await dispatch(createItem(data)).unwrap();
-    const itemId = result.id;
+    await dispatch(
+      updateItem({
+        id: parseInt(itemId!),
+        ...data,
+      }),
+    ).unwrap();
 
     for (const imageFile of imageFiles) {
       if (imageFile && imageFile.size > 0) {
         const imageFormData = new FormData();
         imageFormData.append("image", imageFile);
 
-        addImage({ itemId, image: imageFormData });
+        await dispatch(
+          addImage({
+            itemId: parseInt(itemId!),
+            image: imageFormData,
+          }),
+        );
       }
     }
     navigate(`/${lang}/catalog`);
@@ -87,36 +112,45 @@ export default function CreateItem(): JSX.Element {
 
   return (
     <form onSubmit={handleSubmit} className="catalog-item-create">
-      <h3>{t("createItem.header")}</h3>
+      <h3>{t("editItem.header")}</h3>
       <div className="catalog-item-create-section">
         <h4>Română</h4>
         <div className="form-field">
           <label>{t("createItem.title")}</label>
-          <input name="titleRO" />
+          <input defaultValue={itemRO?.title} name="titleRO" />
         </div>
         <div className="form-field">
           <label>{t("createItem.description")}</label>
-          <textarea name="descriptionRO" />
+          <textarea defaultValue={itemRO?.description} name="descriptionRO" />
         </div>
       </div>
       <div className="catalog-item-create-section">
         <h4>Русский</h4>
         <div className="form-field">
           <label>{t("createItem.title")}</label>
-          <input name="titleRU" />
+          <input defaultValue={itemRU?.title} name="titleRU" />
         </div>
         <div className="form-field">
           <label>{t("createItem.description")}</label>
-          <textarea name="descriptionRU" />
+          <textarea defaultValue={itemRU?.description} name="descriptionRU" />
         </div>
       </div>
       <div className="form-field">
         <label>{t("createItem.price")}</label>
-        <input type="number" name="price" className="price" />
+        <input
+          defaultValue={itemRO?.price}
+          type="number"
+          name="price"
+          className="price"
+        />
       </div>
       <div className="form-field">
         <label>{t("createItem.category")}</label>
-        <select className="category-select" name="categoryId">
+        <select
+          defaultValue={itemRO?.category_id}
+          className="category-select"
+          name="categoryId"
+        >
           {renderCategories(categories)}
         </select>
       </div>
@@ -137,7 +171,7 @@ export default function CreateItem(): JSX.Element {
           </div>
         )}
       </div>
-      <button type="submit">{t("createItem.submit")}</button>
+      <button type="submit">{t("editItem.submit")}</button>
     </form>
   );
 }

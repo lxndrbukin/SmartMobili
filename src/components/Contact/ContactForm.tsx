@@ -1,9 +1,12 @@
 import { type JSX, type FormEvent } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { type AppDispatch, submitInquiry } from "../../store";
 
 export default function ContactForm(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
+  const [searchParams] = useSearchParams();
+  const itemId = searchParams.get("item");
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -22,12 +25,14 @@ export default function ContactForm(): JSX.Element {
       description,
       phone,
       email,
-      item_id: undefined,
+      item_id: itemId ? parseInt(itemId) : undefined,
       telegram,
       viber,
       whatsapp,
     };
     dispatch(submitInquiry(data));
+    alert("Thank you! We'll contact you soon.");
+    e.currentTarget.reset();
   };
 
   return (
@@ -52,6 +57,10 @@ export default function ContactForm(): JSX.Element {
       <div className="input-field">
         <label>Phone Number</label>
         <input type="text" name="phone" />
+      </div>
+      <div className="input-field">
+        <label>Email (optional)</label>
+        <input type="email" name="email" />
       </div>
       <div className="input-field">
         <label>Communication</label>

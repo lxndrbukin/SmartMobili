@@ -8,6 +8,10 @@
     "images": "Images",
     "submit": "Create"
   },
+  "editItem": {
+    "header": "Update Item",
+    "submit": "Update"
+  },
   "createCategory": {
     "header": "New Category",
     "title": "Title",

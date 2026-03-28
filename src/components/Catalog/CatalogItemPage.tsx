@@ -1,11 +1,13 @@
 import { type JSX, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import useLocalePath from "../../hooks/useLocalePath";
 import { useDispatch, useSelector } from "react-redux";
 import { type RootState, type AppDispatch, getItem } from "../../store";
 import { useTranslation } from "react-i18next";
 
 export default function CatalogItemPage(): JSX.Element {
   const { t } = useTranslation("itemPage");
+  const to = useLocalePath();
   const { itemId, lang } = useParams<{ itemId: string; lang: string }>();
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
@@ -76,7 +78,7 @@ export default function CatalogItemPage(): JSX.Element {
           <div className="catalog-item-page-actions">
             <button
               className="button"
-              onClick={() => navigate(`/${lang}/contact?item=${itemId}`)}
+              onClick={() => navigate(to(`/contact?item=${itemId}`))}
             >
               {t("call")}
             </button>

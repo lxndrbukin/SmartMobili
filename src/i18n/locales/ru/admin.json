@@ -8,6 +8,10 @@
     "images": "Изображения",
     "submit": "Создать"
   },
+  "editItem": {
+    "header": "Обновить товар",
+    "submit": "Обновить"
+  },
   "createCategory": {
     "header": "Новая категория",
     "title": "Заголовок",

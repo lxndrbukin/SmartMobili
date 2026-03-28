@@ -8,6 +8,10 @@
     "images": "Imagini",
     "submit": "Crea"
   },
+  "editItem": {
+    "header": "Actualiza produs",
+    "submit": "Actualiza"
+  },
   "createCategory": {
     "header": "Categorie nouă",
     "title": "Titlu",

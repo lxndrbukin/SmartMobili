@@ -1,7 +1,7 @@
 import { type JSX, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-import { type AppDispatch, createCategory } from "../../store";
+import { type AppDispatch, createCategory } from "../../../store";
 
 export default function CreateCategory(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
