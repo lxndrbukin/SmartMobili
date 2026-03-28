@@ -51,9 +51,23 @@ export const createItem = createAsyncThunk(
 export const updateItem = createAsyncThunk(
   "items/updateItem",
   async (data: ItemUpdate) => {
-    const response = await axios.put(
-      `http://localhost:8000/api/v1/items/${data.id}`,
-      data,
+    await axios.put(`http://localhost:8000/api/v1/items/${data.id}`, {
+      price: data.price,
+      category_id: data.category_id,
+    });
+
+    if (data.translations) {
+      for (const translation of data.translations) {
+        const { language, title, description } = translation;
+        await axios.put(
+          `http://localhost:8000/api/v1/items/${data.id}/translations?lang=${language}`,
+          { title, description },
+        );
+      }
+    }
+    const lang = localStorage.getItem("language") || "ro";
+    const response = await axios.get(
+      `http://localhost:8000/api/v1/items/${data.id}?lang=${lang}`,
     );
     return response.data;
   },

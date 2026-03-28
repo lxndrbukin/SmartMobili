@@ -1,4 +1,4 @@
-type ItemTranslationProps = {
+export type ItemTranslationProps = {
   language: string;
   title: string;
   description: string;
@@ -41,6 +41,12 @@ export type CategoryTranslationProps = {
 export type CategoryCreate = {
   slug: string;
   translations: Array<CategoryTranslationProps>;
+};
+
+export type CategoryUpdate = {
+  id: number;
+  slug: string | undefined;
+  translations: Array<CategoryTranslationProps> | undefined;
 };
 
 export type CategoryRequest = {
