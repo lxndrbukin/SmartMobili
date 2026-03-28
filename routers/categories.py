@@ -47,7 +47,7 @@ def create_category(category: CategoryCreate, db: Session = Depends(get_db)):
     }
 
 @categories_router.put("/{category_id}", response_model=CategoryResponse)
-def update_category(category_id: int, data: CategoryUpdate, db: Session = Depends(get_db)):
+def update_category(category_id: int, data: CategoryUpdate, lang: Language = Language.ro, db: Session = Depends(get_db)):
     category = db.query(Category).options(joinedload(Category.translations)).get(category_id)
     if not category:
         raise HTTPException(status_code=404, detail="Category not found")
@@ -55,7 +55,7 @@ def update_category(category_id: int, data: CategoryUpdate, db: Session = Depend
         category.slug = data.slug
     db.commit()
     db.refresh(category)
-    translation = get_translation(category.translations, Language.ro)
+    translation = get_translation(category.translations, lang)
     return {
         "id": category.id,
         "slug": category.slug,

@@ -89,7 +89,12 @@ def create_item(item: ItemCreate, db: Session = Depends(get_db)):
         }
 
 @items_router.put("/{item_id}", response_model=ItemResponse)
-def update_item(item_id: int, data: ItemUpdate, db: Session = Depends(get_db)):
+def update_item(
+        item_id: int,
+        data: ItemUpdate,
+        lang: Language = Language.ro,
+        db: Session = Depends(get_db)
+    ):
     item = db.query(Item).options(joinedload(Item.translations), joinedload(Item.images)).filter(Item.id == item_id).first()
     if not item:
         raise HTTPException(status_code=404, detail="Item not found")
@@ -99,7 +104,7 @@ def update_item(item_id: int, data: ItemUpdate, db: Session = Depends(get_db)):
         item.category_id = data.category_id
     db.commit()
     db.refresh(item)
-    translation = get_translation(item.translations, Language.ro)
+    translation = get_translation(item.translations, lang)
     return {
         "id": item.id,
         "price": item.price,
