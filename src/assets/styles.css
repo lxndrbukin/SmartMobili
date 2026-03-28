@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
 
 /* ─── DESIGN TOKENS ──────────────────────────────────────────────────── */
 :root {
@@ -55,7 +56,7 @@
   --transition-slow: 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
   /* Typography */
-  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-display: "Roboto", Georgia, serif;
   --font-body: "DM Sans", sans-serif;
 
   /* Layout */
@@ -535,11 +536,12 @@ select {
 .categories .categories-header::after {
   position: absolute;
   content: "";
-  height: 2px;
-  width: 50%;
-  bottom: -10px;
-  left: 25%;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  height: 4px;
+  width: 100%;
+  bottom: -5px;
+  left: 0;
+  background-color: var(--accent);
+  border-radius: 2px;
 }
 
 .categories .categories-list {
@@ -1232,68 +1234,85 @@ select {
 }
 
 /* ─── CONTACT ─────────────────────────────────────────────────────── */
-
 .contact-form {
   max-width: 600px;
-  margin: var(--spacing-xl) auto;
-  padding: var(--spacing-lg);
-  background-color: var(--bg-color-three);
-  border-radius: 7px;
-  box-shadow: var(--shadow);
+  margin: var(--space-10) auto;
+  padding: var(--space-5) var(--space-8);
+  background-color: var(--bg-tertiary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border);
+  box-sizing: border-box;
 }
 
 .contact-form h3 {
-  margin-top: 0;
+  margin: 0 0 var(--space-5);
+  font-weight: 800;
   font-size: 1.3rem;
+  color: var(--text-secondary);
 }
 
 .contact-form .input-field {
-  margin-bottom: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-2);
 }
 
 .contact-form .input-field > label {
-  display: block;
   font-weight: 600;
-  margin-bottom: var(--spacing-sm);
-  color: var(--dark-one);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
 }
 
 .contact-form input[type="text"],
 .contact-form input[type="email"],
 .contact-form textarea {
   width: 100%;
-  padding: var(--spacing-sm);
-  border: 1px solid var(--light-color-three);
-  border-radius: 7px;
-  font-family: var(--body-font);
-  font-size: 1rem;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--text-primary);
+  background-color: var(--bg-surface);
   box-sizing: border-box;
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
 }
 
 .contact-form textarea {
-  min-height: 120px;
+  min-height: 140px;
   resize: vertical;
 }
 
-.contact-form input:focus,
+.contact-form input[type="text"]:focus,
+.contact-form input[type="email"]:focus,
 .contact-form textarea:focus {
   outline: none;
-  border-color: var(--light-color-two);
+  border-color: var(--accent-muted);
+  box-shadow: 0 0 0 3px rgba(201, 122, 86, 0.1);
 }
 
 .contact-form .communication {
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
-  margin: var(--spacing-sm) 0;
-  padding: var(--spacing-sm);
-  background-color: var(--white);
-  border-radius: 7px;
+  gap: var(--space-2);
+  margin: var(--space-2) 0;
+  padding: var(--space-2) var(--space-3);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
 }
 
 .contact-form .communication label {
   margin: 0;
   font-weight: 400;
+  font-size: 14px;
+  color: var(--text-secondary);
   cursor: pointer;
 }
 
@@ -1305,19 +1324,114 @@ select {
 
 .contact-form button[type="submit"] {
   width: 100%;
-  background-color: var(--light-color-three);
-  color: var(--dark-one);
+  background-color: var(--accent);
+  color: #fff;
   border: none;
-  padding: var(--spacing-md);
-  font-size: 1.1rem;
+  padding: var(--space-3) var(--space-5);
+  font-family: var(--font-body);
+  font-size: 13px;
   font-weight: 600;
-  border-radius: 7px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  margin-top: var(--spacing-md);
+  margin-top: var(--space-4);
+  transition:
+    background-color var(--transition-fast),
+    transform var(--transition-fast);
 }
 
 .contact-form button[type="submit"]:hover {
-  background-color: var(--light-color-two);
+  background-color: var(--brown);
+  transform: translateY(-1px);
+}
+
+/* ─── ORDER STEPS ────────────────────────────────────────────────────── */
+.order-steps-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: var(--bg-tertiary);
+  padding: var(--space-6) 0;
+}
+
+.order-steps {
+  width: 100%;
+  max-width: var(--max-width);
+  padding: 0 var(--space-4);
+  box-sizing: border-box;
+}
+
+.order-steps-header {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 2.5vw, 2.4rem);
+  font-weight: 300;
+  display: block;
+  width: fit-content;
+  margin: 0 auto var(--space-8);
+  position: relative;
+  color: var(--text-primary);
+}
+
+.order-steps-header::after {
+  position: absolute;
+  content: "";
+  height: 4px;
+  width: 100%;
+  bottom: -5px;
+  left: 0;
+  background-color: var(--accent);
+  border-radius: 2px;
+}
+
+.order-steps-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-4);
+  width: 85%;
+  margin: 0 auto;
+}
+
+.order-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-4) var(--space-4);
+  background-color: var(--bg-surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform var(--transition-base),
+    box-shadow var(--transition-base);
+}
+
+/* .order-step:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+} */
+
+.order-step img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  margin-bottom: var(--space-4);
+}
+
+.order-step span {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.order-step p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin: 0;
 }
 
 /* ─── FORMS ──────────────────────────────────────────────────────────── */
@@ -1607,6 +1721,26 @@ select {
 
   .catalog-item-create,
   .catalog-category-create {
+    padding: var(--space-5);
+    margin: var(--space-6) var(--space-4);
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .order-steps-list {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .order-steps-list {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .contact-form {
     padding: var(--space-5);
     margin: var(--space-6) var(--space-4);
   }

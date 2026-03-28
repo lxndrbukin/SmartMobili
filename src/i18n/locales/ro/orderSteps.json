@@ -1,0 +1,25 @@
+{
+  "header": "Etapele comenzii",
+  "steps": [
+    {
+      "img": "https://img.icons8.com/bubbles/100/chat.png",
+      "primaryText": "Pasul 1",
+      "secondaryText": "Consultația primară"
+    },
+    {
+      "img": "https://img.icons8.com/bubbles/100/tape-measure.png",
+      "primaryText": "Pasul 2",
+      "secondaryText": "Preluarea dimensiunilor de către designer"
+    },
+    {
+      "img": "https://img.icons8.com/bubbles/100/agreement.png",
+      "primaryText": "Pasul 3",
+      "secondaryText": "Semnarea contractului"
+    },
+    {
+      "img": "https://img.icons8.com/bubbles/100/container-truck.png",
+      "primaryText": "Pasul 4",
+      "secondaryText": "Fabricație, asamblare și instalare"
+    }
+  ]
+}

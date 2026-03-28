@@ -1,0 +1,25 @@
+{
+  "header": "Этапы заказа",
+  "steps": [
+    {
+      "img": "https://img.icons8.com/bubbles/200/chat.png",
+      "primaryText": "Шаг 1",
+      "secondaryText": "Первичная консультация"
+    },
+    {
+      "img": "https://img.icons8.com/bubbles/200/tape-measure.png",
+      "primaryText": "Шаг 2",
+      "secondaryText": "Замер и разработка дизайна"
+    },
+    {
+      "img": "https://img.icons8.com/bubbles/200/agreement.png",
+      "primaryText": "Шаг 3",
+      "secondaryText": "Подписание контракта"
+    },
+    {
+      "img": "https://img.icons8.com/bubbles/200/container-truck.png",
+      "primaryText": "Шаг 4",
+      "secondaryText": "Изготовление, сборка и установка"
+    }
+  ]
+}

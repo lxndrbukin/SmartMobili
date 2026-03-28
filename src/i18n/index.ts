@@ -18,6 +18,9 @@ import carousel_ro from "./locales/ro/carousel.json";
 import itemPage_en from "./locales/en/itemPage.json";
 import itemPage_ru from "./locales/ru/itemPage.json";
 import itemPage_ro from "./locales/ro/itemPage.json";
+import orderSteps_en from "./locales/en/orderSteps.json";
+import orderSteps_ro from "./locales/ro/orderSteps.json";
+import orderSteps_ru from "./locales/ru/orderSteps.json";
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -28,6 +31,7 @@ i18n.use(initReactI18next).init({
       categories: categories_en,
       carousel: carousel_en,
       itemPage: itemPage_en,
+      orderSteps: orderSteps_en,
     },
     ru: {
       admin: admin_ru,
@@ -36,6 +40,7 @@ i18n.use(initReactI18next).init({
       categories: categories_ru,
       carousel: carousel_ru,
       itemPage: itemPage_ru,
+      orderSteps: orderSteps_ru,
     },
     ro: {
       admin: admin_ro,
@@ -44,6 +49,7 @@ i18n.use(initReactI18next).init({
       categories: categories_ro,
       carousel: carousel_ro,
       itemPage: itemPage_ro,
+      orderSteps: orderSteps_ro,
     },
   },
   lng: "en",
