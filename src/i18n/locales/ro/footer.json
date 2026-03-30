@@ -5,7 +5,7 @@
       "links": [
         { "label": "Bucatarii", "href": "/kitchens" },
         { "label": "Living", "href": "/living" },
-        { "label": "Officii", "href": "/office" },
+        { "label": "Birouri", "href": "/office" },
         { "label": "Dulapuri", "href": "/wardrobes" },
         { "label": "Mese", "href": "/tables" }
       ]
