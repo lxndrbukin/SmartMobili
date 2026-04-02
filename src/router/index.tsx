@@ -1,19 +1,20 @@
-import { createBrowserRouter } from "react-router-dom";
-import App from "../components/App";
-import Categories from "../components/Static/Categories";
-import OrderSteps from "../components/Static/OrderSteps";
-import Carousel from "../components/Carousel/Carousel";
-import Catalog from "../components/Catalog/Catalog";
-import CatalogSection from "../components/Catalog/CatalogSection";
-import CatalogItemPage from "../components/Catalog/CatalogItemPage";
-import CreateItem from "../components/Admin/Items/CreateItem";
-import EditItem from "../components/Admin/Items/EditItem";
-import CreateCategory from "../components/Admin/Categories/CreateCategory";
-import ContactForm from "../components/Contact/ContactForm";
+import { createBrowserRouter } from 'react-router-dom';
+import App from '../components/App';
+import Categories from '../components/Static/Categories';
+import OrderSteps from '../components/Static/OrderSteps';
+import Carousel from '../components/Carousel/Carousel';
+import Catalog from '../components/Catalog/Catalog';
+import CatalogSection from '../components/Catalog/CatalogSection';
+import CatalogItemPage from '../components/Catalog/CatalogItemPage';
+import CreateItem from '../components/Admin/Items/CreateItem';
+import EditItem from '../components/Admin/Items/ItemForm';
+import CreateCategory from '../components/Admin/Categories/CreateCategory';
+import EditCategory from '../components/Admin/Categories/CategoryForm';
+import ContactForm from '../components/Contact/ContactForm';
 
 export const router = createBrowserRouter([
   {
-    path: "/:lang",
+    path: '/:lang',
     element: <App />,
     children: [
       {
@@ -27,37 +28,20 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "catalog",
+        path: 'catalog',
         element: <Catalog />,
       },
       {
-        path: "catalog/:catSlug",
+        path: 'catalog/:catSlug',
         element: <CatalogSection />,
       },
       {
-        path: "catalog/:catSlug/:itemId",
+        path: 'catalog/:catSlug/:itemId',
         element: <CatalogItemPage />,
       },
       {
-        path: "contact",
+        path: 'contact',
         element: <ContactForm />,
-      },
-      {
-        path: "admin",
-        children: [
-          {
-            path: "items/create",
-            element: <CreateItem />,
-          },
-          {
-            path: "items/:itemId/edit",
-            element: <EditItem />,
-          },
-          {
-            path: "categories/create",
-            element: <CreateCategory />,
-          },
-        ],
       },
     ],
   },

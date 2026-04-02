@@ -1,21 +1,21 @@
 {
-  "createItem": {
-    "header": "New Item",
+  "item": {
+    "headerCreate": "New Item",
+    "headerEdit": "Update Item",
     "title": "Title",
     "description": "Description",
     "price": "Price",
     "category": "Category",
     "images": "Images",
-    "submit": "Create"
+    "submitCreate": "Create",
+    "submitEdit": "Update"
   },
-  "editItem": {
-    "header": "Update Item",
-    "submit": "Update"
-  },
-  "createCategory": {
-    "header": "New Category",
+  "category": {
+    "headerCreate": "New Category",
+    "headerEdit": "Update Category",
     "title": "Title",
     "url": "URL",
-    "submit": "Create"
+    "submitCreate": "Create",
+    "submitEdit": "Update"
   }
 }

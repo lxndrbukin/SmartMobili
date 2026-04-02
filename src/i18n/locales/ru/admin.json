@@ -1,21 +1,21 @@
 {
   "createItem": {
-    "header": "Новый товар",
+    "headerCreate": "Новый товар",
+    "headerEdit": "Обновить товар",
     "title": "Заголовок",
     "description": "Описание",
     "price": "Цена",
     "category": "Категория",
     "images": "Изображения",
-    "submit": "Создать"
+    "submitCreate": "Создать",
+    "submitEdit": "Обновить"
   },
-  "editItem": {
-    "header": "Обновить товар",
-    "submit": "Обновить"
-  },
-  "createCategory": {
-    "header": "Новая категория",
+  "category": {
+    "headerCreate": "Новая категория",
+    "headerEdit": "Обновить категорию",
     "title": "Заголовок",
     "url": "Ссылка",
-    "submit": "Создать"
+    "submitCreate": "Создать",
+    "submitEdit": "Обновить"
   }
 }

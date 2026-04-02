@@ -1,21 +1,21 @@
 {
-  "createItem": {
-    "header": "Produs nou",
+  "item": {
+    "headerCreate": "Produs nou",
+    "headerEdit": "Actualiza produs",
     "title": "Titlu",
     "description": "Descriere",
     "price": "Preț",
     "category": "Categorie",
     "images": "Imagini",
-    "submit": "Crea"
+    "submitCreate": "Crea",
+    "submitEdit": "Actualiza"
   },
-  "editItem": {
-    "header": "Actualiza produs",
-    "submit": "Actualiza"
-  },
-  "createCategory": {
-    "header": "Categorie nouă",
+  "category": {
+    "headerCreate": "Categorie nouă",
+    "headerEdit": "Actualiza categorie",
     "title": "Titlu",
     "url": "URL-ul",
-    "submit": "Crea"
+    "submitCreate": "Crea",
+    "submitEdit": "Actualiza"
   }
 }
