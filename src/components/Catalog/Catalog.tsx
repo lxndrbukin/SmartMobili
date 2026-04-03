@@ -1,7 +1,8 @@
 import { type JSX, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import useLocalePath from '../../hooks/useLocalePath';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import {
   type AppDispatch,
   type RootState,
@@ -28,6 +29,7 @@ export default function Catalog(): JSX.Element {
   const categoryId = searchParams.get('editCategory');
   const itemId = searchParams.get('editItem');
 
+  const { t } = useTranslation('admin');
   useEffect(() => {
     dispatch(getCategories(lang));
   }, [dispatch, lang]);
@@ -67,7 +69,8 @@ export default function Catalog(): JSX.Element {
       return (
         <div key={category.id} className='catalog-section'>
           <h1 onClick={() => navigate(to(`/catalog/${category.slug}`))}>
-            {category.name} <i className='fa-solid fa-angle-right'></i>
+            {category.name.toUpperCase()}{' '}
+            <i className='fa-solid fa-angle-right'></i>
           </h1>
           <div className='catalog-section-items'>
             {categoryItems.length > 0 ? (
@@ -91,9 +94,13 @@ export default function Catalog(): JSX.Element {
 
   return (
     <div className='catalog'>
-      <div>
-        <button onClick={() => handleCreateCategory()}>Create Category</button>
-        <button onClick={() => handleCreateItem()}>Create Item</button>
+      <div className='catalog-admin'>
+        <button onClick={() => handleCreateCategory()}>
+          {t('category.headerCreate')}
+        </button>
+        <button onClick={() => handleCreateItem()}>
+          {t('item.headerCreate')}
+        </button>
       </div>
       {renderCategories(categories)}
       {(categoryId || searchParams.get('createCategory')) && <CategoryForm />}

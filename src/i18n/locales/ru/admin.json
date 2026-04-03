@@ -1,5 +1,5 @@
 {
-  "createItem": {
+  "item": {
     "headerCreate": "Новый товар",
     "headerEdit": "Обновить товар",
     "title": "Заголовок",

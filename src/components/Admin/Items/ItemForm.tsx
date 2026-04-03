@@ -156,7 +156,11 @@ export default function ItemForm(): JSX.Element {
     <div className='modal-backdrop' onClick={handleClose}>
       <div className='modal' onClick={(e) => e.stopPropagation()}>
         <form onSubmit={handleSubmit} className='catalog-item-form'>
-          <button type='button' onClick={handleClose}>
+          <button
+            className='modal-close-btn'
+            type='button'
+            onClick={handleClose}
+          >
             <i className='fa-solid fa-xmark'></i>
           </button>
           <h3>{isCreating ? t('item.headerCreate') : t('item.headerEdit')}</h3>
