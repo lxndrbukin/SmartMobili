@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from datetime import datetime
-from utils import UserRole
+from utils import UserRole, Pagination
 
 class UserAuth(BaseModel):
     username: str
@@ -43,3 +43,7 @@ class UserUpdate(BaseModel):
 class TokenResponse(BaseModel):
     access_token: str
     token_type: str = "bearer"
+
+class PaginatedUsersResponse(BaseModel):
+    data: list[UserResponse]
+    pagination: Pagination

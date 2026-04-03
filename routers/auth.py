@@ -6,15 +6,17 @@ from models.auth import (
     UserAuth,
     UserCreate,
     UserResponse,
-    TokenResponse
+    UserUpdate,
+    UserRole,
+    TokenResponse,
+    PaginatedUsersResponse
 )
 from db_models.auth import User
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 from passlib.context import CryptContext
-from jose import jwt, JWTError
 from db import get_db
-from utils import create_token, get_current_user
+from utils import create_token, get_current_user, Pagination
 
 load_dotenv()
 
@@ -43,7 +45,7 @@ def register(data: UserCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Username already exists")
 
 @auth_router.post("/login", status_code=status.HTTP_200_OK, response_model=TokenResponse)
-def login(data: UserAuth, db: Session):
+def login(data: UserAuth, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.username == data.username).first()
     if user is None:
         raise HTTPException(status_code=401, detail="Invalid credentials")
@@ -55,4 +57,51 @@ def login(data: UserAuth, db: Session):
 
 @auth_router.get("/users/me", status_code=status.HTTP_200_OK, response_model=UserResponse)
 def get_me(current_user: User = Depends(get_current_user)):
-    pass
+    return UserResponse(
+        id=current_user.id,
+        username=current_user.username,
+        user_role=current_user.user_role,
+        signup_at=current_user.signup_at
+    )
+
+@auth_router.get("/users", status_code=status.HTTP_200_OK, response_model=PaginatedUsersResponse)
+def get_users(
+        skip: int = 0,
+        limit: int = 10,
+        db: Session = Depends(get_db),
+        current_user: User = Depends(get_current_user)
+    ):
+    if current_user.user_role == UserRole.admin:
+        users = db.query(User).offset(skip).limit(limit).all()
+        result = []
+        for user in users:
+            result.append({
+                "id": user.id,
+                "username": user.username,
+                "user_role": user.user_role,
+                "signup_at": user.signup_at
+            })
+        return PaginatedUsersResponse(
+            data=result,
+            pagination=Pagination(skip=skip, limit=limit)
+        )
+    return {"message": "Access denied"}
+
+@auth_router.put("/users/{user_id}", status_code=status.HTTP_200_OK, response_model=UserResponse)
+def update_user(user_id: int, data: UserUpdate, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    if current_user.user_role == UserRole.admin:
+        user = db.query(User).filter(User.id == user_id).first()
+        if data.username:
+            user.username = data.username
+        if data.password:
+            user.password = data.password
+        if data.user_role:
+            user.user_role = data.user_role
+
+@auth_router.delete("/users/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_user(user_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    if current_user.user_role == UserRole.admin:
+        user = db.query(User).filter(User.id == user_id).first()
+        db.delete(user)
+        db.commit()
+    return None

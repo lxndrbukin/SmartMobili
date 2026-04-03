@@ -11,6 +11,7 @@ class Inquiry(Base):
     subject = Column(String(100), nullable=False)
     description = Column(Text)
     item_id = Column(Integer, ForeignKey("items.id"), nullable=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
     phone = Column(String(25))
     email = Column(String(100))
     created_at = Column(DateTime, default=datetime.utcnow)
@@ -19,3 +20,4 @@ class Inquiry(Base):
     viber = Column(Boolean)
 
     item = relationship("Item", back_populates="inquiries")
+    user = relationship("User", back_populates="inquiries")

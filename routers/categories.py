@@ -21,6 +21,19 @@ def get_categories(lang: Language = Language.ro , db: Session = Depends(get_db))
         })
     return result
 
+@categories_router.get("/{category_id}", status_code=status.HTTP_200_OK, response_model=CategoryResponse)
+def get_category(category_id: int, lang: Language = Language.ro, db: Session = Depends(get_db)):
+    category = db.query(Category).options(joinedload(Category.translations)).filter(Category.id == category_id).first()
+    if not category:
+        raise HTTPException(status_code=404, detail="Category not found")
+    translation = get_translation(category.translations, lang)
+    return {
+        "id": category.id,
+        "slug": category.slug,
+        "name": translation.name,
+        "language": translation.language
+    }
+
 @categories_router.post("/", status_code=status.HTTP_201_CREATED, response_model=CategoryResponse)
 def create_category(category: CategoryCreate, db: Session = Depends(get_db)):
     db_category = Category(

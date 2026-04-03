@@ -12,8 +12,7 @@ class User(Base):
     user_role = Column(String(25), nullable=False)
     signup_at = Column(DateTime, default=datetime.utcnow)
 
-
-    inquiries = relationship("User", back_populates="inquiries")
+    inquiries = relationship("Inquiry", back_populates="user")
 
 class UserData(Base):
     __tablename__ = "userdata"

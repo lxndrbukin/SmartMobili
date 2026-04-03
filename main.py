@@ -7,6 +7,7 @@ from db import engine, Base, get_db
 from db_models.items import Item, ItemTranslation, ItemImage
 from db_models.categories import Category, CategoryTranslation
 from db_models.inquiries import Inquiry
+from db_models.auth import User, UserData
 from sqlalchemy.orm import Session
 
 Base.metadata.create_all(bind=engine)
