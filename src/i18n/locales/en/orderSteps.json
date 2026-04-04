@@ -2,22 +2,22 @@
   "header": "Order Steps",
   "steps": [
     {
-      "img": "https://img.icons8.com/bubbles/200/chat.png",
+      "img": "https://img.icons8.com/dotty/80/consultation.png",
       "primaryText": "Step 1",
       "secondaryText": "Initial consultation"
     },
     {
-      "img": "https://img.icons8.com/bubbles/100/tape-measure.png",
+      "img": "https://img.icons8.com/dotty/80/design.png",
       "primaryText": "Step 2",
       "secondaryText": "Designer measurements"
     },
     {
-      "img": "https://img.icons8.com/bubbles/100/agreement.png",
+      "img": "https://img.icons8.com/dotty/80/agreement.png",
       "primaryText": "Step 3",
       "secondaryText": "Signing the contract"
     },
     {
-      "img": "https://img.icons8.com/bubbles/100/container-truck.png",
+      "img": "https://img.icons8.com/dotty/80/kitchen-room.png",
       "primaryText": "Step 4",
       "secondaryText": "Manufacturing, assembly and installation"
     }

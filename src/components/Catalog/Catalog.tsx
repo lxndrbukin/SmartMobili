@@ -62,6 +62,21 @@ export default function Catalog(): JSX.Element {
     setSearchParams({ createItem: '1' });
   };
 
+  const renderSkeleton = () => {
+    return Array(3)
+      .fill('')
+      .map((_, index) => {
+        return (
+          <div key={index} className='catalog-item-skeleton'>
+            <div className='skeleton-image' />
+            <div className='skeleton-title'>
+              <div className='skeleton-title-bar' />
+            </div>
+          </div>
+        );
+      });
+  };
+
   const renderCategories = (categories: Array<CategoryProps>) => {
     return categories.map((category) => {
       const categoryItems = itemsByCategory[category.id] || [];
@@ -73,19 +88,17 @@ export default function Catalog(): JSX.Element {
             <i className='fa-solid fa-angle-right'></i>
           </h1>
           <div className='catalog-section-items'>
-            {categoryItems.length > 0 ? (
-              categoryItems.map((item) => (
-                <CatalogItem
-                  key={item.id}
-                  id={item.id}
-                  title={item.title}
-                  image={item.images.length ? item.images[0].image_url : ''}
-                  url={to(`/catalog/${category.slug}/${item.id}`)}
-                />
-              ))
-            ) : (
-              <div className='catalog-empty'>No items in this category</div>
-            )}
+            {categoryItems.length > 0
+              ? categoryItems.map((item) => (
+                  <CatalogItem
+                    key={item.id}
+                    id={item.id}
+                    title={item.title}
+                    image={item.images.length ? item.images[0].image_url : ''}
+                    url={to(`/catalog/${category.slug}/${item.id}`)}
+                  />
+                ))
+              : renderSkeleton()}
           </div>
         </div>
       );

@@ -646,6 +646,7 @@ select {
   align-items: center;
   cursor: pointer;
   width: fit-content;
+  gap: 10px;
 }
 
 .catalog-section h1:hover {
@@ -717,6 +718,61 @@ select {
   font-size: 2.5rem;
 }
 
+.catalog-item-skeleton {
+  background-color: var(--bg-surface);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+}
+
+.catalog-item-skeleton .skeleton-image {
+  width: 100%;
+  height: 280px;
+  background: linear-gradient(
+    90deg,
+    var(--bg-tertiary) 25%,
+    var(--bg-surface) 50%,
+    var(--bg-tertiary) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+}
+
+.catalog-item-skeleton .skeleton-title {
+  padding: var(--space-4) var(--space-4) var(--space-5);
+  background-color: var(--bg-tertiary);
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.catalog-item-skeleton .skeleton-title-bar {
+  width: 60%;
+  height: 1.15rem;
+  border-radius: var(--radius-md);
+  background: linear-gradient(
+    90deg,
+    var(--border) 25%,
+    var(--bg-surface) 50%,
+    var(--border) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
 .catalog-empty {
   grid-column: 1 / -1;
   text-align: center;
@@ -765,6 +821,7 @@ select {
   box-shadow: var(--shadow-md);
   border: 1px solid var(--border);
   box-sizing: border-box;
+  position: relative;
 }
 
 .catalog-item-form-section {
@@ -1437,8 +1494,8 @@ select {
 } */
 
 .order-step img {
-  width: 64px;
-  height: 64px;
+  width: 80px;
+  height: 80px;
   object-fit: contain;
   margin-bottom: var(--space-4);
 }

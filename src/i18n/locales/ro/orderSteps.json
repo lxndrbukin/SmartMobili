@@ -2,22 +2,22 @@
   "header": "Etapele comenzii",
   "steps": [
     {
-      "img": "https://img.icons8.com/bubbles/100/chat.png",
+      "img": "https://img.icons8.com/dotty/80/consultation.png",
       "primaryText": "Pasul 1",
       "secondaryText": "Consultația primară"
     },
     {
-      "img": "https://img.icons8.com/bubbles/100/tape-measure.png",
+      "img": "https://img.icons8.com/dotty/80/design.png",
       "primaryText": "Pasul 2",
       "secondaryText": "Preluarea dimensiunilor de către designer"
     },
     {
-      "img": "https://img.icons8.com/bubbles/100/agreement.png",
+      "img": "https://img.icons8.com/dotty/80/agreement.png",
       "primaryText": "Pasul 3",
       "secondaryText": "Semnarea contractului"
     },
     {
-      "img": "https://img.icons8.com/bubbles/100/container-truck.png",
+      "img": "https://img.icons8.com/dotty/80/kitchen-room.png",
       "primaryText": "Pasul 4",
       "secondaryText": "Fabricație, asamblare și instalare"
     }

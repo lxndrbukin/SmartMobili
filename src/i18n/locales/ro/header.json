@@ -2,6 +2,6 @@
   "nav": [
     { "label": "Principala", "href": "/" },
     { "label": "Catalog", "href": "/catalog" },
-    { "label": "Contacte", "href": "/contact" }
+    { "label": "Comanda", "href": "/order" }
   ]
 }
