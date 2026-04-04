@@ -18,6 +18,9 @@ import categories_ro from "./locales/ro/categories.json";
 import carousel_ru from "./locales/ru/carousel.json";
 import carousel_en from "./locales/en/carousel.json";
 import carousel_ro from "./locales/ro/carousel.json";
+import banners_en from "./locales/en/banners.json";
+import banners_ro from "./locales/ro/banners.json";
+import banners_ru from "./locales/ru/banners.json";
 import itemPage_en from "./locales/en/itemPage.json";
 import itemPage_ru from "./locales/ru/itemPage.json";
 import itemPage_ro from "./locales/ro/itemPage.json";
@@ -34,6 +37,7 @@ i18n.use(initReactI18next).init({
       catalog: catalog_en,
       categories: categories_en,
       carousel: carousel_en,
+      banners: banners_en,
       itemPage: itemPage_en,
       orderSteps: orderSteps_en,
     },
@@ -44,6 +48,7 @@ i18n.use(initReactI18next).init({
       catalog: catalog_ru,
       categories: categories_ru,
       carousel: carousel_ru,
+      banners: banners_ru,
       itemPage: itemPage_ru,
       orderSteps: orderSteps_ru,
     },
@@ -54,6 +59,7 @@ i18n.use(initReactI18next).init({
       catalog: catalog_ro,
       categories: categories_ro,
       carousel: carousel_ro,
+      banners: banners_ro,
       itemPage: itemPage_ro,
       orderSteps: orderSteps_ro,
     },

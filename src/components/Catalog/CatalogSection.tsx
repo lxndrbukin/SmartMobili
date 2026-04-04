@@ -1,15 +1,15 @@
-import { type JSX, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import useLocalePath from "../../hooks/useLocalePath";
+import { type JSX, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import useLocalePath from '../../hooks/useLocalePath';
 import {
   type AppDispatch,
   type RootState,
   type ItemProps,
   getItems,
   getCategories,
-} from "../../store";
-import CatalogItem from "./CatalogItem";
+} from '../../store';
+import CatalogItem from './CatalogItem';
 
 export default function CatalogSection(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
@@ -29,7 +29,7 @@ export default function CatalogSection(): JSX.Element {
       if (category) {
         dispatch(
           getItems({
-            lang: lang || "ro",
+            lang: lang || 'ro',
             categoryId: category.id,
           }),
         ).then((result) => {
@@ -44,25 +44,25 @@ export default function CatalogSection(): JSX.Element {
   const category = categories.find((cat) => cat.slug === catSlug);
 
   if (!category) {
-    return <div className="catalog-empty">Category not found</div>;
+    return <div className='catalog-empty'>Category not found</div>;
   }
 
   return (
-    <div className="catalog-section-page">
-      <h1>{category.name}</h1>
-      <div className="catalog-section-items">
+    <div className='catalog-section-page'>
+      <h1>{category.name.toUpperCase()}</h1>
+      <div className='catalog-section-items'>
         {items.length > 0 ? (
           items.map((item) => (
             <CatalogItem
               key={item.id}
               id={item.id}
               title={item.title}
-              image={item.images.length ? item.images[0].image_url : ""}
+              image={item.images.length ? item.images[0].image_url : ''}
               url={to(`/catalog/${category.slug}/${item.id}`)}
             />
           ))
         ) : (
-          <div className="catalog-empty">No items in this category</div>
+          <div className='catalog-empty'>No items in this category</div>
         )}
       </div>
     </div>

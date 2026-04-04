@@ -14,6 +14,7 @@ import {
 import CatalogItem from './CatalogItem';
 import CategoryForm from '../Admin/Categories/CategoryForm';
 import ItemForm from '../Admin/Items/ItemForm';
+import TelegramBanner from '../Banners/TelegramBanner';
 
 export default function Catalog(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
@@ -107,6 +108,7 @@ export default function Catalog(): JSX.Element {
 
   return (
     <div className='catalog'>
+      <TelegramBanner />
       <div className='catalog-admin'>
         <button onClick={() => handleCreateCategory()}>
           {t('category.headerCreate')}
