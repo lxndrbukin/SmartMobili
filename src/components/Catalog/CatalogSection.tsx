@@ -10,6 +10,7 @@ import {
   getCategories,
 } from '../../store';
 import CatalogItem from './CatalogItem';
+import CatalogItemSkeleton from './CatalogItemSkeleton';
 
 export default function CatalogSection(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
@@ -41,29 +42,40 @@ export default function CatalogSection(): JSX.Element {
     }
   }, [categories, catSlug, lang, dispatch]);
 
+  const renderSkeleton = () => {
+    return Array(6)
+      .fill('')
+      .map((_, index) => {
+        return <CatalogItemSkeleton key={index} />;
+      });
+  };
+
   const category = categories.find((cat) => cat.slug === catSlug);
 
   if (!category) {
-    return <div className='catalog-empty'>Category not found</div>;
+    return (
+      <div className='catalog-section-page'>
+        <h1 className='catalog-section-h1-skeleton'></h1>
+        <div className='catalog-section-items'>{renderSkeleton()}</div>
+      </div>
+    );
   }
 
   return (
     <div className='catalog-section-page'>
       <h1>{category.name.toUpperCase()}</h1>
       <div className='catalog-section-items'>
-        {items.length > 0 ? (
-          items.map((item) => (
-            <CatalogItem
-              key={item.id}
-              id={item.id}
-              title={item.title}
-              image={item.images.length ? item.images[0].image_url : ''}
-              url={to(`/catalog/${category.slug}/${item.id}`)}
-            />
-          ))
-        ) : (
-          <div className='catalog-empty'>No items in this category</div>
-        )}
+        {items.length > 0
+          ? items.map((item) => (
+              <CatalogItem
+                key={item.id}
+                id={item.id}
+                title={item.title}
+                image={item.images.length ? item.images[0].image_url : ''}
+                url={to(`/catalog/${category.slug}/${item.id}`)}
+              />
+            ))
+          : renderSkeleton()}
       </div>
     </div>
   );

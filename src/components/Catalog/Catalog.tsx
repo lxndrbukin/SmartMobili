@@ -12,6 +12,7 @@ import {
   getCategories,
 } from '../../store';
 import CatalogItem from './CatalogItem';
+import CatalogItemSkeleton from './CatalogItemSkeleton';
 import CategoryForm from '../Admin/Categories/CategoryForm';
 import ItemForm from '../Admin/Items/ItemForm';
 import TelegramBanner from '../Banners/TelegramBanner';
@@ -67,14 +68,7 @@ export default function Catalog(): JSX.Element {
     return Array(3)
       .fill('')
       .map((_, index) => {
-        return (
-          <div key={index} className='catalog-item-skeleton'>
-            <div className='skeleton-image' />
-            <div className='skeleton-title'>
-              <div className='skeleton-title-bar' />
-            </div>
-          </div>
-        );
+        return <CatalogItemSkeleton key={index} />;
       });
   };
 
@@ -85,7 +79,7 @@ export default function Catalog(): JSX.Element {
       return (
         <div key={category.id} className='catalog-section'>
           <h1 onClick={() => navigate(to(`/catalog/${category.slug}`))}>
-            {category.name.toUpperCase()}{' '}
+            {category.name.toUpperCase()}
             <i className='fa-solid fa-angle-right'></i>
           </h1>
           <div className='catalog-section-items'>

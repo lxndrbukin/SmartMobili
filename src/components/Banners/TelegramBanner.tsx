@@ -3,16 +3,6 @@ import { useTranslation } from 'react-i18next';
 
 const STORAGE_KEY = 'telegram-banner-dismissed';
 
-const cta: Record<string, string> = {
-  ro: 'Urmărește-ne pe Telegram și primești o reducere de 5%',
-  ru: 'Подпишитесь на наш Telegram и получите скидку 5%',
-};
-
-const buttonLabel: Record<string, string> = {
-  ro: 'Deschide Telegram',
-  ru: 'Открыть Telegram',
-};
-
 export default function TelegramBanner(): JSX.Element | null {
   const [visible, setVisible] = useState(
     () => localStorage.getItem(STORAGE_KEY) !== 'true',
