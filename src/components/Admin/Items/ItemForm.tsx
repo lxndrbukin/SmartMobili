@@ -103,13 +103,11 @@ export default function ItemForm(): JSX.Element {
     if (isCreating) {
       const result = await dispatch(createItem(data)).unwrap();
       const itemId = result.id;
-
       for (const imageFile of imageFiles) {
         if (imageFile && imageFile.size > 0) {
           const imageFormData = new FormData();
           imageFormData.append('image', imageFile);
-
-          addImage({ itemId, image: imageFormData });
+          await dispatch(addImage({ itemId, image: imageFormData }));
         }
       }
     } else {
@@ -124,7 +122,6 @@ export default function ItemForm(): JSX.Element {
         if (imageFile && imageFile.size > 0) {
           const imageFormData = new FormData();
           imageFormData.append('image', imageFile);
-
           await dispatch(
             addImage({
               itemId: parseInt(itemId!),

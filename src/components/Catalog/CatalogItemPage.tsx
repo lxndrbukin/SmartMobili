@@ -4,6 +4,8 @@ import useLocalePath from '../../hooks/useLocalePath';
 import { useDispatch, useSelector } from 'react-redux';
 import { type RootState, type AppDispatch, getItem } from '../../store';
 import { useTranslation } from 'react-i18next';
+import ReactMarkdown from 'react-markdown';
+import remarkBreaks from 'remark-breaks';
 import CatalogItemPageSkeleton from './CatalogItemPageSkeleton';
 
 export default function CatalogItemPage(): JSX.Element {
@@ -73,7 +75,9 @@ export default function CatalogItemPage(): JSX.Element {
 
           <div className='catalog-item-page-description'>
             <h3>{t('description')}</h3>
-            <p>{currentItem.description}</p>
+            <ReactMarkdown remarkPlugins={[remarkBreaks]}>
+              {currentItem.description}
+            </ReactMarkdown>
           </div>
 
           <div className='catalog-item-page-actions'>

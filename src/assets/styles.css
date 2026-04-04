@@ -762,6 +762,7 @@ select {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
 }
 
 .catalog-item-skeleton .skeleton-title-bar {
@@ -1065,8 +1066,8 @@ select {
 .catalog-item-page-title {
   font-family: var(--font-display);
   font-size: clamp(1.8rem, 3vw, 2.8rem);
-  font-weight: 300;
-  font-style: italic;
+  font-weight: 600;
+  font-style: bold;
   color: var(--text-primary);
   margin: 0;
   line-height: 1.15;
@@ -1074,7 +1075,7 @@ select {
 
 .catalog-item-page-price {
   font-family: var(--font-body);
-  font-size: 1.4rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--text-primary);
   padding: var(--space-2) var(--space-3);
@@ -1082,6 +1083,9 @@ select {
   border-radius: var(--radius-md);
   border: 1px solid var(--border);
   width: fit-content;
+  height: 2.2rem;
+  display: flex;
+  align-items: center;
 }
 
 .catalog-item-page-description h3 {
@@ -1370,12 +1374,14 @@ select {
 .footer-wrapper .footer .footer-socials {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
-  margin: var(--space-4) 0;
+  justify-content: center;
+  gap: var(--space-2);
+  margin: var(--space-3) 0;
+  width: 156px;
 }
 
 .footer-wrapper .footer .footer-socials i {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   color: var(--text-secondary);
   cursor: pointer;
   transition: color var(--transition-fast);

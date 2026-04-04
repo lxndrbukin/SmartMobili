@@ -23,6 +23,7 @@ export default function Catalog(): JSX.Element {
   const navigate = useNavigate();
   const { lang } = useParams<{ lang: string }>();
   const { categories } = useSelector((state: RootState) => state.catalog);
+  const { token } = useSelector((state: RootState) => state.auth);
   const [itemsByCategory, setItemsByCategory] = useState<
     Record<number, ItemProps[]>
   >({});
@@ -72,10 +73,22 @@ export default function Catalog(): JSX.Element {
       });
   };
 
+  const renderAdmin = () => {
+    return (
+      <div className='catalog-admin'>
+        <button onClick={() => handleCreateCategory()}>
+          {t('category.headerCreate')}
+        </button>
+        <button onClick={() => handleCreateItem()}>
+          {t('item.headerCreate')}
+        </button>
+      </div>
+    );
+  };
+
   const renderCategories = (categories: Array<CategoryProps>) => {
     return categories.map((category) => {
       const categoryItems = itemsByCategory[category.id] || [];
-
       return (
         <div key={category.id} className='catalog-section'>
           <h1 onClick={() => navigate(to(`/catalog/${category.slug}`))}>
@@ -103,14 +116,7 @@ export default function Catalog(): JSX.Element {
   return (
     <div className='catalog'>
       <TelegramBanner />
-      <div className='catalog-admin'>
-        <button onClick={() => handleCreateCategory()}>
-          {t('category.headerCreate')}
-        </button>
-        <button onClick={() => handleCreateItem()}>
-          {t('item.headerCreate')}
-        </button>
-      </div>
+      {token ? renderAdmin() : null}
       {renderCategories(categories)}
       {(categoryId || searchParams.get('createCategory')) && <CategoryForm />}
       {(itemId || searchParams.get('createItem')) && <ItemForm />}

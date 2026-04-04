@@ -1,14 +1,18 @@
 import type { JSX } from 'react';
 import type { NavLink } from './types';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { type RootState } from '../../store';
 import useLocalePath from '../../hooks/useLocalePath';
-import SelectLang from './SelectLang';
-// import HeaderProfile from "./HeaderProfile";
 import { useTranslation } from 'react-i18next';
+import SelectLang from './SelectLang';
+import HeaderProfile from './HeaderProfile';
 
 export default function Header(): JSX.Element {
   const { t } = useTranslation('header');
   const to = useLocalePath();
+
+  const { token } = useSelector((state: RootState) => state.auth);
 
   const navLinks = t('nav', { returnObjects: true }) as Array<NavLink>;
 
@@ -20,6 +24,18 @@ export default function Header(): JSX.Element {
         </li>
       );
     });
+  };
+
+  const renderAuth = () => {
+    return (
+      <Link
+        className='header_user-link'
+        id='header_profile-icon'
+        to={to('/login')}
+      >
+        <i className='fa-solid fa-right-to-bracket'></i>
+      </Link>
+    );
   };
 
   return (
@@ -35,7 +51,7 @@ export default function Header(): JSX.Element {
           <ul>{renderNavLinks(navLinks)}</ul>
         </div>
         <div className='header_user-links'>
-          {/* <HeaderProfile /> */}
+          {token ? <HeaderProfile /> : renderAuth()}
           <SelectLang />
         </div>
       </header>

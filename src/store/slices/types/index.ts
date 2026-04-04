@@ -34,3 +34,16 @@ export type ImageProps = {
   image_url: string;
   order: number;
 };
+
+export type UserProps = {
+  id: number;
+  username: string;
+  created_at: string;
+};
+
+export type AuthProps = {
+  token: string | null;
+  user: UserProps | null;
+  isLoading: boolean;
+  error: string | null;
+};
