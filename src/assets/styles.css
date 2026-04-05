@@ -525,7 +525,7 @@ select {
 .categories .categories-header {
   font-family: var(--font-display);
   font-size: clamp(1.6rem, 2.5vw, 2.4rem);
-  font-weight: 300;
+  font-weight: 500;
   display: block;
   width: fit-content;
   margin: 0 auto var(--space-8);
@@ -600,11 +600,11 @@ select {
 .categories .categories-list .category .category-header {
   z-index: 2;
   position: absolute;
-  bottom: var(--space-4);
+  bottom: var(--space-2);
   left: var(--space-4);
   font-family: var(--font-display);
   font-size: 1.25rem;
-  font-weight: 400;
+  font-weight: 600;
   color: #fff;
   letter-spacing: 0.01em;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);

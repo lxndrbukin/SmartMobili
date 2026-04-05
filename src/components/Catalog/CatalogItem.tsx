@@ -1,5 +1,5 @@
-import { type JSX } from "react";
-import { useNavigate } from "react-router-dom";
+import { type JSX } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 type CatalogItemProps = {
   id: number;
@@ -17,12 +17,12 @@ export default function CatalogItem({
   const navigate = useNavigate();
 
   return (
-    <div onClick={() => navigate(url)} className="catalog-item">
+    <div onClick={() => navigate(url)} className='catalog-item'>
       {image ? (
-        <img src={image} alt={title} />
+        <img src={image} alt={`${title} ${id}`} />
       ) : (
-        <div className="catalog-item-no-image">
-          <i className="fas fa-image"></i>
+        <div className='catalog-item-no-image'>
+          <i className='fas fa-image'></i>
         </div>
       )}
       <h3>{title}</h3>

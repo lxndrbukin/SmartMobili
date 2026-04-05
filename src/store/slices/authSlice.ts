@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { AuthProps, UserProps } from "./types";
+import type { AuthProps } from "./types";
 
 const initialState: AuthProps = {
   token: localStorage.getItem("token"),
