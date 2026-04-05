@@ -31,7 +31,7 @@ export default function Categories(): JSX.Element {
     return categories.map((category) => {
       return (
         <Link
-          to={to(category.href)}
+          to={to(`/catalog/${category.href}`)}
           className={`category ${category.tag.toLowerCase()}`}
         >
           <img

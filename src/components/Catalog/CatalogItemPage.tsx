@@ -86,7 +86,7 @@ export default function CatalogItemPage(): JSX.Element {
           <div className='catalog-item-page-actions'>
             <button
               className='button'
-              onClick={() => navigate(to(`/contact?item=${itemId}`))}
+              onClick={() => navigate(to(`/order?item=${itemId}`))}
             >
               {t('call')}
             </button>
