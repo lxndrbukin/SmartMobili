@@ -7,6 +7,7 @@ import type {
   ItemImageUpdate,
 } from "./types";
 import axios from "axios";
+import { API_URL } from "../../api";
 
 export const getItems = createAsyncThunk(
   "items/getItems",
@@ -22,7 +23,7 @@ export const getItems = createAsyncThunk(
       params.append("limit", limit.toString());
     }
     const response = await axios.get(
-      `http://localhost:8000/api/v1/items?${params}`,
+      `${API_URL}/api/v1/items?${params}`,
     );
     return response.data.data;
   },
@@ -31,7 +32,7 @@ export const getItem = createAsyncThunk(
   "items/getItem",
   async ({ itemId, lang }: ItemRequest) => {
     const response = await axios.get(
-      `http://localhost:8000/api/v1/items/${itemId}?lang=${lang}`,
+      `${API_URL}/api/v1/items/${itemId}?lang=${lang}`,
     );
     return response.data;
   },
@@ -41,7 +42,7 @@ export const createItem = createAsyncThunk(
   "items/createItem",
   async (data: ItemCreate) => {
     const response = await axios.post(
-      "http://localhost:8000/api/v1/items",
+      `${API_URL}/api/v1/items`,
       data,
     );
     return response.data;
@@ -51,7 +52,7 @@ export const createItem = createAsyncThunk(
 export const updateItem = createAsyncThunk(
   "items/updateItem",
   async (data: ItemUpdate) => {
-    await axios.put(`http://localhost:8000/api/v1/items/${data.id}`, {
+    await axios.put(`${API_URL}/api/v1/items/${data.id}`, {
       price: data.price,
       category_id: data.category_id,
     });
@@ -60,14 +61,14 @@ export const updateItem = createAsyncThunk(
       for (const translation of data.translations) {
         const { language, title, description } = translation;
         await axios.put(
-          `http://localhost:8000/api/v1/items/${data.id}/translations?lang=${language}`,
+          `${API_URL}/api/v1/items/${data.id}/translations?lang=${language}`,
           { title, description },
         );
       }
     }
     const lang = localStorage.getItem("language") || "ro";
     const response = await axios.get(
-      `http://localhost:8000/api/v1/items/${data.id}?lang=${lang}`,
+      `${API_URL}/api/v1/items/${data.id}?lang=${lang}`,
     );
     return response.data;
   },
@@ -76,7 +77,7 @@ export const updateItem = createAsyncThunk(
 export const deleteItem = createAsyncThunk(
   "items/deleteItem",
   async (itemId: number) => {
-    await axios.delete(`http://localhost:8000/api/v1/items/${itemId}`);
+    await axios.delete(`${API_URL}/api/v1/items/${itemId}`);
     return;
   },
 );
@@ -84,7 +85,7 @@ export const deleteItem = createAsyncThunk(
 export const addImage = createAsyncThunk(
   "items/updateImage",
   async (data: ItemImageUpdate) => {
-    await fetch(`http://localhost:8000/api/v1/items/${data.itemId}/images`, {
+    await fetch(`${API_URL}/api/v1/items/${data.itemId}/images`, {
       method: "POST",
       body: data.image,
     });
@@ -93,9 +94,9 @@ export const addImage = createAsyncThunk(
 
 export const deleteImage = createAsyncThunk(
   "items/deleteImage",
-  async (data: { itemId: number; imageId: number }) => {
+  async (data: { itemId: number; imageId: number; }) => {
     await axios.delete(
-      `http://localhost:8000/api/v1/items/${data.itemId}/images/${data.imageId}`,
+      `${API_URL}/api/v1/items/${data.itemId}/images/${data.imageId}`,
     );
   },
 );
