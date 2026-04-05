@@ -1,5 +1,7 @@
 import { type JSX, useEffect, useState } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
+import pageTitle from '../../utils/pageTitle';
+import { title } from './assets/title';
 import useLocalePath from '../../hooks/useLocalePath';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -31,7 +33,7 @@ export default function Catalog(): JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
   const categoryId = searchParams.get('editCategory');
   const itemId = searchParams.get('editItem');
-
+  pageTitle(title[lang as 'en' | 'ro' | 'ru']);
   const { t } = useTranslation('admin');
   useEffect(() => {
     dispatch(getCategories(lang));

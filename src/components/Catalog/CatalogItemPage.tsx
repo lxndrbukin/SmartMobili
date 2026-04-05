@@ -1,5 +1,6 @@
 import { type JSX, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import pageTitle from '../../utils/pageTitle';
 import useLocalePath from '../../hooks/useLocalePath';
 import { useDispatch, useSelector } from 'react-redux';
 import { type RootState, type AppDispatch, getItem } from '../../store';
@@ -33,6 +34,8 @@ export default function CatalogItemPage(): JSX.Element {
   if (!currentItem) {
     return <CatalogItemPageSkeleton />;
   }
+
+  pageTitle(currentItem.title);
 
   return (
     <div className='catalog-item-page'>

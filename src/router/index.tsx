@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 import App from '../components/App';
 import Categories from '../components/Static/Categories';
 import OrderSteps from '../components/Static/OrderSteps';
@@ -9,6 +9,10 @@ import CatalogItemPage from '../components/Catalog/CatalogItemPage';
 import ContactForm from '../components/Contact/ContactForm';
 
 export const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Navigate to='/ro' replace />,
+  },
   {
     path: '/:lang',
     element: <App />,
