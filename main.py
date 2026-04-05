@@ -22,7 +22,7 @@ app.include_router(v1_router)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=["http://localhost:5173", "https://smartmobili-xi.vercel.app"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
