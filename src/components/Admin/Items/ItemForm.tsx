@@ -5,7 +5,7 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -21,7 +21,6 @@ import axios from 'axios';
 
 export default function ItemForm(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate();
   const { t } = useTranslation('admin');
   const { lang } = useParams<{ lang: string; itemId: string }>();
   const { categories } = useSelector((state: RootState) => state.catalog);
@@ -72,6 +71,10 @@ export default function ItemForm(): JSX.Element {
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const images = Array.from(e.target.files || []);
     setSelectedImages(images);
+  };
+
+  const handleClose = () => {
+    setSearchParams({});
   };
 
   const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
@@ -131,11 +134,7 @@ export default function ItemForm(): JSX.Element {
         }
       }
     }
-    navigate(`/${lang}/catalog`);
-  };
-
-  const handleClose = () => {
-    setSearchParams({});
+    handleClose();
   };
 
   const renderCategories = (categories: Array<CategoryProps>) => {

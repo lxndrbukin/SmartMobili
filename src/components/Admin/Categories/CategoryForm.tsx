@@ -42,6 +42,10 @@ export default function CategoryForm(): JSX.Element {
     }
   }, [categoryId]);
 
+  const handleClose = () => {
+    setSearchParams({});
+  };
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -68,10 +72,7 @@ export default function CategoryForm(): JSX.Element {
     } else {
       dispatch(updateCategory({ id: Number(categoryId), ...data }));
     }
-  };
-
-  const handleClose = () => {
-    setSearchParams({});
+    handleClose();
   };
 
   return (
