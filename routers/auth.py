@@ -30,19 +30,23 @@ pwd_context = CryptContext(schemes=["bcrypt"])
 
 @auth_router.post("/register", status_code=status.HTTP_201_CREATED, response_model=TokenResponse)
 def register(data: UserCreate, db: Session = Depends(get_db)):
-    try:
-        user = User(
-            username=data.username,
-            hash_password = pwd_context.hash(data.password)
-        )
-        db.add(user)
-        db.commit()
-        db.refresh(user)
-        jwt_token = create_token(user.id, secret_key=SECRET_KEY, algorith=ALGORITHM)
-        return TokenResponse(access_token=jwt_token)
-    except IntegrityError:
-        db.rollback()
-        raise HTTPException(status_code=400, detail="Username already exists")
+    existing_user = db.query(User).filter(User.username == data.username).first()
+    if not existing_user:
+        try:
+            user = User(
+                username=data.username,
+                hashed_password=pwd_context.hash(data.password),
+            )
+            db.add(user)
+            db.commit()
+            db.refresh(user)
+            jwt_token = create_token(user.id, secret_key=SECRET_KEY, algorith=ALGORITHM)
+            return TokenResponse(access_token=jwt_token)
+        except IntegrityError as e:
+            db.rollback()
+            raise HTTPException(status_code=400, detail=f"Error: {e}")
+    else:
+        raise HTTPException(status_code=400, detail="User already exists")
 
 @auth_router.post("/login", status_code=status.HTTP_200_OK, response_model=TokenResponse)
 def login(data: UserAuth, db: Session = Depends(get_db)):

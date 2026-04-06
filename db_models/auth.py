@@ -9,7 +9,7 @@ class User(Base):
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String(50), nullable=False)
     hashed_password = Column(String(255), nullable=False)
-    user_role = Column(String(25), nullable=False)
+    user_role = Column(String(25), nullable=False, default="user")
     signup_at = Column(DateTime, default=datetime.utcnow)
 
     inquiries = relationship("Inquiry", back_populates="user")
