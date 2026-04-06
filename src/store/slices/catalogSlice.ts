@@ -1,7 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { CatalogState, ItemProps, CategoryProps } from "./types";
-import { getItems, getItem } from "../thunks/items";
-import { getCategories } from "../thunks/categories";
+import { getItems, getItem, createItem } from "../thunks/items";
+import { getCategories, createCategory } from "../thunks/categories";
 
 const initialState: CatalogState = {
   items: [],
@@ -17,7 +17,7 @@ const catalogSlice = createSlice({
     builder.addCase(
       getItems.fulfilled,
       (state: CatalogState, action: PayloadAction<Array<ItemProps>>) => {
-        state.items = action.payload;
+        state.items = [ ...state.items, ...action.payload ];
       },
     );
     builder.addCase(
@@ -27,10 +27,20 @@ const catalogSlice = createSlice({
       },
     );
     builder.addCase(
+      createItem.fulfilled, (state: CatalogState, action: PayloadAction<ItemProps>) => {
+        state.items = [ ...state.items, action.payload ];
+      }
+    );
+    builder.addCase(
       getCategories.fulfilled,
       (state: CatalogState, action: PayloadAction<Array<CategoryProps>>) => {
         state.categories = action.payload;
       },
+    );
+    builder.addCase(
+      createCategory.fulfilled, (state: CatalogState, action: PayloadAction<CategoryProps>) => {
+        state.categories.push(action.payload);
+      }
     );
   },
 });

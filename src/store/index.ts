@@ -21,3 +21,4 @@ export * from "./slices/catalogSlice";
 export * from "./thunks/items";
 export * from "./thunks/categories";
 export * from "./thunks/inquiries";
+export * from "./thunks/auth";

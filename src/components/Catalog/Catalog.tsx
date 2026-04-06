@@ -35,6 +35,7 @@ export default function Catalog(): JSX.Element {
   const itemId = searchParams.get('editItem');
   pageTitle(title[lang as 'en' | 'ro' | 'ru']);
   const { t } = useTranslation('admin');
+
   useEffect(() => {
     dispatch(getCategories(lang));
   }, [dispatch, lang]);
@@ -58,7 +59,7 @@ export default function Catalog(): JSX.Element {
         }
       });
     }
-  }, [categories, dispatch, lang]);
+  }, [dispatch, categories, lang]);
 
   const handleCreateCategory = () => {
     setSearchParams({ createCategory: '1' });
