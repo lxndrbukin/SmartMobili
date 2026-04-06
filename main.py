@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from routers.items import items_router
 from routers.categories import categories_router
 from routers.inquiries import inquiries_router
+from routers.auth import  auth_router
 from db import engine, Base, get_db
 from db_models.items import Item, ItemTranslation, ItemImage
 from db_models.categories import Category, CategoryTranslation
@@ -15,6 +16,7 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI(title="SmartMobili", description="SmartMobili", version="1.0")
 
 v1_router = APIRouter(prefix="/api/v1")
+v1_router.include_router(auth_router)
 v1_router.include_router(items_router)
 v1_router.include_router(categories_router)
 v1_router.include_router(inquiries_router)
