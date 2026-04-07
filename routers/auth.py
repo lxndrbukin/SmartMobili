@@ -31,7 +31,7 @@ pwd_context = CryptContext(schemes=["bcrypt"])
 @auth_router.post("/register", status_code=status.HTTP_201_CREATED, response_model=TokenResponse)
 def register(data: UserCreate, db: Session = Depends(get_db)):
     existing_user = db.query(User).filter(User.username == data.username).first()
-    if not existing_user:
+    if existing_user is None:
         try:
             user = User(
                 username=data.username,
@@ -40,23 +40,23 @@ def register(data: UserCreate, db: Session = Depends(get_db)):
             db.add(user)
             db.commit()
             db.refresh(user)
-            jwt_token = create_token(user.id, secret_key=SECRET_KEY, algorith=ALGORITHM)
+            jwt_token = create_token(user.id, secret_key=SECRET_KEY, algorithm=ALGORITHM)
             return TokenResponse(access_token=jwt_token)
         except IntegrityError as e:
             db.rollback()
             raise HTTPException(status_code=400, detail=f"Error: {e}")
     else:
-        raise HTTPException(status_code=400, detail="User already exists")
+        raise HTTPException(status_code=400, detail="Username already exists")
 
 @auth_router.post("/login", status_code=status.HTTP_200_OK, response_model=TokenResponse)
 def login(data: UserAuth, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.username == data.username).first()
     if user is None:
         raise HTTPException(status_code=401, detail="Invalid credentials")
-    is_valid = pwd_context.verify(data.password, user.hash_password)
+    is_valid = pwd_context.verify(data.password, user.hashed_password)
     if not is_valid:
         raise HTTPException(status_code=401, detail="Invalid credentials")
-    jwt_token = create_token(user.id)
+    jwt_token = create_token(user.id, secret_key=SECRET_KEY, algorithm=ALGORITHM)
     return TokenResponse(access_token=jwt_token)
 
 @auth_router.get("/users/me", status_code=status.HTTP_200_OK, response_model=UserResponse)

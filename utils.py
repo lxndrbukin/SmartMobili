@@ -32,12 +32,12 @@ def get_translation(translations, lang: Language):
         )
     return translation
 
-def create_token(user_id: int, secret_key, algorith) -> str:
+def create_token(user_id: int, secret_key, algorithm) -> str:
     payload = {
         "sub": str(user_id),
         "exp": datetime.utcnow() + timedelta(days=7)
     }
-    return jwt.encode(payload, secret_key, algorithm=algorith)
+    return jwt.encode(payload, secret_key, algorithm=algorithm)
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
