@@ -374,6 +374,7 @@ select {
   transition:
     background-color var(--transition-fast),
     color var(--transition-fast);
+  border: none;
 }
 
 .header-wrapper .header .header_user-links .header_user-link:hover {
@@ -1438,21 +1439,73 @@ select {
 }
 
 /* ─── AUTH ───────────────────────────────────────────────────────────── */
+.auth-form {
+  width: 500px;
+  margin: auto auto;
+  padding: var(--space-5) var(--space-8);
+  background-color: var(--bg-tertiary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border);
+  box-sizing: border-box;
+  position: relative;
+}
+
+.auth-form h3 {
+  margin-top: 0;
+}
+
+.auth-form button {
+  width: 100%;
+  background-color: var(--accent);
+  color: #fff;
+  border: none;
+  padding: var(--space-3) var(--space-5);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  margin-top: var(--space-4);
+  transition:
+    background-color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.auth-form button[type='submit']:hover {
+  background-color: var(--brown);
+  transform: translateY(-1px);
+}
+
+.auth-form button[type='submit']:disabled {
+  background-color: var(--accent-muted);
+  cursor: not-allowed;
+}
+
 .signup-redirect {
   width: fit-content;
-  margin: auto;
+  margin: var(--space-4) auto;
   font-size: 14px;
   color: var(--text-secondary);
 }
 
-.signup-redirect .signup-link {
+.signup-redirect a {
   color: var(--accent);
   font-weight: 600;
   transition: color var(--transition-fast);
 }
 
-.signup-redirect .signup-link:hover {
+.signup-redirect a:hover {
   color: var(--brown);
+}
+
+.auth-form .error {
+  width: fit-content;
+  margin: var(--space-4) auto 0 auto;
+  font-size: 14px;
+  color: rgb(206, 1, 1);
 }
 
 /* ─── CONTACT ─────────────────────────────────────────────────────── */

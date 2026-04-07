@@ -1,6 +1,7 @@
 import type { JSX } from 'react';
 import type { NavLink } from './types';
 import { Link } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { type RootState } from '../../store';
 import useLocalePath from '../../hooks/useLocalePath';
@@ -16,6 +17,8 @@ export default function Header(): JSX.Element {
 
   const navLinks = t('nav', { returnObjects: true }) as Array<NavLink>;
 
+  const [, setSearchParams] = useSearchParams();
+
   const renderNavLinks = (links: Array<NavLink>): Array<JSX.Element> => {
     return links.map((link: NavLink) => {
       return (
@@ -28,13 +31,13 @@ export default function Header(): JSX.Element {
 
   const renderAuth = () => {
     return (
-      <Link
+      <button
         className='header_user-link'
         id='header_profile-icon'
-        to={to('/login')}
+        onClick={() => setSearchParams({ login: 'true' })}
       >
         <i className='fa-solid fa-right-to-bracket'></i>
-      </Link>
+      </button>
     );
   };
 

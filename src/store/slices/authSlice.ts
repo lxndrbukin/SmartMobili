@@ -1,7 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
-import type { AuthProps } from "./types";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import type { AuthState, AuthResponse, UserProps } from "./types";
+import { register, login, getMe } from "../thunks/auth";
 
-const initialState: AuthProps = {
+type ApiError = { detail?: string; };
+
+const initialState: AuthState = {
   token: localStorage.getItem("token"),
   user: null,
   isLoading: false,
@@ -11,7 +14,39 @@ const initialState: AuthProps = {
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {}
+  reducers: {
+    clearError: (state: AuthState) => {
+      state.error = null;
+    }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(register.fulfilled, (state: AuthState, action: PayloadAction<AuthResponse>) => {
+      state.token = action.payload.access_token;
+      state.isLoading = false;
+    });
+    builder.addCase(register.pending, (state: AuthState) => {
+      state.isLoading = true;
+    });
+    builder.addCase(register.rejected, (state: AuthState, action: PayloadAction<ApiError | undefined>) => {
+      state.error = action.payload?.detail || "Something went wrong";
+      state.isLoading = false;
+    });
+    builder.addCase(login.fulfilled, (state: AuthState, action: PayloadAction<AuthResponse>) => {
+      state.token = action.payload.access_token;
+      state.isLoading = false;
+    });
+    builder.addCase(login.pending, (state: AuthState) => {
+      state.isLoading = true;
+    });
+    builder.addCase(login.rejected, (state: AuthState, action: PayloadAction<ApiError | undefined>) => {
+      state.error = action.payload?.detail || "Something went wrong";
+      state.isLoading = false;
+    });
+    builder.addCase(getMe.fulfilled, (state: AuthState, action: PayloadAction<UserProps>) => {
+      state.user = action.payload;
+    });
+  }
 });
 
 export default authSlice.reducer;
+export const { clearError } = authSlice.actions;

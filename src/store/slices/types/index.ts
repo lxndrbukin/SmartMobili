@@ -38,12 +38,18 @@ export type ImageProps = {
 export type UserProps = {
   id: number;
   username: string;
-  created_at: string;
+  user_role: string;
+  signup_at: string;
 };
 
-export type AuthProps = {
+export type AuthState = {
   token: string | null;
   user: UserProps | null;
   isLoading: boolean;
   error: string | null;
+};
+
+export type AuthResponse = {
+  access_token: string;
+  token_type: string;
 };
