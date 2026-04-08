@@ -1,5 +1,5 @@
 import { type JSX, useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import pageTitle from '../../utils/pageTitle';
 import useLocalePath from '../../hooks/useLocalePath';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,9 +15,13 @@ export default function CatalogItemPage(): JSX.Element {
   const { itemId, lang } = useParams<{ itemId: string; lang: string }>();
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
+  const [, setSearchParams] = useSearchParams();
 
   const { currentItem } = useSelector((state: RootState) => state.catalog);
+  const { user } = useSelector((state: RootState) => state.auth);
   const [currentImage, setCurrentImage] = useState<string>('');
+
+  const isAdmin = user && user.user_role === 'admin';
 
   useEffect(() => {
     if (itemId) {
@@ -34,6 +38,10 @@ export default function CatalogItemPage(): JSX.Element {
   if (!currentItem) {
     return <CatalogItemPageSkeleton />;
   }
+
+  const openEdit = () => {
+    setSearchParams({ editItem: String(itemId) });
+  };
 
   pageTitle(currentItem.title);
 
@@ -69,7 +77,14 @@ export default function CatalogItemPage(): JSX.Element {
         </div>
 
         <div className='catalog-item-page-info'>
-          <h1 className='catalog-item-page-title'>{currentItem.title}</h1>
+          <h1 className='catalog-item-page-title'>
+            {currentItem.title}{' '}
+            {isAdmin && (
+              <button onClick={openEdit}>
+                <i className='fa-solid fa-pen-to-square'></i>
+              </button>
+            )}
+          </h1>
           <div className='catalog-item-page-price'>
             {currentItem.price
               ? `${currentItem.price.toFixed(2)} MDL`

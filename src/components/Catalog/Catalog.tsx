@@ -15,8 +15,6 @@ import {
 } from '../../store';
 import CatalogItem from './CatalogItem';
 import CatalogItemSkeleton from './CatalogItemSkeleton';
-import CategoryForm from '../Admin/Categories/CategoryForm';
-import ItemForm from '../Admin/Items/ItemForm';
 import TelegramBanner from '../Banners/TelegramBanner';
 
 export default function Catalog(): JSX.Element {
@@ -30,9 +28,9 @@ export default function Catalog(): JSX.Element {
     Record<number, ItemProps[]>
   >({});
 
-  const [searchParams, setSearchParams] = useSearchParams();
-  const categoryId = searchParams.get('editCategory');
-  const itemId = searchParams.get('editItem');
+  const isAdmin = user && user.user_role === 'admin';
+
+  const [, setSearchParams] = useSearchParams();
   pageTitle(title[lang as 'en' | 'ro' | 'ru']);
   const { t } = useTranslation('admin');
 
@@ -119,10 +117,8 @@ export default function Catalog(): JSX.Element {
   return (
     <div className='catalog'>
       <TelegramBanner />
-      {token && user && user.user_role === 'admin' ? renderAdmin() : null}
+      {token && isAdmin ? renderAdmin() : null}
       {renderCategories(categories)}
-      {(categoryId || searchParams.get('createCategory')) && <CategoryForm />}
-      {(itemId || searchParams.get('createItem')) && <ItemForm />}
     </div>
   );
 }

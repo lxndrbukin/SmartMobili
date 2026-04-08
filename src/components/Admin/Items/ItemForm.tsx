@@ -130,12 +130,13 @@ export default function ItemForm(): JSX.Element {
           );
         }
       }
+      // await dispatch(getItem({ itemId: Number(itemId), lang }));
     }
     handleClose();
   };
 
   const renderCategories = (categories: Array<CategoryProps>) => {
-    if (!categories) return null;
+    if (!categories) return null; // replace with array of loading skeleton components
     return categories.map((category) => {
       return (
         <option value={category.id} key={category.id}>
