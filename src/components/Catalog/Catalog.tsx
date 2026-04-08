@@ -25,7 +25,7 @@ export default function Catalog(): JSX.Element {
   const navigate = useNavigate();
   const { lang } = useParams<{ lang: string }>();
   const { categories } = useSelector((state: RootState) => state.catalog);
-  const { token } = useSelector((state: RootState) => state.auth);
+  const { token, user } = useSelector((state: RootState) => state.auth);
   const [itemsByCategory, setItemsByCategory] = useState<
     Record<number, ItemProps[]>
   >({});
@@ -119,7 +119,7 @@ export default function Catalog(): JSX.Element {
   return (
     <div className='catalog'>
       <TelegramBanner />
-      {token ? renderAdmin() : null}
+      {token && user && user.user_role === 'admin' ? renderAdmin() : null}
       {renderCategories(categories)}
       {(categoryId || searchParams.get('createCategory')) && <CategoryForm />}
       {(itemId || searchParams.get('createItem')) && <ItemForm />}
