@@ -15,6 +15,14 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    logout(state: AuthState) {
+      state.token = null;
+      state.user = null;
+      localStorage.removeItem("token");
+    },
+    setError: (state: AuthState, action: PayloadAction<string>) => {
+      state.error = action.payload;
+    },
     clearError: (state: AuthState) => {
       state.error = null;
     }
@@ -23,6 +31,8 @@ const authSlice = createSlice({
     builder.addCase(register.fulfilled, (state: AuthState, action: PayloadAction<AuthResponse>) => {
       state.token = action.payload.access_token;
       state.isLoading = false;
+      localStorage.setItem("token", action.payload.access_token);
+
     });
     builder.addCase(register.pending, (state: AuthState) => {
       state.isLoading = true;
@@ -34,6 +44,7 @@ const authSlice = createSlice({
     builder.addCase(login.fulfilled, (state: AuthState, action: PayloadAction<AuthResponse>) => {
       state.token = action.payload.access_token;
       state.isLoading = false;
+      localStorage.setItem("token", action.payload.access_token);
     });
     builder.addCase(login.pending, (state: AuthState) => {
       state.isLoading = true;
@@ -49,4 +60,4 @@ const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
-export const { clearError } = authSlice.actions;
+export const { logout, setError, clearError } = authSlice.actions;

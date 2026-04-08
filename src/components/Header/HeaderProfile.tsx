@@ -1,6 +1,10 @@
 import { type JSX, useRef, useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { type AppDispatch, logout } from '../../store';
 
 export default function HeaderProfile(): JSX.Element {
+  const dispatch = useDispatch<AppDispatch>();
+
   const iconRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -31,10 +35,17 @@ export default function HeaderProfile(): JSX.Element {
             <span>User</span>
           </div>
           <div className='header_user-profile_links'>
-            <a className='header_user-profile_link' href='/profile'>
+            <a className='header_user-profile_link' href='#'>
               Profile
             </a>
-            <a className='header_user-profile_link' href='/signout'>
+            <a
+              className='header_user-profile_link'
+              onClick={(e) => {
+                e.preventDefault();
+                dispatch(logout());
+              }}
+              href=''
+            >
               Sign out
             </a>
           </div>

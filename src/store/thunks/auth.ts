@@ -2,21 +2,21 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_URL } from "../../api";
 
-type AuthCredentials = { username: string; password: string };
-type AuthResponse = { access_token: string; token_type: string };
-type ApiError = { detail?: string };
+type AuthCredentials = { username: string; password: string; };
+type AuthResponse = { access_token: string; token_type: string; };
+type ApiError = { detail?: string; };
 
 function getApiErrorDetail(err: unknown): string | undefined {
   if (!axios.isAxiosError(err)) return undefined;
   const data = err.response?.data as unknown;
   if (data && typeof data === "object" && "detail" in data) {
-    const detail = (data as { detail?: unknown }).detail;
+    const detail = (data as { detail?: unknown; }).detail;
     return typeof detail === "string" ? detail : undefined;
   }
   return undefined;
 }
 
-export const register = createAsyncThunk<AuthResponse, AuthCredentials, { rejectValue: ApiError }>(
+export const register = createAsyncThunk<AuthResponse, AuthCredentials, { rejectValue: ApiError; }>(
   "auth/register",
   async (data, { rejectWithValue }) => {
     try {
@@ -28,7 +28,7 @@ export const register = createAsyncThunk<AuthResponse, AuthCredentials, { reject
   },
 );
 
-export const login = createAsyncThunk<AuthResponse, AuthCredentials, { rejectValue: ApiError }>(
+export const login = createAsyncThunk<AuthResponse, AuthCredentials, { rejectValue: ApiError; }>(
   "auth/login",
   async (data, { rejectWithValue }) => {
     try {
@@ -41,6 +41,6 @@ export const login = createAsyncThunk<AuthResponse, AuthCredentials, { rejectVal
 );
 
 export const getMe = createAsyncThunk("auth/getMe", async () => {
-  const response = await axios.get(`${API_URL}/auth/users/me`);
+  const response = await axios.get(`${API_URL}/api/v1/auth/users/me`);
   return response.data;
 });

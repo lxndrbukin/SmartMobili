@@ -6,6 +6,8 @@ import {
   type RootState,
   register,
   login,
+  getMe,
+  setError,
   clearError,
 } from '../../store';
 
@@ -21,16 +23,33 @@ export default function AuthForm(): JSX.Element {
     setSearchParams({});
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const username = formData.get('username') as string;
     const password = formData.get('password') as string;
     const data = { username, password };
-    if (isLogin) {
-      dispatch(login(data));
-    } else {
-      dispatch(register(data));
+    e.preventDefault();
+    if (!username.length && !password.length) {
+      dispatch(setError('Please enter username and password'));
+      return;
+    }
+    if (!username.length && password.length) {
+      dispatch(setError('Please enter username'));
+      return;
+    }
+    if (!password.length && username.length) {
+      dispatch(setError('Please enter password'));
+      return;
+    }
+    if (username.length && password.length) {
+      if (isLogin) {
+        await dispatch(login(data)).unwrap();
+      } else {
+        await dispatch(register(data)).unwrap();
+      }
+      await dispatch(getMe());
+      setSearchParams({});
     }
   };
 
@@ -41,30 +60,20 @@ export default function AuthForm(): JSX.Element {
   const errorMessage = error ? <p className='error'>{error}</p> : null;
 
   const renderLink = () => {
-    if (isLogin) {
-      return (
-        <a
-          href=''
-          onClick={(e) => {
-            e.preventDefault();
-            setSearchParams({ signup: 'true' });
-            dispatch(clearError());
-          }}
-        >
-          Sign Up
-        </a>
-      );
-    }
     return (
       <a
         href=''
         onClick={(e) => {
           e.preventDefault();
-          setSearchParams({ login: 'true' });
+          if (isLogin) {
+            setSearchParams({ signup: 'true' });
+          } else {
+            setSearchParams({ login: 'true' });
+          }
           dispatch(clearError());
         }}
       >
-        Login
+        {isLogin ? 'Sign Up' : 'Log In'}
       </a>
     );
   };
@@ -83,7 +92,7 @@ export default function AuthForm(): JSX.Element {
             <input type='password' name='password' />
           </div>
           <button disabled={isLoading} type='submit'>
-            {isLogin ? 'Login' : 'Sign Up'}
+            {isLogin ? 'Log In' : 'Sign Up'}
           </button>
           <p className='signup-redirect'>
             {paragraphText} {renderLink()}
