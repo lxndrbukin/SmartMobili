@@ -15,6 +15,7 @@ from db_models.auth import User
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 from passlib.context import CryptContext
+from jose import jwt, JWTError
 from db import get_db
 from utils import create_token, get_current_user, Pagination
 
@@ -60,12 +61,22 @@ def login(data: UserAuth, db: Session = Depends(get_db)):
     return TokenResponse(access_token=jwt_token)
 
 @auth_router.get("/users/me", status_code=status.HTTP_200_OK, response_model=UserResponse)
-def get_me(current_user: User = Depends(get_current_user)):
+def get_me(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+    except JWTError:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    user_id = payload.get("sub")
+    if user_id is None:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    user = db.query(User).filter(User.id == int(user_id)).first()
+    if user is None:
+        raise HTTPException(status_code=401, detail="User not found")
     return UserResponse(
-        id=current_user.id,
-        username=current_user.username,
-        user_role=current_user.user_role,
-        signup_at=current_user.signup_at
+        id=user.id,
+        username=user.username,
+        user_role=user.user_role,
+        signup_at=user.signup_at
     )
 
 @auth_router.get("/users", status_code=status.HTTP_200_OK, response_model=PaginatedUsersResponse)
