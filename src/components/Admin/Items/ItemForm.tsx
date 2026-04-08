@@ -18,6 +18,7 @@ import {
   addImage,
 } from '../../../store';
 import axios from 'axios';
+import { API_URL } from '../../../api';
 
 export default function ItemForm(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
@@ -46,21 +47,17 @@ export default function ItemForm(): JSX.Element {
 
   useEffect(() => {
     if (itemId) {
-      axios
-        .get(`http://localhost:8000/api/v1/items/${itemId}?lang=ro`)
-        .then((res) => {
-          setItemTitleRO(res.data.title);
-          setItemDescRO(res.data.description);
-          setItemCategoryId(res.data.category_id);
-          setItemPrice(res.data.price);
-        });
+      axios.get(`${API_URL}/api/v1/items/${itemId}?lang=ro`).then((res) => {
+        setItemTitleRO(res.data.title);
+        setItemDescRO(res.data.description);
+        setItemCategoryId(res.data.category_id);
+        setItemPrice(res.data.price);
+      });
 
-      axios
-        .get(`http://localhost:8000/api/v1/items/${itemId}?lang=ru`)
-        .then((res) => {
-          setItemTitleRU(res.data.title);
-          setItemDescRU(res.data.description);
-        });
+      axios.get(`${API_URL}/api/v1/items/${itemId}?lang=ru`).then((res) => {
+        setItemTitleRU(res.data.title);
+        setItemDescRU(res.data.description);
+      });
     }
   }, [itemId]);
 
