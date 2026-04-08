@@ -33,7 +33,7 @@ export default function ItemForm(): JSX.Element {
   const [itemTitleRO, setItemTitleRO] = useState('');
   const [itemDescRU, setItemDescRU] = useState('');
   const [itemDescRO, setItemDescRO] = useState('');
-  const [itemPrice, setItemPrice] = useState(0);
+  const [itemPrice, setItemPrice] = useState<string>('');
   const [itemCategoryId, setItemCategoryId] = useState(0);
   const [selectedImages, setSelectedImages] = useState<Array<File>>([]);
 
@@ -202,7 +202,7 @@ export default function ItemForm(): JSX.Element {
             <label>{t('item.price')}</label>
             <input
               value={itemPrice}
-              onChange={(e) => setItemPrice(Number(e.target.value))}
+              onChange={(e) => setItemPrice(e.target.value)}
               type='number'
               name='price'
               className='price'
