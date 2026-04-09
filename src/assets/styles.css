@@ -642,12 +642,21 @@ select {
   gap: var(--space-6);
 }
 
-.catalog-section h1 {
+.catalog-section h1,
+.catalog-section-page h1 {
   display: flex;
   align-items: center;
   cursor: pointer;
   width: fit-content;
-  gap: 10px;
+  gap: 8px;
+}
+
+.catalog-section-page h1 button {
+  background-color: transparent;
+  border: none;
+  color: var(--accent);
+  font-size: 23px;
+  cursor: pointer;
 }
 
 .catalog-section h1:hover {
@@ -925,6 +934,12 @@ select {
   transform: translateY(-1px);
 }
 
+.catalog-item-form button[type='submit']:disabled,
+.catalog-category-form button[type='submit']:disabled {
+  background-color: var(--accent-muted);
+  cursor: not-allowed;
+}
+
 .catalog-item-form h3 {
   margin: 0 0 var(--space-5);
   font-weight: 800;
@@ -1072,6 +1087,17 @@ select {
   color: var(--text-primary);
   margin: 0;
   line-height: 1.15;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.catalog-item-page-title button {
+  background-color: transparent;
+  border: none;
+  color: var(--accent);
+  font-size: 23px;
+  cursor: pointer;
 }
 
 .catalog-item-page-price {
@@ -1108,6 +1134,29 @@ select {
   display: flex;
   gap: var(--space-4);
   flex-wrap: wrap;
+}
+
+.catalog-item-page-actions button {
+  background-color: var(--accent);
+  color: #fff;
+  border: none;
+  padding: var(--space-3) var(--space-5);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  margin-top: var(--space-4);
+  transition:
+    background-color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.catalog-item-page-actions button:hover {
+  background-color: var(--brown);
+  transform: translateY(-1px);
 }
 
 .catalog-item-page-loading {

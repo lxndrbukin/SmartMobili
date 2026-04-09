@@ -37,6 +37,7 @@ export default function ItemForm(): JSX.Element {
   const [itemPrice, setItemPrice] = useState<string>('');
   const [itemCategoryId, setItemCategoryId] = useState(0);
   const [selectedImages, setSelectedImages] = useState<Array<File>>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -100,6 +101,7 @@ export default function ItemForm(): JSX.Element {
       price: parseFloat(price),
       category_id: Number(categoryId),
     };
+    setIsLoading(true);
     if (isCreating) {
       const result = await dispatch(createItem(data)).unwrap();
       const itemId = result.id;
@@ -130,7 +132,7 @@ export default function ItemForm(): JSX.Element {
           );
         }
       }
-      // await dispatch(getItem({ itemId: Number(itemId), lang }));
+      setIsLoading(false);
     }
     handleClose();
   };
@@ -234,7 +236,7 @@ export default function ItemForm(): JSX.Element {
               </div>
             )}
           </div>
-          <button type='submit'>
+          <button disabled={isLoading} type='submit'>
             {isCreating ? t('item.submitCreate') : t('item.submitEdit')}
           </button>
         </form>

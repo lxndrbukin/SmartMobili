@@ -8,6 +8,7 @@ import {
   updateCategory,
 } from '../../../store';
 import axios from 'axios';
+import { API_URL } from '../../../api';
 
 export default function CategoryForm(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
@@ -15,6 +16,7 @@ export default function CategoryForm(): JSX.Element {
   const [categoryRO, setCategoryRO] = useState('');
   const [categoryRU, setCategoryRU] = useState('');
   const [slug, setSlug] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const isCreating = searchParams.get('createCategory') === '1';
@@ -30,14 +32,14 @@ export default function CategoryForm(): JSX.Element {
   useEffect(() => {
     if (!isCreating) {
       axios
-        .get(`http://localhost:8000/api/v1/categories/${categoryId}?lang=ro`)
+        .get(`${API_URL}/api/v1/categories/${categoryId}?lang=ro`)
         .then((res) => {
           setCategoryRO(res.data.name);
           setSlug(res.data.slug);
         });
 
       axios
-        .get(`http://localhost:8000/api/v1/categories/${categoryId}?lang=ru`)
+        .get(`${API_URL}/api/v1/categories/${categoryId}?lang=ru`)
         .then((res) => setCategoryRU(res.data.name));
     }
   }, [categoryId]);
@@ -46,7 +48,7 @@ export default function CategoryForm(): JSX.Element {
     setSearchParams({});
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const nameRO = formData.get('nameRO') as string;
@@ -66,12 +68,15 @@ export default function CategoryForm(): JSX.Element {
         },
       ],
     };
-
+    setIsLoading(true);
     if (isCreating) {
-      dispatch(createCategory(data));
+      await dispatch(createCategory(data)).unwrap();
     } else {
-      dispatch(updateCategory({ id: Number(categoryId), ...data }));
+      await dispatch(
+        updateCategory({ id: Number(categoryId), ...data }),
+      ).unwrap();
     }
+    setIsLoading(false);
     handleClose();
   };
 
@@ -106,14 +111,14 @@ export default function CategoryForm(): JSX.Element {
             />
           </div>
           <div className='form-field'>
-            <label>{t('category.url')} (/tables)</label>
+            <label>{t('category.url')} (e.g. tables, kitchens)</label>
             <input
               value={slug}
               onChange={(e) => setSlug(e.target.value)}
               name='slug'
             />
           </div>
-          <button type='submit'>
+          <button disabled={isLoading} type='submit'>
             {isCreating ? t('category.submitCreate') : t('category.submitEdit')}
           </button>
         </form>
