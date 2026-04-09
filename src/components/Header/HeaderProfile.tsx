@@ -35,9 +35,9 @@ export default function HeaderProfile(): JSX.Element {
             <span>User</span>
           </div>
           <div className='header_user-profile_links'>
-            <a className='header_user-profile_link' href='#'>
+            {/* <a className='header_user-profile_link' href='#'>
               Profile
-            </a>
+            </a> */}
             <a
               className='header_user-profile_link'
               onClick={(e) => {

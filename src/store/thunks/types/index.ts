@@ -57,10 +57,10 @@ export type CategoryRequest = {
 export type InquiryCreate = {
   name: string;
   subject: string;
-  description: string | undefined;
+  description: string | null;
   phone: string;
-  email: string | undefined;
-  item_id: number | undefined;
+  email: string | null;
+  item_id: number | null;
   telegram: boolean;
   viber: boolean;
   whatsapp: boolean;
@@ -68,13 +68,13 @@ export type InquiryCreate = {
 
 export type InquiryUpdate = {
   id: number;
-  name: string | undefined;
-  subject: string | undefined;
-  description: string | undefined;
-  phone: string | undefined;
-  email: string | undefined;
-  item_id: number | undefined;
-  telegram: boolean | undefined;
-  viber: boolean | undefined;
-  whatsapp: boolean | undefined;
+  name: string | null;
+  subject: string | null;
+  description: string | null;
+  phone: string | null;
+  email: string | null;
+  item_id: number | null;
+  telegram: boolean | null;
+  viber: boolean | null;
+  whatsapp: boolean | null;
 };

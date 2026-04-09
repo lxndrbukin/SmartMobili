@@ -30,6 +30,9 @@ import itemPage_ro from "./locales/ro/itemPage.json";
 import orderSteps_en from "./locales/en/orderSteps.json";
 import orderSteps_ro from "./locales/ro/orderSteps.json";
 import orderSteps_ru from "./locales/ru/orderSteps.json";
+import contactForm_en from "./locales/en/contactForm.json";
+import contactForm_ro from "./locales/ro/contactForm.json";
+import contactForm_ru from "./locales/ru/contactForm.json";
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -44,6 +47,7 @@ i18n.use(initReactI18next).init({
       banners: banners_en,
       itemPage: itemPage_en,
       orderSteps: orderSteps_en,
+      contactForm: contactForm_en
     },
     ru: {
       admin: admin_ru,
@@ -56,6 +60,7 @@ i18n.use(initReactI18next).init({
       banners: banners_ru,
       itemPage: itemPage_ru,
       orderSteps: orderSteps_ru,
+      contactForm: contactForm_ru
     },
     ro: {
       admin: admin_ro,
@@ -68,6 +73,7 @@ i18n.use(initReactI18next).init({
       banners: banners_ro,
       itemPage: itemPage_ro,
       orderSteps: orderSteps_ro,
+      contactForm: contactForm_ro
     },
   },
   lng: "en",

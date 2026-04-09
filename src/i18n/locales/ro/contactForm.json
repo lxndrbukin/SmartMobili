@@ -1,0 +1,13 @@
+{
+  "header": "Comanda",
+  "name": "Numele",
+  "namePlaceholder": "e.g. Ion sau Ion Gutu",
+  "subject": "Titlu",
+  "subjectPlaceholder": "e.g. Dulap in dormitor",
+  "desc": "Descriere",
+  "descPlaceholder": "",
+  "phoneNumber": "Numarul de telefon",
+  "email": "E-mail (optional)",
+  "communication": "Communicatia (optional)",
+  "submit": "Comanda"
+}

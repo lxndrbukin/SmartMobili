@@ -1,0 +1,13 @@
+{
+  "header": "Order",
+  "name": "Name",
+  "namePlaceholder": "e.g. John or John Doe",
+  "subject": "Subject",
+  "subjectPlaceholder": "e.g. Wardrobe in bedroom",
+  "desc": "Description",
+  "descPlaceholder": "",
+  "phoneNumber": "Phone Number",
+  "email": "Email (optional)",
+  "communication": "Communication (optional)",
+  "submit": "Submit Order"
+}
