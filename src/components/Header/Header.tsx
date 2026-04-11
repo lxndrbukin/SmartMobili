@@ -8,6 +8,7 @@ import useLocalePath from '../../hooks/useLocalePath';
 import { useTranslation } from 'react-i18next';
 import SelectLang from './SelectLang';
 import HeaderProfile from './HeaderProfile';
+import logo from '../../assets/imgs/icons8-wardrobe-50.png';
 
 export default function Header(): JSX.Element {
   const { t } = useTranslation('header');
@@ -45,9 +46,15 @@ export default function Header(): JSX.Element {
     <div className='header-wrapper'>
       <header className='header'>
         <Link className='logo' to={to('/')}>
-          <div className='logo_primary'>
-            <span className='logo_primary-left'>SMART</span>
-            <span className='logo_primary-right'>MOBILI</span>
+          <div className='logo-badge'>
+            <img src={logo} alt='SmartMobili' />
+          </div>
+          <div className='logo-text'>
+            <span className='logo-name'>
+              <span className='logo-name-bold'>Smart</span>
+              <span className='logo-name-light'>Mobili</span>
+            </span>
+            <span className='logo-tagline'>furniture studio</span>
           </div>
         </Link>
         <div className='header-links'>

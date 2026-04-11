@@ -1403,7 +1403,7 @@ select {
 
 /* ─── FOOTER ─────────────────────────────────────────────────────────── */
 .footer-wrapper {
-  background-color: var(--bg-tertiary);
+  background-color: var(--bg-primary);
   border-top: 1px solid var(--border);
   display: flex;
   justify-content: center;
@@ -1432,25 +1432,26 @@ select {
 
 .footer-wrapper .footer .footer-socials i {
   font-size: 1.4rem;
-  color: var(--text-secondary);
+  color: var(--text-inverted-muted);
   cursor: pointer;
   transition: color var(--transition-fast);
 }
 
 .footer-wrapper .footer .footer-socials i:hover {
-  color: var(--accent);
+  color: var(--text-inverted);
 }
 
 .footer-wrapper .footer .footer-col {
   width: 22%;
   min-width: 140px;
+  color: var(--text-inverted-muted);
 }
 
 .footer-wrapper .footer .footer-col .footer-col-header {
   font-family: var(--font-display);
   font-size: 1.3rem;
   font-weight: 500;
-  color: var(--text-primary);
+  color: var(--text-inverted-muted);
   margin: 0 0 var(--space-5);
   position: relative;
   width: fit-content;
@@ -1479,12 +1480,11 @@ select {
 
 .footer-wrapper .footer .footer-col ul a {
   font-size: 14px;
-  color: var(--text-secondary);
   transition: color var(--transition-fast);
 }
 
 .footer-wrapper .footer .footer-col ul a:hover {
-  color: var(--accent);
+  color: var(--text-inverted);
 }
 
 /* ─── AUTH ───────────────────────────────────────────────────────────── */
@@ -1904,44 +1904,63 @@ select {
 }
 
 .logo {
-  display: block;
-  width: fit-content;
-  user-select: none;
-  cursor: pointer;
-}
-
-.logo .logo_primary {
   display: flex;
   align-items: center;
+  gap: 10px;
+  user-select: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.logo-badge {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  background-color: var(--accent);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 15px;
+}
+
+.logo-badge img {
+  height: 30px;
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: 1;
+}
+
+.logo-name {
+  display: flex;
+  align-items: baseline;
   font-family: var(--font-display);
-  font-size: 1.45rem;
-  letter-spacing: 0.01em;
+  font-size: 1.3rem;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+.logo-name-bold {
+  font-weight: 700;
   color: var(--text-inverted);
-  gap: 1px;
 }
 
-.logo-dark .logo_primary {
-  color: var(--text-primary);
-}
-
-.logo .logo_primary .logo_primary-left {
-  font-weight: 600;
-}
-.logo .logo_primary .logo_primary-right {
+.logo-name-light {
   font-weight: 300;
+  color: var(--accent-muted);
 }
 
-.logo .logo_secondary {
-  font-size: 9px;
-  letter-spacing: 0.16em;
+.logo-tagline {
+  font-family: var(--font-body);
+  font-size: 10px;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  display: block;
   color: var(--text-inverted-muted);
-  margin-top: 1px;
-}
-
-.logo-dark .logo_secondary {
-  color: var(--text-muted);
 }
 
 /* ─── MODAL ─────────────────────────────────────────────────────── */
