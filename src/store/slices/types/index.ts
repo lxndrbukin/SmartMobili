@@ -8,6 +8,7 @@ export type CategoryProps = {
   id: number;
   slug: string;
   name: string;
+  item_count: number;
   language: string;
 };
 

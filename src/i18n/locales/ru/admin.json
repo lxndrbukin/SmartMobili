@@ -17,5 +17,21 @@
     "url": "Ссылка",
     "submitCreate": "Создать",
     "submitEdit": "Обновить"
+  },
+  "panel": {
+    "header": "Панель управления",
+    "tabs": {
+      "items": "Товары",
+      "categories": "Категории",
+      "users": "Пользователи",
+      "orders": "Заявки"
+    },
+    "table": {
+      "name": "Название",
+      "category": "Категория",
+      "price": "Цена",
+      "actions": "Действия",
+      "items": "Товары"
+    }
   }
 }

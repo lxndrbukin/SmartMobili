@@ -17,5 +17,21 @@
     "url": "URL-ul",
     "submitCreate": "Crea",
     "submitEdit": "Actualiza"
+  },
+  "panel": {
+    "header": "Panou Admin",
+    "tabs": {
+      "items": "Produse",
+      "categories": "Categorii",
+      "users": "Utilizatori",
+      "orders": "Comenzi"
+    },
+    "table": {
+      "name": "Denumire",
+      "category": "Category",
+      "price": "Price",
+      "actions": "Acțiuni",
+      "items": "Produse"
+    }
   }
 }

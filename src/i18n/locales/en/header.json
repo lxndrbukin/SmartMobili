@@ -2,6 +2,7 @@
   "nav": [
     { "label": "Home", "href": "/" },
     { "label": "Catalog", "href": "/catalog" },
-    { "label": "Order", "href": "/order" }
+    { "label": "Order", "href": "/order" },
+    { "label": "Admin", "href": "/admin" }
   ]
 }

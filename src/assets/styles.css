@@ -133,31 +133,25 @@ select {
 
 /* ─── UTILITIES ──────────────────────────────────────────────────────── */
 .button {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  height: fit-content;
+  background-color: var(--accent);
+  color: #fff;
   border: none;
-  background-color: var(--accent-subtle);
-  color: var(--text-primary);
+  padding: var(--space-3) var(--space-5);
   font-family: var(--font-body);
   font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  border-radius: var(--radius-sm);
-  padding: var(--space-2) var(--space-5);
+  border-radius: var(--radius-md);
   cursor: pointer;
-  transition:
-    background-color var(--transition-fast),
-    box-shadow var(--transition-fast),
-    transform var(--transition-fast);
+  transition: background-color var(--transition-fast);
+  user-select: none;
+  height: 40px;
 }
 
 .button:hover {
-  background-color: var(--accent-muted);
-  box-shadow: var(--shadow-xs);
-  transform: translateY(-1px);
+  background-color: var(--brown);
+  /* transform: translateY(-1px); */
 }
 
 .button:active {
@@ -712,9 +706,9 @@ select {
   border-radius: var(--radius-md);
   background: linear-gradient(
     90deg,
-    var(--border) 25%,
+    rgba(203, 213, 225, 0.5) 25%,
     var(--bg-surface) 50%,
-    var(--border) 75%
+    rgba(203, 213, 225, 0.5) 75%
   );
   background-size: 200% 100%;
   animation: skeleton-shimmer 1.5s ease-in-out infinite;
@@ -807,30 +801,37 @@ select {
 .catalog-item-skeleton .skeleton-image {
   width: 100%;
   height: 280px;
-  background-color: var(--white);
+  background: linear-gradient(
+    90deg,
+    rgba(203, 213, 225, 0.5) 25%,
+    var(--bg-surface) 50%,
+    rgba(203, 213, 225, 0.5) 75%
+  );
   background-size: 200% 100%;
   animation: skeleton-shimmer 1.5s ease-in-out infinite;
 }
 
 .catalog-item-skeleton .skeleton-title {
-  padding: var(--space-4) var(--space-4) var(--space-5);
-  background: var(--white);
+  padding: var(--space-4);
+  background-color: var(--white);
   min-height: 58px;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
+  flex: 1;
 }
 
 .catalog-item-skeleton .skeleton-title-bar {
   width: 60%;
   height: 1.15rem;
-  border-radius: var(--radius-md);
-  background:
+  border-radius: var(--radius-sm);
+  background: linear-gradient(
     90deg,
     rgba(203, 213, 225, 0.5) 25%,
     var(--bg-surface) 50%,
-    rgba(203, 213, 225, 0.5) 75%;
+    rgba(203, 213, 225, 0.5) 75%
+  );
   background-size: 200% 100%;
   animation: skeleton-shimmer 1.5s ease-in-out infinite;
 }
@@ -1279,9 +1280,9 @@ select {
   border-radius: var(--radius-md);
   background: linear-gradient(
     90deg,
-    var(--white) 25%,
+    rgba(203, 213, 225, 0.5) 25%,
     var(--bg-surface) 50%,
-    var(--white) 75%
+    rgba(203, 213, 225, 0.5) 75%
   );
   background-size: 200% 100%;
   animation: skeleton-shimmer 1.5s ease-in-out infinite;
@@ -2183,6 +2184,95 @@ select {
     transform: translateY(0);
     opacity: 1;
   }
+}
+
+/* ─── ADMIN ──────────────────────────────────────────────────────────── */
+.admin-panel {
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-lg) var(--spacing-md);
+}
+
+.admin-panel-sections {
+  display: flex;
+  gap: 5px;
+  background-color: var(--white);
+  padding: 4px;
+  width: fit-content;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.admin-panel-sections button {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: none;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-family: 'Inter';
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.admin-panel-sections button.active {
+  background-color: var(--accent);
+  color: var(--white);
+}
+
+.admin-panel-table {
+  background-color: var(--white);
+  width: 100%;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  border: none;
+  border-collapse: collapse;
+  overflow: hidden;
+}
+
+.admin-panel-table th {
+  background-color: var(--bg-surface);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+  color: #64748b;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.admin-panel-table th,
+.admin-panel-table td {
+  padding: 12px 16px;
+  text-align: left;
+}
+
+.admin-panel-table .actions {
+  color: #64748b;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  height: 60px;
+}
+
+.admin-panel-table .actions i {
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-panel-table tbody tr {
+  height: 60px;
+}
+
+.admin-panel-table tbody tr:hover {
+  background-color: var(--bg-surface);
+}
+
+.admin-panel-table-container-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /* ─── RESPONSIVE ─────────────────────────────────────────────────────── */

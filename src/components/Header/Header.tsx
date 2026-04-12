@@ -14,14 +14,19 @@ export default function Header(): JSX.Element {
   const { t } = useTranslation('header');
   const to = useLocalePath();
 
-  const { token } = useSelector((state: RootState) => state.auth);
+  const { token, user } = useSelector((state: RootState) => state.auth);
 
   const navLinks = t('nav', { returnObjects: true }) as Array<NavLink>;
 
+  const isAdmin = token && user && user.user_role === 'admin';
+
   const [, setSearchParams] = useSearchParams();
 
-  const renderNavLinks = (links: Array<NavLink>): Array<JSX.Element> => {
+  const renderNavLinks = (links: Array<NavLink>): Array<JSX.Element | null> => {
     return links.map((link: NavLink) => {
+      if (link.href === '/admin' && !isAdmin) {
+        return null;
+      }
       return (
         <li key={link.label}>
           <Link to={to(link.href)}>{link.label}</Link>

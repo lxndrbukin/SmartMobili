@@ -7,6 +7,7 @@ import Catalog from '../components/Catalog/Catalog';
 import CatalogSection from '../components/Catalog/CatalogSection';
 import CatalogItemPage from '../components/Catalog/CatalogItemPage';
 import ContactForm from '../components/Contact/ContactForm';
+import Panel from '../components/Admin/Panel/Panel';
 
 export const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ export const router = createBrowserRouter([
       {
         path: 'order',
         element: <ContactForm />,
+      },
+      {
+        path: 'admin',
+        element: <Panel />,
       },
     ],
   },

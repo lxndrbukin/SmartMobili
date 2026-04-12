@@ -1,0 +1,76 @@
+import { type JSX, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useParams, useSearchParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  type AppDispatch,
+  type RootState,
+  type ItemProps,
+  getItems,
+} from '../../../store';
+
+export default function PanelItems(): JSX.Element {
+  const { t } = useTranslation('admin');
+  const HEADERS = [
+    'ID',
+    t('panel.table.name'),
+    t('panel.table.category'),
+    t('panel.table.price'),
+    t('panel.table.actions'),
+  ];
+
+  const dispatch = useDispatch<AppDispatch>();
+  const { items } = useSelector((state: RootState) => state.catalog);
+  const { lang } = useParams();
+  const [, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    dispatch(getItems({ lang: lang! }));
+  }, [lang]);
+
+  const renderHeaders = (headers: Array<string>) => {
+    return headers.map((header) => {
+      return <th>{header}</th>;
+    });
+  };
+
+  const renderRows = (items: Array<ItemProps>) => {
+    return items.map(({ id, title, category, price }) => {
+      return (
+        <tr>
+          <td>{id}</td>
+          <td>{title}</td>
+          <td>{category.name}</td>
+          <td>{price}</td>
+          <td className='actions'>
+            <i
+              onClick={() => setSearchParams({ editItem: String(id) })}
+              className='fa-regular fa-pen-to-square'
+            ></i>
+            <i className='fa-solid fa-trash-can'></i>
+          </td>
+        </tr>
+      );
+    });
+  };
+
+  return (
+    <div className='admin-panel-table-container'>
+      <div className='admin-panel-table-container-header'>
+        <h2>{t('panel.tabs.items')}</h2>
+        <button
+          onClick={() => setSearchParams({ createItem: '1' })}
+          className='button'
+        >
+          {t('item.headerCreate')}
+        </button>
+      </div>
+      <table className='admin-panel-table'>
+        <thead>
+          <tr>{renderHeaders(HEADERS)}</tr>
+        </thead>
+        <tbody>{renderRows(items)}</tbody>
+      </table>
+    </div>
+  );
+}

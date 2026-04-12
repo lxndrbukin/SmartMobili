@@ -17,5 +17,21 @@
     "url": "URL",
     "submitCreate": "Create",
     "submitEdit": "Update"
+  },
+  "panel": {
+    "header": "Admin Panel",
+    "tabs": {
+      "items": "Items",
+      "categories": "Categories",
+      "users": "Users",
+      "orders": "Orders"
+    },
+    "table": {
+      "name": "Name",
+      "category": "Category",
+      "price": "Price",
+      "actions": "Actions",
+      "items": "Items"
+    }
   }
 }

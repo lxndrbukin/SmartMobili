@@ -53,6 +53,12 @@ const catalogSlice = createSlice({
       },
     );
     builder.addCase(
+      getCategories.pending,
+      (state: CatalogState) => {
+        state.categories = [];
+      },
+    );
+    builder.addCase(
       createCategory.fulfilled, (state: CatalogState, action: PayloadAction<CategoryProps>) => {
         state.categories.push(action.payload);
       }
