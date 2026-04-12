@@ -15,11 +15,8 @@ export default function App(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
   const [searchParams] = useSearchParams();
 
-  const { user } = useSelector((state: RootState) => state.auth);
-
   const isLogin = searchParams.get('login') === 'true';
   const isSignup = searchParams.get('signup') === 'true';
-  const isAdmin = user && user.user_role === 'admin';
   const itemId = searchParams.get('editItem');
   const categoryId = searchParams.get('editCategory');
 
@@ -42,10 +39,8 @@ export default function App(): JSX.Element {
         <Outlet />
       </div>
       {(isLogin || isSignup) && <AuthForm />}
-      {(categoryId || searchParams.get('createCategory')) && isAdmin && (
-        <CategoryForm />
-      )}
-      {(itemId || searchParams.get('createItem')) && isAdmin && <ItemForm />}
+      {(categoryId || searchParams.get('createCategory')) && <CategoryForm />}
+      {(itemId || searchParams.get('createItem')) && <ItemForm />}
       <Footer />
     </div>
   );

@@ -1,10 +1,10 @@
 import { type JSX, useEffect, useState } from 'react';
-import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import pageTitle from '../../utils/pageTitle';
 import { title } from './assets/title';
 import useLocalePath from '../../hooks/useLocalePath';
-import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   type AppDispatch,
   type RootState,
@@ -15,110 +15,115 @@ import {
 } from '../../store';
 import CatalogItem from './CatalogItem';
 import CatalogItemSkeleton from './CatalogItemSkeleton';
-import TelegramBanner from '../Banners/TelegramBanner';
 
 export default function Catalog(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
   const to = useLocalePath();
-  const navigate = useNavigate();
+  const { t } = useTranslation('catalog');
   const { lang } = useParams<{ lang: string }>();
-  const { categories } = useSelector((state: RootState) => state.catalog);
-  const { token, user } = useSelector((state: RootState) => state.auth);
-  const [itemsByCategory, setItemsByCategory] = useState<
-    Record<number, ItemProps[]>
-  >({});
+  const { categories, items } = useSelector(
+    (state: RootState) => state.catalog,
+  );
 
-  const isAdmin = user && user.user_role === 'admin';
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const [, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   pageTitle(title[lang as 'en' | 'ro' | 'ru']);
-  const { t } = useTranslation('admin');
-
+  const categorySlug = searchParams.get('category');
   useEffect(() => {
     dispatch(getCategories(lang));
   }, [dispatch, lang]);
 
   useEffect(() => {
-    if (categories.length > 0) {
-      categories.forEach(async (category) => {
-        const result = await dispatch(
+    const fetchData = async () => {
+      setIsLoading(true);
+      if (categorySlug) {
+        await dispatch(
           getItems({
             lang: lang || 'ro',
-            categoryId: category.id,
+            categorySlug: String(categorySlug),
             limit: 5,
           }),
-        );
-
-        if (result.payload) {
-          setItemsByCategory((prev) => ({
-            ...prev,
-            [category.id]: result.payload as ItemProps[],
-          }));
-        }
-      });
-    }
-  }, [dispatch, categories, lang]);
-
-  const handleCreateCategory = () => {
-    setSearchParams({ createCategory: '1' });
-  };
-  const handleCreateItem = () => {
-    setSearchParams({ createItem: '1' });
-  };
+        ).unwrap();
+      } else {
+        await dispatch(
+          getItems({
+            lang: lang || 'ro',
+            limit: 5,
+          }),
+        ).unwrap();
+      }
+      setIsLoading(false);
+    };
+    fetchData();
+  }, [dispatch, categorySlug, lang]);
 
   const renderSkeleton = () => {
-    return Array(3)
-      .fill('')
-      .map((_, index) => {
-        return <CatalogItemSkeleton key={index} />;
-      });
+    if (isLoading) {
+      return (
+        <div className='catalog-section-items'>
+          {Array(3)
+            .fill('')
+            .map((_, index) => {
+              return <CatalogItemSkeleton key={index} />;
+            })}
+        </div>
+      );
+    }
+    return <div className='catalog-no-items'>{t('generic.noItems')}</div>;
   };
 
-  const renderAdmin = () => {
+  const renderItems = (items: Array<ItemProps>) => {
     return (
-      <div className='catalog-admin'>
-        <button onClick={() => handleCreateCategory()}>
-          {t('category.headerCreate')}
-        </button>
-        <button onClick={() => handleCreateItem()}>
-          {t('item.headerCreate')}
-        </button>
+      <div className='catalog-section-items'>
+        {items.map((item) => {
+          return (
+            <CatalogItem
+              key={item.id}
+              id={item.id}
+              categoryName={item.category.name}
+              title={item.title}
+              price={item.price}
+              image={item.images.length ? item.images[0].image_url : ''}
+              url={to(`/catalog/${item.category.slug}/${item.id}`)}
+            />
+          );
+        })}
       </div>
     );
   };
 
   const renderCategories = (categories: Array<CategoryProps>) => {
     return categories.map((category) => {
-      const categoryItems = itemsByCategory[category.id] || [];
       return (
-        <div key={category.id} className='catalog-section'>
-          <h1 onClick={() => navigate(to(`/catalog/${category.slug}`))}>
-            {category.name.toUpperCase()}
-            <i className='fa-solid fa-angle-right'></i>
-          </h1>
-          <div className='catalog-section-items'>
-            {categoryItems.length > 0
-              ? categoryItems.map((item) => (
-                  <CatalogItem
-                    key={item.id}
-                    id={item.id}
-                    title={item.title}
-                    image={item.images.length ? item.images[0].image_url : ''}
-                    url={to(`/catalog/${category.slug}/${item.id}`)}
-                  />
-                ))
-              : renderSkeleton()}
-          </div>
-        </div>
+        <button
+          className={
+            categorySlug && String(categorySlug) === category.slug
+              ? 'active'
+              : ''
+          }
+          onClick={() => setSearchParams({ category: String(category.slug) })}
+        >
+          {category.name}
+        </button>
       );
     });
   };
 
   return (
     <div className='catalog'>
-      <TelegramBanner />
-      {token && isAdmin ? renderAdmin() : null}
-      {renderCategories(categories)}
+      <h1>{t('header')}</h1>
+
+      <div className='catalog-categories'>
+        <button
+          className={!categorySlug ? 'active' : ''}
+          onClick={() => setSearchParams({})}
+        >
+          {t('generic.allItems')}
+        </button>
+        {renderCategories(categories)}
+      </div>
+      {items.length ? renderItems(items) : renderSkeleton()}
     </div>
   );
 }

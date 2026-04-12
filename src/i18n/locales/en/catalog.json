@@ -1,5 +1,17 @@
 {
+  "header": "Catalog",
   "generic": {
-    "noItems": "No items in this category"
+    "noItems": "No items in this category",
+    "allItems": "All Items"
+  },
+  "items": "Items: {{count}}",
+  "breadcrumbs": {
+    "home": "Home",
+    "catalog": "Catalog"
+  },
+  "itemPage": {
+    "description": "Description",
+    "noPrice": "No Price",
+    "call": "Order"
   }
 }

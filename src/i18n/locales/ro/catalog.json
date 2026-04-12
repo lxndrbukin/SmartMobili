@@ -1,5 +1,17 @@
 {
+  "header": "Catalog",
   "generic": {
-    "noItems": "Nu există produse disponibile"
+    "noItems": "Nu există produse disponibile",
+    "allItems": "Toate Produsele"
+  },
+  "items": "Produse: {{count}}",
+  "breadcrumbs": {
+    "home": "Principala",
+    "catalog": "Catalog"
+  },
+  "itemPage": {
+    "description": "Descriere",
+    "noPrice": "Fără preț",
+    "call": "Comanda"
   }
 }

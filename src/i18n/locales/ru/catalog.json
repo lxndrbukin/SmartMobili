@@ -1,5 +1,17 @@
 {
+  "header": "Каталог",
   "generic": {
-    "noItems": "Товары отсутствуют"
+    "noItems": "Товары отсутствуют",
+    "allItems": "Все товары"
+  },
+  "items": "Товары: {{count}}",
+  "breadcrumbs": {
+    "home": "Главная",
+    "catalog": "Каталог"
+  },
+  "itemPage": {
+    "description": "Описание",
+    "noPrice": "Нет цены",
+    "call": "Оставить заявку"
   }
 }

@@ -28,8 +28,9 @@ export type ItemRequest = {
 };
 
 export type ItemsRequest = {
-  lang: string | undefined;
+  lang: string | null;
   categoryId?: number;
+  categorySlug?: string;
   limit?: number;
 };
 

@@ -17,13 +17,25 @@ const catalogSlice = createSlice({
     builder.addCase(
       getItems.fulfilled,
       (state: CatalogState, action: PayloadAction<Array<ItemProps>>) => {
-        state.items = [ ...state.items, ...action.payload ];
+        state.items = action.payload;
+      },
+    );
+    builder.addCase(
+      getItems.pending,
+      (state: CatalogState) => {
+        state.items = [];
       },
     );
     builder.addCase(
       getItem.fulfilled,
       (state: CatalogState, action: PayloadAction<ItemProps>) => {
         state.currentItem = action.payload;
+      },
+    );
+    builder.addCase(
+      getItem.pending,
+      (state: CatalogState) => {
+        state.currentItem = null;
       },
     );
     builder.addCase(

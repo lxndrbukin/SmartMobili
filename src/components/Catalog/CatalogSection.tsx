@@ -1,6 +1,7 @@
 import { type JSX, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import useLocalePath from '../../hooks/useLocalePath';
 import {
   type AppDispatch,
@@ -15,14 +16,10 @@ import CatalogItemSkeleton from './CatalogItemSkeleton';
 export default function CatalogSection(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
   const to = useLocalePath();
-  const [, setSearchParams] = useSearchParams();
   const { catSlug, lang } = useParams<{ catSlug: string; lang: string }>();
   const { categories } = useSelector((state: RootState) => state.catalog);
-  const { user } = useSelector((state: RootState) => state.auth);
   const [items, setItems] = useState<ItemProps[]>([]);
-  const [categoryId, setCategoryId] = useState<number>();
-
-  const isAdmin = user && user.user_role === 'admin';
+  const { t } = useTranslation('catalog');
 
   useEffect(() => {
     dispatch(getCategories(lang));
@@ -33,11 +30,10 @@ export default function CatalogSection(): JSX.Element {
       const category = categories.find((cat) => cat.slug === catSlug);
 
       if (category) {
-        setCategoryId(category.id);
         dispatch(
           getItems({
             lang: lang || 'ro',
-            categoryId: category.id,
+            categorySlug: catSlug,
           }),
         ).then((result) => {
           if (result.payload) {
@@ -47,10 +43,6 @@ export default function CatalogSection(): JSX.Element {
       }
     }
   }, [categories, catSlug, lang, dispatch]);
-
-  const openEdit = () => {
-    setSearchParams({ editCategory: String(categoryId) });
-  };
 
   const renderSkeleton = () => {
     return Array(6)
@@ -73,22 +65,22 @@ export default function CatalogSection(): JSX.Element {
 
   return (
     <div className='catalog-section-page'>
-      <h1>
-        {category.name.toUpperCase()}{' '}
-        {isAdmin && (
-          <button onClick={openEdit}>
-            <i className='fa-solid fa-pen-to-square'></i>
-          </button>
-        )}
-      </h1>
+      <div className='catalog-breadcrumbs'>
+        <Link to={to('/')}>{t('breadcrumbs.home')}</Link> /{' '}
+        <Link to={to('/catalog')}>{t('breadcrumbs.catalog')}</Link> /{' '}
+        <span>{category.name}</span>
+      </div>
+      <h1>{category.name}</h1>
       <div className='catalog-section-items'>
         {items.length > 0
           ? items.map((item) => (
               <CatalogItem
                 key={item.id}
                 id={item.id}
+                categoryName={item.category.name}
                 title={item.title}
                 image={item.images.length ? item.images[0].image_url : ''}
+                price={item.price}
                 url={to(`/catalog/${category.slug}/${item.id}`)}
               />
             ))

@@ -20,7 +20,11 @@ export type CatalogState = {
 export type ItemProps = {
   id: number;
   price: number;
-  category_id: number;
+  category: {
+    id: number;
+    slug: string;
+    name: string;
+  };
   created_at: string;
   title: string;
   description: string;

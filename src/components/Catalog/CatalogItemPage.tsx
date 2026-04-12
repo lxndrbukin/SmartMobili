@@ -1,5 +1,5 @@
 import { type JSX, useEffect, useState } from 'react';
-import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import pageTitle from '../../utils/pageTitle';
 import useLocalePath from '../../hooks/useLocalePath';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,18 +10,14 @@ import remarkBreaks from 'remark-breaks';
 import CatalogItemPageSkeleton from './CatalogItemPageSkeleton';
 
 export default function CatalogItemPage(): JSX.Element {
-  const { t } = useTranslation('itemPage');
+  const { t } = useTranslation('catalog');
   const to = useLocalePath();
   const { itemId, lang } = useParams<{ itemId: string; lang: string }>();
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const [, setSearchParams] = useSearchParams();
 
   const { currentItem } = useSelector((state: RootState) => state.catalog);
-  const { user } = useSelector((state: RootState) => state.auth);
   const [currentImage, setCurrentImage] = useState<string>('');
-
-  const isAdmin = user && user.user_role === 'admin';
 
   useEffect(() => {
     if (itemId) {
@@ -39,14 +35,18 @@ export default function CatalogItemPage(): JSX.Element {
     return <CatalogItemPageSkeleton />;
   }
 
-  const openEdit = () => {
-    setSearchParams({ editItem: String(itemId) });
-  };
-
   pageTitle(currentItem.title);
 
   return (
     <div className='catalog-item-page'>
+      <div className='catalog-breadcrumbs'>
+        <Link to={to('/')}>{t('breadcrumbs.home')}</Link> /{' '}
+        <Link to={to('/catalog')}>{t('breadcrumbs.catalog')}</Link> /{' '}
+        <Link to={to(`/catalog/${currentItem.category.slug}`)}>
+          {currentItem.category.name}
+        </Link>{' '}
+        / <span>{currentItem.title}</span>
+      </div>
       <div className='catalog-item-page-container'>
         <div className='catalog-item-page-gallery'>
           {currentItem.images.length > 0 ? (
@@ -77,22 +77,21 @@ export default function CatalogItemPage(): JSX.Element {
         </div>
 
         <div className='catalog-item-page-info'>
-          <h1 className='catalog-item-page-title'>
-            {currentItem.title}{' '}
-            {isAdmin && (
-              <button onClick={openEdit}>
-                <i className='fa-solid fa-pen-to-square'></i>
-              </button>
-            )}
-          </h1>
+          <Link
+            className='catalog-item-page-category'
+            to={to(`/catalog/${currentItem.category.slug}`)}
+          >
+            {currentItem.category.name}
+          </Link>
+          <h1 className='catalog-item-page-title'>{currentItem.title}</h1>
           <div className='catalog-item-page-price'>
             {currentItem.price
               ? `${currentItem.price.toFixed(2)} MDL`
-              : t('noPrice')}
+              : t('itemPage.noPrice')}
           </div>
 
           <div className='catalog-item-page-description'>
-            <h3>{t('description')}</h3>
+            <h3>{t('itemPage.description')}</h3>
             <ReactMarkdown remarkPlugins={[remarkBreaks]}>
               {currentItem.description}
             </ReactMarkdown>
@@ -103,7 +102,7 @@ export default function CatalogItemPage(): JSX.Element {
               className='button'
               onClick={() => navigate(to(`/order?item=${itemId}`))}
             >
-              {t('call')}
+              {t('itemPage.call')}
             </button>
           </div>
         </div>
