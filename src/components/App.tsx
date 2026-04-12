@@ -1,8 +1,8 @@
 import { type JSX, useEffect } from 'react';
 import { useSearchParams, Outlet } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { type AppDispatch, type RootState, getMe } from '../store';
+import { useDispatch } from 'react-redux';
+import { type AppDispatch, getMe } from '../store';
 import pageTitle from '../utils/pageTitle';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
