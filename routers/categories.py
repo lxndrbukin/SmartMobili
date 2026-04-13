@@ -2,7 +2,9 @@ from fastapi import APIRouter, status, Depends, HTTPException
 from db import get_db
 from models.categories import CategoryCreate, CategoryUpdate, CategoryResponse, CategoryTranslationUpdate
 from db_models.categories import Category, CategoryTranslation
+from db_models.items import Item
 from sqlalchemy.orm import Session, joinedload
+from sqlalchemy import func
 from utils import Language, get_translation
 
 categories_router = APIRouter(prefix="/categories", tags=["categories"])
@@ -12,10 +14,12 @@ def get_categories(lang: Language = Language.ro , db: Session = Depends(get_db))
     categories = db.query(Category).options(joinedload(Category.translations)).all()
     result = []
     for category in categories:
+        item_count = db.query(func.count(Item.id)).filter(Item.category_id == category.id).scalar()
         translation = get_translation(category.translations, lang)
         result.append({
             "id": category.id,
             "slug": category.slug,
+            "item_count": item_count,
             "name": translation.name,
             "language": translation.language
         })
@@ -27,9 +31,11 @@ def get_category(category_id: int, lang: Language = Language.ro, db: Session = D
     if not category:
         raise HTTPException(status_code=404, detail="Category not found")
     translation = get_translation(category.translations, lang)
+    item_count = db.query(func.count(Item.id)).filter(Item.category_id == category.id).scalar()
     return {
         "id": category.id,
         "slug": category.slug,
+        "item_count": item_count,
         "name": translation.name,
         "language": translation.language
     }

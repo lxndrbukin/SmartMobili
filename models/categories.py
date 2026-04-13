@@ -33,5 +33,6 @@ class CategoryUpdate(BaseModel):
 class CategoryResponse(BaseModel):
     id: int
     slug: str
+    item_count: int
     name: str
     language: Language

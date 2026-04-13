@@ -1,6 +1,15 @@
 from fastapi import APIRouter, status, Depends, HTTPException, UploadFile, File
 from db_models.categories import Category
-from models.items import ItemCreate, ItemUpdate, ItemResponse, ItemTranslationUpdate, PaginatedResponse, Pagination, ItemImageResponse
+from models.items import (
+    ItemCreate,
+    ItemUpdate,
+    ItemResponse,
+    ItemTranslationUpdate,
+    PaginatedResponse,
+    Pagination,
+    ItemImageResponse,
+    ItemCategoryResponse
+)
 from db import get_db
 from db_models.items import Item, ItemImage, ItemTranslation
 from sqlalchemy.orm import Session, joinedload
@@ -14,25 +23,39 @@ def get_items(
         skip: int = 0,
         limit: int = 10,
         category_id: int | None = None,
+        category_slug: str | None = None,
         lang: Language = Language.ro,
         db: Session = Depends(get_db)
     ):
+    category = None
     query = db.query(Item) \
         .options(joinedload(Item.images), joinedload(Item.translations))
     if category_id:
         query = query.filter(Item.category_id == category_id)
+    if category_slug:
+        category = db.query(Category).filter(Category.slug == category_slug).first()
+        if category:
+            query = query.filter(Item.category_id == category.id)
     items = query.offset(skip).limit(limit).all()
     result = []
     for item in items:
-        translation = get_translation(item.translations, lang)
+        if category_slug is None:
+            category = db.query(Category) \
+                .options(joinedload(Category.translations)).filter(Category.id == item.category_id).first()
+        category_translation = get_translation(category.translations, lang)
+        item_translation = get_translation(item.translations, lang)
         result.append({
             "id": item.id,
             "price": item.price,
-            "category_id": item.category_id,
+            "category": ItemCategoryResponse(
+                id=category.id,
+                slug=category.slug,
+                name=category_translation.name
+            ),
             "created_at": item.created_at,
-            "title": translation.title,
-            "description": translation.description,
-            "language": translation.language,
+            "title": item_translation.title,
+            "description": item_translation.description,
+            "language": item_translation.language,
             "images": item.images
         })
     return PaginatedResponse(
@@ -45,15 +68,22 @@ def get_item(item_id: int, lang: Language = Language.ro, db: Session = Depends(g
     item = db.query(Item).options(joinedload(Item.images), joinedload(Item.translations)).get(item_id)
     if not item:
         raise HTTPException(status_code=404, detail="Item not found")
-    translation = get_translation(item.translations, lang)
+    category = db.query(Category) \
+        .options(joinedload(Category.translations)).filter(Category.id == item.category_id).first()
+    category_translation = get_translation(category.translations, lang)
+    item_translation = get_translation(item.translations, lang)
     return {
             "id": item.id,
             "price": item.price,
-            "category_id": item.category_id,
+            "category": ItemCategoryResponse(
+                id=category.id,
+                slug=category.slug,
+                name=category_translation.name
+            ),
             "created_at": item.created_at,
-            "title": translation.title,
-            "description": translation.description,
-            "language": translation.language,
+            "title": item_translation.title,
+            "description": item_translation.description,
+            "language": item_translation.language,
             "images": item.images
         }
 

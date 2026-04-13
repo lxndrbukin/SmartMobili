@@ -46,10 +46,15 @@ class ItemUpdate(BaseModel):
     price: float | None = None
     category_id: int | None = None
 
+class ItemCategoryResponse(BaseModel):
+    id: int
+    slug: str
+    name: str
+
 class ItemResponse(BaseModel):
     id: int
     price: float | None = None
-    category_id: int
+    category: ItemCategoryResponse
     created_at: datetime
     title: str
     description: str | None
