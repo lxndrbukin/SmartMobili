@@ -9,6 +9,7 @@ import {
   type CategoryProps,
   getCategories,
 } from '../../store';
+import CategorySkeleton from './CategorySkeleton';
 
 export default function Categories(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
@@ -26,12 +27,20 @@ export default function Categories(): JSX.Element {
       setIsLoading(false);
     };
     fetchData();
-  }, []);
+  }, [currentLang]);
 
   const baseImgURL =
     'https://raw.githubusercontent.com/lxndrbukin/shkafmaster-new/refs/heads/main/public/imgs';
 
   const header = t('header');
+
+  const renderSkeleton = () => {
+    return Array(3)
+      .fill('')
+      .map((_, index) => {
+        return <CategorySkeleton key={index} />;
+      });
+  };
 
   const renderCategories = (categories: Array<CategoryProps>) => {
     return categories.map((category) => {
@@ -54,7 +63,9 @@ export default function Categories(): JSX.Element {
     <div className='categories-wrapper'>
       <div className='categories'>
         <h3 className='categories-header'>{header}</h3>
-        <div className='categories-list'>{renderCategories(categories)}</div>
+        <div className='categories-list'>
+          {categories.length ? renderCategories(categories) : renderSkeleton()}
+        </div>
       </div>
     </div>
   );

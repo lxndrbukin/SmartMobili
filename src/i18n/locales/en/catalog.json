@@ -13,5 +13,8 @@
     "description": "Description",
     "noPrice": "No Price",
     "call": "Order"
+  },
+  "popular": {
+    "header": "Popular Items"
   }
 }

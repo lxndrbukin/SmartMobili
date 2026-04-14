@@ -1,4 +1,4 @@
-import type { JSX } from 'react';
+import { type JSX, useState } from 'react';
 import type { NavLink } from './types';
 import { Link } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
@@ -13,12 +13,10 @@ import logo from '../../assets/imgs/icons8-wardrobe-50.png';
 export default function Header(): JSX.Element {
   const { t } = useTranslation('header');
   const to = useLocalePath();
-
   const { token, user } = useSelector((state: RootState) => state.auth);
-
   const navLinks = t('nav', { returnObjects: true }) as Array<NavLink>;
-
   const isAdmin = token && user && user.user_role === 'admin';
+  const [showNav, setShowNav] = useState<boolean>(false);
 
   const [, setSearchParams] = useSearchParams();
 
@@ -47,6 +45,21 @@ export default function Header(): JSX.Element {
     );
   };
 
+  const renderMobileNavLinks = (
+    links: Array<NavLink>,
+  ): Array<JSX.Element | null> => {
+    return links.map((link: NavLink) => {
+      if (link.href === '/admin' && !isAdmin) {
+        return null;
+      }
+      return (
+        <Link key={link.label} to={to(link.href)}>
+          {link.label}
+        </Link>
+      );
+    });
+  };
+
   return (
     <div className='header-wrapper'>
       <header className='header'>
@@ -68,8 +81,23 @@ export default function Header(): JSX.Element {
         <div className='header_user-links'>
           {token ? <HeaderProfile /> : renderAuth()}
           <SelectLang />
+          <button
+            onClick={() => setShowNav(!showNav)}
+            className='mobile-nav-toggle'
+          >
+            {showNav ? (
+              <i className='fa-solid fa-xmark'></i>
+            ) : (
+              <i className='fa-solid fa-bars'></i>
+            )}
+          </button>
         </div>
       </header>
+      {showNav && (
+        <div className='mobile-nav'>
+          <nav>{renderMobileNavLinks(navLinks)}</nav>
+        </div>
+      )}
     </div>
   );
 }

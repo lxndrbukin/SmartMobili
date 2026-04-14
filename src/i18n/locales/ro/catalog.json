@@ -13,5 +13,8 @@
     "description": "Descriere",
     "noPrice": "Fără preț",
     "call": "Comanda"
+  },
+  "popular": {
+    "header": "Produse populare"
   }
 }
