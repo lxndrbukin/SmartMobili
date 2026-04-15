@@ -1,6 +1,14 @@
 from pydantic import BaseModel, field_validator
 from utils import Language
 
+class CategoryImageResponse(BaseModel):
+    id: int
+    image_url: str
+    order: int
+
+    class Config:
+        from_attributes = True
+
 class CategoryTranslationCreate(BaseModel):
     language: Language
     name: str

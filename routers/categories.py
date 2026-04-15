@@ -1,10 +1,17 @@
-from fastapi import APIRouter, status, Depends, HTTPException
+from fastapi import APIRouter, status, Depends, HTTPException, UploadFile, File
 from db import get_db
-from models.categories import CategoryCreate, CategoryUpdate, CategoryResponse, CategoryTranslationUpdate
-from db_models.categories import Category, CategoryTranslation
+from models.categories import (
+    CategoryCreate,
+    CategoryUpdate,
+    CategoryResponse,
+    CategoryTranslationUpdate,
+    CategoryImageResponse
+)
+from db_models.categories import Category, CategoryTranslation, CategoryImage
 from db_models.items import Item
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import func
+from cloud_storage import upload_image, delete_image
 from utils import Language, get_translation
 
 categories_router = APIRouter(prefix="/categories", tags=["categories"])
@@ -109,3 +116,34 @@ def update_translation(
         db.add(new_translation)
         db.commit()
         return {"message": f"Created {lang} translation"}
+
+@categories_router.post("/{category_id}/images", response_model=CategoryImageResponse)
+def add_images(category_id: int, image: UploadFile = File(...), db: Session = Depends(get_db)):
+    category = db.query(Category).get(category_id)
+    if not category:
+        raise HTTPException(status_code=404, detail="Category not found")
+    category = db.query(Category).get(category.id)
+    image_url = upload_image(image, category.slug)
+    existing_count = db.query(CategoryImage).filter(CategoryImage.cateogory_id == category_id).count()
+    db_image = CategoryImage(
+        category_id=category.id,
+        image_url=image_url,
+        order=existing_count
+    )
+    db.add(db_image)
+    db.commit()
+    db.refresh(db_image)
+    return db_image
+
+@categories_router.delete("/{category_id}/images/{image_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_image(category_id: int, image_id: int, db: Session = Depends(get_db)):
+    category = db.query(Category).get(category_id)
+    if not category:
+        raise HTTPException(status_code=404, detail="Category not found")
+    image = db.query(CategoryImage).get(image_id)
+    if not image or image.item_id != category.id:
+        raise HTTPException(status_code=404, detail="Category not found")
+    delete_image(image.image_url)
+    db.delete(image)
+    db.commit()
+    return None
