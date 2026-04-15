@@ -3,7 +3,12 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import pageTitle from '../../utils/pageTitle';
 import useLocalePath from '../../hooks/useLocalePath';
 import { useDispatch, useSelector } from 'react-redux';
-import { type RootState, type AppDispatch, getItem } from '../../store';
+import {
+  type RootState,
+  type AppDispatch,
+  type ImageProps,
+  getItem,
+} from '../../store';
 import { useTranslation } from 'react-i18next';
 import ReactMarkdown from 'react-markdown';
 import remarkBreaks from 'remark-breaks';
@@ -19,6 +24,11 @@ export default function CatalogItemPage(): JSX.Element {
   const { currentItem } = useSelector((state: RootState) => state.catalog);
   const [currentImage, setCurrentImage] = useState<string>('');
 
+  const handleImageSelection = (images: Array<ImageProps>) => {
+    const imageData = images.find((image) => image.order === 0);
+    return imageData?.image_url;
+  };
+
   useEffect(() => {
     if (itemId) {
       dispatch(getItem({ itemId: parseInt(itemId), lang }));
@@ -27,7 +37,7 @@ export default function CatalogItemPage(): JSX.Element {
 
   useEffect(() => {
     if (currentItem && currentItem.images.length > 0) {
-      setCurrentImage(currentItem.images[0].image_url);
+      setCurrentImage(handleImageSelection(currentItem.images)!);
     }
   }, [currentItem]);
 

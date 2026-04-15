@@ -79,7 +79,7 @@ export default function CatalogSection(): JSX.Element {
                 id={item.id}
                 categoryName={item.category.name}
                 title={item.title}
-                image={item.images.length ? item.images[0].image_url : ''}
+                images={item.images}
                 price={item.price}
                 url={to(`/catalog/${category.slug}/${item.id}`)}
               />

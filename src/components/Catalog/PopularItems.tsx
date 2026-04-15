@@ -1,6 +1,6 @@
 import { type JSX, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import useLocalePath from '../../hooks/useLocalePath';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -9,10 +9,10 @@ import {
   type ItemProps,
   getItems,
 } from '../../store';
+import CatalogItem from './CatalogItem';
 import CatalogItemSkeleton from './CatalogItemSkeleton';
 
 export default function PopularItems(): JSX.Element {
-  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const to = useLocalePath();
   const { t } = useTranslation('catalog');
@@ -32,23 +32,15 @@ export default function PopularItems(): JSX.Element {
   const renderItems = (items: Array<ItemProps>) => {
     return items.map(({ images, title, id, price, category }) => {
       return (
-        <div
-          onClick={() => navigate(to(`/catalog/${category.slug}/${id}`))}
-          className='catalog-item'
-        >
-          {images[0] ? (
-            <img src={images[0].image_url} alt={`${title} ${id}`} />
-          ) : (
-            <div className='catalog-item-no-image'>
-              <i className='fas fa-image'></i>
-            </div>
-          )}
-          <div className='catalog-item-info'>
-            <span>{category.name}</span>
-            <h3>{title}</h3>
-            {price ? <p>{price} MDL</p> : null}
-          </div>
-        </div>
+        <CatalogItem
+          key={id}
+          id={id}
+          url={to(`/catalog/${category.slug}/${id}`)}
+          images={images}
+          price={price}
+          categoryName={category.name}
+          title={title}
+        />
       );
     });
   };
