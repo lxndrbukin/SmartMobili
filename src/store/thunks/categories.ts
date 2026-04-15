@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import type { CategoryCreate, CategoryUpdate } from "./types";
+import type { CategoryCreate, CategoryUpdate, CategoryImageUpdate } from "./types";
 import axios from "axios";
 import { API_URL } from "../../api";
 
@@ -54,5 +54,24 @@ export const deleteCategory = createAsyncThunk(
   async (categoryId: number) => {
     await axios.delete(`${API_URL}/api/v1/categories/${categoryId}`);
     return;
+  },
+);
+
+export const addCategoryImage = createAsyncThunk(
+  "categories/updateImage",
+  async ({ categoryId, image }: CategoryImageUpdate) => {
+    await fetch(`${API_URL}/api/v1/categories/${categoryId}/images`, {
+      method: "POST",
+      body: image,
+    });
+  },
+);
+
+export const deleteCategoryImage = createAsyncThunk(
+  "categories/deleteImage",
+  async ({ itemId, imageId }: { itemId: number; imageId: number; }) => {
+    await axios.delete(
+      `${API_URL}/api/v1/categories/${itemId}/images/${imageId}`,
+    );
   },
 );

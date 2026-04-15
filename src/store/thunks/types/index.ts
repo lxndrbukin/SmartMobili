@@ -22,6 +22,11 @@ export type ItemImageUpdate = {
   image: FormData;
 };
 
+export type CategoryImageUpdate = {
+  categoryId: number;
+  image: FormData;
+};
+
 export type ItemRequest = {
   itemId: number;
   lang: string | undefined;

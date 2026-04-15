@@ -1,4 +1,10 @@
-import { type JSX, type FormEvent, useEffect, useState } from 'react';
+import {
+  type JSX,
+  type FormEvent,
+  type ChangeEvent,
+  useEffect,
+  useState,
+} from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -6,6 +12,7 @@ import {
   type AppDispatch,
   createCategory,
   updateCategory,
+  addCategoryImage,
 } from '../../../store';
 import axios from 'axios';
 import { API_URL } from '../../../api';
@@ -17,6 +24,7 @@ export default function CategoryForm(): JSX.Element {
   const [categoryRU, setCategoryRU] = useState('');
   const [slug, setSlug] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedImages, setSelectedImages] = useState<Array<File>>([]);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const isCreating = searchParams.get('createCategory') === '1';
@@ -48,13 +56,18 @@ export default function CategoryForm(): JSX.Element {
     setSearchParams({});
   };
 
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const images = Array.from(e.target.files || []);
+    setSelectedImages(images);
+  };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const nameRO = formData.get('nameRO') as string;
     const nameRU = formData.get('nameRU') as string;
     const slug = formData.get('slug') as string;
-
+    const imageFiles = formData.getAll('images') as File[];
     const data = {
       slug,
       translations: [
@@ -70,11 +83,38 @@ export default function CategoryForm(): JSX.Element {
     };
     setIsLoading(true);
     if (isCreating) {
-      await dispatch(createCategory(data)).unwrap();
+      const result = await dispatch(createCategory(data)).unwrap();
+      const categoryId = result.id;
+      for (const imageFile of imageFiles) {
+        if (imageFile && imageFile.size > 0) {
+          const imageFormData = new FormData();
+          imageFormData.append('image', imageFile);
+          await dispatch(
+            addCategoryImage({ categoryId, image: imageFormData }),
+          );
+        }
+      }
     } else {
       await dispatch(
-        updateCategory({ id: Number(categoryId), ...data }),
+        updateCategory({
+          id: parseInt(categoryId!),
+          ...data,
+        }),
       ).unwrap();
+
+      for (const imageFile of imageFiles) {
+        if (imageFile && imageFile.size > 0) {
+          const imageFormData = new FormData();
+          imageFormData.append('image', imageFile);
+          await dispatch(
+            addCategoryImage({
+              categoryId: parseInt(categoryId!),
+              image: imageFormData,
+            }),
+          );
+        }
+      }
+      setIsLoading(false);
     }
     setIsLoading(false);
     handleClose();
@@ -117,6 +157,23 @@ export default function CategoryForm(): JSX.Element {
               onChange={(e) => setSlug(e.target.value)}
               name='slug'
             />
+          </div>
+          <div className='form-field'>
+            <label>Image</label>
+            <input
+              onChange={handleImageChange}
+              type='file'
+              name='images'
+              accept='image/*'
+              multiple
+            />
+            {selectedImages.length > 0 && (
+              <div className='selected-files'>
+                {selectedImages.map((img, index) => (
+                  <span key={index}>{img.name}</span>
+                ))}
+              </div>
+            )}
           </div>
           <button disabled={isLoading} type='submit'>
             {isCreating ? t('category.submitCreate') : t('category.submitEdit')}

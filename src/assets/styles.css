@@ -1037,7 +1037,7 @@ img {
   font-family: var(--font-body);
   font-size: 14px;
   color: var(--text-primary);
-  background-color: var(--bg-surface);
+  background-color: var(--white);
   transition:
     border-color var(--transition-fast),
     box-shadow var(--transition-fast);
@@ -2129,15 +2129,14 @@ img {
 }
 
 .modal {
-  background: var(--surface-one);
-  border: 1px solid var(--border-active);
-  border-radius: var(--radius-lg);
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-lg);
   animation: fadeSlideIn 0.2s ease forwards;
   position: relative;
-  max-width: 100%;
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+  height: fit-content;
 }
 
 @keyframes fadeSlideIn {

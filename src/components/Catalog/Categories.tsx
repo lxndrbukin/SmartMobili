@@ -1,4 +1,4 @@
-import { type JSX, useEffect, useState } from 'react';
+import { type JSX, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import useLocalePath from '../../hooks/useLocalePath';
 import { useTranslation } from 'react-i18next';
@@ -14,7 +14,7 @@ import CategorySkeleton from './CategorySkeleton';
 export default function Categories(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
   const { t } = useTranslation('categories');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  // const [isLoading, setIsLoading] = useState<boolean>(false);
   const to = useLocalePath();
 
   const { categories } = useSelector((state: RootState) => state.catalog);
@@ -22,9 +22,9 @@ export default function Categories(): JSX.Element {
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true);
+      // setIsLoading(true);
       await dispatch(getCategories(currentLang)).unwrap();
-      setIsLoading(false);
+      // setIsLoading(false);
     };
     fetchData();
   }, [currentLang]);

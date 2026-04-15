@@ -1,4 +1,4 @@
-import { type JSX, useEffect, useState } from 'react';
+import { type JSX, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, Link } from 'react-router-dom';
 import useLocalePath from '../../hooks/useLocalePath';
@@ -16,15 +16,15 @@ export default function PopularItems(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
   const to = useLocalePath();
   const { t } = useTranslation('catalog');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  // const [isLoading, setIsLoading] = useState<boolean>(false);
   const { items } = useSelector((state: RootState) => state.catalog);
   const { currentLang } = useSelector((state: RootState) => state.system);
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true);
+      // setIsLoading(true);
       await dispatch(getItems({ limit: 4, lang: currentLang })).unwrap();
-      setIsLoading(false);
+      // setIsLoading(false);
     };
     fetchData();
   }, [currentLang]);

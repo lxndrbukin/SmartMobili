@@ -15,7 +15,7 @@ import {
   getCategories,
   createItem,
   updateItem,
-  addImage,
+  addItemImage,
 } from '../../../store';
 import axios from 'axios';
 import { API_URL } from '../../../api';
@@ -109,7 +109,7 @@ export default function ItemForm(): JSX.Element {
         if (imageFile && imageFile.size > 0) {
           const imageFormData = new FormData();
           imageFormData.append('image', imageFile);
-          await dispatch(addImage({ itemId, image: imageFormData }));
+          await dispatch(addItemImage({ itemId, image: imageFormData }));
         }
       }
     } else {
@@ -125,7 +125,7 @@ export default function ItemForm(): JSX.Element {
           const imageFormData = new FormData();
           imageFormData.append('image', imageFile);
           await dispatch(
-            addImage({
+            addItemImage({
               itemId: parseInt(itemId!),
               image: imageFormData,
             }),
