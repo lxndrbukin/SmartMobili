@@ -31,7 +31,9 @@
       "category": "Category",
       "price": "Price",
       "actions": "Acțiuni",
-      "items": "Produse"
+      "items": "Produse",
+      "username": "Utilizator",
+      "role": "Rolul"
     }
   }
 }

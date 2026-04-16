@@ -1053,6 +1053,11 @@ img {
   box-shadow: 0 0 0 3px rgba(201, 122, 86, 0.1);
 }
 
+.form-field input.input-error {
+  border-color: rgb(206, 1, 1);
+  box-shadow: 0 0 0 3px rgba(201, 122, 86, 0.1);
+}
+
 .form-field .price,
 .form-field .category-select,
 .form-field input[type='file'] {
@@ -1706,7 +1711,7 @@ img {
 
 .auth-form .error {
   width: fit-content;
-  margin: var(--space-4) auto 0 auto;
+  margin: var(--space-2) auto 0 auto;
   font-size: 14px;
   color: rgb(206, 1, 1);
 }

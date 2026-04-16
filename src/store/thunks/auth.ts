@@ -44,3 +44,8 @@ export const getMe = createAsyncThunk("auth/getMe", async () => {
   const response = await axios.get(`${API_URL}/api/v1/auth/users/me`);
   return response.data;
 });
+
+export const getUsers = createAsyncThunk("auth/getUsers", async () => {
+  const response = await axios.get(`${API_URL}/api/v1/auth/users`);
+  return response.data;
+});

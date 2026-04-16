@@ -1,4 +1,4 @@
-import { type JSX, type FormEvent } from 'react';
+import { type JSX, type FormEvent, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -13,6 +13,11 @@ import {
 
 export default function AuthForm(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
+
+  const [formErrors, setFormErrors] = useState<{
+    username: string | null;
+    password: string | null;
+  }>({ username: null, password: null });
 
   const [searchParams, setSearchParams] = useSearchParams();
   const { isLoading, error } = useSelector((state: RootState) => state.auth);
@@ -78,6 +83,24 @@ export default function AuthForm(): JSX.Element {
     );
   };
 
+  const handleOnBlur = (name: string, value: string) => {
+    if (!value.length) {
+      setFormErrors({
+        ...formErrors,
+        [name]: `Please enter your ${name}`,
+      });
+    } else {
+      setFormErrors({
+        ...formErrors,
+        [name]: null,
+      });
+    }
+  };
+
+  const handleOnClick = (name: string) => {
+    setFormErrors({ ...formErrors, [name]: null });
+  };
+
   return (
     <div className='modal-backdrop' onClick={handleClose}>
       <div className='modal' onClick={(e) => e.stopPropagation()}>
@@ -85,11 +108,29 @@ export default function AuthForm(): JSX.Element {
           <h3>{isLogin ? 'Login' : 'Sign Up'}</h3>
           <div className='form-field'>
             <label>Username</label>
-            <input type='text' name='username' />
+            <input
+              onBlur={(e) => handleOnBlur(e.target.name, e.target.value)}
+              onFocus={(e) => handleOnClick(e.target.name)}
+              type='text'
+              name='username'
+              className={formErrors['username'] ? 'input-error' : ''}
+            />
+            {formErrors['username'] && (
+              <p className='error'>{formErrors['username']}</p>
+            )}
           </div>
           <div className='form-field'>
             <label>Password</label>
-            <input type='password' name='password' />
+            <input
+              className={formErrors['password'] ? 'input-error' : ''}
+              onBlur={(e) => handleOnBlur(e.target.name, e.target.value)}
+              onFocus={(e) => handleOnClick(e.target.name)}
+              type='password'
+              name='password'
+            />
+            {formErrors['password'] && (
+              <p className='error'>{formErrors['password']}</p>
+            )}
           </div>
           <button disabled={isLoading} type='submit'>
             {isLogin ? 'Log In' : 'Sign Up'}

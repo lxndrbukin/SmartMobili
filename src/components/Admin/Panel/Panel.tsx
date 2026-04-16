@@ -1,5 +1,9 @@
 import { type JSX, useState } from 'react';
+import { Navigate } from 'react-router-dom';
+import useLocalePath from '../../../hooks/useLocalePath';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { type RootState } from '../../../store';
 import PanelItems from './PanelItems';
 import PanelCategories from './PanelCategories';
 
@@ -10,6 +14,11 @@ export default function Panel(): JSX.Element {
     { name: 'users', component: <></> },
     { name: 'orders', component: <></> },
   ];
+
+  const to = useLocalePath();
+  const { token, user } = useSelector((state: RootState) => state.auth);
+
+  const isAdmin = token && user && user.user_role === 'admin';
 
   const [currentTab, setCurrentTab] = useState<string>('items');
   const { t } = useTranslation('admin');
@@ -36,6 +45,10 @@ export default function Panel(): JSX.Element {
     const tab = tabs.find((t) => t.name === currentTab);
     return tab?.component;
   };
+
+  if (!isAdmin) {
+    return <Navigate to={to('')} />;
+  }
 
   return (
     <div className='admin-panel'>

@@ -58,3 +58,8 @@ export type AuthResponse = {
   access_token: string;
   token_type: string;
 };
+
+export type AdminState = {
+  users: Array<UserProps> | null;
+  orders: Array<{ id: number; title: string; }> | null;
+};

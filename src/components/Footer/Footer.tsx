@@ -13,7 +13,7 @@ export default function Footer(): JSX.Element {
   const renderSectionLinks = (links: Array<NavLink>) => {
     return links.map((link: NavLink) => {
       return (
-        <li>
+        <li key={link.label}>
           <Link to={to(`/catalog${link.href}`)}>{link.label}</Link>
         </li>
       );
@@ -23,7 +23,7 @@ export default function Footer(): JSX.Element {
   const renderSections = (sections: FooterTranslations) => {
     return Object.values(sections).map((section) => {
       return (
-        <div className='footer-col'>
+        <div key={section.label} className='footer-col'>
           <h3 className='footer-col-header'>{section.label}</h3>
           <ul>{renderSectionLinks(section.links)}</ul>
         </div>

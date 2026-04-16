@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 
 *.env*
+
+# Temporary
+PanelUsers.tsx

@@ -1,12 +1,12 @@
-import type { JSX, ChangeEvent } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import type { JSX, ChangeEvent } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   type RootState,
   type AppDispatch,
   type Language,
   setLanguage,
-} from "../../store";
+} from '../../store';
 
 export default function SelectLang(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
@@ -24,9 +24,9 @@ export default function SelectLang(): JSX.Element {
   };
 
   const renderLangs = (): Array<JSX.Element> => {
-    return ["en", "ro", "ru"].map((langCode) => {
+    return ['en', 'ro', 'ru'].map((langCode) => {
       return (
-        <option key={langCode} value={langCode} selected={lang == langCode}>
+        <option key={langCode} value={langCode}>
           {langCode.toUpperCase()}
         </option>
       );
@@ -35,9 +35,9 @@ export default function SelectLang(): JSX.Element {
 
   return (
     <select
-      value={currentLang}
+      defaultValue={currentLang}
       onChange={handleChange}
-      className="header_lang-selector"
+      className='header_lang-selector'
     >
       {renderLangs()}
     </select>

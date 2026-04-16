@@ -31,7 +31,9 @@
       "category": "Category",
       "price": "Price",
       "actions": "Actions",
-      "items": "Items"
+      "items": "Items",
+      "username": "Username",
+      "role": "Role"
     }
   }
 }

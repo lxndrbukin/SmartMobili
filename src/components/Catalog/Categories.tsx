@@ -46,6 +46,7 @@ export default function Categories(): JSX.Element {
     return categories.map((category) => {
       return (
         <Link
+          key={category.id}
           to={to(`/catalog/${category.slug}`)}
           className={`category ${category.slug}`}
         >
