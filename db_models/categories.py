@@ -28,5 +28,6 @@ class CategoryImage(Base):
     id = Column(Integer, primary_key=True, index=True)
     image_url = Column(String(500), nullable=False)
     category_id = Column(Integer, ForeignKey("categories.id"), nullable=False)
+    order = Column(Integer, default=0)
 
     category = relationship("Category", back_populates="images")

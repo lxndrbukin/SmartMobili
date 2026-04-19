@@ -88,7 +88,7 @@ def get_item(item_id: int, lang: Language = Language.ro, db: Session = Depends(g
         }
 
 @items_router.post("/", status_code=status.HTTP_201_CREATED, response_model=ItemResponse)
-def create_item(item: ItemCreate, db: Session = Depends(get_db)):
+def create_item(item: ItemCreate, lang: Language = Language.ro, db: Session = Depends(get_db)):
     db_item = Item(
         price=item.price,
         category_id=item.category_id
@@ -106,11 +106,18 @@ def create_item(item: ItemCreate, db: Session = Depends(get_db)):
         db.add(db_translation)
     db.commit()
     db.refresh(db_item)
+    category = db.query(Category) \
+        .options(joinedload(Category.translations)).filter(Category.id == item.category_id).first()
+    category_translation = get_translation(category.translations, lang)
     translation = get_translation(db_item.translations, Language.ro)
     return {
             "id": db_item.id,
             "price": db_item.price,
-            "category_id": db_item.category_id,
+            "category": ItemCategoryResponse(
+                id=category.id,
+                slug=category.slug,
+                name=category_translation.name
+            ),
             "created_at": db_item.created_at,
             "title": translation.title,
             "description": translation.description,

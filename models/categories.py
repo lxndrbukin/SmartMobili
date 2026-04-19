@@ -44,3 +44,4 @@ class CategoryResponse(BaseModel):
     item_count: int
     name: str
     language: Language
+    images: list[CategoryImageResponse] = []

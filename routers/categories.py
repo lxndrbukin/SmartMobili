@@ -18,7 +18,8 @@ categories_router = APIRouter(prefix="/categories", tags=["categories"])
 
 @categories_router.get("/", status_code=status.HTTP_200_OK, response_model=list[CategoryResponse])
 def get_categories(lang: Language = Language.ro , db: Session = Depends(get_db)):
-    categories = db.query(Category).options(joinedload(Category.translations)).all()
+    categories = db.query(Category) \
+        .options(joinedload(Category.translations), joinedload(Category.images)).all()
     result = []
     for category in categories:
         item_count = db.query(func.count(Item.id)).filter(Item.category_id == category.id).scalar()
@@ -28,13 +29,15 @@ def get_categories(lang: Language = Language.ro , db: Session = Depends(get_db))
             "slug": category.slug,
             "item_count": item_count,
             "name": translation.name,
-            "language": translation.language
+            "language": translation.language,
+            "images": category.images
         })
     return result
 
 @categories_router.get("/{category_id}", status_code=status.HTTP_200_OK, response_model=CategoryResponse)
 def get_category(category_id: int, lang: Language = Language.ro, db: Session = Depends(get_db)):
-    category = db.query(Category).options(joinedload(Category.translations)).filter(Category.id == category_id).first()
+    category = db.query(Category).options(joinedload(Category.translations), joinedload(Category.images)) \
+        .filter(Category.id == category_id).first()
     if not category:
         raise HTTPException(status_code=404, detail="Category not found")
     translation = get_translation(category.translations, lang)
@@ -82,9 +85,11 @@ def update_category(category_id: int, data: CategoryUpdate, lang: Language = Lan
     db.commit()
     db.refresh(category)
     translation = get_translation(category.translations, lang)
+    item_count = db.query(func.count(Item.id)).filter(Item.category_id == category.id).scalar()
     return {
         "id": category.id,
         "slug": category.slug,
+        "item_count": item_count,
         "name": translation.name,
         "language": translation.language
     }
@@ -124,7 +129,7 @@ def add_images(category_id: int, image: UploadFile = File(...), db: Session = De
         raise HTTPException(status_code=404, detail="Category not found")
     category = db.query(Category).get(category.id)
     image_url = upload_image(image, category.slug)
-    existing_count = db.query(CategoryImage).filter(CategoryImage.cateogory_id == category_id).count()
+    existing_count = db.query(CategoryImage).filter(CategoryImage.category_id == category_id).count()
     db_image = CategoryImage(
         category_id=category.id,
         image_url=image_url,
