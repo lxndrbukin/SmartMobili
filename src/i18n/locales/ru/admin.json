@@ -16,7 +16,8 @@
     "title": "Заголовок",
     "url": "Ссылка",
     "submitCreate": "Создать",
-    "submitEdit": "Обновить"
+    "submitEdit": "Обновить",
+    "images": "Изображения"
   },
   "panel": {
     "header": "Панель управления",

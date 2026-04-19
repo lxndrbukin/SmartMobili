@@ -1,4 +1,5 @@
 {
+  "logo": "Mobila la comanda",
   "nav": [
     { "label": "Principala", "href": "/" },
     { "label": "Catalog", "href": "/catalog" },

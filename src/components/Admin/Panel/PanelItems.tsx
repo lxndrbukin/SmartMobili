@@ -15,7 +15,7 @@ export default function PanelItems(): JSX.Element {
     'ID',
     t('panel.table.name'),
     t('panel.table.category'),
-    t('panel.table.price'),
+    `${t('panel.table.price')} (MDL)`,
     t('panel.table.actions'),
   ];
 

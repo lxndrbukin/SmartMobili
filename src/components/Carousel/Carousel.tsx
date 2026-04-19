@@ -1,16 +1,16 @@
-import { type JSX } from "react";
+import { type JSX } from 'react';
 import AcroolCarousel, {
   type TAcroolSlideItemDataList,
   AcroolSlideCard,
-} from "@acrool/react-carousel";
-import { useTranslation } from "react-i18next";
-import { type BannerProps } from "./types";
-import CarouselBanner from "./CarouselBanner";
+} from '@acrool/react-carousel';
+import { useTranslation } from 'react-i18next';
+import { type BannerProps } from './types';
+import CarouselBanner from './CarouselBanner';
 
 export default function Carousel(): JSX.Element {
-  const { t } = useTranslation("carousel");
+  const { t } = useTranslation('carousel');
 
-  const banners = t("banners", { returnObjects: true }) as Array<BannerProps>;
+  const banners = t('banners', { returnObjects: true }) as Array<BannerProps>;
 
   const acroolSlideItemData: TAcroolSlideItemDataList = banners.map(
     (banner, idx) => {
@@ -24,7 +24,7 @@ export default function Carousel(): JSX.Element {
   return (
     <AcroolCarousel
       data={acroolSlideItemData}
-      height="550px"
+      height='550px'
       isEnableNavButton
       isEnableLoop
       isEnableAutoPlay

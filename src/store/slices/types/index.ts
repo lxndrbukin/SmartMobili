@@ -10,6 +10,7 @@ export type CategoryProps = {
   name: string;
   item_count: number;
   language: string;
+  images: Array<ImageProps>;
 };
 
 export type CatalogState = {

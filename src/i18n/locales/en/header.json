@@ -1,4 +1,5 @@
 {
+  "logo": "Custom Furniture",
   "nav": [
     { "label": "Home", "href": "/" },
     { "label": "Catalog", "href": "/catalog" },

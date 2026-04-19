@@ -1,4 +1,5 @@
 import { type JSX, type FormEvent, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -13,7 +14,7 @@ import {
 
 export default function AuthForm(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
-
+  const { t } = useTranslation('auth');
   const [formErrors, setFormErrors] = useState<{
     username: string | null;
     password: string | null;
@@ -22,7 +23,7 @@ export default function AuthForm(): JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
   const { isLoading, error } = useSelector((state: RootState) => state.auth);
 
-  const isLogin = searchParams.get('login') === 'true';
+  const isLogin = searchParams.get('form.login') === 'true';
 
   const handleClose = () => {
     setSearchParams({});
@@ -31,8 +32,8 @@ export default function AuthForm(): JSX.Element {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const username = formData.get('username') as string;
-    const password = formData.get('password') as string;
+    const username = formData.get('form.username') as string;
+    const password = formData.get('form.password') as string;
     const data = { username, password };
     e.preventDefault();
     if (!username.length && !password.length) {
@@ -58,9 +59,7 @@ export default function AuthForm(): JSX.Element {
     }
   };
 
-  const paragraphText = isLogin
-    ? "Don't have an account?"
-    : 'Already have an account?';
+  const paragraphText = isLogin ? t('form.noAccMsg') : t('form.existingAccMsg');
 
   const errorMessage = error ? <p className='error'>{error}</p> : null;
 
@@ -78,7 +77,7 @@ export default function AuthForm(): JSX.Element {
           dispatch(clearError());
         }}
       >
-        {isLogin ? 'Sign Up' : 'Log In'}
+        {isLogin ? t('form.signup') : t('form.login')}
       </a>
     );
   };
@@ -87,7 +86,7 @@ export default function AuthForm(): JSX.Element {
     if (!value.length) {
       setFormErrors({
         ...formErrors,
-        [name]: `Please enter your ${name}`,
+        [name]: t('form.enterMsg', { label: name }),
       });
     } else {
       setFormErrors({
@@ -105,9 +104,9 @@ export default function AuthForm(): JSX.Element {
     <div className='modal-backdrop' onClick={handleClose}>
       <div className='modal' onClick={(e) => e.stopPropagation()}>
         <form className='auth-form' onSubmit={handleSubmit}>
-          <h3>{isLogin ? 'Login' : 'Sign Up'}</h3>
+          <h3>{isLogin ? t('form.loginHeader') : t('form.signupHeader')}</h3>
           <div className='form-field'>
-            <label>Username</label>
+            <label>{t('form.username')}</label>
             <input
               onBlur={(e) => handleOnBlur(e.target.name, e.target.value)}
               onFocus={(e) => handleOnClick(e.target.name)}
@@ -120,7 +119,7 @@ export default function AuthForm(): JSX.Element {
             )}
           </div>
           <div className='form-field'>
-            <label>Password</label>
+            <label>{t('form.password')}</label>
             <input
               className={formErrors['password'] ? 'input-error' : ''}
               onBlur={(e) => handleOnBlur(e.target.name, e.target.value)}
@@ -133,7 +132,7 @@ export default function AuthForm(): JSX.Element {
             )}
           </div>
           <button disabled={isLoading} type='submit'>
-            {isLogin ? 'Log In' : 'Sign Up'}
+            {isLogin ? t('form.login') : t('form.signup')}
           </button>
           <p className='signup-redirect'>
             {paragraphText} {renderLink()}

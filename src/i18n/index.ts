@@ -3,6 +3,9 @@ import { initReactI18next } from "react-i18next";
 import admin_en from "./locales/en/admin.json";
 import admin_ro from "./locales/ro/admin.json";
 import admin_ru from "./locales/ru/admin.json";
+import auth_en from "./locales/en/auth.json";
+import auth_ro from "./locales/ro/auth.json";
+import auth_ru from "./locales/ru/auth.json";
 import general_en from "./locales/en/general.json";
 import general_ro from "./locales/ro/general.json";
 import general_ru from "./locales/ru/general.json";
@@ -38,6 +41,7 @@ i18n.use(initReactI18next).init({
   resources: {
     en: {
       admin: admin_en,
+      auth: auth_en,
       general: general_en,
       header: header_en,
       footer: footer_en,
@@ -51,6 +55,7 @@ i18n.use(initReactI18next).init({
     },
     ru: {
       admin: admin_ru,
+      auth: auth_ru,
       general: general_ru,
       header: header_ru,
       footer: footer_ru,
@@ -64,6 +69,7 @@ i18n.use(initReactI18next).init({
     },
     ro: {
       admin: admin_ro,
+      auth: auth_ro,
       general: general_ro,
       header: header_ro,
       footer: footer_ro,

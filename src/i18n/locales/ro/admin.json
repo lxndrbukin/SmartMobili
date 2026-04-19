@@ -16,7 +16,8 @@
     "title": "Titlu",
     "url": "URL-ul",
     "submitCreate": "Crea",
-    "submitEdit": "Actualiza"
+    "submitEdit": "Actualiza",
+    "images": "Imagini"
   },
   "panel": {
     "header": "Panou Admin",

@@ -29,9 +29,6 @@ export default function Categories(): JSX.Element {
     fetchData();
   }, [currentLang]);
 
-  const baseImgURL =
-    'https://raw.githubusercontent.com/lxndrbukin/shkafmaster-new/refs/heads/main/public/imgs';
-
   const header = t('header');
 
   const renderSkeleton = () => {
@@ -43,18 +40,22 @@ export default function Categories(): JSX.Element {
   };
 
   const renderCategories = (categories: Array<CategoryProps>) => {
-    return categories.map((category) => {
+    return categories.map(({ id, slug, images, name }) => {
       return (
         <Link
-          key={category.id}
-          to={to(`/catalog/${category.slug}`)}
-          className={`category ${category.slug}`}
+          key={id}
+          to={to(`/catalog/${slug}`)}
+          className={`category ${slug}`}
         >
-          <img
-            src={`${baseImgURL}/menu_${category.slug.replace('s', '')}.png`}
-            className='category-bg'
-          />
-          <span className='category-header'>{category.name.toUpperCase()}</span>
+          {images.length ? (
+            <img className='category-bg' alt={name} src={images[0].image_url} />
+          ) : (
+            <div className='catalog-item-no-image'>
+              <i className='fas fa-image'></i>
+            </div>
+          )}
+
+          <span className='category-header'>{name.toUpperCase()}</span>
         </Link>
       );
     });

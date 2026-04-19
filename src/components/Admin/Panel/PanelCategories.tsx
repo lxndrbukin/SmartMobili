@@ -25,7 +25,7 @@ export default function PanelCategories(): JSX.Element {
   const [, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    dispatch(getCategories());
+    dispatch(getCategories(lang));
   }, [lang]);
 
   const renderHeaders = (headers: Array<string>) => {

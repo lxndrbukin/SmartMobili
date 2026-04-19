@@ -159,7 +159,7 @@ export default function CategoryForm(): JSX.Element {
             />
           </div>
           <div className='form-field'>
-            <label>Image</label>
+            <label>{t('category.images')}</label>
             <input
               onChange={handleImageChange}
               type='file'

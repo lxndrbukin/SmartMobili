@@ -1,9 +1,13 @@
 import { type JSX, useRef, useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { type AppDispatch, logout } from '../../store';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { type AppDispatch, type RootState, logout } from '../../store';
 
 export default function HeaderProfile(): JSX.Element {
+  const { t } = useTranslation('auth');
   const dispatch = useDispatch<AppDispatch>();
+
+  const { user } = useSelector((state: RootState) => state.auth);
 
   const iconRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -32,7 +36,7 @@ export default function HeaderProfile(): JSX.Element {
         <div className='header_user-profile'>
           <div className='header_user-profile-info'>
             <i className='fas fa-user-circle'></i>
-            <span>User</span>
+            <span>{user?.username}</span>
           </div>
           <div className='header_user-profile_links'>
             {/* <a className='header_user-profile_link' href='#'>
@@ -46,7 +50,7 @@ export default function HeaderProfile(): JSX.Element {
               }}
               href=''
             >
-              Sign out
+              {t('header.signout')}
             </a>
           </div>
         </div>
@@ -61,7 +65,7 @@ export default function HeaderProfile(): JSX.Element {
         onClick={() => setIsVisible(!isVisible)}
         className='header_user-link'
         id='header_profile-icon'
-        title='Profile'
+        title={t('header.profile')}
       >
         <i className='far fa-user'></i>
       </div>

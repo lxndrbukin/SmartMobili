@@ -16,7 +16,8 @@
     "title": "Title",
     "url": "URL",
     "submitCreate": "Create",
-    "submitEdit": "Update"
+    "submitEdit": "Update",
+    "images": "Images"
   },
   "panel": {
     "header": "Admin Panel",
