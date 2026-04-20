@@ -4,6 +4,11 @@ export type SystemState = {
   currentLang: Language;
 };
 
+export type Pagination = {
+  skip: number;
+  limit: number;
+};
+
 export type CategoryProps = {
   id: number;
   slug: string;
@@ -48,11 +53,34 @@ export type UserProps = {
   signup_at: string;
 };
 
+export type InquiryProps = {
+  id: number;
+  name: string;
+  description: string | null;
+  item_id: number | null;
+  phone: string;
+  email: string | null;
+  created_at: Date;
+  telegram: boolean;
+  viber: boolean;
+  whatsapp: boolean;
+};
+
 export type AuthState = {
   token: string | null;
   user: UserProps | null;
   isLoading: boolean;
   error: string | null;
+};
+
+export type PaginatedUsersResponse = {
+  data: Array<UserProps>;
+  pagination: Pagination | null;
+};
+
+export type PaginatedInquiriesResponse = {
+  data: Array<InquiryProps>;
+  pagination: Pagination | null;
 };
 
 export type AuthResponse = {
@@ -61,6 +89,7 @@ export type AuthResponse = {
 };
 
 export type AdminState = {
-  users: Array<UserProps> | null;
-  orders: Array<{ id: number; title: string; }> | null;
+  users: PaginatedUsersResponse;
+  inquiries: PaginatedInquiriesResponse;
 };
+

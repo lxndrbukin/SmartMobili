@@ -8,7 +8,6 @@ import {
   register,
   login,
   getMe,
-  setError,
   clearError,
 } from '../../store';
 
@@ -23,7 +22,7 @@ export default function AuthForm(): JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
   const { isLoading, error } = useSelector((state: RootState) => state.auth);
 
-  const isLogin = searchParams.get('form.login') === 'true';
+  const isLogin = searchParams.get('login') === 'true';
 
   const handleClose = () => {
     setSearchParams({});
@@ -32,22 +31,10 @@ export default function AuthForm(): JSX.Element {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const username = formData.get('form.username') as string;
-    const password = formData.get('form.password') as string;
+    const username = formData.get('username') as string;
+    const password = formData.get('password') as string;
     const data = { username, password };
     e.preventDefault();
-    if (!username.length && !password.length) {
-      dispatch(setError('Please enter username and password'));
-      return;
-    }
-    if (!username.length && password.length) {
-      dispatch(setError('Please enter username'));
-      return;
-    }
-    if (!password.length && username.length) {
-      dispatch(setError('Please enter password'));
-      return;
-    }
     if (username.length && password.length) {
       if (isLogin) {
         await dispatch(login(data)).unwrap();

@@ -2,10 +2,12 @@ import { configureStore } from "@reduxjs/toolkit";
 import system from "./slices/systemSlice";
 import auth from "./slices/authSlice";
 import catalog from "./slices/catalogSlice";
+import admin from "./slices/adminSlice";
 
 export const store = configureStore({
   reducer: {
     system,
+    admin,
     auth,
     catalog,
   },

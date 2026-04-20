@@ -34,7 +34,8 @@
       "actions": "Actions",
       "items": "Items",
       "username": "Username",
-      "role": "Role"
+      "role": "Role",
+      "signedup": "Signed Up"
     }
   }
 }

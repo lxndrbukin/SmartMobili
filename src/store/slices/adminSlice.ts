@@ -1,10 +1,17 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import { type AdminState, type UserProps } from "./types";
+import { type AdminState, type PaginatedUsersResponse, type PaginatedInquiriesResponse } from "./types";
 import { getUsers } from "../thunks/auth";
+import { getInquiries } from "../thunks/inquiries";
 
 const initialState: AdminState = {
-  users: null,
-  orders: null
+  users: {
+    data: [],
+    pagination: null
+  },
+  inquiries: {
+    data: [],
+    pagination: null
+  }
 };
 
 const adminState = createSlice({
@@ -12,8 +19,11 @@ const adminState = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getUsers.fulfilled, (state: AdminState, action: PayloadAction<Array<UserProps>>) => {
+    builder.addCase(getUsers.fulfilled, (state: AdminState, action: PayloadAction<PaginatedUsersResponse>) => {
       state.users = action.payload;
+    });
+    builder.addCase(getInquiries.fulfilled, (state: AdminState, action: PayloadAction<PaginatedInquiriesResponse>) => {
+      state.inquiries = action.payload;
     });
   }
 });

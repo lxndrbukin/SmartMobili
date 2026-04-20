@@ -34,7 +34,8 @@
       "actions": "Acțiuni",
       "items": "Produse",
       "username": "Utilizator",
-      "role": "Rolul"
+      "role": "Rolul",
+      "signedup": "Registrarea"
     }
   }
 }
