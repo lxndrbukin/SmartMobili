@@ -6,11 +6,13 @@ import { getInquiries, deleteInquiry } from "../thunks/inquiries";
 const initialState: AdminState = {
   users: {
     data: [],
-    pagination: null
+    pagination: null,
+    currentUser: null
   },
   inquiries: {
     data: [],
-    pagination: null
+    pagination: null,
+    currentInquiry: null
   }
 };
 
@@ -20,10 +22,10 @@ const adminState = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getUsers.fulfilled, (state: AdminState, action: PayloadAction<PaginatedUsersResponse>) => {
-      state.users = action.payload;
+      state.users = { ...state.users, ...action.payload };
     });
     builder.addCase(getInquiries.fulfilled, (state: AdminState, action: PayloadAction<PaginatedInquiriesResponse>) => {
-      state.inquiries = action.payload;
+      state.inquiries = { ...state.inquiries, ...action.payload };
     });
     builder.addCase(deleteInquiry.fulfilled, (state: AdminState, action: PayloadAction<number>) => {
       state.inquiries.data = state.inquiries.data.filter(inquiry => inquiry.id !== action.payload);

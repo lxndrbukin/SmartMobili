@@ -7,6 +7,8 @@ import {
   type RootState,
   type InquiryProps,
   getInquiries,
+  // getInquiry,
+  // updateInquiry,
   deleteInquiry,
 } from '../../../store';
 

@@ -1720,6 +1720,7 @@ img {
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
   border: 1px solid var(--border);
+  position: relative;
 }
 
 .contact-form h3 {

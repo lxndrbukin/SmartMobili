@@ -10,6 +10,7 @@ import LanguageSync from './LanguageSync';
 import AuthForm from './Auth/AuthForm';
 import ItemForm from './Admin/Items/ItemForm';
 import CategoryForm from './Admin/Categories/CategoryForm';
+import InquiryForm from './Admin/Inquiry/InquiryForm';
 
 export default function App(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
@@ -19,6 +20,7 @@ export default function App(): JSX.Element {
   const isSignup = searchParams.get('signup') === 'true';
   const itemId = searchParams.get('editItem');
   const categoryId = searchParams.get('editCategory');
+  const inquiryId = searchParams.get('editInquiry');
 
   const { t } = useTranslation('general');
 
@@ -41,6 +43,8 @@ export default function App(): JSX.Element {
       {(isLogin || isSignup) && <AuthForm />}
       {(categoryId || searchParams.get('createCategory')) && <CategoryForm />}
       {(itemId || searchParams.get('createItem')) && <ItemForm />}
+      {(itemId || searchParams.get('createItem')) && <ItemForm />}
+      {(inquiryId || searchParams.get('createInquiry')) && <InquiryForm />}
       <Footer />
     </div>
   );

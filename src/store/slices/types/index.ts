@@ -84,13 +84,22 @@ export type PaginatedInquiriesResponse = {
   pagination: Pagination | null;
 };
 
+
 export type AuthResponse = {
   access_token: string;
   token_type: string;
 };
 
 export type AdminState = {
-  users: PaginatedUsersResponse;
-  inquiries: PaginatedInquiriesResponse;
+  users: {
+    data: Array<UserProps>;
+    pagination: Pagination | null;
+    currentUser: UserProps | null;
+  };
+  inquiries: {
+    data: Array<InquiryProps>;
+    pagination: Pagination | null;
+    currentInquiry: InquiryProps | null;
+  };
 };
 
