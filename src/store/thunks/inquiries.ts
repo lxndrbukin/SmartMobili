@@ -47,6 +47,6 @@ export const deleteInquiry = createAsyncThunk(
   "inquiries/deleteInquiry",
   async (inquiryId: number) => {
     await axios.delete(`${API_URL}/api/v1/inquiries/${inquiryId}`);
-    return;
+    return inquiryId;
   },
 );

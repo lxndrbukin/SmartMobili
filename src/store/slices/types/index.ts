@@ -56,6 +56,7 @@ export type UserProps = {
 export type InquiryProps = {
   id: number;
   name: string;
+  subject: string;
   description: string | null;
   item_id: number | null;
   phone: string;
