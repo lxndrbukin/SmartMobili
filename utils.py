@@ -1,4 +1,6 @@
 from enum import Enum
+from dotenv import load_dotenv
+from os import getenv
 from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from pydantic import BaseModel
@@ -7,6 +9,11 @@ from jose import jwt, JWTError
 from sqlalchemy.orm import Session
 from db import get_db
 from db_models.auth import User
+
+load_dotenv()
+
+SECRET_KEY = getenv("SECRET_KEY")
+ALGORITHM = "HS256"
 
 class Language(str, Enum):
     ro = "ro"
@@ -43,13 +50,11 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
 
 def get_current_user(
-        secret_key: str,
-        algorithm: str,
         token: str = Depends(oauth2_scheme),
         db: Session = Depends(get_db)
     ):
     try:
-        payload = jwt.decode(token, secret_key, algorithms=[algorithm])
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
     except JWTError:
         raise HTTPException(status_code=401, detail="Invalid token")
     user_id = payload.get("sub")
