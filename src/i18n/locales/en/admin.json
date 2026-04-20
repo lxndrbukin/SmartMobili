@@ -25,7 +25,7 @@
       "items": "Items",
       "categories": "Categories",
       "users": "Users",
-      "orders": "Orders"
+      "inquiries": "Orders"
     },
     "table": {
       "name": "Name",
@@ -35,7 +35,10 @@
       "items": "Items",
       "username": "Username",
       "role": "Role",
-      "signedup": "Signed Up"
+      "signedup": "Signed Up",
+      "subject": "Subject",
+      "description": "Description",
+      "date": "Date"
     }
   }
 }

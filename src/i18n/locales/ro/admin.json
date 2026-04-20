@@ -25,7 +25,7 @@
       "items": "Produse",
       "categories": "Categorii",
       "users": "Utilizatori",
-      "orders": "Comenzi"
+      "inquiries": "Comenzi"
     },
     "table": {
       "name": "Denumire",
@@ -35,7 +35,10 @@
       "items": "Produse",
       "username": "Utilizator",
       "role": "Rolul",
-      "signedup": "Registrarea"
+      "signedup": "Registrarea",
+      "subject": "Titlu",
+      "description": "Descriere",
+      "date": "Data"
     }
   }
 }
