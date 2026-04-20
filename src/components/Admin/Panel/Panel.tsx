@@ -7,13 +7,14 @@ import { type RootState } from '../../../store';
 import PanelItems from './PanelItems';
 import PanelCategories from './PanelCategories';
 import PanelUsers from './PanelUsers';
+import PanelInquiries from './PanelInquiries';
 
 export default function Panel(): JSX.Element {
   const TABS = [
     { name: 'items', component: <PanelItems /> },
     { name: 'categories', component: <PanelCategories /> },
     { name: 'users', component: <PanelUsers /> },
-    { name: 'orders', component: <></> },
+    { name: 'inquiries', component: <PanelInquiries /> },
   ];
 
   const to = useLocalePath();

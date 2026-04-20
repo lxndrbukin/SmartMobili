@@ -57,16 +57,13 @@ export default function PanelUsers(): JSX.Element {
   return (
     <div className='admin-panel-table-container'>
       <div className='admin-panel-table-container-header'>
-        <h2>{t('panel.tabs.items')}</h2>
-        <button onClick={() => setSearchParams({})} className='button'>
-          {t('item.headerCreate')}
-        </button>
+        <h2>{t('panel.tabs.users')}</h2>
       </div>
       <table className='admin-panel-table'>
         <thead>
           <tr>{renderHeaders(HEADERS)}</tr>
         </thead>
-        <tbody>{renderRows(data || [])}</tbody>
+        <tbody>{renderRows(data)}</tbody>
       </table>
     </div>
   );
