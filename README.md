@@ -300,8 +300,3 @@ All endpoints are prefixed with `/api/v1`.
 
 The platform supports **Romanian**, **Russian**, and **English**. Language is selected via the URL prefix (`/ro`, `/ru`, `/en`) and defaults to Romanian. Product and category names and descriptions are stored per-language in the database, and the API accepts a `language` query parameter to return the appropriate translations.
 
----
-
-## License
-
-This project is open source and available for personal and educational use.
