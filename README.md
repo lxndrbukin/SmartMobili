@@ -2,7 +2,7 @@
 
 A full-stack **furniture e-commerce platform** built with Python and React. Features **multilingual support** (Romanian, Russian, English), **product and category management**, **Cloudinary image storage**, **JWT authentication**, and a fully functional **admin panel**.
 
-🔗 **Live Demo**: [https://smartmobili.vercel.app/]
+🔗 **Live Demo**: [SmartMobili](https://smartmobili.vercel.app/)
 
 ---
 
