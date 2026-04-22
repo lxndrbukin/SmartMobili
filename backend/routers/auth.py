@@ -102,6 +102,18 @@ def get_users(
         )
     return {"message": "Access denied"}
 
+@auth_router.get("/users/{user_id}", status_code=status.HTTP_200_OK, response_model=UserResponse)
+def get_user(user_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    if current_user.user_role == UserRole.admin:
+        user = db.query(User).filter(User.id == user_id).first()
+        return UserResponse(
+            id=user.id,
+            username=user.username,
+            user_role=user.user_role,
+            signup_at=user.signup_at
+        )
+    return {"message": "Access denied"}
+
 @auth_router.put("/users/{user_id}", status_code=status.HTTP_200_OK, response_model=UserResponse)
 def update_user(user_id: int, data: UserUpdate, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     if current_user.user_role == UserRole.admin:
