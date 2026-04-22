@@ -52,12 +52,12 @@ export const getUsers = createAsyncThunk("auth/getUsers", async () => {
 });
 
 export const getUser = createAsyncThunk("auth/getUser", async (userId: Number) => {
-  const response = await axios.get(`${API_URL}/api/v1/auth/${userId}`);
+  const response = await axios.get(`${API_URL}/api/v1/auth/users/${userId}`);
   return response.data;
 });
 
 export const updateUser = createAsyncThunk("auth/updateUser", async (data: UserUpdate) => {
-  const response = await axios.put(`${API_URL}/api/v1/auth/${data.id}`);
+  const response = await axios.put(`${API_URL}/api/v1/auth/users/${data.id}`);
   return response.data;
 });
 

@@ -7,6 +7,7 @@ import {
   type RootState,
   type UserProps,
   getUsers,
+  deleteUser,
 } from '../../../store';
 
 export default function PanelUsers(): JSX.Element {
@@ -28,6 +29,14 @@ export default function PanelUsers(): JSX.Element {
     dispatch(getUsers());
   }, [lang]);
 
+  const handleDelete = (userId: number, username: string) => {
+    const del = confirm(`Do you want to delete user ${username}?`);
+    if (del) {
+      dispatch(deleteUser(userId));
+      alert(`User ${username} deleted`);
+    } else return;
+  };
+
   const renderHeaders = (headers: Array<string>) => {
     return headers.map((header) => {
       return <th>{header}</th>;
@@ -47,7 +56,10 @@ export default function PanelUsers(): JSX.Element {
               onClick={() => setSearchParams({ editUser: String(id) })}
               className='fa-regular fa-pen-to-square'
             ></i>
-            <i className='fa-solid fa-trash-can'></i>
+            <i
+              onClick={() => handleDelete(id, username)}
+              className='fa-solid fa-trash-can'
+            ></i>
           </td>
         </tr>
       );

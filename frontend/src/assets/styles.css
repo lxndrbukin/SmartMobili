@@ -1640,6 +1640,70 @@ img {
   color: var(--text-inverted);
 }
 
+/* ─── USER FORM ────────────────────────────────────────────────────────── */
+.user-form {
+  width: 100%;
+  max-width: 800px;
+  margin: var(--space-6) auto;
+  padding: var(--space-5) var(--space-8);
+  background-color: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border);
+  position: relative;
+}
+
+.user-form .input-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-2);
+}
+
+.user-form .input-field > label {
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.user-form input,
+.user-form select,
+.user-form textarea {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--text-primary);
+  background-color: var(--bg-surface);
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.user-form textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.user-form input:focus,
+.user-form select:focus,
+.user-form textarea:focus {
+  outline: none;
+  border-color: var(--accent-muted);
+  box-shadow: 0 0 0 3px rgba(201, 122, 86, 0.1);
+}
+
+.user-form h3 {
+  margin: 0 0 var(--space-5);
+  font-weight: 800;
+  font-size: 1.3rem;
+  color: var(--text-secondary);
+}
+
 /* ─── AUTH ───────────────────────────────────────────────────────────── */
 .auth-form {
   width: 100%;

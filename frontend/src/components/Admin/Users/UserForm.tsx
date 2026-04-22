@@ -12,7 +12,7 @@ export default function UserForm(): JSX.Element {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const userId = Number(searchParams.get('userId'));
+  const userId = Number(searchParams.get('editUser'));
 
   useEffect(() => {
     const fetchData = async () => {
@@ -53,7 +53,8 @@ export default function UserForm(): JSX.Element {
           >
             <i className='fa-solid fa-xmark'></i>
           </button>
-          <div className='input-field'>
+          <h3>User Form</h3>
+          <div className='form-field'>
             <label>Username</label>
             <input
               value={username || ''}
@@ -62,11 +63,11 @@ export default function UserForm(): JSX.Element {
               name='username'
             />
           </div>
-          <div className='input-field'>
+          <div className='form-field'>
             <label>New Password</label>
             <input type='password' name='password' />
           </div>
-          <div className='input-field'>
+          <div className='form-field'>
             <label>Role</label>
             <select
               name='role'
@@ -78,7 +79,7 @@ export default function UserForm(): JSX.Element {
               <option value={'user'}>User</option>
             </select>
           </div>
-          <button disabled={isLoading} type='submit'>
+          <button className='button' disabled={isLoading} type='submit'>
             Submit
           </button>
         </form>
