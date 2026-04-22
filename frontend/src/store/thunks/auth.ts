@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import type { UserUpdate } from "./types";
 import { API_URL } from "../../api";
 
 type AuthCredentials = { username: string; password: string; };
@@ -48,4 +49,19 @@ export const getMe = createAsyncThunk("auth/getMe", async () => {
 export const getUsers = createAsyncThunk("auth/getUsers", async () => {
   const response = await axios.get(`${API_URL}/api/v1/auth/users`);
   return response.data;
+});
+
+export const getUser = createAsyncThunk("auth/getUser", async (userId: Number) => {
+  const response = await axios.get(`${API_URL}/api/v1/auth/${userId}`);
+  return response.data;
+});
+
+export const updateUser = createAsyncThunk("auth/updateUser", async (data: UserUpdate) => {
+  const response = await axios.put(`${API_URL}/api/v1/auth/${data.id}`);
+  return response.data;
+});
+
+export const deleteUser = createAsyncThunk("auth/deleteUser", async (userId: Number) => {
+  await axios.delete(`${API_URL}/api/v1/auth/users/${userId}`);
+  return userId;
 });

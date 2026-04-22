@@ -79,7 +79,7 @@ export default function PanelInquiries(): JSX.Element {
             </td>
             <td className='actions'>
               <i
-                onClick={() => setSearchParams()}
+                onClick={() => setSearchParams({ editInquiry: String(id) })}
                 className='fa-regular fa-pen-to-square'
               ></i>
               <i

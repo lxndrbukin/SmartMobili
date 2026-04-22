@@ -11,6 +11,7 @@ import AuthForm from './Auth/AuthForm';
 import ItemForm from './Admin/Items/ItemForm';
 import CategoryForm from './Admin/Categories/CategoryForm';
 import InquiryForm from './Admin/Inquiry/InquiryForm';
+import UserForm from './Admin/Users/UserForm';
 
 export default function App(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
@@ -21,6 +22,7 @@ export default function App(): JSX.Element {
   const itemId = searchParams.get('editItem');
   const categoryId = searchParams.get('editCategory');
   const inquiryId = searchParams.get('editInquiry');
+  const userId = searchParams.get('editUser');
 
   const { t } = useTranslation('general');
 
@@ -45,6 +47,7 @@ export default function App(): JSX.Element {
       {(itemId || searchParams.get('createItem')) && <ItemForm />}
       {(itemId || searchParams.get('createItem')) && <ItemForm />}
       {(inquiryId || searchParams.get('createInquiry')) && <InquiryForm />}
+      {userId && <UserForm />}
       <Footer />
     </div>
   );

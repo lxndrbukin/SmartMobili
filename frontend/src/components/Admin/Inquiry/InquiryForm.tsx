@@ -168,7 +168,7 @@ export default function InquiryForm(): JSX.Element {
             </div>
           </div>
           <button disabled={isLoading} type='submit'>
-            {t('submit')}
+            {isCreating ? t('submit') : t('edit')}
           </button>
         </form>
       </div>

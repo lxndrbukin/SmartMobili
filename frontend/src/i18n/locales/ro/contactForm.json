@@ -9,5 +9,6 @@
   "phoneNumber": "Numarul de telefon",
   "email": "E-mail (optional)",
   "communication": "Communicatia (optional)",
-  "submit": "Comanda"
+  "submit": "Comanda",
+  "edit": "Actualiza"
 }

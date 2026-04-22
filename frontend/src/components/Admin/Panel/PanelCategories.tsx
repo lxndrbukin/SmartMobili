@@ -7,6 +7,7 @@ import {
   type RootState,
   type CategoryProps,
   getCategories,
+  deleteCategory,
 } from '../../../store';
 
 export default function PanelCategories(): JSX.Element {
@@ -28,6 +29,14 @@ export default function PanelCategories(): JSX.Element {
     dispatch(getCategories(lang));
   }, [lang]);
 
+  const handleDelete = (categoryId: number, categoryName: string) => {
+    const del = confirm(`Do you want to delete category ${categoryName}?`);
+    if (del) {
+      dispatch(deleteCategory(categoryId));
+      alert(`Category ${categoryName} deleted`);
+    } else return;
+  };
+
   const renderHeaders = (headers: Array<string>) => {
     return headers.map((header) => {
       return <th>{header}</th>;
@@ -47,7 +56,10 @@ export default function PanelCategories(): JSX.Element {
               onClick={() => setSearchParams({ editCategory: String(id) })}
               className='fa-regular fa-pen-to-square'
             ></i>
-            <i className='fa-solid fa-trash-can'></i>
+            <i
+              onClick={() => handleDelete(id, name)}
+              className='fa-solid fa-trash-can'
+            ></i>
           </td>
         </tr>
       );

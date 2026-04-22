@@ -1,5 +1,5 @@
 const pageTitle = (text: string) => {
-  document.title = `SMARTMOBILI | ${text}`;
+  document.title = `SmartMobili | ${text}`;
 };
 
 export default pageTitle;

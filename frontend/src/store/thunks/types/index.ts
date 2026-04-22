@@ -84,3 +84,9 @@ export type InquiryUpdate = {
   viber: boolean | null;
   whatsapp: boolean | null;
 };
+
+export type UserUpdate = {
+  id: number;
+  username: string | null;
+  user_role: string | null;
+};

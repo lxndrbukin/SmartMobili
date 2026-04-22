@@ -9,5 +9,6 @@
   "phoneNumber": "Phone Number",
   "email": "Email (optional)",
   "communication": "Communication (optional)",
-  "submit": "Submit Order"
+  "submit": "Submit Order",
+  "edit": "Edit Order"
 }

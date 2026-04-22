@@ -7,6 +7,7 @@ import {
   type RootState,
   type ItemProps,
   getItems,
+  deleteItem,
 } from '../../../store';
 
 export default function PanelItems(): JSX.Element {
@@ -28,6 +29,14 @@ export default function PanelItems(): JSX.Element {
     dispatch(getItems({ lang: lang! }));
   }, [lang]);
 
+  const handleDelete = (itemId: number, itemName: string) => {
+    const del = confirm(`Do you want to delete item ${itemName}?`);
+    if (del) {
+      dispatch(deleteItem(itemId));
+      alert(`Item ${itemName} deleted`);
+    } else return;
+  };
+
   const renderHeaders = (headers: Array<string>) => {
     return headers.map((header) => {
       return <th>{header}</th>;
@@ -47,7 +56,10 @@ export default function PanelItems(): JSX.Element {
               onClick={() => setSearchParams({ editItem: String(id) })}
               className='fa-regular fa-pen-to-square'
             ></i>
-            <i className='fa-solid fa-trash-can'></i>
+            <i
+              onClick={() => handleDelete(id, title)}
+              className='fa-solid fa-trash-can'
+            ></i>
           </td>
         </tr>
       );

@@ -44,7 +44,7 @@ export default function PanelUsers(): JSX.Element {
           <td>{new Date(signup_at).toLocaleDateString()}</td>
           <td className='actions'>
             <i
-              onClick={() => setSearchParams({})}
+              onClick={() => setSearchParams({ editUser: String(id) })}
               className='fa-regular fa-pen-to-square'
             ></i>
             <i className='fa-solid fa-trash-can'></i>
