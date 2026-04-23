@@ -57,7 +57,7 @@ export const getUser = createAsyncThunk("auth/getUser", async (userId: Number) =
 });
 
 export const updateUser = createAsyncThunk("auth/updateUser", async (data: UserUpdate) => {
-  const response = await axios.put(`${API_URL}/api/v1/auth/users/${data.id}`);
+  const response = await axios.put(`${API_URL}/api/v1/auth/users/${data.id}`, data);
   return response.data;
 });
 

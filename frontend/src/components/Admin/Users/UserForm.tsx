@@ -28,6 +28,7 @@ export default function UserForm(): JSX.Element {
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const uname = formData.get('username') as string;
     const role = formData.get('role') as string;
@@ -35,11 +36,13 @@ export default function UserForm(): JSX.Element {
     const data = {
       id: userId,
       username: uname,
+      password: null,
       user_role: role,
     };
     setIsLoading(true);
     await dispatch(updateUser(data));
     setIsLoading(false);
+    handleClose();
   };
 
   return (
@@ -75,7 +78,6 @@ export default function UserForm(): JSX.Element {
               defaultValue={userRole || 'User'}
             >
               <option value={'admin'}>Admin</option>
-              <option value={'moderator'}>Moderator</option>
               <option value={'user'}>User</option>
             </select>
           </div>

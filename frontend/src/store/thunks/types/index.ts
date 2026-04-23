@@ -88,5 +88,6 @@ export type InquiryUpdate = {
 export type UserUpdate = {
   id: number;
   username: string | null;
+  password: string | null;
   user_role: string | null;
 };
