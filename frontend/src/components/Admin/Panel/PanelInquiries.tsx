@@ -69,13 +69,13 @@ export default function PanelInquiries(): JSX.Element {
             <td>{description}</td>
             <td>{new Date(created_at).toLocaleDateString()}</td>
             <td>
-              <input type='checkbox' checked={telegram} />
+              <input type='checkbox' defaultChecked={telegram} />
             </td>
             <td>
-              <input type='checkbox' checked={viber} />
+              <input type='checkbox' defaultChecked={viber} />
             </td>
             <td>
-              <input type='checkbox' checked={whatsapp} />
+              <input type='checkbox' defaultChecked={whatsapp} />
             </td>
             <td className='actions'>
               <i

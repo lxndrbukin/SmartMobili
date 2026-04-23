@@ -2,7 +2,12 @@ import { type JSX, type FormEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { type AppDispatch, getInquiry, submitInquiry } from '../../../store';
+import {
+  type AppDispatch,
+  getInquiry,
+  submitInquiry,
+  updateInquiry,
+} from '../../../store';
 
 export default function InquiryForm(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
@@ -21,7 +26,7 @@ export default function InquiryForm(): JSX.Element {
   const [viber, setViber] = useState<boolean>(false);
 
   const isCreating = searchParams.get('createInquiry') === '1';
-  const inquiryId = searchParams.get('editInquiry');
+  const inquiryId = Number(searchParams.get('editInquiry'));
   const itemId = searchParams.get('itemId');
 
   useEffect(() => {
@@ -47,7 +52,8 @@ export default function InquiryForm(): JSX.Element {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
     const name = formData.get('name') as string;
     const subject = formData.get('subject') as string;
     const description = formData.get('description') as string;
@@ -57,6 +63,7 @@ export default function InquiryForm(): JSX.Element {
     const viber = formData.get('viber') === 'on';
     const whatsapp = formData.get('whatsapp') === 'on';
     const data = {
+      id: inquiryId,
       name,
       subject,
       description,
@@ -69,11 +76,12 @@ export default function InquiryForm(): JSX.Element {
     };
     setIsLoading(true);
     if (isCreating) {
-      await dispatch(submitInquiry(data)).unwrap();
+      await dispatch(submitInquiry(data));
     } else {
+      await dispatch(updateInquiry(data));
     }
     setIsLoading(false);
-    e.currentTarget.reset();
+    form.reset();
     handleClose();
     alert("Thank you! We'll contact you soon.");
   };
@@ -142,7 +150,7 @@ export default function InquiryForm(): JSX.Element {
             <div className='communication'>
               <label htmlFor='telegram'>Telegram</label>
               <input
-                checked={telegram}
+                defaultChecked={telegram}
                 onChange={(e) => setTelegram(e.target.checked)}
                 type='checkbox'
                 name='telegram'
@@ -151,7 +159,7 @@ export default function InquiryForm(): JSX.Element {
             <div className='communication'>
               <label htmlFor='viber'>Viber</label>
               <input
-                checked={viber}
+                defaultChecked={viber}
                 onChange={(e) => setViber(e.target.checked)}
                 type='checkbox'
                 name='viber'
@@ -160,7 +168,7 @@ export default function InquiryForm(): JSX.Element {
             <div className='communication'>
               <label htmlFor='whatsapp'>WhatsApp</label>
               <input
-                checked={whatsapp}
+                defaultChecked={whatsapp}
                 onChange={(e) => setWhatsapp(e.target.checked)}
                 type='checkbox'
                 name='whatsapp'

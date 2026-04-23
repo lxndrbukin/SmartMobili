@@ -56,7 +56,7 @@ const adminState = createSlice({
     builder.addCase(updateInquiry.fulfilled, (state: AdminState, action: PayloadAction<InquiryProps>) => {
       const updatedInquiry = action.payload;
 
-      const index = state.users.data.findIndex(u => u.id === updatedInquiry.id);
+      const index = state.inquiries.data.findIndex(u => u.id === updatedInquiry.id);
       if (index !== -1) {
         state.inquiries.data[ index ] = updatedInquiry;
       }
