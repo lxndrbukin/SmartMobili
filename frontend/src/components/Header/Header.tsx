@@ -22,9 +22,20 @@ export default function Header(): JSX.Element {
 
   const renderNavLinks = (links: Array<NavLink>): Array<JSX.Element | null> => {
     return links.map((link: NavLink) => {
-      if (link.href === '/admin' && !isAdmin) {
+      if (link.name === 'order') {
+        return (
+          <li
+            onClick={() => setSearchParams({ createInquiry: '1' })}
+            key={link.label}
+          >
+            <span>{link.label}</span>
+          </li>
+        );
+      }
+      if (link.name === 'admin' && !isAdmin) {
         return null;
       }
+
       return (
         <li key={link.label}>
           <Link to={to(link.href)}>{link.label}</Link>

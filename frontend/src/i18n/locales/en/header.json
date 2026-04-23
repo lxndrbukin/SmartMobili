@@ -1,9 +1,9 @@
 {
   "logo": "Custom Furniture",
   "nav": [
-    { "label": "Home", "href": "/" },
-    { "label": "Catalog", "href": "/catalog" },
-    { "label": "Order", "href": "/order" },
-    { "label": "Admin", "href": "/admin" }
+    { "name": "home", "label": "Home", "href": "/" },
+    { "name": "catalog", "label": "Catalog", "href": "/catalog" },
+    { "name": "order", "label": "Order" },
+    { "name": "admin", "label": "Admin", "href": "/admin" }
   ]
 }

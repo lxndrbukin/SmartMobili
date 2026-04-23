@@ -237,7 +237,8 @@ img {
   gap: var(--space-1);
 }
 
-.header-wrapper .header .header-links ul li a {
+.header-wrapper .header .header-links ul li a,
+.header-wrapper .header .header-links ul li span {
   font-size: 13px;
   font-weight: 500;
   color: var(--text-inverted-muted);
@@ -248,9 +249,11 @@ img {
   transition:
     color var(--transition-fast),
     background-color var(--transition-fast);
+  cursor: pointer;
 }
 
-.header-wrapper .header .header-links ul li a:hover {
+.header-wrapper .header .header-links ul li a:hover,
+.header-wrapper .header .header-links ul li span:hover {
   color: var(--text-inverted);
   background-color: rgba(255, 255, 255, 0.06);
 }

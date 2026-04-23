@@ -1,9 +1,9 @@
 {
   "logo": "Mobila la comanda",
   "nav": [
-    { "label": "Principala", "href": "/" },
-    { "label": "Catalog", "href": "/catalog" },
-    { "label": "Comanda", "href": "/order" },
-    { "label": "Admin", "href": "/admin" }
+    { "name": "home", "label": "Principala", "href": "/" },
+    { "name": "catalog", "label": "Catalog", "href": "/catalog" },
+    { "name": "inquiry", "label": "Comanda" },
+    { "name": "admin", "label": "Admin", "href": "/admin" }
   ]
 }

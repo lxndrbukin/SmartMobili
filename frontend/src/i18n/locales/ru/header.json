@@ -1,9 +1,9 @@
 {
   "logo": "Мебель на заказ",
   "nav": [
-    { "label": "Главная", "href": "/" },
-    { "label": "Каталог", "href": "/catalog" },
-    { "label": "Заявка", "href": "/order" },
-    { "label": "Панель", "href": "/admin" }
+    { "name": "home", "label": "Главная", "href": "/" },
+    { "name": "catalog", "label": "Каталог", "href": "/catalog" },
+    { "name": "inquiry", "label": "Заявка" },
+    { "name": "admin", "label": "Панель", "href": "/admin" }
   ]
 }
