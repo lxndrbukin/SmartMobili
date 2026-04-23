@@ -86,44 +86,57 @@ def get_users(
         db: Session = Depends(get_db),
         current_user: User = Depends(get_current_user)
     ):
-    if current_user.user_role == UserRole.admin:
-        users = db.query(User).offset(skip).limit(limit).all()
-        result = []
-        for user in users:
-            result.append({
-                "id": user.id,
-                "username": user.username,
-                "user_role": user.user_role,
-                "signup_at": user.signup_at
-            })
-        return PaginatedUsersResponse(
-            data=result,
-            pagination=Pagination(skip=skip, limit=limit)
-        )
-    return {"message": "Access denied"}
+    if current_user.user_role != UserRole.admin:
+        raise HTTPException(status_code=403, detail="Access denied")
+    users = db.query(User).offset(skip).limit(limit).all()
+    result = []
+    for user in users:
+        result.append({
+            "id": user.id,
+            "username": user.username,
+            "user_role": user.user_role,
+            "signup_at": user.signup_at
+        })
+    return PaginatedUsersResponse(
+        data=result,
+        pagination=Pagination(skip=skip, limit=limit)
+    )
 
 @auth_router.get("/users/{user_id}", status_code=status.HTTP_200_OK, response_model=UserResponse)
 def get_user(user_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    if current_user.user_role == UserRole.admin:
-        user = db.query(User).filter(User.id == user_id).first()
-        return UserResponse(
-            id=user.id,
-            username=user.username,
-            user_role=user.user_role,
-            signup_at=user.signup_at
-        )
-    return {"message": "Access denied"}
+    if current_user.user_role != UserRole.admin:
+        raise HTTPException(status_code=403, detail="Access denied")
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return UserResponse(
+        id=user.id,
+        username=user.username,
+        user_role=user.user_role,
+        signup_at=user.signup_at
+    )
 
 @auth_router.put("/users/{user_id}", status_code=status.HTTP_200_OK, response_model=UserResponse)
 def update_user(user_id: int, data: UserUpdate, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    if current_user.user_role == UserRole.admin:
-        user = db.query(User).filter(User.id == user_id).first()
-        if data.username:
-            user.username = data.username
-        if data.password:
-            user.password = data.password
-        if data.user_role:
-            user.user_role = data.user_role
+    if current_user.user_role != UserRole.admin:
+        raise HTTPException(status_code=403, detail="Access denied")
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    if data.username:
+        user.username = data.username
+    if data.password:
+        user.hashed_password=pwd_context.hash(data.password)
+    if data.user_role:
+        user.user_role = data.user_role
+    db.commit()
+    db.refresh(user)
+    return UserResponse(
+        id=user.id,
+        username=user.username,
+        user_role=user.user_role,
+        signup_at=user.signup_at
+    )
 
 @auth_router.delete("/users/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_user(user_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
