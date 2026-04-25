@@ -1,5 +1,5 @@
 import { type JSX, useEffect, useState } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, Link, useSearchParams } from 'react-router-dom';
 import pageTitle from '../../utils/pageTitle';
 import useLocalePath from '../../hooks/useLocalePath';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,7 +18,7 @@ export default function CatalogItemPage(): JSX.Element {
   const { t } = useTranslation('catalog');
   const to = useLocalePath();
   const { itemId, lang } = useParams<{ itemId: string; lang: string }>();
-  const navigate = useNavigate();
+  const [, setSearchParams] = useSearchParams();
   const dispatch = useDispatch<AppDispatch>();
 
   const { currentItem } = useSelector((state: RootState) => state.catalog);
@@ -110,7 +110,12 @@ export default function CatalogItemPage(): JSX.Element {
           <div className='catalog-item-page-actions'>
             <button
               className='button'
-              onClick={() => navigate(to(`/order?item=${itemId}`))}
+              onClick={() =>
+                setSearchParams({
+                  createInquiry: 'true',
+                  itemId: String(itemId),
+                })
+              }
             >
               {t('itemPage.call')}
             </button>
