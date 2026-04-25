@@ -1,22 +1,22 @@
 {
   "item": {
     "headerCreate": "Produs nou",
-    "headerEdit": "Actualiza produs",
+    "headerEdit": "Actualizare produs",
     "title": "Titlu",
     "description": "Descriere",
     "price": "Preț",
     "category": "Categorie",
     "images": "Imagini",
-    "submitCreate": "Crea",
-    "submitEdit": "Actualiza"
+    "submitCreate": "Creează",
+    "submitEdit": "Actualizează"
   },
   "category": {
     "headerCreate": "Categorie nouă",
-    "headerEdit": "Actualiza categorie",
+    "headerEdit": "Actualizare categorie",
     "title": "Titlu",
-    "url": "URL-ul",
-    "submitCreate": "Crea",
-    "submitEdit": "Actualiza",
+    "url": "URL",
+    "submitCreate": "Creează",
+    "submitEdit": "Actualizează",
     "images": "Imagini"
   },
   "panel": {
@@ -29,13 +29,13 @@
     },
     "table": {
       "name": "Denumire",
-      "category": "Category",
-      "price": "Price",
+      "category": "Categorie",
+      "price": "Preț",
       "actions": "Acțiuni",
       "items": "Produse",
       "username": "Utilizator",
       "role": "Rolul",
-      "signedup": "Registrarea",
+      "signedup": "Înregistrare",
       "subject": "Titlu",
       "description": "Descriere",
       "date": "Data"

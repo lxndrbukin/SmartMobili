@@ -1,7 +1,7 @@
 {
   "header": "Catalog",
   "sections": [
-    { "label": "Bucatarii", "href": "/kitchens", "tag": "kitchens" },
+    { "label": "Bucătării", "href": "/kitchens", "tag": "kitchens" },
     { "label": "Dulapuri", "href": "/wardrobes", "tag": "wardrobes" },
     { "label": "Birouri", "href": "/office", "tag": "offices" },
     { "label": "Mese", "href": "/tables", "tag": "tables" },

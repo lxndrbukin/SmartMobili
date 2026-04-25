@@ -1,14 +1,14 @@
 {
-  "header": "Comanda",
+  "header": "Comandă",
   "name": "Numele",
-  "namePlaceholder": "e.g. Ion sau Ion Gutu",
+  "namePlaceholder": "ex. Ion sau Ion Gutu",
   "subject": "Titlu",
-  "subjectPlaceholder": "e.g. Dulap in dormitor",
+  "subjectPlaceholder": "ex. Dulap în dormitor",
   "desc": "Descriere",
   "descPlaceholder": "",
-  "phoneNumber": "Numarul de telefon",
-  "email": "E-mail (optional)",
-  "communication": "Communicatia (optional)",
-  "submit": "Comanda",
-  "edit": "Actualiza"
+  "phoneNumber": "Numărul de telefon",
+  "email": "E-mail (opțional)",
+  "communication": "Comunicația (opțional)",
+  "submit": "Trimite comanda",
+  "edit": "Actualizează"
 }

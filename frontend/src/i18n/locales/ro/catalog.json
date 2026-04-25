@@ -6,13 +6,13 @@
   },
   "items": "Produse: {{count}}",
   "breadcrumbs": {
-    "home": "Principala",
+    "home": "Acasă",
     "catalog": "Catalog"
   },
   "itemPage": {
     "description": "Descriere",
     "noPrice": "Fără preț",
-    "call": "Comanda"
+    "call": "Comandă"
   },
   "popular": {
     "header": "Produse populare"

@@ -1,9 +1,9 @@
 {
-  "logo": "Mobila la comanda",
+  "logo": "Mobilă la comandă",
   "nav": [
-    { "name": "home", "label": "Principala", "href": "/" },
+    { "name": "home", "label": "Acasă", "href": "/" },
     { "name": "catalog", "label": "Catalog", "href": "/catalog" },
-    { "name": "inquiry", "label": "Comanda" },
+    { "name": "inquiry", "label": "Comandă" },
     { "name": "admin", "label": "Admin", "href": "/admin" }
   ]
 }

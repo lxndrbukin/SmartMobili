@@ -1,10 +1,10 @@
 {
-  "logo": "Mobila la comanda",
+  "logo": "Mobilă la comandă",
   "sections": {
     "catalog": {
       "label": "Catalog",
       "links": [
-        { "label": "Bucatarii", "href": "/kitchens" },
+        { "label": "Bucătării", "href": "/kitchens" },
         { "label": "Living", "href": "/living" },
         { "label": "Birouri", "href": "/office" },
         { "label": "Dulapuri", "href": "/wardrobes" },
@@ -12,18 +12,18 @@
       ]
     },
     "info": {
-      "label": "Informatia",
+      "label": "Informații",
       "links": [
         { "label": "Despre noi", "href": "/about" },
         { "label": "Servicii", "href": "/services" },
-        { "label": "Comanda", "href": "/orders" }
+        { "label": "Comenzi", "href": "/orders" }
       ]
     },
     "contacts": {
       "label": "Contacte",
       "links": [
-        { "label": "+373 69 923 028", "href": "tel:+373 69 923 028" },
-        { "label": "+373 79 684 094", "href": "tel:+373 79 684 094" }
+        { "label": "+373 69 923 028", "href": "tel:+37369923028" },
+        { "label": "+373 79 684 094", "href": "tel:+37379684094" }
       ]
     }
   }
