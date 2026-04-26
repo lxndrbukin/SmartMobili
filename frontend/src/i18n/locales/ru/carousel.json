@@ -1,17 +1,17 @@
 {
   "banners": [
     {
-      "img": "https://smartmobili.vercel.app/imgs/menu_hallway.png",
+      "img": "/banners/banner1.jpg",
       "primaryText": "Мебель на заказ от SmartMobili",
       "secondaryText": "Уникальные интерьерные решения для дома и офиса. Производство корпусной и встраиваемой продукции – основная специализация нашей компании. Создаем композиции для всех жилых помещений."
     },
     {
-      "img": "https://smartmobili.vercel.app/imgs/menu_wardrobe.png",
+      "img": "/banners/banner2.jpg",
       "primaryText": "Шкафы",
       "secondaryText": ""
     },
     {
-      "img": "https://smartmobili.vercel.app/imgs/menu_office.png",
+      "img": "/banners/banner3.jpg",
       "primaryText": "Офисы",
       "secondaryText": ""
     }

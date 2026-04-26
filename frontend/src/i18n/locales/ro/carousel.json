@@ -1,17 +1,17 @@
 {
   "banners": [
     {
-      "img": "https://smartmobili.vercel.app/imgs/menu_hallway.png",
+      "img": "/banners/banner1.jpg",
       "primaryText": "Mobilă la comandă de la SmartMobili",
       "secondaryText": "Soluții de interior unice pentru casă și birou. Fabricarea de cabinete și produse încorporate este principala specializare a companiei noastre. Creăm compoziții pentru toate zonele rezidențiale."
     },
     {
-      "img": "https://smartmobili.vercel.app/imgs/menu_wardrobe.png",
+      "img": "/banners/banner2.jpg",
       "primaryText": "Dulapuri",
       "secondaryText": ""
     },
     {
-      "img": "https://smartmobili.vercel.app/imgs/menu_office.png",
+      "img": "/banners/banner3.jpg",
       "primaryText": "Birouri",
       "secondaryText": ""
     }
