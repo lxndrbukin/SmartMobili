@@ -68,9 +68,11 @@ def create_category(category: CategoryCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(db_category)
     translation = get_translation(db_category.translations, Language.ro)
+    item_count = db.query(func.count(Item.id)).filter(Item.category_id == category.id).scalar()
     return {
         "id": db_category.id,
         "slug": db_category.slug,
+        "item_count": item_count,
         "name": translation.name,
         "language": translation.language
     }

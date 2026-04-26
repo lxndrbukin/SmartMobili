@@ -141,11 +141,18 @@ def update_item(
         item.category_id = data.category_id
     db.commit()
     db.refresh(item)
+    category = db.query(Category) \
+        .options(joinedload(Category.translations)).filter(Category.id == item.category_id).first()
+    category_translation = get_translation(category.translations, lang)
     translation = get_translation(item.translations, lang)
     return {
         "id": item.id,
         "price": item.price,
-        "category_id": item.category_id,
+        "category": ItemCategoryResponse(
+            id=category.id,
+            slug=category.slug,
+            name=category_translation.name
+        ),
         "created_at": item.created_at,
         "title": translation.title,
         "description": translation.description,
