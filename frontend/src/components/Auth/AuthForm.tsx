@@ -8,7 +8,6 @@ import {
   register,
   login,
   getMe,
-  clearError,
 } from '../../store';
 
 export default function AuthForm(): JSX.Element {
@@ -61,7 +60,7 @@ export default function AuthForm(): JSX.Element {
           } else {
             setSearchParams({ login: 'true' });
           }
-          dispatch(clearError());
+          setFormErrors({ username: null, password: null });
         }}
       >
         {isLogin ? t('form.signup') : t('form.login')}
@@ -73,7 +72,7 @@ export default function AuthForm(): JSX.Element {
     if (!value.length) {
       setFormErrors({
         ...formErrors,
-        [name]: t('form.enterMsg', { label: name }),
+        [name]: t('form.enterMsg', { label: t(`form.${name}`).toLowerCase() }),
       });
     } else {
       setFormErrors({
