@@ -13,6 +13,7 @@ from models.items import (
 from db import get_db
 from db_models.items import Item, ItemImage, ItemTranslation
 from sqlalchemy.orm import Session, joinedload
+from sqlalchemy import or_
 from cloud_storage import upload_image, delete_image
 from utils import get_translation, Language
 
@@ -24,6 +25,7 @@ def get_items(
         limit: int = 10,
         category_id: int | None = None,
         category_slug: str | None = None,
+        search_query: str | None = None,
         lang: Language = Language.ro,
         db: Session = Depends(get_db)
     ):
@@ -36,12 +38,20 @@ def get_items(
         category = db.query(Category).filter(Category.slug == category_slug).first()
         if category:
             query = query.filter(Item.category_id == category.id)
+    if search_query:
+        query = query.join(ItemTranslation).filter(
+            ItemTranslation.language == lang,
+            or_(
+                ItemTranslation.title.ilike(f"%{search_query}%"),
+                ItemTranslation.description.ilike(f"%{search_query}%")
+            )
+        )
     items = query.offset(skip).limit(limit).all()
     result = []
     for item in items:
         if category_slug is None:
             category = db.query(Category) \
-                .options(joinedload(Category.translations)).filter(Category.id == item.category_id).first()
+                .options(joinedload(Category.translations)).filter(Category.id == item.category_id).first()            
         category_translation = get_translation(category.translations, lang)
         item_translation = get_translation(item.translations, lang)
         result.append({
