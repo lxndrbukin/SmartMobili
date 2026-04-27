@@ -18,6 +18,7 @@ export default function Header(): JSX.Element {
   const navLinks = t('nav', { returnObjects: true }) as Array<NavLink>;
   const isAdmin = token && user && user.user_role === 'admin';
   const [showNav, setShowNav] = useState<boolean>(false);
+  const [showSearch, setShowSearch] = useState<boolean>(false);
 
   const [, setSearchParams] = useSearchParams();
 
@@ -92,11 +93,17 @@ export default function Header(): JSX.Element {
         </div>
         <HeaderSearch />
         <div className='header_user-links'>
+          <button
+            onClick={() => setShowSearch(!showSearch)}
+            className='mobile-toggle'
+          >
+            <i className='fa-solid fa-magnifying-glass'></i>
+          </button>
           {token ? <HeaderProfile /> : renderAuth()}
           <SelectLang />
           <button
             onClick={() => setShowNav(!showNav)}
-            className='mobile-nav-toggle'
+            className='mobile-toggle'
           >
             {showNav ? (
               <i className='fa-solid fa-xmark'></i>
@@ -106,6 +113,13 @@ export default function Header(): JSX.Element {
           </button>
         </div>
       </header>
+
+      {showSearch && (
+        <div className='mobile-search'>
+          <HeaderSearch />
+        </div>
+      )}
+
       {showNav && (
         <div className='mobile-nav'>
           <nav>{renderMobileNavLinks(navLinks)}</nav>

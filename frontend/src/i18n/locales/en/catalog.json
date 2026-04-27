@@ -16,5 +16,9 @@
   },
   "popular": {
     "header": "Popular Items"
+  },
+  "search": {
+    "header": "Results for:",
+    "results": "{{num}} results found"
   }
 }

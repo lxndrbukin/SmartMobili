@@ -1,5 +1,5 @@
 import { type JSX, useEffect, useState } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import pageTitle from '../../utils/pageTitle';
 import { title } from './assets/title';
 import useLocalePath from '../../hooks/useLocalePath';
@@ -18,6 +18,7 @@ import CatalogItemSkeleton from './CatalogItemSkeleton';
 
 export default function Catalog(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
   const to = useLocalePath();
   const { t } = useTranslation('catalog');
   const { lang } = useParams<{ lang: string }>();
@@ -30,6 +31,8 @@ export default function Catalog(): JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
   pageTitle(title[lang as 'en' | 'ro' | 'ru']);
   const categorySlug = searchParams.get('category');
+  const searchQuery = searchParams.get('search');
+
   useEffect(() => {
     dispatch(getCategories(lang));
   }, [dispatch, lang]);
@@ -37,26 +40,30 @@ export default function Catalog(): JSX.Element {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      if (categorySlug) {
-        await dispatch(
-          getItems({
-            lang: lang || 'ro',
-            categorySlug: String(categorySlug),
-            limit: 5,
-          }),
-        ).unwrap();
+      if (!searchQuery) {
+        if (categorySlug) {
+          await dispatch(
+            getItems({
+              lang: lang || 'ro',
+              categorySlug: String(categorySlug),
+              limit: 5,
+            }),
+          ).unwrap();
+        } else {
+          await dispatch(
+            getItems({
+              lang: lang || 'ro',
+              limit: 5,
+            }),
+          ).unwrap();
+        }
       } else {
-        await dispatch(
-          getItems({
-            lang: lang || 'ro',
-            limit: 5,
-          }),
-        ).unwrap();
+        await dispatch(getItems({ lang: lang || 'ro', searchQuery })).unwrap();
       }
       setIsLoading(false);
     };
     fetchData();
-  }, [dispatch, categorySlug, lang]);
+  }, [dispatch, categorySlug, lang, searchQuery]);
 
   const renderSkeleton = () => {
     if (isLoading) {
@@ -110,10 +117,37 @@ export default function Catalog(): JSX.Element {
     });
   };
 
+  if (searchQuery) {
+    return (
+      <div className='catalog'>
+        <p>
+          {t('search.header')} <b>{searchQuery}</b>
+        </p>
+        {isLoading ? (
+          renderSkeleton()
+        ) : items.length ? (
+          <>
+            <p>{t('search.results', { num: items.length })}</p>
+            {renderItems(items)}
+          </>
+        ) : (
+          <div className='catalog-no-results'>
+            <div className='catalog-no-items'>{t('generic.noItems')}</div>
+            <button
+              className='catalog-no-items-button'
+              onClick={() => navigate(to('/catalog'))}
+            >
+              Catalog
+            </button>
+          </div>
+        )}
+      </div>
+    );
+  }
+
   return (
     <div className='catalog'>
       <h1>{t('header')}</h1>
-
       <div className='catalog-categories'>
         <button
           className={!categorySlug ? 'active' : ''}

@@ -16,5 +16,9 @@
   },
   "popular": {
     "header": "Produse populare"
+  },
+  "search": {
+    "header": "Rezultate pentru:",
+    "results": "Rezultate găsite: {{num}}"
   }
 }
