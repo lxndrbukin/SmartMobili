@@ -8,6 +8,7 @@ import useLocalePath from '../../hooks/useLocalePath';
 import { useTranslation } from 'react-i18next';
 import SelectLang from './SelectLang';
 import HeaderProfile from './HeaderProfile';
+import HeaderSearch from './HeaderSearch';
 import logo from '../../assets/imgs/icons8-wardrobe-50.png';
 
 export default function Header(): JSX.Element {
@@ -89,6 +90,7 @@ export default function Header(): JSX.Element {
         <div className='header-links'>
           <ul>{renderNavLinks(navLinks)}</ul>
         </div>
+        <HeaderSearch />
         <div className='header_user-links'>
           {token ? <HeaderProfile /> : renderAuth()}
           <SelectLang />

@@ -1,7 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { CatalogState, ItemProps, CategoryProps } from "./types";
 import { getItems, getItem, createItem, updateItem } from "../thunks/items";
-import { getCategories, createCategory } from "../thunks/categories";
+import { getCategories, createCategory, updateCategory } from "../thunks/categories";
 
 const initialState: CatalogState = {
   items: [],
@@ -44,7 +44,12 @@ const catalogSlice = createSlice({
       }
     );
     builder.addCase(updateItem.fulfilled, (state: CatalogState, action: PayloadAction<ItemProps>) => {
+      const updatedItem = action.payload;
       state.currentItem = action.payload;
+      const index = state.items.findIndex(i => i.id === updatedItem.id);
+      if (index !== -1) {
+        state.items[ index ] = updatedItem;
+      }
     });
     builder.addCase(
       getCategories.fulfilled,
@@ -61,6 +66,16 @@ const catalogSlice = createSlice({
     builder.addCase(
       createCategory.fulfilled, (state: CatalogState, action: PayloadAction<CategoryProps>) => {
         state.categories.push(action.payload);
+      }
+    );
+    builder.addCase(
+      updateCategory.fulfilled, (state: CatalogState, action: PayloadAction<CategoryProps>) => {
+        const updatedCategory = action.payload;
+
+        const index = state.categories.findIndex(c => c.id === updatedCategory.id);
+        if (index !== -1) {
+          state.categories[ index ] = updatedCategory;
+        }
       }
     );
   },
