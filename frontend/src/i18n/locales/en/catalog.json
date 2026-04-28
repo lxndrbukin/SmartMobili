@@ -14,8 +14,8 @@
     "noPrice": "No Price",
     "call": "Order"
   },
-  "popular": {
-    "header": "Popular Items"
+  "latest": {
+    "header": "Latest Items"
   },
   "search": {
     "header": "Results for:",

@@ -47,6 +47,7 @@ export default function Catalog(): JSX.Element {
               lang: lang || 'ro',
               categorySlug: String(categorySlug),
               limit: 5,
+              desc: true,
             }),
           ).unwrap();
         } else {
@@ -54,6 +55,7 @@ export default function Catalog(): JSX.Element {
             getItems({
               lang: lang || 'ro',
               limit: 5,
+              desc: true,
             }),
           ).unwrap();
         }

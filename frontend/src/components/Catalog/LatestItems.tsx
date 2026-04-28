@@ -12,7 +12,7 @@ import {
 import CatalogItem from './CatalogItem';
 import CatalogItemSkeleton from './CatalogItemSkeleton';
 
-export default function PopularItems(): JSX.Element {
+export default function LatestItems(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
   const to = useLocalePath();
   const { t } = useTranslation('catalog');
@@ -23,7 +23,9 @@ export default function PopularItems(): JSX.Element {
   useEffect(() => {
     const fetchData = async () => {
       // setIsLoading(true);
-      await dispatch(getItems({ limit: 4, lang: currentLang })).unwrap();
+      await dispatch(
+        getItems({ limit: 4, lang: currentLang, desc: true }),
+      ).unwrap();
       // setIsLoading(false);
     };
     fetchData();
@@ -54,12 +56,12 @@ export default function PopularItems(): JSX.Element {
   };
 
   return (
-    <div className='popular-items-wrapper'>
-      <div className='popular-items-header'>
-        <h3>{t('popular.header')}</h3>
+    <div className='latest-items-wrapper'>
+      <div className='latest-items-header'>
+        <h3>{t('latest.header')}</h3>
         <Link to={to('/catalog')}>{t('generic.allItems')} →</Link>
       </div>
-      <div className='popular-items'>
+      <div className='latest-items'>
         {items.length ? renderItems(items) : renderSkeleton()}
       </div>
     </div>

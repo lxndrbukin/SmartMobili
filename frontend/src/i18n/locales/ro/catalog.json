@@ -14,8 +14,8 @@
     "noPrice": "Fără preț",
     "call": "Comandă"
   },
-  "popular": {
-    "header": "Produse populare"
+  "latest": {
+    "header": "Produse noi"
   },
   "search": {
     "header": "Rezultate pentru:",

@@ -34,6 +34,7 @@ export type ItemRequest = {
 
 export type ItemsRequest = {
   lang: string | null;
+  desc?: boolean;
   categoryId?: number;
   categorySlug?: string;
   searchQuery?: string;

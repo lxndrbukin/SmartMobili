@@ -1,7 +1,7 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import App from '../components/App';
 import Categories from '../components/Catalog/Categories';
-import PopularItems from '../components/Catalog/PopularItems';
+import LatestItems from '../components/Catalog/LatestItems';
 import OrderSteps from '../components/Static/OrderSteps';
 import Carousel from '../components/Carousel/Carousel';
 import Catalog from '../components/Catalog/Catalog';
@@ -25,7 +25,7 @@ export const router = createBrowserRouter([
           <>
             <Carousel />
             <Categories />
-            <PopularItems />
+            <LatestItems />
             <OrderSteps />
           </>
         ),

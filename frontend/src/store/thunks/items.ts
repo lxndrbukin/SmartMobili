@@ -11,8 +11,11 @@ import { API_URL } from "../../api";
 
 export const getItems = createAsyncThunk(
   "items/getItems",
-  async ({ lang, categoryId, categorySlug, searchQuery, limit }: ItemsRequest) => {
+  async ({ lang, categoryId, desc, categorySlug, searchQuery, limit }: ItemsRequest) => {
     const params = new URLSearchParams();
+    if (desc) {
+      params.append("desc", desc.toString());
+    }
     if (lang) {
       params.append("lang", lang);
     }
