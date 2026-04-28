@@ -23,6 +23,7 @@ items_router = APIRouter(prefix="/items", tags=["items"])
 def get_items(
         skip: int = 0,
         limit: int = 10,
+        desc: bool = False,
         category_id: int | None = None,
         category_slug: str | None = None,
         search_query: str | None = None,
@@ -32,6 +33,8 @@ def get_items(
     category = None
     query = db.query(Item) \
         .options(joinedload(Item.images), joinedload(Item.translations))
+    if desc:
+        query = query.order_by(Item.id.desc())
     if category_id:
         query = query.filter(Item.category_id == category_id)
     if category_slug:
