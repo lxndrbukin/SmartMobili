@@ -500,6 +500,11 @@ img {
 .mobile-search {
   width: 100%;
   padding: var(--spacing-md) var(--spacing-lg);
+  display: none;
+}
+
+.mobile-search form {
+  width: 100%;
 }
 
 .mobile-search .header-search input {
@@ -507,6 +512,7 @@ img {
   height: 40px;
   width: 100%;
   max-width: 500px;
+  font-size: 16px;
 }
 
 .mobile-search .header-search button {
@@ -2568,6 +2574,26 @@ img {
     height: 480px;
   }
 
+  .header-wrapper .header .header-search {
+    display: none;
+  }
+
+  #search-toggle {
+    display: flex;
+  }
+
+  .mobile-search {
+    display: flex;
+  }
+
+  .acrool-react-carousel__nav-button {
+    display: none;
+  }
+
+  .acrool-react-carousel__root {
+    height: 480px;
+  }
+
   .catalog-section-items {
     grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
     gap: var(--space-4);
@@ -2586,14 +2612,15 @@ img {
 
 /* ─── ≤ 900px : Tablet portrait ──────────────────────────────────────── */
 @media screen and (max-width: 900px) {
-  .header-wrapper .header .header-search {
-    display: none;
+  .acrool-react-carousel__root {
+    height: 350px;
   }
 
   .top-banner {
     grid-template-columns: 1fr;
     text-align: center;
     padding: var(--space-10) var(--space-5);
+    height: 350px;
   }
 
   .top-banner .top-banner_left {

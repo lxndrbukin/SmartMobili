@@ -5,5 +5,6 @@
     { "name": "catalog", "label": "Catalog", "href": "/catalog" },
     { "name": "inquiry", "label": "Comandă" },
     { "name": "admin", "label": "Admin", "href": "/admin" }
-  ]
+  ],
+  "search": "Căutare"
 }

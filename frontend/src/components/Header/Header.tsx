@@ -96,6 +96,7 @@ export default function Header(): JSX.Element {
           <button
             onClick={() => setShowSearch(!showSearch)}
             className='mobile-toggle'
+            id='search-toggle'
           >
             <i className='fa-solid fa-magnifying-glass'></i>
           </button>
@@ -104,6 +105,7 @@ export default function Header(): JSX.Element {
           <button
             onClick={() => setShowNav(!showNav)}
             className='mobile-toggle'
+            id='nav-toggle'
           >
             {showNav ? (
               <i className='fa-solid fa-xmark'></i>
@@ -115,7 +117,7 @@ export default function Header(): JSX.Element {
       </header>
 
       {showSearch && (
-        <div className='mobile-search'>
+        <div id='mobile-search' className='mobile-search'>
           <HeaderSearch />
         </div>
       )}
