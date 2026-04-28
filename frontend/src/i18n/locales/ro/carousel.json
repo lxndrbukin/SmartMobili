@@ -3,17 +3,20 @@
     {
       "img": "/banners/banner1.jpg",
       "primaryText": "Mobilă la comandă de la SmartMobili",
-      "secondaryText": "Soluții de interior unice pentru casă și birou. Fabricarea de cabinete și produse încorporate este principala specializare a companiei noastre. Creăm compoziții pentru toate zonele rezidențiale."
+      "secondaryText": "Soluții de interior unice pentru casă și birou. Fabricarea de cabinete și produse încorporate este principala specializare a companiei noastre. Creăm compoziții pentru toate zonele rezidențiale.",
+      "url": "/catalog"
     },
     {
       "img": "/banners/banner2.jpg",
       "primaryText": "Dulapuri",
-      "secondaryText": ""
+      "secondaryText": "",
+      "url": "/catalog/wardrobes"
     },
     {
       "img": "/banners/banner3.jpg",
       "primaryText": "Birouri",
-      "secondaryText": ""
+      "secondaryText": "",
+      "url": "/catalog/office"
     }
   ],
   "bannerLinks": {

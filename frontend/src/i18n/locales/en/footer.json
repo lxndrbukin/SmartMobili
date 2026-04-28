@@ -1,16 +1,6 @@
 {
   "logo": "Custom Furniture",
   "sections": {
-    "catalog": {
-      "label": "Catalog",
-      "links": [
-        { "label": "Kitchens", "href": "/kitchens" },
-        { "label": "Living Rooms", "href": "/living" },
-        { "label": "Offices", "href": "/office" },
-        { "label": "Wardrobes", "href": "/wardrobes" },
-        { "label": "Tables", "href": "/tables" }
-      ]
-    },
     "info": {
       "label": "Info",
       "links": [

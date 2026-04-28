@@ -1,16 +1,6 @@
 {
   "logo": "Мебель на заказ",
   "sections": {
-    "catalog": {
-      "label": "Каталог",
-      "links": [
-        { "label": "Кухни", "href": "/kitchens" },
-        { "label": "Прихожие", "href": "/living" },
-        { "label": "Офисы", "href": "/office" },
-        { "label": "Шкафы", "href": "/wardrobes" },
-        { "label": "Столы", "href": "/tables" }
-      ]
-    },
     "info": {
       "label": "Информация",
       "links": [

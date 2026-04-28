@@ -3,7 +3,7 @@
   "nav": [
     { "name": "home", "label": "Главная", "href": "/" },
     { "name": "catalog", "label": "Каталог", "href": "/catalog" },
-    { "name": "inquiry", "label": "Заявка" },
+    { "name": "order", "label": "Заявка" },
     { "name": "admin", "label": "Панель", "href": "/admin" }
   ],
   "search": "Поиск"

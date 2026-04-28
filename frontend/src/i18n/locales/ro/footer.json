@@ -1,16 +1,6 @@
 {
   "logo": "Mobilă la comandă",
   "sections": {
-    "catalog": {
-      "label": "Catalog",
-      "links": [
-        { "label": "Bucătării", "href": "/kitchens" },
-        { "label": "Living", "href": "/living" },
-        { "label": "Birouri", "href": "/office" },
-        { "label": "Dulapuri", "href": "/wardrobes" },
-        { "label": "Mese", "href": "/tables" }
-      ]
-    },
     "info": {
       "label": "Informații",
       "links": [

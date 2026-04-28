@@ -25,7 +25,7 @@ export default function InquiryForm(): JSX.Element {
   const [whatsapp, setWhatsapp] = useState<boolean>(false);
   const [viber, setViber] = useState<boolean>(false);
 
-  const isCreating = searchParams.get('createInquiry') === '1';
+  const isCreating = searchParams.get('createInquiry') === 'true';
   const inquiryId = Number(searchParams.get('editInquiry'));
   const itemId = searchParams.get('itemId');
 

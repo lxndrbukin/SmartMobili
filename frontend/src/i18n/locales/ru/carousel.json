@@ -3,17 +3,20 @@
     {
       "img": "/banners/banner1.jpg",
       "primaryText": "Мебель на заказ от SmartMobili",
-      "secondaryText": "Уникальные интерьерные решения для дома и офиса. Производство корпусной и встраиваемой продукции – основная специализация нашей компании. Создаем композиции для всех жилых помещений."
+      "secondaryText": "Уникальные интерьерные решения для дома и офиса. Производство корпусной и встраиваемой продукции – основная специализация нашей компании. Создаем композиции для всех жилых помещений.",
+      "url": "/catalog"
     },
     {
       "img": "/banners/banner2.jpg",
       "primaryText": "Шкафы",
-      "secondaryText": ""
+      "secondaryText": "",
+      "url": "/catalog/wardrobes"
     },
     {
       "img": "/banners/banner3.jpg",
       "primaryText": "Офисы",
-      "secondaryText": ""
+      "secondaryText": "",
+      "url": "/catalog/office"
     }
   ],
   "bannerLinks": {

@@ -27,7 +27,7 @@ export default function Header(): JSX.Element {
       if (link.name === 'order') {
         return (
           <li
-            onClick={() => setSearchParams({ createInquiry: '1' })}
+            onClick={() => setSearchParams({ createInquiry: 'true' })}
             key={link.label}
           >
             <span>{link.label}</span>
