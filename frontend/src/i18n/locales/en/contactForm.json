@@ -10,5 +10,6 @@
   "email": "Email (optional)",
   "communication": "Communication (optional)",
   "submit": "Submit Order",
-  "edit": "Edit Order"
+  "edit": "Edit Order",
+  "submitMessage": "Thank you! We'll contact you soon."
 }

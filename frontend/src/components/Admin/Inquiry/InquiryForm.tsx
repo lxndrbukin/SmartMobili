@@ -83,7 +83,7 @@ export default function InquiryForm(): JSX.Element {
     setIsLoading(false);
     form.reset();
     handleClose();
-    alert("Thank you! We'll contact you soon.");
+    alert(t('submitMessage'));
   };
 
   return (

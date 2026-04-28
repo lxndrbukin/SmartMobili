@@ -19,6 +19,24 @@
     "submitEdit": "Actualizează",
     "images": "Imagini"
   },
+  "alerts": {
+    "item": {
+      "confirmDelete": "Doriți să ștergeți produsul {{name}}?",
+      "deleted": "Produsul {{name}} a fost șters"
+    },
+    "category": {
+      "confirmDelete": "Doriți să ștergeți categoria {{name}}?",
+      "deleted": "Categoria {{name}} a fost ștearsă"
+    },
+    "user": {
+      "confirmDelete": "Doriți să ștergeți utilizatorul {{name}}?",
+      "deleted": "Utilizatorul {{name}} a fost șters"
+    },
+    "inquiry": {
+      "confirmDelete": "Doriți să ștergeți comanda #{{id}}?",
+      "deleted": "Comanda #{{id}} a fost ștearsă"
+    }
+  },
   "panel": {
     "header": "Panou Admin",
     "tabs": {

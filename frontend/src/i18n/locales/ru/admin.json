@@ -19,6 +19,24 @@
     "submitEdit": "Обновить",
     "images": "Изображения"
   },
+  "alerts": {
+    "item": {
+      "confirmDelete": "Вы хотите удалить товар {{name}}?",
+      "deleted": "Товар {{name}} удалён"
+    },
+    "category": {
+      "confirmDelete": "Вы хотите удалить категорию {{name}}?",
+      "deleted": "Категория {{name}} удалена"
+    },
+    "user": {
+      "confirmDelete": "Вы хотите удалить пользователя {{name}}?",
+      "deleted": "Пользователь {{name}} удалён"
+    },
+    "inquiry": {
+      "confirmDelete": "Вы хотите удалить заявку #{{id}}?",
+      "deleted": "Заявка #{{id}} удалена"
+    }
+  },
   "panel": {
     "header": "Панель управления",
     "tabs": {

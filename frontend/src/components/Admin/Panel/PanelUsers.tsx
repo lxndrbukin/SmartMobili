@@ -30,10 +30,10 @@ export default function PanelUsers(): JSX.Element {
   }, [lang]);
 
   const handleDelete = (userId: number, username: string) => {
-    const del = confirm(`Do you want to delete user ${username}?`);
+    const del = confirm(t('alerts.user.confirmDelete', { name: username }));
     if (del) {
       dispatch(deleteUser(userId));
-      alert(`User ${username} deleted`);
+      alert(t('alerts.user.deleted', { name: username }));
     } else return;
   };
 

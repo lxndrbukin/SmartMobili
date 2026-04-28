@@ -37,7 +37,7 @@ export default function ContactForm(): JSX.Element {
     setIsLoading(true);
     await dispatch(submitInquiry(data)).unwrap();
     setIsLoading(false);
-    alert("Thank you! We'll contact you soon.");
+    alert(t('submitMessage'));
     e.currentTarget.reset();
   };
 

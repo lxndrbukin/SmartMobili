@@ -36,10 +36,10 @@ export default function PanelInquiries(): JSX.Element {
   }, [lang]);
 
   const handleDelete = (inquiryId: number) => {
-    const del = confirm(`Do you want to delete inquiry ${inquiryId}?`);
+    const del = confirm(t('alerts.inquiry.confirmDelete', { id: inquiryId }));
     if (del) {
       dispatch(deleteInquiry(inquiryId));
-      alert(`Inquiry ${inquiryId} deleted`);
+      alert(t('alerts.inquiry.deleted', { id: inquiryId }));
     } else return;
   };
 

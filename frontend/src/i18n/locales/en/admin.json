@@ -19,6 +19,24 @@
     "submitEdit": "Update",
     "images": "Images"
   },
+  "alerts": {
+    "item": {
+      "confirmDelete": "Do you want to delete item {{name}}?",
+      "deleted": "Item {{name}} deleted"
+    },
+    "category": {
+      "confirmDelete": "Do you want to delete category {{name}}?",
+      "deleted": "Category {{name}} deleted"
+    },
+    "user": {
+      "confirmDelete": "Do you want to delete user {{name}}?",
+      "deleted": "User {{name}} deleted"
+    },
+    "inquiry": {
+      "confirmDelete": "Do you want to delete inquiry #{{id}}?",
+      "deleted": "Inquiry #{{id}} deleted"
+    }
+  },
   "panel": {
     "header": "Admin Panel",
     "tabs": {

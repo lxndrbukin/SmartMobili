@@ -30,10 +30,10 @@ export default function PanelItems(): JSX.Element {
   }, [lang]);
 
   const handleDelete = (itemId: number, itemName: string) => {
-    const del = confirm(`Do you want to delete item ${itemName}?`);
+    const del = confirm(t('alerts.item.confirmDelete', { name: itemName }));
     if (del) {
       dispatch(deleteItem(itemId));
-      alert(`Item ${itemName} deleted`);
+      alert(t('alerts.item.deleted', { name: itemName }));
     } else return;
   };
 

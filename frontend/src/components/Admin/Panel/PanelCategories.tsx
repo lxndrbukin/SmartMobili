@@ -30,10 +30,10 @@ export default function PanelCategories(): JSX.Element {
   }, [lang]);
 
   const handleDelete = (categoryId: number, categoryName: string) => {
-    const del = confirm(`Do you want to delete category ${categoryName}?`);
+    const del = confirm(t('alerts.category.confirmDelete', { name: categoryName }));
     if (del) {
       dispatch(deleteCategory(categoryId));
-      alert(`Category ${categoryName} deleted`);
+      alert(t('alerts.category.deleted', { name: categoryName }));
     } else return;
   };
 
