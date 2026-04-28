@@ -34,29 +34,37 @@ export default function Footer(): JSX.Element {
   return (
     <div className='footer-wrapper'>
       <footer className='footer'>
-        <div className='footer-col'>
-          <Link className='logo' to={to('/')}>
-            <div className='logo-badge'>
-              <img src={logo} alt='SmartMobili' />
+        <div className='footer-cols'>
+          <div className='footer-col'>
+            <Link className='logo' to={to('/')}>
+              <div className='logo-badge'>
+                <img src={logo} alt='SmartMobili' />
+              </div>
+              <div className='logo-text'>
+                <span className='logo-name'>
+                  <span className='logo-name-bold'>Smart</span>
+                  <span className='logo-name-light'>Mobili</span>
+                </span>
+                <span className='logo-tagline'>{t('logo')}</span>
+              </div>
+            </Link>
+            <div className='footer-socials'>
+              <a
+                target='_blank'
+                href='https://www.instagram.com/sm_smartmobili/'
+              >
+                <i className='fab fa-instagram-square'></i>
+              </a>
+              <a target='_blank' href='https://t.me/SM_smartmobili'>
+                <i className='fab fa-telegram-plane'></i>
+              </a>
             </div>
-            <div className='logo-text'>
-              <span className='logo-name'>
-                <span className='logo-name-bold'>Smart</span>
-                <span className='logo-name-light'>Mobili</span>
-              </span>
-              <span className='logo-tagline'>{t('logo')}</span>
-            </div>
-          </Link>
-          <div className='footer-socials'>
-            <a target='_blank' href='https://www.instagram.com/sm_smartmobili/'>
-              <i className='fab fa-instagram-square'></i>
-            </a>
-            <a target='_blank' href='https://t.me/SM_smartmobili'>
-              <i className='fab fa-telegram-plane'></i>
-            </a>
           </div>
+          {renderSections(sections)}
         </div>
-        {renderSections(sections)}
+        <p className='footer-copyright'>
+          SmartMobili © {new Date().getFullYear()}
+        </p>
       </footer>
     </div>
   );
