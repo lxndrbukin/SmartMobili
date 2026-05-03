@@ -5,8 +5,7 @@
       "label": "Info",
       "links": [
         { "label": "About us", "href": "/about" },
-        { "label": "Services", "href": "/services" },
-        { "label": "Orders", "href": "/orders" }
+        { "label": "Services", "href": "/services" }
       ]
     },
     "contacts": {

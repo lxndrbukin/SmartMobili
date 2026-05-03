@@ -14,7 +14,7 @@ export default function Footer(): JSX.Element {
     return links.map((link: NavLink) => {
       return (
         <li key={link.label}>
-          <Link to={to(`/catalog${link.href}`)}>{link.label}</Link>
+          <Link to={to(`${link.href}`)}>{link.label}</Link>
         </li>
       );
     });

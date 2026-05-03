@@ -1,0 +1,36 @@
+{
+  "hero": {
+    "title": "Despre SmartMobili",
+    "subtitle": "Creăm mobilă la comandă care transformă casele în cămine — construită exact după viziunea dumneavoastră, livrată cu precizie."
+  },
+  "story": {
+    "title": "Povestea noastră",
+    "text": "SmartMobili a fost fondată cu o convingere simplă: fiecare casă merită mobilier care se potrivește perfect — nu doar ca dimensiune, ci și ca personalitate. Cu sediul în Moldova, suntem specializați în proiectarea și fabricarea de mobilier de calitate superioară, corpuri și piese încorporate. De la prima consultație până la instalarea finală, colaborăm îndeaproape cu clienții noștri pentru a le aduce la viață viziunile de interior."
+  },
+  "values": [
+    {
+      "icon": "fa-solid fa-ruler-combined",
+      "title": "Meșteșug de Precizie",
+      "text": "Fiecare piesă este măsurată, proiectată și asamblată la specificații exacte. Fără compromisuri."
+    },
+    {
+      "icon": "fa-solid fa-palette",
+      "title": "Design Personalizat",
+      "text": "Nu lucrăm cu produse standard. Fiecare comandă este unică, adaptată spațiului și stilului dumneavoastră."
+    },
+    {
+      "icon": "fa-solid fa-handshake",
+      "title": "Orientare spre Client",
+      "text": "De la primul contact până la instalare, vă ținem informați și implicați la fiecare pas."
+    },
+    {
+      "icon": "fa-solid fa-leaf",
+      "title": "Materiale de Calitate",
+      "text": "Folosim materiale premium și durabile pentru a asigura că mobilierul dumneavoastră rezistă testului timpului."
+    }
+  ],
+  "cta": {
+    "text": "Aveți un proiect în minte? Contactați-ne și vom stabili o consultație gratuită.",
+    "button": "Solicitați o Consultație"
+  }
+}

@@ -5,8 +5,7 @@
       "label": "Informații",
       "links": [
         { "label": "Despre noi", "href": "/about" },
-        { "label": "Servicii", "href": "/services" },
-        { "label": "Comenzi", "href": "/orders" }
+        { "label": "Servicii", "href": "/services" }
       ]
     },
     "contacts": {

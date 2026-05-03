@@ -1,0 +1,42 @@
+{
+  "hero": {
+    "title": "Serviciile Noastre",
+    "subtitle": "De la concept până la instalare — tot ce aveți nevoie pentru un spațiu perfect mobilat."
+  },
+  "items": [
+    {
+      "icon": "fa-solid fa-door-open",
+      "title": "Dulapuri",
+      "text": "Dulapuri încorporate, glisante și walk-in, proiectate pentru a maximiza depozitarea în orice cameră. Dimensiuni, finisaje și accesorii interioare personalizate."
+    },
+    {
+      "icon": "fa-solid fa-briefcase",
+      "title": "Mobilier de Birou",
+      "text": "Soluții de birou funcționale și elegante — birouri, biblioteci, dulapuri și configurații complete de lucru adaptate spațiului dumneavoastră."
+    },
+    {
+      "icon": "fa-solid fa-table-cells-large",
+      "title": "Mese",
+      "text": "Mese de dining, mese de cafea și birouri de lucru lucrate manual, în diverse materiale și dimensiuni. Durabile și impresionante."
+    },
+    {
+      "icon": "fa-solid fa-couch",
+      "title": "Mobilier de Living",
+      "text": "Comode TV, sisteme de rafturi și compoziții de depozitare care aduc stil și ordine în spațiul dumneavoastră de zi."
+    },
+    {
+      "icon": "fa-solid fa-pencil-ruler",
+      "title": "Consultanță în Design",
+      "text": "Nu știți de unde să începeți? Echipa noastră vă vizitează acasă, ia măsurătorile și lucrează cu dumneavoastră pentru a concepe soluția ideală."
+    },
+    {
+      "icon": "fa-solid fa-screwdriver-wrench",
+      "title": "Fabricare și Instalare",
+      "text": "Gestionăm întregul proces — fabricare de precizie în atelierul nostru, urmată de asamblare și instalare profesională la fața locului."
+    }
+  ],
+  "cta": {
+    "text": "Sunteți gata să începeți proiectul? Contactați-ne și vom stabili o consultație gratuită.",
+    "button": "Solicitați o Consultație"
+  }
+}

@@ -36,6 +36,12 @@ import orderSteps_ru from "./locales/ru/orderSteps.json";
 import contactForm_en from "./locales/en/contactForm.json";
 import contactForm_ro from "./locales/ro/contactForm.json";
 import contactForm_ru from "./locales/ru/contactForm.json";
+import about_en from "./locales/en/about.json";
+import about_ro from "./locales/ro/about.json";
+import about_ru from "./locales/ru/about.json";
+import services_en from "./locales/en/services.json";
+import services_ro from "./locales/ro/services.json";
+import services_ru from "./locales/ru/services.json";
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -51,7 +57,9 @@ i18n.use(initReactI18next).init({
       banners: banners_en,
       itemPage: itemPage_en,
       orderSteps: orderSteps_en,
-      contactForm: contactForm_en
+      contactForm: contactForm_en,
+      about: about_en,
+      services: services_en
     },
     ru: {
       admin: admin_ru,
@@ -65,7 +73,9 @@ i18n.use(initReactI18next).init({
       banners: banners_ru,
       itemPage: itemPage_ru,
       orderSteps: orderSteps_ru,
-      contactForm: contactForm_ru
+      contactForm: contactForm_ru,
+      about: about_ru,
+      services: services_ru
     },
     ro: {
       admin: admin_ro,
@@ -79,7 +89,9 @@ i18n.use(initReactI18next).init({
       banners: banners_ro,
       itemPage: itemPage_ro,
       orderSteps: orderSteps_ro,
-      contactForm: contactForm_ro
+      contactForm: contactForm_ro,
+      about: about_ro,
+      services: services_ro
     },
   },
   lng: localStorage.getItem("language") || "ro",

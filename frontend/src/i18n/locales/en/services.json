@@ -1,0 +1,42 @@
+{
+  "hero": {
+    "title": "Our Services",
+    "subtitle": "From concept to installation — everything you need for a perfectly furnished space."
+  },
+  "items": [
+    {
+      "icon": "fa-solid fa-door-open",
+      "title": "Wardrobes",
+      "text": "Built-in, sliding, and walk-in wardrobes designed to maximise storage in any room. Custom dimensions, finishes, and interior fittings."
+    },
+    {
+      "icon": "fa-solid fa-briefcase",
+      "title": "Office Furniture",
+      "text": "Functional and elegant office solutions — desks, bookshelves, cabinets, and complete workstation setups tailored to your workspace."
+    },
+    {
+      "icon": "fa-solid fa-table-cells-large",
+      "title": "Tables",
+      "text": "Handcrafted dining tables, coffee tables, and work desks in a range of materials and sizes. Built to last and made to impress."
+    },
+    {
+      "icon": "fa-solid fa-couch",
+      "title": "Living Room Furniture",
+      "text": "TV units, shelving systems, and storage compositions that bring style and order to your living space."
+    },
+    {
+      "icon": "fa-solid fa-pencil-ruler",
+      "title": "Design Consultation",
+      "text": "Not sure where to start? Our team visits your home, takes measurements, and works with you to design the ideal solution."
+    },
+    {
+      "icon": "fa-solid fa-screwdriver-wrench",
+      "title": "Manufacturing & Installation",
+      "text": "We handle the full process — precision manufacturing in our workshop followed by professional on-site assembly and installation."
+    }
+  ],
+  "cta": {
+    "text": "Ready to start your project? Get in touch and we'll arrange a free consultation.",
+    "button": "Request a Consultation"
+  }
+}

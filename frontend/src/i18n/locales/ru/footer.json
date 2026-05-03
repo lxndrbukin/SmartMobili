@@ -5,8 +5,7 @@
       "label": "Информация",
       "links": [
         { "label": "О нас", "href": "/about" },
-        { "label": "Услуги", "href": "/services" },
-        { "label": "Заказы", "href": "/orders" }
+        { "label": "Услуги", "href": "/services" }
       ]
     },
     "contacts": {

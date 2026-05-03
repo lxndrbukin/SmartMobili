@@ -1,0 +1,36 @@
+{
+  "hero": {
+    "title": "About SmartMobili",
+    "subtitle": "We craft custom furniture that transforms houses into homes — built to your exact vision, delivered with precision."
+  },
+  "story": {
+    "title": "Our Story",
+    "text": "SmartMobili was founded with a simple belief: every home deserves furniture that fits perfectly — not just in size, but in character. Based in Moldova, we specialise in the design and manufacture of high-quality cabinet and built-in furniture. From the first consultation to the final installation, we work closely with our clients to bring their interior visions to life."
+  },
+  "values": [
+    {
+      "icon": "fa-solid fa-ruler-combined",
+      "title": "Precision Craftsmanship",
+      "text": "Every piece is measured, designed, and assembled to exact specifications. No compromises."
+    },
+    {
+      "icon": "fa-solid fa-palette",
+      "title": "Bespoke Design",
+      "text": "We don't do off-the-shelf. Each order is unique, tailored to your space and style."
+    },
+    {
+      "icon": "fa-solid fa-handshake",
+      "title": "Client-First Approach",
+      "text": "From first contact to installation, we keep you informed and involved at every step."
+    },
+    {
+      "icon": "fa-solid fa-leaf",
+      "title": "Quality Materials",
+      "text": "We source durable, premium materials to ensure your furniture stands the test of time."
+    }
+  ],
+  "cta": {
+    "text": "Have a project in mind? Get in touch and we will arrange a free consultation.",
+    "button": "Request a Consultation"
+  }
+}
