@@ -1813,7 +1813,7 @@ img {
   margin-top: 0;
 }
 
-.auth-form button {
+.auth-form button[type='submit'] {
   width: 100%;
   background-color: var(--accent);
   color: #fff;
@@ -2626,14 +2626,14 @@ img {
 /* ─── ≤ 900px : Tablet portrait ──────────────────────────────────────── */
 @media screen and (max-width: 900px) {
   .acrool-react-carousel__root {
-    height: 350px;
+    height: 400px;
   }
 
   .top-banner {
     grid-template-columns: 1fr;
     text-align: center;
     padding: var(--space-10) var(--space-5);
-    height: 350px;
+    height: 400px;
   }
 
   .top-banner .top-banner_left {
@@ -2754,14 +2754,6 @@ img {
     width: 100%;
   }
 
-  .catalog-item-form,
-  .catalog-category-form,
-  .auth-form,
-  .contact-form {
-    padding: var(--space-5);
-    margin: var(--space-6) var(--space-4);
-  }
-
   .order-steps-list {
     grid-template-columns: 1fr;
     gap: var(--space-4);
@@ -2803,12 +2795,41 @@ img {
     padding: 0 var(--space-3);
   }
 
+  /* ── Modal: full-screen on mobile ── */
+  .modal-backdrop {
+    padding: 0;
+    background: var(--white);
+    overflow: hidden;
+  }
+
+  .modal {
+    width: 100%;
+    max-width: 100%;
+    height: 100dvh;
+    margin: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
   .catalog-item-form,
   .catalog-category-form,
-  .user-form {
+  .user-form,
+  .contact-form,
+  .auth-form {
     width: 100%;
+    max-width: 100%;
+    min-height: 100dvh;
     margin: 0;
-    padding: var(--space-4);
+    padding: var(--space-5) var(--space-4) var(--space-8);
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .auth-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .catalog-item-form-section,
@@ -2818,13 +2839,27 @@ img {
 
   .catalog-item-form h3,
   .catalog-category-form h3,
-  .user-form h3 {
-    padding-right: var(--space-8);
+  .user-form h3,
+  .contact-form h3,
+  .auth-form h3 {
+    padding-right: var(--space-10);
+  }
+
+  .modal-close-btn {
+    position: fixed;
+    top: var(--space-3);
+    right: var(--space-3);
+    z-index: 10;
+    box-shadow: var(--shadow-md);
   }
 
   .form-field .price,
   .form-field .category-select,
   .form-field input[type='file'] {
+    max-width: 100%;
+  }
+
+  .contact-form .communication {
     max-width: 100%;
   }
 }

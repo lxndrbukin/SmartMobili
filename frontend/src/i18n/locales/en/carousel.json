@@ -9,14 +9,20 @@
     {
       "img": "/banners/banner2.jpg",
       "primaryText": "Wardrobes",
-      "secondaryText": "",
+      "secondaryText": "Stylish and functional wardrobes tailored to your space — built-in, sliding, or walk-in designs crafted to maximize storage and elevate any room.",
       "url": "/catalog/wardrobes"
     },
     {
       "img": "/banners/banner3.jpg",
       "primaryText": "Furniture for your office",
-      "secondaryText": "",
+      "secondaryText": "Modern office furniture designed for productivity and comfort — desks, shelving, and storage solutions built to your specifications.",
       "url": "/catalog/office"
+    },
+    {
+      "img": "/banners/banner4.jpg",
+      "primaryText": "Tables",
+      "secondaryText": "Handcrafted dining and working tables made to last — choose your size, material, and finish for a piece that fits your home perfectly.",
+      "url": "/catalog/tables"
     }
   ],
   "bannerLinks": {

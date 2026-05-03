@@ -90,6 +90,13 @@ export default function AuthForm(): JSX.Element {
     <div className='modal-backdrop' onClick={handleClose}>
       <div className='modal' onClick={(e) => e.stopPropagation()}>
         <form className='auth-form' onSubmit={handleSubmit}>
+          <button
+            className='modal-close-btn'
+            type='button'
+            onClick={handleClose}
+          >
+            <i className='fa-solid fa-xmark'></i>
+          </button>
           <h3>{isLogin ? t('form.loginHeader') : t('form.signupHeader')}</h3>
           <div className='form-field'>
             <label>{t('form.username')}</label>

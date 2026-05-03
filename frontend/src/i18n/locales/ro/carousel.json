@@ -9,14 +9,20 @@
     {
       "img": "/banners/banner2.jpg",
       "primaryText": "Dulapuri",
-      "secondaryText": "",
+      "secondaryText": "Dulapuri elegante și funcționale adaptate spațiului tău — modele încorporate, glisante sau walk-in, create pentru a maximiza depozitarea și a transforma orice cameră.",
       "url": "/catalog/wardrobes"
     },
     {
       "img": "/banners/banner3.jpg",
       "primaryText": "Birouri",
-      "secondaryText": "",
+      "secondaryText": "Mobilier de birou modern, conceput pentru productivitate și confort — birouri, rafturi și soluții de depozitare realizate la specificațiile dumneavoastră.",
       "url": "/catalog/office"
+    },
+    {
+      "img": "/banners/banner4.jpg",
+      "primaryText": "Mese",
+      "secondaryText": "Mese de dining și de lucru fabricate manual pentru a dura — alegeți dimensiunea, materialul și finisajul pentru o piesă care se potrivește perfect casei dumneavoastră.",
+      "url": "/catalog/tables"
     }
   ],
   "bannerLinks": {
