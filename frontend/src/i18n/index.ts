@@ -82,7 +82,7 @@ i18n.use(initReactI18next).init({
       contactForm: contactForm_ro
     },
   },
-  lng: localStorage.getItem("language") || "en",
+  lng: localStorage.getItem("language") || "ro",
   fallbackLng: "en",
   interpolation: {
     escapeValue: false,
