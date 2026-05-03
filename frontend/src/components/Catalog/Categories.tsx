@@ -1,5 +1,5 @@
 import { type JSX, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import useLocalePath from '../../hooks/useLocalePath';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,16 +18,16 @@ export default function Categories(): JSX.Element {
   const to = useLocalePath();
 
   const { categories } = useSelector((state: RootState) => state.catalog);
-  const { currentLang } = useSelector((state: RootState) => state.system);
+  const { lang } = useParams();
 
   useEffect(() => {
     const fetchData = async () => {
       // setIsLoading(true);
-      await dispatch(getCategories(currentLang)).unwrap();
+      await dispatch(getCategories(lang)).unwrap();
       // setIsLoading(false);
     };
     fetchData();
-  }, [currentLang]);
+  }, [lang]);
 
   const header = t('header');
 

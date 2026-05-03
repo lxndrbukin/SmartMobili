@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import useLocalePath from '../../hooks/useLocalePath';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import {
   type RootState,
   type AppDispatch,
@@ -18,18 +19,18 @@ export default function LatestItems(): JSX.Element {
   const { t } = useTranslation('catalog');
   // const [isLoading, setIsLoading] = useState<boolean>(false);
   const { items } = useSelector((state: RootState) => state.catalog);
-  const { currentLang } = useSelector((state: RootState) => state.system);
+  const { lang } = useParams();
 
   useEffect(() => {
     const fetchData = async () => {
       // setIsLoading(true);
       await dispatch(
-        getItems({ limit: 4, lang: currentLang, desc: true }),
+        getItems({ limit: 4, lang: lang ?? 'ro', desc: true }),
       ).unwrap();
       // setIsLoading(false);
     };
     fetchData();
-  }, [currentLang]);
+  }, [lang]);
 
   const renderItems = (items: Array<ItemProps>) => {
     return items.map(({ images, title, id, price, category }) => {
