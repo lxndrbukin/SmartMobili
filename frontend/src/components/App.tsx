@@ -7,6 +7,7 @@ import pageTitle from '../utils/pageTitle';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import LanguageSync from './LanguageSync';
+import ScrollToTop from './ScrollToTop';
 import AuthForm from './Auth/AuthForm';
 import ItemForm from './Admin/Items/ItemForm';
 import CategoryForm from './Admin/Categories/CategoryForm';
@@ -38,6 +39,7 @@ export default function App(): JSX.Element {
   return (
     <div className='main_container'>
       <LanguageSync />
+      <ScrollToTop />
       <Header />
       <div className='content_container'>
         <Outlet />
