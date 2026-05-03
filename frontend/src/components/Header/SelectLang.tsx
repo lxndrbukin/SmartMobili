@@ -24,7 +24,7 @@ export default function SelectLang(): JSX.Element {
   };
 
   const renderLangs = (): Array<JSX.Element> => {
-    return ['en', 'ro', 'ru'].map((langCode) => {
+    return ['ro', 'ru'].map((langCode) => {
       return (
         <option key={langCode} value={langCode}>
           {langCode.toUpperCase()}
