@@ -57,6 +57,7 @@
       "subject": "Subject",
       "description": "Description",
       "date": "Date"
-    }
+    },
+    "scrollHint": "Scroll to see more"
   }
 }

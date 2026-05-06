@@ -62,7 +62,7 @@ export default function PanelInquiries(): JSX.Element {
         whatsapp,
       }) => {
         return (
-          <tr>
+          <tr onClick={() => setSearchParams({ inquiry: String(id) })}>
             <td>{id}</td>
             <td>{name}</td>
             <td>{subject}</td>
@@ -98,12 +98,17 @@ export default function PanelInquiries(): JSX.Element {
       <div className='admin-panel-table-container-header'>
         <h2>{t('panel.tabs.inquiries')}</h2>
       </div>
-      <table className='admin-panel-table'>
-        <thead>
-          <tr>{renderHeaders(HEADERS)}</tr>
-        </thead>
-        <tbody>{renderRows(data)}</tbody>
-      </table>
+      <p className='admin-panel-scroll-hint'>
+        <i className='fa-solid fa-arrow-right-arrow-left'></i> {t('panel.scrollHint')}
+      </p>
+      <div className='admin-panel-table-wrapper'>
+        <table className='admin-panel-table'>
+          <thead>
+            <tr>{renderHeaders(HEADERS)}</tr>
+          </thead>
+          <tbody>{renderRows(data)}</tbody>
+        </table>
+      </div>
     </div>
   );
 }

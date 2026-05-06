@@ -71,12 +71,17 @@ export default function PanelUsers(): JSX.Element {
       <div className='admin-panel-table-container-header'>
         <h2>{t('panel.tabs.users')}</h2>
       </div>
-      <table className='admin-panel-table'>
-        <thead>
-          <tr>{renderHeaders(HEADERS)}</tr>
-        </thead>
-        <tbody>{renderRows(data)}</tbody>
-      </table>
+      <p className='admin-panel-scroll-hint'>
+        <i className='fa-solid fa-arrow-right-arrow-left'></i> {t('panel.scrollHint')}
+      </p>
+      <div className='admin-panel-table-wrapper'>
+        <table className='admin-panel-table'>
+          <thead>
+            <tr>{renderHeaders(HEADERS)}</tr>
+          </thead>
+          <tbody>{renderRows(data)}</tbody>
+        </table>
+      </div>
     </div>
   );
 }

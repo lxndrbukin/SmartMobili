@@ -1996,6 +1996,105 @@ img {
   cursor: not-allowed;
 }
 
+/* ─── INQUIRY ────────────────────────────────────────────────────────── */
+.inquiry {
+  width: 500px;
+  margin: var(--space-10) auto;
+  padding: var(--space-5) var(--space-8);
+  background-color: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border);
+  position: relative;
+}
+
+.inquiry h3 {
+  margin: 0 0 var(--space-5);
+  font-weight: 800;
+  font-size: 1.3rem;
+  color: var(--text-secondary);
+}
+
+.inquiry .data-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-2);
+}
+
+.inquiry .data-field > label {
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.inquiry .data-field p {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  margin: 8px 0;
+}
+
+.inquiry .communication {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 50%;
+  gap: var(--space-2);
+  margin: var(--space-1) 0;
+  padding: var(--space-2) var(--space-3);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.contact-form .communication label {
+  margin: 0;
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.contact-form .communication input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.contact-form button[type='submit'] {
+  width: 100%;
+  background-color: var(--accent);
+  color: #fff;
+  border: none;
+  padding: var(--space-3) var(--space-5);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  margin-top: var(--space-4);
+  transition:
+    background-color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.contact-form button[type='submit']:hover {
+  background-color: var(--brown);
+  transform: translateY(-1px);
+}
+
+.contact-form button[type='submit']:disabled {
+  background-color: var(--accent-muted);
+  cursor: not-allowed;
+}
+
 /* ─── ORDER STEPS ────────────────────────────────────────────────────── */
 .order-steps-wrapper {
   width: 100%;
@@ -2642,6 +2741,22 @@ img {
 .admin-panel-table-wrapper {
   width: 100%;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+}
+
+.admin-panel-table-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.9));
+  pointer-events: none;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
 }
 
 .admin-panel-table {
@@ -2649,7 +2764,6 @@ img {
   width: 100%;
   min-width: 600px;
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-md);
   border: none;
   border-collapse: collapse;
   overflow: hidden;
@@ -2668,6 +2782,19 @@ img {
 .admin-panel-table td {
   padding: 12px 16px;
   text-align: left;
+}
+
+.admin-panel-table td.actions,
+.admin-panel-table th:last-child {
+  position: sticky;
+  right: 0;
+  background-color: var(--white);
+  box-shadow: -2px 0 6px rgba(0, 0, 0, 0.06);
+  z-index: 1;
+}
+
+.admin-panel-table th:last-child {
+  background-color: var(--bg-surface);
 }
 
 .admin-panel-table .actions {
@@ -2705,6 +2832,11 @@ img {
   align-items: center;
   flex-wrap: wrap;
   gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.admin-panel-scroll-hint {
+  display: none;
 }
 
 .admin-panel-table-imgs {
@@ -2909,6 +3041,23 @@ img {
     flex: 1;
     font-size: 13px;
     padding: var(--space-2) var(--space-3);
+  }
+
+  .admin-panel-scroll-hint {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin: 0 0 var(--space-2);
+  }
+
+  .admin-panel-scroll-hint i {
+    font-size: 12px;
+    color: var(--accent-muted);
   }
 }
 

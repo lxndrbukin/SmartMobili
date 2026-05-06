@@ -77,12 +77,17 @@ export default function PanelItems(): JSX.Element {
           {t('item.headerCreate')}
         </button>
       </div>
-      <table className='admin-panel-table'>
-        <thead>
-          <tr>{renderHeaders(HEADERS)}</tr>
-        </thead>
-        <tbody>{renderRows(items)}</tbody>
-      </table>
+      <p className='admin-panel-scroll-hint'>
+        <i className='fa-solid fa-arrow-right-arrow-left'></i> {t('panel.scrollHint')}
+      </p>
+      <div className='admin-panel-table-wrapper'>
+        <table className='admin-panel-table'>
+          <thead>
+            <tr>{renderHeaders(HEADERS)}</tr>
+          </thead>
+          <tbody>{renderRows(items)}</tbody>
+        </table>
+      </div>
     </div>
   );
 }

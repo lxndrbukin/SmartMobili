@@ -7,7 +7,7 @@ import {
   type InquiryProps
 } from "./types";
 import { getUsers, deleteUser, getUser, updateUser } from "../thunks/auth";
-import { getInquiries, deleteInquiry, updateInquiry } from "../thunks/inquiries";
+import { getInquiries, getInquiry, deleteInquiry, updateInquiry } from "../thunks/inquiries";
 
 const initialState: AdminState = {
   users: {
@@ -52,6 +52,9 @@ const adminState = createSlice({
     });
     builder.addCase(getInquiries.pending, (state: AdminState) => {
       state.inquiries = { data: [], pagination: null, currentInquiry: null };
+    });
+    builder.addCase(getInquiry.fulfilled, (state: AdminState, action: PayloadAction<InquiryProps>) => {
+      state.inquiries.currentInquiry = action.payload;
     });
     builder.addCase(updateInquiry.fulfilled, (state: AdminState, action: PayloadAction<InquiryProps>) => {
       const updatedInquiry = action.payload;

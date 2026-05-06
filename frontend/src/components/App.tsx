@@ -12,6 +12,7 @@ import AuthForm from './Auth/AuthForm';
 import ItemForm from './Admin/Items/ItemForm';
 import CategoryForm from './Admin/Categories/CategoryForm';
 import InquiryForm from './Admin/Inquiry/InquiryForm';
+import PanelInquiry from './Admin/Panel/PanelInquiry';
 import UserForm from './Admin/Users/UserForm';
 
 export default function App(): JSX.Element {
@@ -49,6 +50,7 @@ export default function App(): JSX.Element {
       {(itemId || searchParams.get('createItem')) && <ItemForm />}
       {(itemId || searchParams.get('createItem')) && <ItemForm />}
       {(inquiryId || searchParams.get('createInquiry')) && <InquiryForm />}
+      {searchParams.get('inquiry') && <PanelInquiry />}
       {userId && <UserForm />}
       <Footer />
     </div>

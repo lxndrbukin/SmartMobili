@@ -57,6 +57,7 @@
       "subject": "Titlu",
       "description": "Descriere",
       "date": "Data"
-    }
+    },
+    "scrollHint": "Derulați pentru mai mult"
   }
 }
