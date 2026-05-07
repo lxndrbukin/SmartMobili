@@ -1934,6 +1934,11 @@ img {
   color: var(--text-secondary);
 }
 
+.contact-form .input-field input.input-error {
+  border-color: rgb(206, 1, 1);
+  box-shadow: 0 0 0 3px rgba(201, 122, 86, 0.1);
+}
+
 .contact-form input[type='text'],
 .contact-form input[type='email'],
 .contact-form textarea {
@@ -2018,6 +2023,13 @@ img {
 .contact-form button[type='submit']:disabled {
   background-color: var(--accent-muted);
   cursor: not-allowed;
+}
+
+.contact-form .error {
+  width: fit-content;
+  margin: var(--space-2) 0 0 0;
+  font-size: 14px;
+  color: rgb(206, 1, 1);
 }
 
 /* ─── INQUIRY ────────────────────────────────────────────────────────── */

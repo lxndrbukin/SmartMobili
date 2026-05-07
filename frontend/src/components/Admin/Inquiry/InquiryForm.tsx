@@ -25,6 +25,12 @@ export default function InquiryForm(): JSX.Element {
   const [whatsapp, setWhatsapp] = useState<boolean>(false);
   const [viber, setViber] = useState<boolean>(false);
 
+  const [formErrors, setFormErrors] = useState<{
+    name: string | null;
+    subject: string | null;
+    phone: string | null;
+  }>({ name: null, subject: null, phone: null });
+
   const isCreating = searchParams.get('createInquiry') === 'true';
   const inquiryId = Number(searchParams.get('editInquiry'));
   const itemId = searchParams.get('itemId');
@@ -86,6 +92,24 @@ export default function InquiryForm(): JSX.Element {
     alert(t('submitMessage'));
   };
 
+  const handleOnBlur = (name: string, value: string) => {
+    if (!value.length) {
+      setFormErrors({
+        ...formErrors,
+        [name]: t('errors.required'),
+      });
+    } else {
+      setFormErrors({
+        ...formErrors,
+        [name]: null,
+      });
+    }
+  };
+
+  const handleOnClick = (name: string) => {
+    setFormErrors({ ...formErrors, [name]: null });
+  };
+
   return (
     <div className='modal-backdrop' onClick={handleClose}>
       <div className='modal' onClick={(e) => e.stopPropagation()}>
@@ -102,21 +126,33 @@ export default function InquiryForm(): JSX.Element {
             <label>{t('name')}</label>
             <input
               value={name}
+              onBlur={(e) => handleOnBlur(e.target.name, e.target.value)}
+              onFocus={(e) => handleOnClick(e.target.name)}
               onChange={(e) => setName(e.target.value)}
               placeholder={t('namePlaceholder')}
               type='text'
               name='name'
+              className={formErrors['name'] ? 'input-error' : ''}
             />
+            {formErrors['name'] && (
+              <p className='error'>{formErrors['name']}</p>
+            )}
           </div>
           <div className='input-field'>
             <label>{t('subject')}</label>
             <input
               value={subject}
+              onBlur={(e) => handleOnBlur(e.target.name, e.target.value)}
+              onFocus={(e) => handleOnClick(e.target.name)}
               onChange={(e) => setSubject(e.target.value)}
               placeholder={t('subjectPlaceholder')}
               type='text'
               name='subject'
+              className={formErrors['subject'] ? 'input-error' : ''}
             />
+            {formErrors['subject'] && (
+              <p className='error'>{formErrors['subject']}</p>
+            )}
           </div>
           <div className='input-field'>
             <label>{t('desc')}</label>
@@ -131,10 +167,16 @@ export default function InquiryForm(): JSX.Element {
             <label>{t('phoneNumber')}</label>
             <input
               value={phone}
+              onBlur={(e) => handleOnBlur(e.target.name, e.target.value)}
+              onFocus={(e) => handleOnClick(e.target.name)}
               onChange={(e) => setPhone(e.target.value)}
               type='text'
               name='phone'
+              className={formErrors['phone'] ? 'input-error' : ''}
             />
+            {formErrors['phone'] && (
+              <p className='error'>{formErrors['phone']}</p>
+            )}
           </div>
           <div className='input-field'>
             <label>{t('email')}</label>

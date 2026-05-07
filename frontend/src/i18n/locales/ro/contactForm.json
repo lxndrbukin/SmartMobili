@@ -11,5 +11,8 @@
   "communication": "Comunicația (opțional)",
   "submit": "Trimite comanda",
   "edit": "Actualizează",
-  "submitMessage": "Mulțumim! Vă vom contacta în curând."
+  "submitMessage": "Mulțumim! Vă vom contacta în curând.",
+  "errors": {
+    "required": "Câmpul este obligatoriu"
+  }
 }
