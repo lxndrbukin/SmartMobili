@@ -17,7 +17,7 @@ export default function CatalogSection(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
   const to = useLocalePath();
   const { catSlug, lang } = useParams<{ catSlug: string; lang: string }>();
-  const { categories } = useSelector((state: RootState) => state.catalog);
+  const { categories, categoriesLoaded } = useSelector((state: RootState) => state.catalog);
   const [items, setItems] = useState<ItemProps[]>([]);
   const { t } = useTranslation('catalog');
 
@@ -54,7 +54,21 @@ export default function CatalogSection(): JSX.Element {
 
   const category = categories.find((cat) => cat.slug === catSlug);
 
-  if (!category) {
+  if (categoriesLoaded && !category) {
+    return (
+      <div className='catalog-section-page'>
+        <div className='catalog-not-found'>
+          <i className='fas fa-search'></i>
+          <p>{t('generic.categoryNotFound')}</p>
+          <Link to={to('/catalog')} className='button'>
+            {t('breadcrumbs.catalog')}
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  if (!categoriesLoaded || !category) {
     return (
       <div className='catalog-section-page'>
         <h1 className='catalog-section-h1-skeleton'></h1>

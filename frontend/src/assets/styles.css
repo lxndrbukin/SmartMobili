@@ -110,6 +110,7 @@ body {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
 }
 
 body a {
@@ -136,6 +137,7 @@ img {
 .content_container {
   width: 100%;
   justify-self: center;
+  min-width: 0;
 }
 
 /* ─── UTILITIES ──────────────────────────────────────────────────────── */
@@ -1254,6 +1256,28 @@ img {
   justify-content: center;
   padding: var(--space-10) var(--space-4);
   background-color: var(--bg-surface);
+}
+
+.catalog-not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  min-height: 40vh;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.catalog-not-found i {
+  font-size: 2.5rem;
+}
+
+.catalog-not-found p {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin: 0;
 }
 
 .catalog-item-page-container {
@@ -3143,7 +3167,8 @@ img {
   .catalog-category-form,
   .user-form,
   .contact-form,
-  .auth-form {
+  .auth-form,
+  .inquiry {
     width: 100%;
     max-width: 100%;
     min-height: 100dvh;
@@ -3169,7 +3194,8 @@ img {
   .catalog-category-form h3,
   .user-form h3,
   .contact-form h3,
-  .auth-form h3 {
+  .auth-form h3,
+  .inquiry h3 {
     padding-right: var(--space-10);
   }
 
@@ -3187,7 +3213,8 @@ img {
     max-width: 100%;
   }
 
-  .contact-form .communication {
+  .contact-form .communication,
+  .inquiry .communication {
     max-width: 100%;
   }
 }

@@ -6,7 +6,9 @@ import { getCategories, createCategory, updateCategory } from "../thunks/categor
 const initialState: CatalogState = {
   items: [],
   currentItem: null,
+  itemNotFound: false,
   categories: [],
+  categoriesLoaded: false,
 };
 
 const catalogSlice = createSlice({
@@ -30,12 +32,21 @@ const catalogSlice = createSlice({
       getItem.fulfilled,
       (state: CatalogState, action: PayloadAction<ItemProps>) => {
         state.currentItem = action.payload;
+        state.itemNotFound = false;
       },
     );
     builder.addCase(
       getItem.pending,
       (state: CatalogState) => {
         state.currentItem = null;
+        state.itemNotFound = false;
+      },
+    );
+    builder.addCase(
+      getItem.rejected,
+      (state: CatalogState) => {
+        state.currentItem = null;
+        state.itemNotFound = true;
       },
     );
     builder.addCase(
@@ -55,12 +66,20 @@ const catalogSlice = createSlice({
       getCategories.fulfilled,
       (state: CatalogState, action: PayloadAction<Array<CategoryProps>>) => {
         state.categories = action.payload;
+        state.categoriesLoaded = true;
       },
     );
     builder.addCase(
       getCategories.pending,
       (state: CatalogState) => {
         state.categories = [];
+        state.categoriesLoaded = false;
+      },
+    );
+    builder.addCase(
+      getCategories.rejected,
+      (state: CatalogState) => {
+        state.categoriesLoaded = true;
       },
     );
     builder.addCase(

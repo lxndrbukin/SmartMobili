@@ -47,7 +47,7 @@ export default function PanelInquiry(): JSX.Element {
           </div>
           <div className='data-field'>
             <label>{t('description')}</label>
-            <p>{currentInquiry?.description}</p>
+            <p>{currentInquiry?.description || '-'}</p>
           </div>
           <div className='data-field'>
             <label>{t('phone')}</label>

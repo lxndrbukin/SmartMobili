@@ -21,7 +21,7 @@ export default function CatalogItemPage(): JSX.Element {
   const [, setSearchParams] = useSearchParams();
   const dispatch = useDispatch<AppDispatch>();
 
-  const { currentItem } = useSelector((state: RootState) => state.catalog);
+  const { currentItem, itemNotFound } = useSelector((state: RootState) => state.catalog);
   const [currentImage, setCurrentImage] = useState<string>('');
 
   const handleImageSelection = (images: Array<ImageProps>) => {
@@ -40,6 +40,20 @@ export default function CatalogItemPage(): JSX.Element {
       setCurrentImage(handleImageSelection(currentItem.images)!);
     }
   }, [currentItem]);
+
+  if (itemNotFound) {
+    return (
+      <div className='catalog-item-page'>
+        <div className='catalog-not-found'>
+          <i className='fas fa-search'></i>
+          <p>{t('itemPage.notFound')}</p>
+          <Link to={to('/catalog')} className='button'>
+            {t('breadcrumbs.catalog')}
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   if (!currentItem) {
     return <CatalogItemPageSkeleton />;

@@ -21,7 +21,9 @@ export type CategoryProps = {
 export type CatalogState = {
   items: Array<ItemProps>;
   currentItem: ItemProps | null;
+  itemNotFound: boolean;
   categories: Array<CategoryProps>;
+  categoriesLoaded: boolean;
 };
 
 export type ItemProps = {

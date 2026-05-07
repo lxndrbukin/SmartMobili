@@ -2,7 +2,8 @@
   "header": "Каталог",
   "generic": {
     "noItems": "Товары отсутствуют",
-    "allItems": "Все товары"
+    "allItems": "Все товары",
+    "categoryNotFound": "Категория не найдена"
   },
   "items": "Товары: {{count}}",
   "breadcrumbs": {
@@ -12,7 +13,8 @@
   "itemPage": {
     "description": "Описание",
     "noPrice": "Нет цены",
-    "call": "Оставить заявку"
+    "call": "Оставить заявку",
+    "notFound": "Товар не найден"
   },
   "latest": {
     "header": "Новые товары"
