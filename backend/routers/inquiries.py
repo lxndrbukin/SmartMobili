@@ -48,22 +48,10 @@ def update_inquiry(inquiry_id: int, data: InquiryUpdate, db: Session = Depends(g
     inquiry = db.query(Inquiry).get(inquiry_id)
     if not inquiry:
         raise HTTPException(status_code=404, detail="Inquiry not found")
-    if data.name is not None:
-        inquiry.name = data.name
-    if data.subject is not None:
-        inquiry.subject = data.subject
-    if data.description is not None:
-        inquiry.description = data.description
-    if data.phone is not None:
-        inquiry.phone = data.phone
-    if data.email is not None:
-        inquiry.email = data.email
-    if data.telegram is not None:
-        inquiry.telegram = data.telegram
-    if data.whatsapp is not None:
-        inquiry.whatsapp = data.whatsapp
-    if data.viber is not None:
-        inquiry.viber = data.viber
+    update_data = data.model_dump(exclude_unset=True)
+    for key, value in update_data.items():
+        if value is not None:
+            setattr(inquiry, key, value)
     db.commit()
     db.refresh(inquiry)
     return inquiry

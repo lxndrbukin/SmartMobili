@@ -148,10 +148,10 @@ def update_item(
     item = db.query(Item).options(joinedload(Item.translations), joinedload(Item.images)).filter(Item.id == item_id).first()
     if not item:
         raise HTTPException(status_code=404, detail="Item not found")
-    if data.price is not None:
-        item.price = data.price
-    if data.category_id is not None:
-        item.category_id = data.category_id
+    update_data = data.model_dump(exclude_unset=True)
+    for key, value in update_data.items():
+        if value is not None:
+            setattr(item, key, value)
     db.commit()
     db.refresh(item)
     category = db.query(Category) \

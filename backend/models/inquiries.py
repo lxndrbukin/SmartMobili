@@ -34,6 +34,7 @@ class InquiryUpdate(BaseModel):
     name: str | None = None
     subject: str | None = None
     description: str | None = None
+    item_id: int | None = None
     phone: str | None = None
     email: str | None = None
     telegram: bool | None = None
