@@ -1,5 +1,5 @@
 import { type JSX, useEffect, useState } from 'react';
-import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
+import { useParams, useSearchParams, useNavigate, Link } from 'react-router-dom';
 import pageTitle from '../../utils/pageTitle';
 import { title } from './assets/title';
 import useLocalePath from '../../hooks/useLocalePath';
@@ -119,47 +119,64 @@ export default function Catalog(): JSX.Element {
     });
   };
 
+  const hero = (
+    <div className='catalog-section-hero catalog-section-hero--no-image'>
+      <div className='catalog-section-hero-content'>
+        <div className='catalog-breadcrumbs'>
+          <Link to={to('/')}>{t('breadcrumbs.home')}</Link> /{' '}
+          <span>{t('header')}</span>
+        </div>
+        <h1 className='catalog-section-hero-title'>{t('header')}</h1>
+      </div>
+    </div>
+  );
+
   if (searchQuery) {
     return (
-      <div className='catalog'>
-        <p>
-          {t('search.header')} <b>{searchQuery}</b>
-        </p>
-        {isLoading ? (
-          renderSkeleton()
-        ) : items.length ? (
-          <>
-            <p>{t('search.results', { num: items.length })}</p>
-            {renderItems(items)}
-          </>
-        ) : (
-          <div className='catalog-no-results'>
-            <div className='catalog-no-items'>{t('generic.noItems')}</div>
-            <button
-              className='catalog-no-items-button'
-              onClick={() => navigate(to('/catalog'))}
-            >
-              Catalog
-            </button>
-          </div>
-        )}
+      <div className='catalog-page'>
+        {hero}
+        <div className='catalog'>
+          <p>
+            {t('search.header')} <b>{searchQuery}</b>
+          </p>
+          {isLoading ? (
+            renderSkeleton()
+          ) : items.length ? (
+            <>
+              <p>{t('search.results', { num: items.length })}</p>
+              {renderItems(items)}
+            </>
+          ) : (
+            <div className='catalog-no-results'>
+              <div className='catalog-no-items'>{t('generic.noItems')}</div>
+              <button
+                className='catalog-no-items-button'
+                onClick={() => navigate(to('/catalog'))}
+              >
+                Catalog
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     );
   }
 
   return (
-    <div className='catalog'>
-      <h1>{t('header')}</h1>
-      <div className='catalog-categories'>
-        <button
-          className={!categorySlug ? 'active' : ''}
-          onClick={() => setSearchParams({})}
-        >
-          {t('generic.allItems')}
-        </button>
-        {renderCategories(categories)}
+    <div className='catalog-page'>
+      {hero}
+      <div className='catalog'>
+        <div className='catalog-categories'>
+          <button
+            className={!categorySlug ? 'active' : ''}
+            onClick={() => setSearchParams({})}
+          >
+            {t('generic.allItems')}
+          </button>
+          {renderCategories(categories)}
+        </div>
+        {items.length ? renderItems(items) : renderSkeleton()}
       </div>
-      {items.length ? renderItems(items) : renderSkeleton()}
     </div>
   );
 }

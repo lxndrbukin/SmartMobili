@@ -19,6 +19,7 @@ export default function CatalogSection(): JSX.Element {
   const { catSlug, lang } = useParams<{ catSlug: string; lang: string }>();
   const { categories, categoriesLoaded } = useSelector((state: RootState) => state.catalog);
   const [items, setItems] = useState<ItemProps[]>([]);
+  const [itemsLoaded, setItemsLoaded] = useState<boolean>(false);
   const { t } = useTranslation('catalog');
 
   useEffect(() => {
@@ -30,15 +31,15 @@ export default function CatalogSection(): JSX.Element {
       const category = categories.find((cat) => cat.slug === catSlug);
 
       if (category) {
+        setItemsLoaded(false);
         dispatch(
           getItems({
             lang: lang || 'ro',
             categorySlug: catSlug,
           }),
         ).then((result) => {
-          if (result.payload) {
-            setItems(result.payload);
-          }
+          setItems(Array.isArray(result.payload) ? result.payload : []);
+          setItemsLoaded(true);
         });
       }
     }
@@ -57,12 +58,22 @@ export default function CatalogSection(): JSX.Element {
   if (categoriesLoaded && !category) {
     return (
       <div className='catalog-section-page'>
-        <div className='catalog-not-found'>
-          <i className='fas fa-search'></i>
-          <p>{t('generic.categoryNotFound')}</p>
-          <Link to={to('/catalog')} className='button'>
-            {t('breadcrumbs.catalog')}
-          </Link>
+        <div className='catalog-section-hero catalog-section-hero--no-image'>
+          <div className='catalog-section-hero-content'>
+            <div className='catalog-breadcrumbs'>
+              <Link to={to('/')}>{t('breadcrumbs.home')}</Link> /{' '}
+              <Link to={to('/catalog')}>{t('breadcrumbs.catalog')}</Link>
+            </div>
+          </div>
+        </div>
+        <div className='catalog-section-content'>
+          <div className='catalog-not-found'>
+            <i className='fas fa-search'></i>
+            <p>{t('generic.categoryNotFound')}</p>
+            <Link to={to('/catalog')} className='button'>
+              {t('breadcrumbs.catalog')}
+            </Link>
+          </div>
         </div>
       </div>
     );
@@ -71,23 +82,45 @@ export default function CatalogSection(): JSX.Element {
   if (!categoriesLoaded || !category) {
     return (
       <div className='catalog-section-page'>
-        <h1 className='catalog-section-h1-skeleton'></h1>
-        <div className='catalog-section-items'>{renderSkeleton()}</div>
+        <div className='catalog-section-hero catalog-section-hero--no-image'>
+          <div className='catalog-section-hero-content'>
+            <div className='catalog-section-hero-skeleton'></div>
+          </div>
+        </div>
+        <div className='catalog-section-content'>
+          <div className='catalog-section-items'>{renderSkeleton()}</div>
+        </div>
       </div>
     );
   }
 
+  const heroImage = category.images?.length ? category.images[0].image_url : null;
+
   return (
     <div className='catalog-section-page'>
-      <div className='catalog-breadcrumbs'>
-        <Link to={to('/')}>{t('breadcrumbs.home')}</Link> /{' '}
-        <Link to={to('/catalog')}>{t('breadcrumbs.catalog')}</Link> /{' '}
-        <span>{category.name}</span>
+      <div
+        className={`catalog-section-hero${!heroImage ? ' catalog-section-hero--no-image' : ''}`}
+        style={heroImage ? { backgroundImage: `url(${heroImage})` } : undefined}
+      >
+        <div className='catalog-section-hero-content'>
+          <div className='catalog-breadcrumbs'>
+            <Link to={to('/')}>{t('breadcrumbs.home')}</Link> /{' '}
+            <Link to={to('/catalog')}>{t('breadcrumbs.catalog')}</Link> /{' '}
+            <span>{category.name}</span>
+          </div>
+          <h1 className='catalog-section-hero-title'>{category.name}</h1>
+          <span className='catalog-section-hero-meta'>
+            {t('items', { count: category.item_count })}
+          </span>
+        </div>
       </div>
-      <h1>{category.name}</h1>
-      <div className='catalog-section-items'>
-        {items.length > 0
-          ? items.map((item) => (
+
+      <div className='catalog-section-content'>
+        {!itemsLoaded ? (
+          <div className='catalog-section-items'>{renderSkeleton()}</div>
+        ) : items.length > 0 ? (
+          <div className='catalog-section-items'>
+            {items.map((item) => (
               <CatalogItem
                 key={item.id}
                 id={item.id}
@@ -97,8 +130,11 @@ export default function CatalogSection(): JSX.Element {
                 price={item.price}
                 url={to(`/catalog/${category.slug}/${item.id}`)}
               />
-            ))
-          : renderSkeleton()}
+            ))}
+          </div>
+        ) : (
+          <div className='catalog-empty'>{t('generic.noItems')}</div>
+        )}
       </div>
     </div>
   );

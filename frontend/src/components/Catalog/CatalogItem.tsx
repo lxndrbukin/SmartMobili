@@ -28,13 +28,18 @@ export default function CatalogItem({
 
   return (
     <div onClick={() => navigate(url)} className='catalog-item'>
-      {images ? (
-        <img src={handleImageSelection(images)} alt={`${title} ${id}`} />
-      ) : (
-        <div className='catalog-item-no-image'>
-          <i className='fas fa-image'></i>
+      <div className='catalog-item-image-wrapper'>
+        {images ? (
+          <img src={handleImageSelection(images)} alt={`${title} ${id}`} />
+        ) : (
+          <div className='catalog-item-no-image'>
+            <i className='fas fa-image'></i>
+          </div>
+        )}
+        <div className='catalog-item-overlay'>
+          <i className='fas fa-eye'></i>
         </div>
-      )}
+      </div>
       <div className='catalog-item-info'>
         <span>{categoryName}</span>
         <h3>{title}</h3>
