@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60">
+  <circle cx="35" cy="30" r="18" fill="#009639" />
+  <circle cx="35" cy="30" r="10" fill="#FFFFFF" />
+  <circle cx="35" cy="30" r="5" fill="#009639" />
+  <text x="65" y="41" font-family="'Inter', 'Segoe UI', Arial, sans-serif" font-size="30" font-weight="900" fill="#1A1A1A" letter-spacing="2">AGT</text>
+</svg>

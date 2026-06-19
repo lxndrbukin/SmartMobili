@@ -3,3 +3,9 @@ export type OrderStepProps = {
   primaryText: string;
   secondaryText: string;
 };
+
+export type BrandProps = {
+  img: string;
+  name: string;
+  description?: string;
+};

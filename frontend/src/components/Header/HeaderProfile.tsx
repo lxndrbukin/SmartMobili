@@ -14,12 +14,6 @@ export default function HeaderProfile(): JSX.Element {
 
   const [isVisible, setIsVisible] = useState(false);
 
-  useEffect(() => {
-    document.addEventListener('click', handleOutsideClick);
-    return (): void =>
-      document.removeEventListener('click', handleOutsideClick);
-  }, []);
-
   const handleOutsideClick = (e: MouseEvent): void => {
     if (
       iconRef &&
@@ -29,6 +23,13 @@ export default function HeaderProfile(): JSX.Element {
       setIsVisible(false);
     }
   };
+
+  useEffect(() => {
+    document.addEventListener('click', handleOutsideClick);
+    return (): void =>
+      document.removeEventListener('click', handleOutsideClick);
+  }, []);
+
 
   const headerUserProfile = (): JSX.Element => {
     return (

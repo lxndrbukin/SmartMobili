@@ -1,0 +1,25 @@
+{
+  "header": "Бренды, которые мы используем",
+  "brands": [
+    {
+      "img": "/brands/Fritz_Egger_Logo.png",
+      "name": "Egger",
+      "description": "Древесные панели премиум-класса"
+    },
+    {
+      "img": "/brands/agt-logo-big.svg",
+      "name": "AGT",
+      "description": "Высококачественные профили и панели МДФ"
+    },
+    {
+      "img": "/brands/Blum-gmbh.png",
+      "name": "Blum",
+      "description": "Инновационная мебельная фурнитура"
+    },
+    {
+      "img": "/brands/Hettich-Logo.png",
+      "name": "Hettich",
+      "description": "Умные технологии для мебели"
+    }
+  ]
+}

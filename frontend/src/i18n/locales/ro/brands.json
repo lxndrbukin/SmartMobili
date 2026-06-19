@@ -1,0 +1,25 @@
+{
+  "header": "Branduri cu care lucrăm",
+  "brands": [
+    {
+      "img": "/brands/Fritz_Egger_Logo.png",
+      "name": "Egger",
+      "description": "Plăci din lemn de calitate superioară"
+    },
+    {
+      "img": "/brands/agt-logo-big.svg",
+      "name": "AGT",
+      "description": "Profile și plăci MDF de înaltă calitate"
+    },
+    {
+      "img": "/brands/Blum-gmbh.png",
+      "name": "Blum",
+      "description": "Feronerie inovatoare pentru mobilier"
+    },
+    {
+      "img": "/brands/Hettich-Logo.png",
+      "name": "Hettich",
+      "description": "Tehnologie inteligentă pentru mobilier"
+    }
+  ]
+}

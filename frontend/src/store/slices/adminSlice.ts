@@ -44,7 +44,7 @@ const adminState = createSlice({
         state.users.data[ index ] = updatedUser;
       }
     });
-    builder.addCase(deleteUser.fulfilled, (state: AdminState, action: PayloadAction<Number>) => {
+    builder.addCase(deleteUser.fulfilled, (state: AdminState, action: PayloadAction<number>) => {
       state.users.data = state.users.data.filter((user) => user.id !== action.payload);
     });
     builder.addCase(getInquiries.fulfilled, (state: AdminState, action: PayloadAction<PaginatedInquiriesResponse>) => {

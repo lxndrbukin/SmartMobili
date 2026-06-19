@@ -14,5 +14,8 @@
   "submitMessage": "Mulțumim! Vă vom contacta în curând.",
   "errors": {
     "required": "Câmpul este obligatoriu"
+  },
+  "seo": {
+    "description": "Contactați SmartMobili pentru a comanda mobilier la comandă în Moldova. Completați formularul pentru a solicita o consultație gratuită și o ofertă pentru proiectul dumneavoastră."
   }
 }

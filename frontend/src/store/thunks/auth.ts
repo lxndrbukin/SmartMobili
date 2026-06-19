@@ -51,7 +51,7 @@ export const getUsers = createAsyncThunk("auth/getUsers", async () => {
   return response.data;
 });
 
-export const getUser = createAsyncThunk("auth/getUser", async (userId: Number) => {
+export const getUser = createAsyncThunk("auth/getUser", async (userId: number) => {
   const response = await axios.get(`${API_URL}/api/v1/auth/users/${userId}`);
   return response.data;
 });
@@ -61,7 +61,7 @@ export const updateUser = createAsyncThunk("auth/updateUser", async (data: UserU
   return response.data;
 });
 
-export const deleteUser = createAsyncThunk("auth/deleteUser", async (userId: Number) => {
+export const deleteUser = createAsyncThunk("auth/deleteUser", async (userId: number) => {
   await axios.delete(`${API_URL}/api/v1/auth/users/${userId}`);
   return userId;
 });

@@ -1,8 +1,7 @@
 import { type JSX, useEffect, useState } from 'react';
 import { useParams, useSearchParams, useNavigate, Link } from 'react-router-dom';
-import pageTitle from '../../utils/pageTitle';
-import { title } from './assets/title';
 import useLocalePath from '../../hooks/useLocalePath';
+import SeoHead from '../SeoHead';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -29,7 +28,6 @@ export default function Catalog(): JSX.Element {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [searchParams, setSearchParams] = useSearchParams();
-  pageTitle(title[lang as 'en' | 'ro' | 'ru']);
   const categorySlug = searchParams.get('category');
   const searchQuery = searchParams.get('search');
 
@@ -131,9 +129,18 @@ export default function Catalog(): JSX.Element {
     </div>
   );
 
+  const seoHead = (
+    <SeoHead
+      title={t('header')}
+      description={t('seo.description')}
+      lang={lang || 'ro'}
+    />
+  );
+
   if (searchQuery) {
     return (
       <div className='catalog-page'>
+        {seoHead}
         {hero}
         <div className='catalog'>
           <p>
@@ -164,6 +171,7 @@ export default function Catalog(): JSX.Element {
 
   return (
     <div className='catalog-page'>
+      {seoHead}
       {hero}
       <div className='catalog'>
         <div className='catalog-categories'>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="100%" height="100%" fill="none">
+  <!-- Background decorative elements -->
+  <circle cx="32" cy="32" r="26" fill="#fcf7f4" />
+  <circle cx="32" cy="32" r="20" fill="#f0ddd0" opacity="0.5" />
+  
+  <!-- Blueprint draft line pattern -->
+  <path d="M22 22h20M22 28h20M22 34h20M22 40h20M22 22v20M28 22v20M34 22v20M40 22v20" stroke="#f0ddd0" stroke-width="1" stroke-dasharray="2 2" opacity="0.4" />
+  
+  <!-- Set Square (Triangle Ruler) -->
+  <path d="M18 44V18l26 26H18z" fill="#ffffff" stroke="#d9a98a" stroke-width="2" stroke-linejoin="round" />
+  <!-- Inner cutout of set square -->
+  <path d="M24 38V26l12 12H24z" fill="#fcf7f4" stroke="#d9a98a" stroke-width="1.5" stroke-linejoin="round" />
+  
+  <!-- Pencil -->
+  <path d="M44 14l6 6L28 42h-6v-6L44 14z" fill="#ffffff" stroke="#c97a56" stroke-width="2" stroke-linejoin="round" />
+  <path d="M24 38l4 4" stroke="#c97a56" stroke-width="2" />
+  <path d="M42 16l6 6" stroke="#c97a56" stroke-width="1.5" />
+  
+  <!-- Measuring base line -->
+  <path d="M12 44h40" stroke="#c97a56" stroke-width="2" stroke-linecap="round" />
+</svg>

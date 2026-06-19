@@ -2,22 +2,22 @@
   "header": "Order Steps",
   "steps": [
     {
-      "img": "https://img.icons8.com/dotty/80/consultation.png",
+      "img": "/steps/consultation.svg",
       "primaryText": "Step 1",
       "secondaryText": "Initial consultation"
     },
     {
-      "img": "https://img.icons8.com/dotty/80/design.png",
+      "img": "/steps/design.svg",
       "primaryText": "Step 2",
       "secondaryText": "Designer measurements"
     },
     {
-      "img": "https://img.icons8.com/dotty/80/agreement.png",
+      "img": "/steps/contract.svg",
       "primaryText": "Step 3",
       "secondaryText": "Signing the contract"
     },
     {
-      "img": "https://img.icons8.com/dotty/80/kitchen-room.png",
+      "img": "/steps/installation.svg",
       "primaryText": "Step 4",
       "secondaryText": "Manufacturing, assembly and installation"
     }

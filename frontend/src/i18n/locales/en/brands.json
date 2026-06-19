@@ -1,0 +1,25 @@
+{
+  "header": "Brands We Use",
+  "brands": [
+    {
+      "img": "/brands/egger.svg",
+      "name": "Egger",
+      "description": "Premium wood-based panels"
+    },
+    {
+      "img": "/brands/agt.svg",
+      "name": "AGT",
+      "description": "High-quality MDF profiles and panels"
+    },
+    {
+      "img": "/brands/blum.svg",
+      "name": "Blum",
+      "description": "Innovative furniture fittings"
+    },
+    {
+      "img": "/brands/hettich.svg",
+      "name": "Hettich",
+      "description": "Smart furniture technology"
+    }
+  ]
+}

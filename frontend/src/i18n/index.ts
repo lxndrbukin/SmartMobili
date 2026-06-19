@@ -42,6 +42,9 @@ import about_ru from "./locales/ru/about.json";
 import services_en from "./locales/en/services.json";
 import services_ro from "./locales/ro/services.json";
 import services_ru from "./locales/ru/services.json";
+import brands_en from "./locales/en/brands.json";
+import brands_ro from "./locales/ro/brands.json";
+import brands_ru from "./locales/ru/brands.json";
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -59,7 +62,8 @@ i18n.use(initReactI18next).init({
       orderSteps: orderSteps_en,
       contactForm: contactForm_en,
       about: about_en,
-      services: services_en
+      services: services_en,
+      brands: brands_en
     },
     ru: {
       admin: admin_ru,
@@ -75,7 +79,8 @@ i18n.use(initReactI18next).init({
       orderSteps: orderSteps_ru,
       contactForm: contactForm_ru,
       about: about_ru,
-      services: services_ru
+      services: services_ru,
+      brands: brands_ru
     },
     ro: {
       admin: admin_ro,
@@ -91,7 +96,8 @@ i18n.use(initReactI18next).init({
       orderSteps: orderSteps_ro,
       contactForm: contactForm_ro,
       about: about_ro,
-      services: services_ro
+      services: services_ro,
+      brands: brands_ro
     },
   },
   lng: localStorage.getItem("language") || "ro",
