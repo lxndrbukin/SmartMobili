@@ -19,11 +19,11 @@ export default function Panel(): JSX.Element {
 
   const to = useLocalePath();
   const { token, user } = useSelector((state: RootState) => state.auth);
-
-  const isAdmin = token && user && user.user_role === 'admin';
-
   const [currentTab, setCurrentTab] = useState<string>('items');
   const { t } = useTranslation('admin');
+
+  const isAuthenticating = token && !user;
+  const isAdmin = token && user && user.user_role === 'admin';
 
   const renderTabBtns = (
     tabs: Array<{ name: string; component: JSX.Element }>,
@@ -47,6 +47,17 @@ export default function Panel(): JSX.Element {
     const tab = tabs.find((t) => t.name === currentTab);
     return tab?.component;
   };
+
+  if (isAuthenticating) {
+    return (
+      <div className="admin-panel-loading" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '300px', gap: 'var(--space-4)' }}>
+        <div className="loading-spinner"></div>
+        <span style={{ color: 'var(--text-secondary)', fontWeight: 500 }}>
+          {t('panel.loading', { defaultValue: 'Loading...' })}
+        </span>
+      </div>
+    );
+  }
 
   if (!isAdmin) {
     return <Navigate to={to('')} />;

@@ -55,6 +55,16 @@ const authSlice = createSlice({
     });
     builder.addCase(getMe.fulfilled, (state: AuthState, action: PayloadAction<UserProps>) => {
       state.user = action.payload;
+      state.isLoading = false;
+    });
+    builder.addCase(getMe.pending, (state: AuthState) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getMe.rejected, (state: AuthState) => {
+      state.token = null;
+      state.user = null;
+      state.isLoading = false;
+      localStorage.removeItem("token");
     });
   }
 });

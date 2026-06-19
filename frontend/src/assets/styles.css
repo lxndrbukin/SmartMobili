@@ -3194,7 +3194,6 @@ img {
   position: sticky;
   right: 0;
   background-color: var(--white);
-  box-shadow: -2px 0 6px rgba(0, 0, 0, 0.06);
   z-index: 1;
 }
 
@@ -3657,4 +3656,19 @@ img {
   .logo-tagline {
     display: none;
   }
+}
+
+/* ─── LOADING SPINNER ────────────────────────────────────────────────── */
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--accent-subtle);
+  border-top: 3px solid var(--accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
