@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
 import useLocalePath from '../../hooks/useLocalePath';
+import SeoHead from '../SeoHead';
 import {
   type AppDispatch,
   type RootState,
@@ -20,7 +21,15 @@ export default function CatalogSection(): JSX.Element {
   const { categories, categoriesLoaded } = useSelector((state: RootState) => state.catalog);
   const [items, setItems] = useState<ItemProps[]>([]);
   const [itemsLoaded, setItemsLoaded] = useState<boolean>(false);
+  const [prevKey, setPrevKey] = useState<string>('');
   const { t } = useTranslation('catalog');
+
+  const currentKey = `${catSlug || ''}-${lang || ''}`;
+  if (currentKey !== prevKey) {
+    setPrevKey(currentKey);
+    setItemsLoaded(false);
+    setItems([]);
+  }
 
   useEffect(() => {
     dispatch(getCategories(lang));
@@ -31,7 +40,6 @@ export default function CatalogSection(): JSX.Element {
       const category = categories.find((cat) => cat.slug === catSlug);
 
       if (category) {
-        setItemsLoaded(false);
         dispatch(
           getItems({
             lang: lang || 'ro',
@@ -44,6 +52,7 @@ export default function CatalogSection(): JSX.Element {
       }
     }
   }, [categories, catSlug, lang, dispatch]);
+
 
   const renderSkeleton = () => {
     return Array(6)
@@ -96,8 +105,26 @@ export default function CatalogSection(): JSX.Element {
 
   const heroImage = category.images?.length ? category.images[0].image_url : null;
 
+  const SITE_URL = (import.meta.env.VITE_SITE_URL as string | undefined) ?? 'https://smartmobili.md';
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: t('breadcrumbs.home'), item: `${SITE_URL}/${lang}` },
+      { '@type': 'ListItem', position: 2, name: t('breadcrumbs.catalog'), item: `${SITE_URL}/${lang}/catalog` },
+      { '@type': 'ListItem', position: 3, name: category.name, item: `${SITE_URL}/${lang}/catalog/${catSlug}` },
+    ],
+  };
+
   return (
     <div className='catalog-section-page'>
+      <SeoHead
+        title={category.name}
+        description={t('seo.categoryDescription', { category: category.name, count: category.item_count })}
+        lang={lang || 'ro'}
+        ogImage={heroImage ?? undefined}
+        jsonLd={breadcrumbJsonLd}
+      />
       <div
         className={`catalog-section-hero${!heroImage ? ' catalog-section-hero--no-image' : ''}`}
         style={heroImage ? { backgroundImage: `url(${heroImage})` } : undefined}

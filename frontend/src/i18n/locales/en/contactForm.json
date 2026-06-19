@@ -14,5 +14,8 @@
   "submitMessage": "Thank you! We'll contact you soon.",
   "errors": {
     "required": "This field is required"
+  },
+  "seo": {
+    "description": "Contact SmartMobili to order custom furniture in Moldova. Fill out the form to request a free consultation and get a quote for your bespoke furniture project."
   }
 }

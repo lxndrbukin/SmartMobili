@@ -1,6 +1,7 @@
 import { type JSX } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useParams } from 'react-router-dom';
+import SeoHead from '../SeoHead';
 
 type ValueProps = {
   icon: string;
@@ -8,14 +9,31 @@ type ValueProps = {
   text: string;
 };
 
+const SITE_URL = (import.meta.env.VITE_SITE_URL as string | undefined) ?? 'https://smartmobili.md';
+
+const orgJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: 'SmartMobili',
+  '@id': `${SITE_URL}/#organization`,
+  url: SITE_URL,
+};
+
 export default function About(): JSX.Element {
   const { t } = useTranslation('about');
+  const { lang = 'ro' } = useParams<{ lang: string }>();
   const [, setSearchParams] = useSearchParams();
 
   const values = t('values', { returnObjects: true }) as Array<ValueProps>;
 
   return (
     <div className='static-page'>
+      <SeoHead
+        title={t('hero.title')}
+        description={t('hero.subtitle')}
+        lang={lang}
+        jsonLd={orgJsonLd}
+      />
       <div className='static-page-hero'>
         <h1 className='static-page-hero-title'>{t('hero.title')}</h1>
         <p className='static-page-hero-subtitle'>{t('hero.subtitle')}</p>

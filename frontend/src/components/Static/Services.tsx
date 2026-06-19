@@ -1,6 +1,7 @@
 import { type JSX } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useParams } from 'react-router-dom';
+import SeoHead from '../SeoHead';
 
 type ServiceProps = {
   icon: string;
@@ -10,12 +11,18 @@ type ServiceProps = {
 
 export default function Services(): JSX.Element {
   const { t } = useTranslation('services');
+  const { lang = 'ro' } = useParams<{ lang: string }>();
   const [, setSearchParams] = useSearchParams();
 
   const items = t('items', { returnObjects: true }) as Array<ServiceProps>;
 
   return (
     <div className='static-page'>
+      <SeoHead
+        title={t('hero.title')}
+        description={t('hero.subtitle')}
+        lang={lang}
+      />
       <div className='static-page-hero'>
         <h1 className='static-page-hero-title'>{t('hero.title')}</h1>
         <p className='static-page-hero-subtitle'>{t('hero.subtitle')}</p>

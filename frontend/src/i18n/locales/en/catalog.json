@@ -22,5 +22,10 @@
   "search": {
     "header": "Results for:",
     "results": "{{num}} results found"
+  },
+  "seo": {
+    "description": "Browse SmartMobili's custom furniture catalog — wardrobes, office furniture, tables, living room pieces, and more, all made to order in Moldova.",
+    "categoryDescription": "Custom {{category}} furniture made to order by SmartMobili in Moldova. {{count}} items available. Free design consultation included.",
+    "itemDescription": "Order custom {{title}} from SmartMobili, Moldova. Handcrafted to your exact specifications. Request a free consultation today."
   }
 }

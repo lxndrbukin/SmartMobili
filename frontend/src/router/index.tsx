@@ -1,9 +1,6 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import App from '../components/App';
-import Categories from '../components/Catalog/Categories';
-import LatestItems from '../components/Catalog/LatestItems';
-import OrderSteps from '../components/Static/OrderSteps';
-import Carousel from '../components/Carousel/Carousel';
+import HomePage from '../components/HomePage';
 import Catalog from '../components/Catalog/Catalog';
 import CatalogSection from '../components/Catalog/CatalogSection';
 import CatalogItemPage from '../components/Catalog/CatalogItemPage';
@@ -23,14 +20,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: (
-          <>
-            <Carousel />
-            <Categories />
-            <LatestItems />
-            <OrderSteps />
-          </>
-        ),
+        element: <HomePage />,
       },
       {
         path: 'catalog',

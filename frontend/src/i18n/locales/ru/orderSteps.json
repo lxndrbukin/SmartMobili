@@ -2,22 +2,22 @@
   "header": "Этапы заказа",
   "steps": [
     {
-      "img": "https://img.icons8.com/dotty/80/consultation.png",
+      "img": "/steps/consultation.svg",
       "primaryText": "Шаг 1",
       "secondaryText": "Первичная консультация"
     },
     {
-      "img": "https://img.icons8.com/dotty/80/design.png",
+      "img": "/steps/design.svg",
       "primaryText": "Шаг 2",
       "secondaryText": "Замер и разработка дизайна"
     },
     {
-      "img": "https://img.icons8.com/dotty/80/agreement.png",
+      "img": "/steps/contract.svg",
       "primaryText": "Шаг 3",
       "secondaryText": "Подписание контракта"
     },
     {
-      "img": "https://img.icons8.com/dotty/80/kitchen-room.png",
+      "img": "/steps/installation.svg",
       "primaryText": "Шаг 4",
       "secondaryText": "Изготовление, сборка и установка"
     }

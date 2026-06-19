@@ -1,7 +1,7 @@
 import { type JSX, useEffect, useState } from 'react';
 import { useParams, Link, useSearchParams } from 'react-router-dom';
-import pageTitle from '../../utils/pageTitle';
 import useLocalePath from '../../hooks/useLocalePath';
+import SeoHead from '../SeoHead';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   type RootState,
@@ -22,6 +22,7 @@ export default function CatalogItemPage(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
 
   const { currentItem, itemNotFound } = useSelector((state: RootState) => state.catalog);
+  const [prevItemId, setPrevItemId] = useState<number | null>(null);
   const [currentImage, setCurrentImage] = useState<string>('');
 
   const handleImageSelection = (images: Array<ImageProps>) => {
@@ -29,17 +30,17 @@ export default function CatalogItemPage(): JSX.Element {
     return imageData?.image_url;
   };
 
+  if (currentItem && currentItem.id !== prevItemId) {
+    setPrevItemId(currentItem.id);
+    setCurrentImage(handleImageSelection(currentItem.images) ?? '');
+  }
+
   useEffect(() => {
     if (itemId) {
       dispatch(getItem({ itemId: parseInt(itemId), lang }));
     }
   }, [itemId, lang, dispatch]);
 
-  useEffect(() => {
-    if (currentItem && currentItem.images.length > 0) {
-      setCurrentImage(handleImageSelection(currentItem.images)!);
-    }
-  }, [currentItem]);
 
   if (itemNotFound) {
     return (
@@ -59,10 +60,49 @@ export default function CatalogItemPage(): JSX.Element {
     return <CatalogItemPageSkeleton />;
   }
 
-  pageTitle(currentItem.title);
+  const SITE_URL = (import.meta.env.VITE_SITE_URL as string | undefined) ?? 'https://smartmobili.md';
+  const firstImage = currentItem.images.find((img) => img.order === 0)?.image_url;
+
+  const productJsonLd: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: currentItem.title,
+    description: currentItem.description?.slice(0, 300) || currentItem.title,
+    brand: { '@type': 'Brand', name: 'SmartMobili' },
+  };
+  if (firstImage) productJsonLd.image = firstImage;
+  if (currentItem.price) {
+    productJsonLd.offers = {
+      '@type': 'Offer',
+      priceCurrency: 'MDL',
+      price: currentItem.price,
+      availability: 'https://schema.org/InStock',
+    };
+  }
+
+  const itemJsonLd = [
+    productJsonLd,
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: t('breadcrumbs.home'), item: `${SITE_URL}/${lang}` },
+        { '@type': 'ListItem', position: 2, name: t('breadcrumbs.catalog'), item: `${SITE_URL}/${lang}/catalog` },
+        { '@type': 'ListItem', position: 3, name: currentItem.category.name, item: `${SITE_URL}/${lang}/catalog/${currentItem.category.slug}` },
+        { '@type': 'ListItem', position: 4, name: currentItem.title, item: `${SITE_URL}/${lang}/catalog/${currentItem.category.slug}/${itemId}` },
+      ],
+    },
+  ];
 
   return (
     <div className='catalog-item-page'>
+      <SeoHead
+        title={currentItem.title}
+        description={t('seo.itemDescription', { title: currentItem.title })}
+        lang={lang || 'ro'}
+        ogImage={firstImage}
+        jsonLd={itemJsonLd}
+      />
       <div className='catalog-breadcrumbs'>
         <Link to={to('/')}>{t('breadcrumbs.home')}</Link> /{' '}
         <Link to={to('/catalog')}>{t('breadcrumbs.catalog')}</Link> /{' '}

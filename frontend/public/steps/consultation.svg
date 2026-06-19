@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="100%" height="100%" fill="none">
+  <!-- Background decorative elements -->
+  <circle cx="32" cy="32" r="26" fill="#fcf7f4" />
+  <circle cx="32" cy="32" r="20" fill="#f0ddd0" opacity="0.5" />
+  
+  <!-- Left/Background Speech Bubble -->
+  <path d="M16 16h16a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4h-6l-5 4v-4h-5a4 4 0 0 1-4-4v-8a4 4 0 0 1 4-4z" fill="#ffffff" stroke="#d9a98a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  <!-- Left Bubble Text Lines -->
+  <path d="M19 21h10M19 25h6" stroke="#d9a98a" stroke-width="1.5" stroke-linecap="round" />
+
+  <!-- Right/Foreground Speech Bubble -->
+  <path d="M32 24h16a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4h-5l-5 4v-4h-6a4 4 0 0 1-4-4v-8a4 4 0 0 1 4-4z" fill="#ffffff" stroke="#c97a56" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  <!-- Right Bubble Text Lines -->
+  <path d="M36 29h8M36 33h6" stroke="#c97a56" stroke-width="1.5" stroke-linecap="round" />
+</svg>

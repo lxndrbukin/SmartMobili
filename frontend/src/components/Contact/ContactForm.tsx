@@ -1,11 +1,13 @@
 import { type JSX, type FormEvent, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { type AppDispatch, submitInquiry } from '../../store';
+import SeoHead from '../SeoHead';
 
 export default function ContactForm(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
+  const { lang = 'ro' } = useParams<{ lang: string }>();
   const [searchParams] = useSearchParams();
   const itemId = searchParams.get('item');
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -42,6 +44,13 @@ export default function ContactForm(): JSX.Element {
   };
 
   return (
+    <>
+      <SeoHead
+        title={t('header')}
+        description={t('seo.description')}
+        lang={lang}
+        noIndex
+      />
     <form onSubmit={handleSubmit} className='contact-form'>
       <h3>{t('header')}</h3>
       <div className='input-field'>
@@ -87,5 +96,6 @@ export default function ContactForm(): JSX.Element {
         {t('submit')}
       </button>
     </form>
+    </>
   );
 }
