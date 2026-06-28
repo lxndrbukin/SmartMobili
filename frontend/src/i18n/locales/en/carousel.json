@@ -23,6 +23,18 @@
       "primaryText": "Tables",
       "secondaryText": "Handcrafted dining and working tables made to last — choose your size, material, and finish for a piece that fits your home perfectly.",
       "url": "/catalog/tables"
+    },
+    {
+      "img": "/banners/banner5.jpg",
+      "primaryText": "Bespoke Kitchens",
+      "secondaryText": "Modern and ergonomic kitchens designed to blend seamless style with daily utility — built with premium materials and silent close hardware.",
+      "url": "/catalog/kitchens"
+    },
+    {
+      "img": "/banners/banner6.jpg",
+      "primaryText": "Living Room Furniture",
+      "secondaryText": "Floating TV wall units, custom cabinets, and illuminated shelving — unique pieces of furniture that bring comfort and sophistication to your living room.",
+      "url": "/catalog/living"
     }
   ],
   "bannerLinks": {

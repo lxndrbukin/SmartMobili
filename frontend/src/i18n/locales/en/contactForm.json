@@ -12,6 +12,14 @@
   "submit": "Submit Order",
   "edit": "Edit Order",
   "submitMessage": "Thank you! We'll contact you soon.",
+  "successHeader": "Thank you!",
+  "successMessage": "We have received your request and will contact you as soon as possible.",
+  "backToHome": "Back to Home",
+  "inquiryRegarding": "Inquiry regarding:",
+  "errorHeader": "Error",
+  "errorMessage": "Something went wrong. Please try again.",
+  "subjectPrefill": "Inquiry regarding {{name}}",
+  "descPrefill": "Hello! I am interested in \"{{name}}\" and would like to get more information, pricing, and measurements consultation.",
   "errors": {
     "required": "This field is required"
   },

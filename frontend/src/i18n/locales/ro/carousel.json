@@ -23,6 +23,18 @@
       "primaryText": "Mese",
       "secondaryText": "Mese de dining și de lucru fabricate manual pentru a dura — alegeți dimensiunea, materialul și finisajul pentru o piesă care se potrivește perfect casei dumneavoastră.",
       "url": "/catalog/tables"
+    },
+    {
+      "img": "/banners/banner5.jpg",
+      "primaryText": "Bucătării la comandă",
+      "secondaryText": "Bucătării moderne și ergonomice concepute pentru a îmbina stilul cu utilitatea — realizate din materiale premium cu sisteme de închidere silențioasă.",
+      "url": "/catalog/kitchens"
+    },
+    {
+      "img": "/banners/banner6.jpg",
+      "primaryText": "Mobilier pentru Living",
+      "secondaryText": "Sisteme TV suspendate, comode elegante și rafturi luminate — piese unice de mobilier care aduc confort și rafinament livingului tău.",
+      "url": "/catalog/living"
     }
   ],
   "bannerLinks": {

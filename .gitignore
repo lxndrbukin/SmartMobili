@@ -37,6 +37,4 @@ __pycache__
 # MD Files
 PROJECT.md
 
-static
->>>>>>> backend/main
-.venv/
+backend/.venv/

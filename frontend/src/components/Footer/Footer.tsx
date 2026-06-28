@@ -12,15 +12,16 @@ export default function Footer(): JSX.Element {
 
   const renderSectionLinks = (links: Array<NavLink>) => {
     return links.map((link: NavLink) => {
+      const cleanHref = link.href.replace(/^\//, '');
       const isProtocolOrExternal =
-        link.href.startsWith('tel:') ||
-        link.href.startsWith('mailto:') ||
-        link.href.startsWith('http://') ||
-        link.href.startsWith('https://');
+        cleanHref.startsWith('tel:') ||
+        cleanHref.startsWith('mailto:') ||
+        cleanHref.startsWith('http://') ||
+        cleanHref.startsWith('https://');
       return (
         <li key={link.label}>
           {isProtocolOrExternal ? (
-            <a href={link.href}>{link.label}</a>
+            <a href={cleanHref}>{link.label}</a>
           ) : (
             <Link to={to(`${link.href}`)}>{link.label}</Link>
           )}

@@ -12,6 +12,14 @@
   "submit": "Trimite comanda",
   "edit": "Actualizează",
   "submitMessage": "Mulțumim! Vă vom contacta în curând.",
+  "successHeader": "Vă mulțumim!",
+  "successMessage": "Am primit solicitarea dumneavoastră și vă vom contacta în cel mai scurt timp posibil.",
+  "backToHome": "Înapoi la pagina principală",
+  "inquiryRegarding": "Solicitare pentru:",
+  "errorHeader": "Eroare",
+  "errorMessage": "Ceva nu a mers bine. Vă rugăm să încercați din nou.",
+  "subjectPrefill": "Detalii pentru {{name}}",
+  "descPrefill": "Bună ziua! Sunt interesat de \"{{name}}\" și aș dori să obțin detalii suplimentare, estimarea prețului și o consultație.",
   "errors": {
     "required": "Câmpul este obligatoriu"
   },
