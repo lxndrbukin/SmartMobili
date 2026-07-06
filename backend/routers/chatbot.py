@@ -13,8 +13,6 @@ GEMINI_MODEL = os.getenv('GEMINI_MODEL')
 chatbot_router = APIRouter()
 client = genai.Client(api_key=GEMINI_API_KEY)
 
-
-
 class ChatRequest(BaseModel):
     message: str
     lang: str = "ro"
