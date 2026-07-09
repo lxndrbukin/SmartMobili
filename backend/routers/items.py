@@ -1,3 +1,4 @@
+from backend.routers.chatbot import GEMINI_API_KEY, client
 from fastapi import APIRouter, status, Depends, HTTPException, UploadFile, File
 from db_models.categories import Category
 from models.items import (
@@ -16,6 +17,19 @@ from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import or_
 from cloud_storage import upload_image, delete_image
 from utils import get_translation, Language
+from google.genai import types
+
+def generate_embedding(title: str, description: str | None):
+    if description == '' or description is None:
+        text_to_embed = f"Title: {title}"
+    else:
+        text_to_embed = f"Title: {title}\nDescription: {description}"
+    result = client.models.embed_content(
+        model="gemini-embedding-001",
+        contents=text_to_embed,
+        config=types.EmbedContentConfig(output_dimensionality=768)
+    )
+    return result.embeddings[0].values
 
 items_router = APIRouter(prefix="/items", tags=["items"])
 
@@ -110,11 +124,13 @@ def create_item(item: ItemCreate, lang: Language = Language.ro, db: Session = De
     db.commit()
     db.refresh(db_item)
     for translation in item.translations:
+        embedding_vector = generate_embedding(translation.title, translation.description)
         db_translation = ItemTranslation(
             item_id=db_item.id,
             language=translation.language,
             title=translation.title,
-            description=translation.description
+            description=translation.description,
+            embedding=embedding_vector
         )
         db.add(db_translation)
     db.commit()
@@ -228,10 +244,13 @@ def update_translation(
                                     ItemTranslation.item_id == item_id,
                                             ItemTranslation.language == lang
                                     ).first()
+
+    embedding_vector = generate_embedding(data.title, data.description)
     if translation:
         translation.title = data.title
         if data.description is not None:
             translation.description = data.description
+        translation.embedding = embedding_vector
         db.commit()
         return {"message": f"Updated {lang} translation"}
 
@@ -240,7 +259,8 @@ def update_translation(
             item_id=item_id,
             language=lang,
             title=data.title,
-            description=data.description
+            description=data.description,
+            embedding=embedding_vector
         )
         db.add(new_translation)
         db.commit()

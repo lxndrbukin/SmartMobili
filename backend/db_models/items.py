@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, Float
 from sqlalchemy.orm import relationship
+from pgvector.sqlalchemy import Vector
 from datetime import datetime
 from db import Base
 
@@ -24,6 +25,7 @@ class ItemTranslation(Base):
     language = Column(String(2), nullable=False)
     title = Column(String(200), nullable=False)
     description = Column(Text)
+    embedding = Column(Vector(768))
 
     item = relationship("Item", back_populates="translations")
 
