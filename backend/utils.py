@@ -9,6 +9,8 @@ from jose import jwt, JWTError
 from sqlalchemy.orm import Session
 from db import get_db
 from db_models.auth import User
+from google.genai import types
+from routers.chatbot import client
 
 load_dotenv()
 
@@ -71,3 +73,11 @@ retailer. Answer in the same language the user writes in (Romanian or Russian).
 Only answer questions about furniture, materials, dimensions, delivery, and 
 general shopping help. If asked something unrelated, politely redirect.
 '''
+
+def generate_embedding(text: str):
+    result = client.models.embed_content(
+        model="gemini-embedding-001",
+        contents=text,
+        config=types.EmbedContentConfig(output_dimensionality=768)
+    )
+    return result.embeddings[0].values
