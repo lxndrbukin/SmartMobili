@@ -1,19 +1,16 @@
-import os
-from dotenv import load_dotenv
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel, Field
 from google import genai
 from google.genai.errors import ClientError
 from google.genai import types
 from utils import SYSTEM_PROMPT
+from sqlalchemy.orm import Session
+from db import get_db
+from utils import search_products
+from gemini_client import client, GEMINI_MODEL
 
-load_dotenv()
 
-GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
-GEMINI_MODEL = os.getenv('GEMINI_MODEL')
-
-chatbot_router = APIRouter()
-client = genai.Client(api_key=GEMINI_API_KEY)
+chatbot_router = APIRouter(prefix="/chatbot", tags=["chatbot"])
 
 class Message(BaseModel):
     role: str
@@ -42,20 +39,44 @@ search_tool = types.Tool(
 )
 
 @chatbot_router.post('/')
-def chat(req: ChatRequest):
+def chat(req: ChatRequest, db: Session = Depends(get_db)):
     lang_name = "Romanian" if req.lang == "ro" else "Russian"
     try:
+        contents = [
+                {"role": m.role, "parts": [{"text": m.text}]} for m in req.history
+            ] + [
+                {"role": "user", "parts": [{"text": req.message}]}
+            ]
         response = client.models.generate_content(
             model=GEMINI_MODEL,
-            contents=[
-                {"role": m.role, "parts": [{"text": m.text}]} for m in req.history
-            ],
+            contents=contents,
             config={
                 'system_instruction': f'{SYSTEM_PROMPT}\n\nRespond in {lang_name}',
                 'tools': [search_tool]
             }
         )
-        return {'reply': response.text}
+        part = response.candidates[0].content.parts[0]
+        if part.function_call:
+            args = part.function_call.args
+            results = search_products(args["query"], req.lang, db)
+            contents.append(response.candidates[0].content)
+            contents.append(
+                types.Content(
+                    role='user',
+                    parts=[types.Part.from_function_response(
+                        name="search_products",
+                        response={"results": results}
+                    )]
+                )
+            )
+            final_response = client.models.generate_content(
+                model=GEMINI_MODEL,
+                contents=contents,
+                config={'system_instruction': f'{SYSTEM_PROMPT}\n\nRespond in {lang_name}'}
+            )
+            return {'reply': final_response.text}
+        else:
+            return {'reply': response.text}
     except ClientError as e:
         raise HTTPException(status_code=429, detail='Assistant is busy, please try again shortly.')
     except Exception as e:

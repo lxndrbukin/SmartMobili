@@ -9,8 +9,9 @@ from jose import jwt, JWTError
 from sqlalchemy.orm import Session
 from db import get_db
 from db_models.auth import User
+from db_models.items import Item, ItemTranslation
 from google.genai import types
-from routers.chatbot import client
+from gemini_client import client
 
 load_dotenv()
 
@@ -81,3 +82,19 @@ def generate_embedding(text: str):
         config=types.EmbedContentConfig(output_dimensionality=768)
     )
     return result.embeddings[0].values
+
+def search_products(query: str, lang: str, db: Session):
+    query_embedding = generate_embedding(query)
+    results = (
+        db.query(ItemTranslation)
+        .join(Item, ItemTranslation.item_id == Item.id)
+        .filter(ItemTranslation.language == lang)
+        .order_by(ItemTranslation.embedding.cosine_distance(query_embedding))
+        .limit(5)
+        .all()
+    )
+    return [
+        {
+            'title': r.title, 'description': r.description,  'price': r.item.price
+        } for r in results
+    ]

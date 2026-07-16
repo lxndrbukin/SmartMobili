@@ -1,4 +1,3 @@
-from backend.routers.chatbot import GEMINI_API_KEY, client
 from fastapi import APIRouter, status, Depends, HTTPException, UploadFile, File
 from db_models.categories import Category
 from models.items import (
@@ -13,11 +12,11 @@ from models.items import (
 )
 from db import get_db
 from db_models.items import Item, ItemImage, ItemTranslation
+from db_models.auth import User
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import or_
 from cloud_storage import upload_image, delete_image
-from utils import get_translation, Language, generate_embedding
-from google.genai import types
+from utils import get_translation, Language, generate_embedding, get_current_user
 
 items_router = APIRouter(prefix="/items", tags=["items"])
 
@@ -77,6 +76,24 @@ def get_items(
         data=result,
         pagination=Pagination(skip=skip, limit=limit)
     )
+
+@items_router.put("/translation_embeddings")
+def add_embeddings(
+        db: Session = Depends(get_db),
+        current_user: User = Depends(get_current_user)
+    ):
+    translations = db.query(ItemTranslation).filter(ItemTranslation.embedding.is_(None)).all()
+    for translation in translations:
+        if translation.description == '' or translation.description is None:
+            text_to_embed = f"Title: {translation.title}"
+        else:
+            text_to_embed = f"Title: {translation.title}\nDescription: {translation.description}"
+
+        embedding_vector = generate_embedding(text_to_embed)
+        translation.embedding = embedding_vector
+
+    db.commit()
+    return {"message": f"Translations updated"}
 
 @items_router.get("/{item_id}", status_code=status.HTTP_200_OK, response_model=ItemResponse)
 def get_item(item_id: int, lang: Language = Language.ro, db: Session = Depends(get_db)):
