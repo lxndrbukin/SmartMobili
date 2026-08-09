@@ -26,6 +26,7 @@ class CategoryTranslationResponse(BaseModel):
 
 class CategoryCreate(BaseModel):
     slug: str
+    parent_id: int | None = None
     translations: list[CategoryTranslationCreate]
 
     @field_validator("translations")
@@ -41,6 +42,7 @@ class CategoryUpdate(BaseModel):
 class CategoryResponse(BaseModel):
     id: int
     slug: str
+    parent_id: int | None = None
     item_count: int
     name: str
     language: Language

@@ -51,27 +51,37 @@ def get_category(category_id: int, lang: Language = Language.ro, db: Session = D
     }
 
 @categories_router.post("/", status_code=status.HTTP_201_CREATED, response_model=CategoryResponse)
-def create_category(category: CategoryCreate, db: Session = Depends(get_db)):
-    db_category = Category(
-        slug=category.slug
+def create_category(data: CategoryCreate, db: Session = Depends(get_db)):
+    if data.parent_id:
+        parent = db.query(Category).get(data.parent_id)
+        if not parent:
+            raise HTTPException(status_code=404, detail="Parent category not found")
+        if parent.parent_id is not None:
+            raise HTTPException(
+                status_code=400, 
+                detail="Cannot create a subcategory of a subcategory"
+            )
+    category = Category(
+        slug=data.slug,
+        parent_id=data.parent_id
     )
-    db.add(db_category)
+    db.add(category)
     db.commit()
-    db.refresh(db_category)
-    for translation in category.translations:
+    db.refresh(category)
+    for translation in data.translations:
         db_translation = CategoryTranslation(
-            category_id=db_category.id,
+            category_id=category.id,
             language=translation.language,
             name=translation.name
         )
         db.add(db_translation)
     db.commit()
-    db.refresh(db_category)
-    translation = get_translation(db_category.translations, Language.ro)
+    db.refresh(category)
+    translation = get_translation(category.translations, Language.ro)
     item_count = db.query(func.count(Item.id)).filter(Item.category_id == category.id).scalar()
     return {
-        "id": db_category.id,
-        "slug": db_category.slug,
+        "id": category.id,
+        "slug": category.slug,
         "item_count": item_count,
         "name": translation.name,
         "language": translation.language

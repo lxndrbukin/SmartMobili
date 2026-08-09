@@ -7,10 +7,14 @@ class Category(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     slug = Column(String(100), unique=True, nullable=False)
+    parent_id = Column(Integer, ForeignKey("categories.id"), nullable=True)
 
     images = relationship("CategoryImage", back_populates="category", cascade="all, delete-orphan")
     items = relationship("Item", back_populates="category", cascade="all, delete-orphan")
     translations = relationship("CategoryTranslation", back_populates="category", cascade="all, delete-orphan")
+
+    parent = relationship("Category", remote_side=[id], back_populates="children")
+    children = relationship("Category", back_populates="parent", cascade="all, delete-orphan")
 
 class CategoryTranslation(Base):
     __tablename__ = "category_translations"

@@ -9,7 +9,6 @@ from db import get_db
 from utils import search_products
 from gemini_client import client, GEMINI_MODEL
 
-
 chatbot_router = APIRouter(prefix="/chatbot", tags=["chatbot"])
 
 class Message(BaseModel):
