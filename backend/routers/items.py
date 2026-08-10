@@ -16,7 +16,13 @@ from db_models.auth import User
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import or_
 from cloud_storage import upload_image, delete_image
-from utils import get_translation, Language, generate_embedding, get_current_user
+from utils import (
+    get_translation, 
+    Language, 
+    generate_embedding, 
+    get_current_user,
+    get_category_and_children_ids
+)
 
 items_router = APIRouter(prefix="/items", tags=["items"])
 
@@ -37,11 +43,13 @@ def get_items(
     if desc:
         query = query.order_by(Item.id.desc())
     if category_id:
-        query = query.filter(Item.category_id == category_id)
+        category_ids = get_category_and_children_ids(category_id, db)
+        query = query.filter(Item.category_id.in_(category_ids))
     if category_slug:
         category = db.query(Category).filter(Category.slug == category_slug).first()
         if category:
-            query = query.filter(Item.category_id == category.id)
+            category_ids = get_category_and_children_ids(category.id, db)
+            query = query.filter(Item.category_id.in_(category_ids))
     if search_query:
         query = query.join(ItemTranslation).filter(
             ItemTranslation.language == lang,
@@ -53,9 +61,8 @@ def get_items(
     items = query.offset(skip).limit(limit).all()
     result = []
     for item in items:
-        if category_slug is None:
-            category = db.query(Category) \
-                .options(joinedload(Category.translations)).filter(Category.id == item.category_id).first()            
+        category = db.query(Category) \
+            .options(joinedload(Category.translations)).filter(Category.id == item.category_id).first()            
         category_translation = get_translation(category.translations, lang)
         item_translation = get_translation(item.translations, lang)
         result.append({

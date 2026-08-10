@@ -10,6 +10,7 @@ from sqlalchemy.orm import Session
 from db import get_db
 from db_models.auth import User
 from db_models.items import Item, ItemTranslation
+from db_models.categories import Category
 from google.genai import types
 from gemini_client import client
 
@@ -130,3 +131,13 @@ def search_products(query: str, lang: str, db: Session):
             'title': r.title, 'description': r.description,  'price': r.item.price
         } for r in results
     ]
+
+def get_category_and_children_ids(category_id: int, db: Session) -> list[int]:
+    category = db.query(Category).get(category_id)
+    if not category:
+        return [category_id]
+    ids = [category.id]
+    if category.parent_id is None:
+        children = db.query(Category.id).filter(Category.parent_id == category_id).all()
+        ids.extend([c.id for c in children])
+    return ids

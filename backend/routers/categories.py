@@ -27,6 +27,7 @@ def get_categories(lang: Language = Language.ro , db: Session = Depends(get_db))
         result.append({
             "id": category.id,
             "slug": category.slug,
+            "parent_id": category.parent_id,
             "item_count": item_count,
             "name": translation.name,
             "language": translation.language,
@@ -45,6 +46,7 @@ def get_category(category_id: int, lang: Language = Language.ro, db: Session = D
     return {
         "id": category.id,
         "slug": category.slug,
+        "parent_id": category.parent_id,
         "item_count": item_count,
         "name": translation.name,
         "language": translation.language
@@ -110,6 +112,7 @@ def update_category(category_id: int, data: CategoryUpdate, lang: Language = Lan
     return {
         "id": category.id,
         "slug": category.slug,
+        "parent_id": category.parent_id,
         "item_count": item_count,
         "name": translation.name,
         "language": translation.language
