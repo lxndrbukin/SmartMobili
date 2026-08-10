@@ -44,6 +44,7 @@ openai==0.27.10
 parso==0.8.7
 passlib==1.7.4
 pexpect==4.9.0
+pgvector==0.3.6
 prompt_toolkit==3.0.52
 propcache==0.5.2
 psycopg2-binary==2.9.11
