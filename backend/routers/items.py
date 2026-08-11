@@ -61,8 +61,12 @@ def get_items(
     items = query.offset(skip).limit(limit).all()
     result = []
     for item in items:
+        parent_category = None
         category = db.query(Category) \
-            .options(joinedload(Category.translations)).filter(Category.id == item.category_id).first()            
+            .options(joinedload(Category.translations)).filter(Category.id == item.category_id).first()  
+        if category.parent_id is not None:
+            parent_category = db.query(Category) \
+                .filter(Category.id == category.parent_id).first()          
         category_translation = get_translation(category.translations, lang)
         item_translation = get_translation(item.translations, lang)
         result.append({
@@ -71,6 +75,7 @@ def get_items(
             "category": ItemCategoryResponse(
                 id=category.id,
                 slug=category.slug,
+                parent_slug=parent_category.slug if parent_category else None,
                 name=category_translation.name
             ),
             "created_at": item.created_at,
