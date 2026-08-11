@@ -49,6 +49,7 @@ class ItemUpdate(BaseModel):
 class ItemCategoryResponse(BaseModel):
     id: int
     slug: str
+    parent_slug: str | None = None
     name: str
 
 class ItemResponse(BaseModel):
