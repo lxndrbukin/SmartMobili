@@ -43,6 +43,8 @@ class CategoryResponse(BaseModel):
     id: int
     slug: str
     parent_id: int | None = None
+    parent_name: str | None = None
+    parent_slug: str | None = None
     item_count: int
     name: str
     language: Language
