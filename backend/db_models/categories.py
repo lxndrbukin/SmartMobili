@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import relationship
 from db import Base
 
@@ -6,7 +6,7 @@ class Category(Base):
     __tablename__ = "categories"
 
     id = Column(Integer, primary_key=True, index=True)
-    slug = Column(String(100), unique=True, nullable=False)
+    slug = Column(String(100), nullable=False)
     parent_id = Column(Integer, ForeignKey("categories.id"), nullable=True)
 
     images = relationship("CategoryImage", back_populates="category", cascade="all, delete-orphan")
@@ -15,6 +15,10 @@ class Category(Base):
 
     parent = relationship("Category", remote_side=[id], back_populates="children")
     children = relationship("Category", back_populates="parent", cascade="all, delete-orphan")
+
+    __table_args__ = (
+        UniqueConstraint("slug", "parent_id", name="uq_category_slug_parent"),
+    )
 
 class CategoryTranslation(Base):
     __tablename__ = "category_translations"
