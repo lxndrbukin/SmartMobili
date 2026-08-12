@@ -3435,7 +3435,6 @@ img {
 .admin-panel-table th:last-child {
   position: sticky;
   right: 0;
-  background-color: var(--white);
   z-index: 1;
 }
 
@@ -3466,6 +3465,15 @@ img {
 
 .admin-panel-table tbody tr {
   height: 60px;
+}
+
+ .subcategory-row {
+  background-color: var(--bg-color-three);
+}
+
+.subcategory-indent {
+  color: var(--light-color-two);
+  font-weight: 400;
 }
 
 .admin-panel-table tbody tr:hover {

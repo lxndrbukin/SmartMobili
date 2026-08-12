@@ -60,7 +60,7 @@ export default function CatalogItemPage(): JSX.Element {
     return <CatalogItemPageSkeleton />;
   }
 
-  const SITE_URL = (import.meta.env.VITE_SITE_URL as string | undefined) ?? 'https://smartmobili.md';
+  const SITE_URL = (import.meta.env.VITE_SITE_URL as string | undefined) ?? 'https://smartmobili-md.com';
   const firstImage = currentItem.images.find((img) => img.order === 0)?.image_url;
 
   const productJsonLd: Record<string, unknown> = {
@@ -106,6 +106,11 @@ export default function CatalogItemPage(): JSX.Element {
       <div className='catalog-breadcrumbs'>
         <Link to={to('/')}>{t('breadcrumbs.home')}</Link> /{' '}
         <Link to={to('/catalog')}>{t('breadcrumbs.catalog')}</Link> /{' '}
+        {currentItem.category.parent_slug && (
+          <Link to={to(`/catalog/${currentItem.category.parent_slug}`)}>
+            {currentItem.category.parent_slug}
+          </Link>
+        ) } {currentItem.category.parent_slug && '/'}
         <Link to={to(`/catalog/${currentItem.category.slug}`)}>
           {currentItem.category.name}
         </Link>{' '}

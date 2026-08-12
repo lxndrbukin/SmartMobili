@@ -31,7 +31,7 @@ export const router = createBrowserRouter([
         element: <CatalogSection />,
       },
       {
-        path: 'catalog/:catSlug/:itemId',
+        path: 'catalog/:catSlug/:subSlug?/item/:itemId',
         element: <CatalogItemPage />,
       },
       {

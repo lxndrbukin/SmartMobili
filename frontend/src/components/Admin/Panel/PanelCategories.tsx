@@ -44,11 +44,23 @@ export default function PanelCategories(): JSX.Element {
   };
 
   const renderRows = (categories: Array<CategoryProps>) => {
-    return categories.map(({ id, name, slug, item_count }) => {
+    const parents = categories.filter((cat) => !cat.parent_id);
+    const sorted: CategoryProps[] = [];
+    
+    parents.forEach((parent) => {
+      sorted.push(parent);
+      const children = categories.filter((cat) => cat.parent_id === parent.id);
+      sorted.push(...children);
+    });
+  
+    return sorted.map(({ id, name, slug, item_count, parent_id }) => {
       return (
-        <tr>
-          <td>{id}</td>
-          <td>{name}</td>
+        <tr key={id} className={parent_id ? 'subcategory-row' : ''}>
+          <td>{parent_id ? '' : id}</td>
+          <td>
+            {parent_id && <span className="subcategory-indent">↳ </span>}
+            {name}
+          </td>
           <td>{slug}</td>
           <td>{item_count}</td>
           <td className='actions'>

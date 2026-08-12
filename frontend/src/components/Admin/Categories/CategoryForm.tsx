@@ -7,8 +7,9 @@ import {
 } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
+  type RootState,
   type AppDispatch,
   createCategory,
   updateCategory,
@@ -20,6 +21,7 @@ import { API_URL } from '../../../api';
 export default function CategoryForm(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
   const { t } = useTranslation('admin');
+  const { categories } = useSelector((state: RootState) => state.catalog);
   const [categoryRO, setCategoryRO] = useState('');
   const [categoryRU, setCategoryRU] = useState('');
   const [slug, setSlug] = useState('');
@@ -45,7 +47,7 @@ export default function CategoryForm(): JSX.Element {
           setCategoryRO(res.data.name);
           setSlug(res.data.slug);
         });
-
+  
       axios
         .get(`${API_URL}/api/v1/categories/${categoryId}?lang=ru`)
         .then((res) => setCategoryRU(res.data.name));
@@ -67,9 +69,11 @@ export default function CategoryForm(): JSX.Element {
     const nameRO = formData.get('nameRO') as string;
     const nameRU = formData.get('nameRU') as string;
     const slug = formData.get('slug') as string;
+    const parentId = formData.get('parentId') as string;
     const imageFiles = formData.getAll('images') as File[];
     const data = {
       slug,
+      parent_id: parentId ? parseInt(parentId) : null,
       translations: [
         {
           language: 'ro',
@@ -158,6 +162,19 @@ export default function CategoryForm(): JSX.Element {
               name='slug'
             />
           </div>
+          {isCreating && (
+            <div className="form-field">
+              <label>Parent Category (optional)</label>
+              <select name="parentId">
+                <option value="">None (top-level category)</option>
+                {categories
+                  .filter(cat => !cat.parent_id)
+                  .map(cat => (
+                    <option value={cat.id} key={cat.id}>{cat.name}</option>
+                  ))}
+              </select>
+            </div>
+          )}
           <div className='form-field'>
             <label>{t('category.images')}</label>
             <input

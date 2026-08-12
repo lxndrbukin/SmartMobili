@@ -84,6 +84,7 @@ export default function Catalog(): JSX.Element {
     return (
       <div className='catalog-section-items'>
         {items.map((item) => {
+          const item_url = item.category.parent_slug ? `/catalog/${item.category.parent_slug}/${item.category.slug}/item/${item.id}` : `/catalog/${item.category.slug}/item/${item.id}`;
           return (
             <CatalogItem
               key={item.id}
@@ -92,7 +93,7 @@ export default function Catalog(): JSX.Element {
               title={item.title}
               price={item.price}
               images={item.images}
-              url={to(`/catalog/${item.category.slug}/${item.id}`)}
+              url={to(item_url)}
             />
           );
         })}
