@@ -62,11 +62,14 @@ def get_items(
     result = []
     for item in items:
         parent_category = None
+        parent_translation = None
         category = db.query(Category) \
             .options(joinedload(Category.translations)).filter(Category.id == item.category_id).first()  
         if category.parent_id is not None:
             parent_category = db.query(Category) \
-                .filter(Category.id == category.parent_id).first()          
+                .options(joinedload(Category.translations)) \
+                .filter(Category.id == category.parent_id).first()
+            parent_translation = get_translation(parent_category.translations, lang)         
         category_translation = get_translation(category.translations, lang)
         item_translation = get_translation(item.translations, lang)
         result.append({
@@ -77,7 +80,7 @@ def get_items(
                 slug=category.slug,
                 name=category_translation.name,
                 parent_slug=parent_category.slug if parent_category else None,
-                parent_name=parent_category.name if parent_category else None
+                parent_name=parent_translation.name if parent_translation else None
             ),
             "created_at": item.created_at,
             "title": item_translation.title,
@@ -114,11 +117,14 @@ def get_item(item_id: int, lang: Language = Language.ro, db: Session = Depends(g
     if not item:
         raise HTTPException(status_code=404, detail="Item not found")
     parent_category = None
+    parent_translation = None
     category = db.query(Category) \
         .options(joinedload(Category.translations)).filter(Category.id == item.category_id).first()
     if category.parent_id is not None:
         parent_category = db.query(Category) \
-            .filter(Category.id == category.parent_id).first() 
+            .options(joinedload(Category.translations)) \
+            .filter(Category.id == category.parent_id).first()
+        parent_translation = get_translation(parent_category.translations, lang) 
     category_translation = get_translation(category.translations, lang)
     item_translation = get_translation(item.translations, lang)
     return {
@@ -129,7 +135,7 @@ def get_item(item_id: int, lang: Language = Language.ro, db: Session = Depends(g
                 slug=category.slug,
                 name=category_translation.name,
                 parent_slug=parent_category.slug if parent_category else None,
-                parent_name=parent_category.name if parent_category else None
+                parent_name=parent_translation.name if parent_translation else None
             ),
             "created_at": item.created_at,
             "title": item_translation.title,
