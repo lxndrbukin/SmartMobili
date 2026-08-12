@@ -112,8 +112,12 @@ def get_item(item_id: int, lang: Language = Language.ro, db: Session = Depends(g
     item = db.query(Item).options(joinedload(Item.images), joinedload(Item.translations)).get(item_id)
     if not item:
         raise HTTPException(status_code=404, detail="Item not found")
+    parent_category = None
     category = db.query(Category) \
         .options(joinedload(Category.translations)).filter(Category.id == item.category_id).first()
+    if category.parent_id is not None:
+        parent_category = db.query(Category) \
+            .filter(Category.id == category.parent_id).first() 
     category_translation = get_translation(category.translations, lang)
     item_translation = get_translation(item.translations, lang)
     return {
@@ -122,6 +126,7 @@ def get_item(item_id: int, lang: Language = Language.ro, db: Session = Depends(g
             "category": ItemCategoryResponse(
                 id=category.id,
                 slug=category.slug,
+                parent_slug=parent_category.slug if parent_category else None,
                 name=category_translation.name
             ),
             "created_at": item.created_at,
