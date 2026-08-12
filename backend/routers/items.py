@@ -75,8 +75,9 @@ def get_items(
             "category": ItemCategoryResponse(
                 id=category.id,
                 slug=category.slug,
+                name=category_translation.name,
                 parent_slug=parent_category.slug if parent_category else None,
-                name=category_translation.name
+                parent_name=parent_category.name if parent_category else None
             ),
             "created_at": item.created_at,
             "title": item_translation.title,
@@ -126,8 +127,9 @@ def get_item(item_id: int, lang: Language = Language.ro, db: Session = Depends(g
             "category": ItemCategoryResponse(
                 id=category.id,
                 slug=category.slug,
+                name=category_translation.name,
                 parent_slug=parent_category.slug if parent_category else None,
-                name=category_translation.name
+                parent_name=parent_category.name if parent_category else None
             ),
             "created_at": item.created_at,
             "title": item_translation.title,

@@ -50,6 +50,7 @@ class ItemCategoryResponse(BaseModel):
     id: int
     slug: str
     parent_slug: str | None = None
+    parent_name: str | None = None
     name: str
 
 class ItemResponse(BaseModel):
