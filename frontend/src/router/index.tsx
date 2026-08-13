@@ -31,6 +31,10 @@ export const router = createBrowserRouter([
         element: <CatalogSection />,
       },
       {
+        path: 'catalog/:catSlug/:subSlug',
+        element: <CatalogSection />,
+      },
+      {
         path: 'catalog/:catSlug/:subSlug?/item/:itemId',
         element: <CatalogItemPage />,
       },

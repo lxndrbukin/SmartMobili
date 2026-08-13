@@ -22,15 +22,18 @@ export default function CatalogItem({
   const navigate = useNavigate();
 
   const handleImageSelection = (images: Array<ImageProps>) => {
-    const imageData = images.find((image) => image.order === 0);
+    if (!images || images.length === 0) return undefined;
+    const imageData = images.find((image) => image.order === 0) || images[0];
     return imageData?.image_url;
   };
+
+  const imageUrl = handleImageSelection(images);
 
   return (
     <div onClick={() => navigate(url)} className='catalog-item'>
       <div className='catalog-item-image-wrapper'>
-        {images ? (
-          <img src={handleImageSelection(images)} alt={`${title} ${id}`} />
+        {imageUrl ? (
+          <img src={imageUrl} alt={`${title} ${id}`} />
         ) : (
           <div className='catalog-item-no-image'>
             <i className='fas fa-image'></i>

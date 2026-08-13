@@ -14,6 +14,8 @@ export type CategoryProps = {
   slug: string;
   name: string;
   parent_id: number | null;
+  parent_slug: string | null;
+  parent_name: string | null;
   item_count: number;
   language: string;
   images: Array<ImageProps>;
@@ -34,6 +36,7 @@ export type ItemProps = {
     id: number;
     slug: string;
     parent_slug: string | null;
+    parent_name: string | null;
     name: string;
   };
   created_at: string;

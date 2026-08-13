@@ -17,28 +17,26 @@ export default function LatestItems(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
   const to = useLocalePath();
   const { t } = useTranslation('catalog');
-  // const [isLoading, setIsLoading] = useState<boolean>(false);
   const { items } = useSelector((state: RootState) => state.catalog);
   const { lang } = useParams();
 
   useEffect(() => {
     const fetchData = async () => {
-      // setIsLoading(true);
       await dispatch(
         getItems({ limit: 4, lang: lang ?? 'ro', desc: true }),
       ).unwrap();
-      // setIsLoading(false);
     };
     fetchData();
   }, [lang]);
 
   const renderItems = (items: Array<ItemProps>) => {
     return items.map(({ images, title, id, price, category }) => {
+      const item_url = category.parent_slug ? `/catalog/${category.parent_slug}/${category.slug}/item/${id}` : `/catalog/${category.slug}/item/${id}`;
       return (
         <CatalogItem
           key={id}
           id={id}
-          url={to(`/catalog/${category.slug}/${id}`)}
+          url={to(item_url)}
           images={images}
           price={price}
           categoryName={category.name}

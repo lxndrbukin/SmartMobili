@@ -101,10 +101,15 @@ export default function Catalog(): JSX.Element {
     );
   };
 
-  const renderCategories = (categories: Array<CategoryProps>) => {
-    return categories.map((category) => {
+  const parentCategories = categories.filter((cat) => cat.parent_id === null);
+  const totalParentItemsCount = parentCategories.reduce((sum, cat) => sum + cat.item_count, 0);
+
+  const renderCategories = (categoriesList: Array<CategoryProps>) => {
+    const parentCats = categoriesList.filter((cat) => cat.parent_id === null);
+    return parentCats.map((category) => {
       return (
         <button
+          key={category.id}
           className={
             categorySlug && String(categorySlug) === category.slug
               ? 'active'
@@ -113,9 +118,33 @@ export default function Catalog(): JSX.Element {
           onClick={() => setSearchParams({ category: String(category.slug) })}
         >
           {category.name}
+          {category.item_count > 0 && <span className='category-count'>{category.item_count}</span>}
         </button>
       );
     });
+  };
+
+  const renderSubcategoriesFilter = (categoriesList: Array<CategoryProps>, activeParentSlug: string) => {
+    const parentCategory = categoriesList.find((cat) => cat.slug === activeParentSlug);
+    if (!parentCategory) return null;
+    const subcats = categoriesList.filter((cat) => cat.parent_id === parentCategory.id);
+    if (subcats.length === 0) return null;
+
+    return (
+      <div className='catalog-subcategories-filter'>
+        {subcats.map((sub) => (
+          <button
+            key={sub.id}
+            onClick={() => navigate(to(`/catalog/${activeParentSlug}/${sub.slug}`))}
+            className='subcategory-filter-pill'
+          >
+            {sub.name}
+            {sub.item_count > 0 && <span className='category-count'>{sub.item_count}</span>}
+            <i className="fa-solid fa-arrow-right"></i>
+          </button>
+        ))}
+      </div>
+    );
   };
 
   const hero = (
@@ -181,9 +210,11 @@ export default function Catalog(): JSX.Element {
             onClick={() => setSearchParams({})}
           >
             {t('generic.allItems')}
+            {totalParentItemsCount > 0 && <span className='category-count'>{totalParentItemsCount}</span>}
           </button>
           {renderCategories(categories)}
         </div>
+        {categorySlug && renderSubcategoriesFilter(categories, categorySlug)}
         {items.length ? renderItems(items) : renderSkeleton()}
       </div>
     </div>

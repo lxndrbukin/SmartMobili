@@ -40,7 +40,8 @@ export default function Categories(): JSX.Element {
   };
 
   const renderCategories = (categories: Array<CategoryProps>) => {
-    return categories.map(({ id, slug, images, name }) => {
+    const parentCategories = categories.filter((cat) => cat.parent_id === null);
+    return parentCategories.map(({ id, slug, images, name }) => {
       return (
         <Link
           key={id}

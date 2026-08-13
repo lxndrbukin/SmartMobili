@@ -999,31 +999,105 @@ img {
   justify-content: center;
 }
 
-.catalog-categories button {
+/* Subcategory Navigation Tabs Container */
+.catalog-subcategories-nav {
+  display: flex;
+  gap: var(--space-3);
+  margin-bottom: var(--space-8);
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Subcategory quick filter container in main Catalog */
+.catalog-subcategories-filter {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: calc(-1 * var(--space-4));
+  margin-bottom: var(--space-8);
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.catalog-categories button,
+.subcategory-tab,
+.subcategory-filter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
   border: 1px solid var(--border-strong);
   padding: var(--space-2) var(--space-5);
-  background-color: transparent;
+  background-color: var(--bg-surface);
   color: var(--text-secondary);
   border-radius: var(--radius-full);
   cursor: pointer;
   font-family: var(--font-body);
   font-weight: 500;
+  font-size: 0.95rem;
+  line-height: 1.2;
   transition: all var(--transition-base);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+  text-decoration: none;
 }
 
-.catalog-categories button:hover {
+.catalog-categories button:hover,
+.subcategory-tab:hover,
+.subcategory-filter-pill:hover {
   border-color: var(--accent);
   color: var(--accent);
   background-color: rgba(201, 122, 86, 0.05);
   transform: translateY(-1px);
 }
 
-.catalog-categories button.active {
+.catalog-categories button.active,
+.subcategory-tab.active,
+.subcategory-filter-pill.active {
   background-color: var(--accent);
   color: var(--white);
   border-color: var(--accent);
-  box-shadow: 0 4px 15px rgba(201, 122, 86, 0.3);
+  box-shadow: 0 4px 12px rgba(201, 122, 86, 0.25);
+}
+
+/* Category Item Count Badges */
+.catalog-categories button .category-count,
+.subcategory-tab .subcategory-count,
+.subcategory-filter-pill .category-count {
+  font-size: 0.75rem;
+  background-color: var(--bg-elevated);
+  color: var(--text-muted);
+  padding: 2px 6px;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  transition: all var(--transition-base);
+  pointer-events: none;
+}
+
+.catalog-categories button:hover .category-count,
+.subcategory-tab:hover .subcategory-count,
+.subcategory-filter-pill:hover .category-count {
+  background-color: rgba(201, 122, 86, 0.15);
+  color: var(--accent);
+}
+
+.catalog-categories button.active .category-count,
+.subcategory-tab.active .subcategory-count,
+.subcategory-filter-pill.active .category-count {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: var(--white);
+}
+
+/* Custom styles for filter-pill arrow */
+.subcategory-filter-pill i {
+  font-size: 0.75rem;
+  margin-left: 2px;
+  transition: transform var(--transition-fast);
+}
+
+.subcategory-filter-pill:hover i {
+  transform: translateX(3px);
 }
 
 .catalog-section-items {

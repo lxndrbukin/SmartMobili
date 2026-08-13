@@ -26,7 +26,8 @@ export default function CatalogItemPage(): JSX.Element {
   const [currentImage, setCurrentImage] = useState<string>('');
 
   const handleImageSelection = (images: Array<ImageProps>) => {
-    const imageData = images.find((image) => image.order === 0);
+    if (!images || images.length === 0) return undefined;
+    const imageData = images.find((image) => image.order === 0) || images[0];
     return imageData?.image_url;
   };
 
@@ -61,7 +62,7 @@ export default function CatalogItemPage(): JSX.Element {
   }
 
   const SITE_URL = (import.meta.env.VITE_SITE_URL as string | undefined) ?? 'https://smartmobili-md.com';
-  const firstImage = currentItem.images.find((img) => img.order === 0)?.image_url;
+  const firstImage = currentItem.images.find((img) => img.order === 0)?.image_url || currentItem.images[0]?.image_url;
 
   const productJsonLd: Record<string, unknown> = {
     '@context': 'https://schema.org',
@@ -80,19 +81,65 @@ export default function CatalogItemPage(): JSX.Element {
     };
   }
 
+  const itemCategoryUrl = currentItem.category.parent_slug
+    ? `${SITE_URL}/${lang}/catalog/${currentItem.category.parent_slug}/${currentItem.category.slug}`
+    : `${SITE_URL}/${lang}/catalog/${currentItem.category.slug}`;
+
+  const itemUrl = currentItem.category.parent_slug
+    ? `${SITE_URL}/${lang}/catalog/${currentItem.category.parent_slug}/${currentItem.category.slug}/item/${itemId}`
+    : `${SITE_URL}/${lang}/catalog/${currentItem.category.slug}/item/${itemId}`;
+
+  const breadcrumbElements = [
+    { '@type': 'ListItem', position: 1, name: t('breadcrumbs.home'), item: `${SITE_URL}/${lang}` },
+    { '@type': 'ListItem', position: 2, name: t('breadcrumbs.catalog'), item: `${SITE_URL}/${lang}/catalog` },
+  ];
+
+  if (currentItem.category.parent_name && currentItem.category.parent_slug) {
+    breadcrumbElements.push({
+      '@type': 'ListItem',
+      position: 3,
+      name: currentItem.category.parent_name,
+      item: `${SITE_URL}/${lang}/catalog/${currentItem.category.parent_slug}`,
+    });
+    breadcrumbElements.push({
+      '@type': 'ListItem',
+      position: 4,
+      name: currentItem.category.name,
+      item: itemCategoryUrl,
+    });
+    breadcrumbElements.push({
+      '@type': 'ListItem',
+      position: 5,
+      name: currentItem.title,
+      item: itemUrl,
+    });
+  } else {
+    breadcrumbElements.push({
+      '@type': 'ListItem',
+      position: 3,
+      name: currentItem.category.name,
+      item: itemCategoryUrl,
+    });
+    breadcrumbElements.push({
+      '@type': 'ListItem',
+      position: 4,
+      name: currentItem.title,
+      item: itemUrl,
+    });
+  }
+
   const itemJsonLd = [
     productJsonLd,
     {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: t('breadcrumbs.home'), item: `${SITE_URL}/${lang}` },
-        { '@type': 'ListItem', position: 2, name: t('breadcrumbs.catalog'), item: `${SITE_URL}/${lang}/catalog` },
-        { '@type': 'ListItem', position: 3, name: currentItem.category.name, item: `${SITE_URL}/${lang}/catalog/${currentItem.category.slug}` },
-        { '@type': 'ListItem', position: 4, name: currentItem.title, item: `${SITE_URL}/${lang}/catalog/${currentItem.category.slug}/${itemId}` },
-      ],
+      itemListElement: breadcrumbElements,
     },
   ];
+
+  const categoryLinkTo = to(currentItem.category.parent_slug
+    ? `/catalog/${currentItem.category.parent_slug}/${currentItem.category.slug}`
+    : `/catalog/${currentItem.category.slug}`);
 
   return (
     <div className='catalog-item-page'>
@@ -106,19 +153,22 @@ export default function CatalogItemPage(): JSX.Element {
       <div className='catalog-breadcrumbs'>
         <Link to={to('/')}>{t('breadcrumbs.home')}</Link> /{' '}
         <Link to={to('/catalog')}>{t('breadcrumbs.catalog')}</Link> /{' '}
-        {currentItem.category.parent_slug && (
-          <Link to={to(`/catalog/${currentItem.category.parent_slug}`)}>
-            {currentItem.category.parent_slug}
-          </Link>
-        ) } {currentItem.category.parent_slug && '/'}
-        <Link to={to(`/catalog/${currentItem.category.slug}`)}>
+        {currentItem.category.parent_name && (
+          <>
+            <Link to={to(`/catalog/${currentItem.category.parent_slug}`)}>
+              {currentItem.category.parent_name}
+            </Link>
+            {' / '}
+          </>
+        )}
+        <Link to={categoryLinkTo}>
           {currentItem.category.name}
         </Link>{' '}
         / <span>{currentItem.title}</span>
       </div>
       <div className='catalog-item-page-container'>
         <div className='catalog-item-page-gallery'>
-          {currentItem.images.length > 0 ? (
+          {currentImage ? (
             <img
               src={currentImage}
               alt={currentItem.title}
@@ -148,22 +198,25 @@ export default function CatalogItemPage(): JSX.Element {
         <div className='catalog-item-page-info'>
           <Link
             className='catalog-item-page-category'
-            to={to(`/catalog/${currentItem.category.slug}`)}
+            to={categoryLinkTo}
           >
             {currentItem.category.name}
           </Link>
           <h1 className='catalog-item-page-title'>{currentItem.title}</h1>
           <div className='catalog-item-page-price'>
             {currentItem.price
-              ? `${currentItem.price.toFixed(2)} MDL`
+              ? `${currentItem.price} MDL`
               : t('itemPage.noPrice')}
           </div>
 
           <div className='catalog-item-page-description'>
-            <h3>{t('itemPage.description')}</h3>
-            <ReactMarkdown remarkPlugins={[remarkBreaks]}>
-              {currentItem.description}
-            </ReactMarkdown>
+            {currentItem.description && 
+            <>
+              <h3>{t('itemPage.description')}</h3>
+              <ReactMarkdown remarkPlugins={[remarkBreaks]}>
+                {currentItem.description}
+              </ReactMarkdown>
+            </>}
           </div>
 
           <div className='catalog-item-page-actions'>
