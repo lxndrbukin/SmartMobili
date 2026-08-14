@@ -14,10 +14,12 @@
     "headerCreate": "Categorie nouă",
     "headerEdit": "Actualizare categorie",
     "title": "Titlu",
-    "url": "URL",
+    "url": "Slug",
     "submitCreate": "Creează",
     "submitEdit": "Actualizează",
-    "images": "Imagini"
+    "images": "Imagini",
+    "parentCategory": "Categorie principală (opțional)",
+    "noneParent": "Niciuna"
   },
   "alerts": {
     "item": {

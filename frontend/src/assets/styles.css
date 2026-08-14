@@ -1397,7 +1397,8 @@ img {
 
 /* ─── CATALOG ITEM FORM ──────────────────────────────────────────────── */
 .catalog-item-form {
-  width: 600px;
+  width: 750px;
+  max-width: 90vw;
   margin: var(--space-6) auto;
   padding: var(--space-5) var(--space-8);
   background-color: var(--white);
@@ -1535,7 +1536,8 @@ img {
 }
 
 .catalog-category-form {
-  width: 450px;
+  width: 550px;
+  max-width: 90vw;
   padding: var(--space-5) var(--space-8);
   background-color: var(--white);
   border-radius: var(--radius-lg);
@@ -2137,7 +2139,8 @@ img {
 
 /* ─── USER FORM ────────────────────────────────────────────────────────── */
 .user-form {
-  width: 450px;
+  width: 550px;
+  max-width: 90vw;
   margin: var(--space-6) auto;
   padding: var(--space-5) var(--space-8);
   background-color: var(--white);
@@ -2204,8 +2207,8 @@ img {
 
 /* ─── AUTH ───────────────────────────────────────────────────────────── */
 .auth-form {
-  width: 450px;
-  max-width: 500px;
+  width: 500px;
+  max-width: 90vw;
   padding: var(--space-5) var(--space-8);
   background-color: var(--white);
   border-radius: var(--radius-lg);
@@ -2274,7 +2277,8 @@ img {
 
 /* ─── CONTACT ────────────────────────────────────────────────────────── */
 .contact-form {
-  width: 500px;
+  width: 600px;
+  max-width: 90vw;
   margin: var(--space-10) auto;
   padding: var(--space-5) var(--space-8);
   background-color: var(--white);
@@ -3539,10 +3543,6 @@ img {
 
 .admin-panel-table tbody tr {
   height: 60px;
-}
-
- .subcategory-row {
-  background-color: var(--bg-color-three);
 }
 
 .subcategory-indent {

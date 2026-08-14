@@ -155,7 +155,7 @@ export default function CategoryForm(): JSX.Element {
             />
           </div>
           <div className='form-field'>
-            <label>{t('category.url')} (e.g. tables, kitchens)</label>
+            <label>{t('category.url')}</label>
             <input
               value={slug}
               onChange={(e) => setSlug(e.target.value)}
@@ -164,9 +164,9 @@ export default function CategoryForm(): JSX.Element {
           </div>
           {isCreating && (
             <div className="form-field">
-              <label>Parent Category (optional)</label>
+              <label>{t('category.parentCategory')}</label>
               <select name="parentId">
-                <option value="">None (top-level category)</option>
+                <option value="">{t('category.noneParent')}</option>
                 {categories
                   .filter(cat => !cat.parent_id)
                   .map(cat => (

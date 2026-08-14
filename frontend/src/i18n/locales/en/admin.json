@@ -17,7 +17,9 @@
     "url": "URL",
     "submitCreate": "Create",
     "submitEdit": "Update",
-    "images": "Images"
+    "images": "Images",
+    "parentCategory": "Parent Category (optional)",
+    "noneParent": "None (top-level category)"
   },
   "alerts": {
     "item": {

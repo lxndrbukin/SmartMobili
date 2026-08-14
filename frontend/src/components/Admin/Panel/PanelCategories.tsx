@@ -46,14 +46,23 @@ export default function PanelCategories(): JSX.Element {
   const renderRows = (categories: Array<CategoryProps>) => {
     const parents = categories.filter((cat) => !cat.parent_id);
     const sorted: CategoryProps[] = [];
-    
+
     parents.forEach((parent) => {
       sorted.push(parent);
       const children = categories.filter((cat) => cat.parent_id === parent.id);
       sorted.push(...children);
     });
   
-    return sorted.map(({ id, name, slug, item_count, parent_id }) => {
+    return sorted.map((category) => {
+      const { id, name, slug, parent_id, item_count } = category;
+      let displayItemCount = item_count;
+
+      if (!parent_id) {
+        const children = categories.filter((cat) => cat.parent_id === id);
+        const childrenCount = children.reduce((sum, cat) => sum + cat.item_count, 0);
+        displayItemCount = item_count + childrenCount;
+      }
+
       return (
         <tr key={id} className={parent_id ? 'subcategory-row' : ''}>
           <td>{parent_id ? '' : id}</td>
@@ -62,7 +71,7 @@ export default function PanelCategories(): JSX.Element {
             {name}
           </td>
           <td>{slug}</td>
-          <td>{item_count}</td>
+          <td>{displayItemCount}</td>
           <td className='actions'>
             <i
               onClick={() => setSearchParams({ editCategory: String(id) })}

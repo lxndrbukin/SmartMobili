@@ -14,10 +14,12 @@
     "headerCreate": "Новая категория",
     "headerEdit": "Обновить категорию",
     "title": "Заголовок",
-    "url": "Ссылка",
+    "url": "Slug",
     "submitCreate": "Создать",
     "submitEdit": "Обновить",
-    "images": "Изображения"
+    "images": "Изображения",
+    "parentCategory": "Основная категория (необязательно)",
+    "noneParent": "Нет (основная категория)"
   },
   "alerts": {
     "item": {
