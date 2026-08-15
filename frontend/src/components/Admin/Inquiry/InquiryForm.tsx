@@ -89,7 +89,11 @@ export default function InquiryForm(): JSX.Element {
     setIsLoading(false);
     form.reset();
     handleClose();
-    alert(t('submitMessage'));
+    if (isCreating) {
+      alert(t('submitMessage'));
+    } else {
+      alert(t('submitMessageAdmin'));
+    }
   };
 
   const handleOnBlur = (name: string, value: string) => {

@@ -154,7 +154,7 @@ export default function ItemForm(): JSX.Element {
   };
 
   const renderCategories = (categories: Array<CategoryProps>) => {
-    if (!categories) return null; // replace with array of loading skeleton components
+    if (!categories) return null;
     return categories.map((category) => {
       return (
         <option value={category.id} key={category.id}>
