@@ -8,7 +8,9 @@
     "category": "Categorie",
     "images": "Imagini",
     "submitCreate": "Creează",
-    "submitEdit": "Actualizează"
+    "submitEdit": "Actualizează",
+    "existingImages": "Imagini existente",
+    "noImages": "Nu există imagini încărcate"
   },
   "category": {
     "headerCreate": "Categorie nouă",
@@ -19,7 +21,9 @@
     "submitEdit": "Actualizează",
     "images": "Imagini",
     "parentCategory": "Categorie principală (opțional)",
-    "noneParent": "Niciuna"
+    "noneParent": "Niciuna",
+    "existingImages": "Imagini existente",
+    "noImages": "Nu există imagini încărcate"
   },
   "alerts": {
     "item": {

@@ -8,7 +8,9 @@
     "category": "Category",
     "images": "Images",
     "submitCreate": "Create",
-    "submitEdit": "Update"
+    "submitEdit": "Update",
+    "existingImages": "Existing Images",
+    "noImages": "No images uploaded yet"
   },
   "category": {
     "headerCreate": "New Category",
@@ -19,7 +21,9 @@
     "submitEdit": "Update",
     "images": "Images",
     "parentCategory": "Parent Category (optional)",
-    "noneParent": "None (top-level category)"
+    "noneParent": "None (top-level category)",
+    "existingImages": "Existing Images",
+    "noImages": "No images uploaded yet"
   },
   "alerts": {
     "item": {

@@ -3,7 +3,8 @@
   "generic": {
     "noItems": "Товары отсутствуют",
     "allItems": "Все товары",
-    "categoryNotFound": "Категория не найдена"
+    "categoryNotFound": "Категория не найдена",
+    "loadMore": "Показать еще"
   },
   "items": "Товары: {{count}}",
   "breadcrumbs": {

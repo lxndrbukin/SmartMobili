@@ -16,6 +16,7 @@ import {
   createItem,
   updateItem,
   addItemImage,
+  deleteItemImage,
 } from '../../../store';
 import axios from 'axios';
 import { API_URL } from '../../../api';
@@ -37,6 +38,7 @@ export default function ItemForm(): JSX.Element {
   const [itemPrice, setItemPrice] = useState<string>('');
   const [itemCategoryId, setItemCategoryId] = useState(0);
   const [selectedImages, setSelectedImages] = useState<Array<File>>([]);
+  const [existingImages, setExistingImages] = useState<Array<{ id: number; image_url: string }>>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -53,6 +55,7 @@ export default function ItemForm(): JSX.Element {
         setItemDescRO(res.data.description);
         setItemCategoryId(res.data.category_id);
         setItemPrice(res.data.price);
+        setExistingImages(res.data.images || []);
       });
 
       axios.get(`${API_URL}/api/v1/items/${itemId}?lang=ru`).then((res) => {
@@ -61,6 +64,19 @@ export default function ItemForm(): JSX.Element {
       });
     }
   }, [itemId]);
+
+  const handleDeleteImage = async (imageId: number) => {
+    if (!confirm('Are you sure you want to delete this image?')) return;
+    try {
+      setIsLoading(true);
+      await dispatch(deleteItemImage({ itemId: Number(itemId), imageId })).unwrap();
+      setExistingImages(existingImages.filter((img) => img.id !== imageId));
+      setIsLoading(false);
+    } catch (err) {
+      console.error(err);
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
     dispatch(getCategories(lang));
@@ -236,6 +252,29 @@ export default function ItemForm(): JSX.Element {
               </div>
             )}
           </div>
+          {!isCreating && (
+            <div className='form-field'>
+              <label>{t('item.existingImages')}</label>
+              {existingImages.length > 0 ? (
+                <div className='form-existing-images'>
+                  {existingImages.map((img) => (
+                    <div key={img.id} className='form-existing-image-card'>
+                      <img src={img.image_url} alt='Item image' />
+                      <button
+                        type='button'
+                        onClick={() => handleDeleteImage(img.id)}
+                        className='form-existing-image-delete-btn'
+                      >
+                        <i className='fa-solid fa-trash'></i>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p style={{ fontSize: '13px', color: 'var(--text-muted)', margin: '4px 0 0' }}>{t('item.noImages')}</p>
+              )}
+            </div>
+          )}
           <button disabled={isLoading} type='submit'>
             {isCreating ? t('item.submitCreate') : t('item.submitEdit')}
           </button>

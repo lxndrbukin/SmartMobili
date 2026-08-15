@@ -14,6 +14,8 @@ import {
   createCategory,
   updateCategory,
   addCategoryImage,
+  deleteCategoryImage,
+  getCategories,
 } from '../../../store';
 import axios from 'axios';
 import { API_URL } from '../../../api';
@@ -27,10 +29,13 @@ export default function CategoryForm(): JSX.Element {
   const [slug, setSlug] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [selectedImages, setSelectedImages] = useState<Array<File>>([]);
+  const [existingImages, setExistingImages] = useState<Array<{ id: number; image_url: string }>>([]);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const isCreating = searchParams.get('createCategory') === '1';
   const categoryId = searchParams.get('editCategory');
+
+  console.log('CategoryForm render:', { isCreating, categoryId, existingImages });
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -40,19 +45,27 @@ export default function CategoryForm(): JSX.Element {
   }, []);
 
   useEffect(() => {
-    if (!isCreating) {
+    if (!isCreating && categoryId) {
+      const reduxCat = categories.find((cat) => cat.id === Number(categoryId));
+      if (reduxCat && reduxCat.images) {
+        setExistingImages(reduxCat.images);
+      }
+
       axios
         .get(`${API_URL}/api/v1/categories/${categoryId}?lang=ro`)
         .then((res) => {
           setCategoryRO(res.data.name);
           setSlug(res.data.slug);
+          if (res.data.images && res.data.images.length > 0) {
+            setExistingImages(res.data.images);
+          }
         });
   
       axios
         .get(`${API_URL}/api/v1/categories/${categoryId}?lang=ru`)
         .then((res) => setCategoryRU(res.data.name));
     }
-  }, [categoryId]);
+  }, [categoryId, isCreating, categories]);
 
   const handleClose = () => {
     setSearchParams({});
@@ -61,6 +74,20 @@ export default function CategoryForm(): JSX.Element {
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const images = Array.from(e.target.files || []);
     setSelectedImages(images);
+  };
+
+  const handleDeleteImage = async (imageId: number) => {
+    if (!confirm('Are you sure you want to delete this image?')) return;
+    try {
+      setIsLoading(true);
+      await dispatch(deleteCategoryImage({ itemId: Number(categoryId), imageId })).unwrap();
+      setExistingImages(existingImages.filter((img) => img.id !== imageId));
+      dispatch(getCategories('ro')); // Refresh categories lists
+      setIsLoading(false);
+    } catch (err) {
+      console.error(err);
+      setIsLoading(false);
+    }
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -192,6 +219,29 @@ export default function CategoryForm(): JSX.Element {
               </div>
             )}
           </div>
+          {!isCreating && (
+            <div className='form-field'>
+              <label>{t('category.existingImages')}</label>
+              {existingImages.length > 0 ? (
+                <div className='form-existing-images'>
+                  {existingImages.map((img) => (
+                    <div key={img.id} className='form-existing-image-card'>
+                      <img src={img.image_url} alt='Category image' />
+                      <button
+                        type='button'
+                        onClick={() => handleDeleteImage(img.id)}
+                        className='form-existing-image-delete-btn'
+                      >
+                        <i className='fa-solid fa-trash'></i>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p style={{ fontSize: '13px', color: 'var(--text-muted)', margin: '4px 0 0' }}>{t('category.noImages')}</p>
+              )}
+            </div>
+          )}
           <button disabled={isLoading} type='submit'>
             {isCreating ? t('category.submitCreate') : t('category.submitEdit')}
           </button>

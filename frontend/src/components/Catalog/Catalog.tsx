@@ -31,9 +31,16 @@ export default function Catalog(): JSX.Element {
   const categorySlug = searchParams.get('category');
   const searchQuery = searchParams.get('search');
 
+  const pageSize = categorySlug ? 10 : 5;
+  const [limit, setLimit] = useState<number>(pageSize);
+
   useEffect(() => {
     dispatch(getCategories(lang));
   }, [dispatch, lang]);
+
+  useEffect(() => {
+    setLimit(pageSize);
+  }, [categorySlug, searchQuery, pageSize]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,7 +51,7 @@ export default function Catalog(): JSX.Element {
             getItems({
               lang: lang || 'ro',
               categorySlug: String(categorySlug),
-              limit: 5,
+              limit,
               desc: true,
             }),
           ).unwrap();
@@ -52,18 +59,18 @@ export default function Catalog(): JSX.Element {
           await dispatch(
             getItems({
               lang: lang || 'ro',
-              limit: 5,
+              limit,
               desc: true,
             }),
           ).unwrap();
         }
       } else {
-        await dispatch(getItems({ lang: lang || 'ro', searchQuery })).unwrap();
+        await dispatch(getItems({ lang: lang || 'ro', searchQuery, limit })).unwrap();
       }
       setIsLoading(false);
     };
     fetchData();
-  }, [dispatch, categorySlug, lang, searchQuery]);
+  }, [dispatch, categorySlug, lang, searchQuery, limit]);
 
   const renderSkeleton = () => {
     if (isLoading) {
@@ -102,11 +109,22 @@ export default function Catalog(): JSX.Element {
   };
 
   const parentCategories = categories.filter((cat) => cat.parent_id === null);
-  const totalParentItemsCount = parentCategories.reduce((sum, cat) => sum + cat.item_count, 0);
+
+  const getParentCategoryItemCount = (parentCat: CategoryProps) => {
+    const subcategories = categories.filter((cat) => cat.parent_id === parentCat.id);
+    const subcategoriesCount = subcategories.reduce((sum, cat) => sum + cat.item_count, 0);
+    return parentCat.item_count + subcategoriesCount;
+  };
+
+  const totalParentItemsCount = parentCategories.reduce(
+    (sum, cat) => sum + getParentCategoryItemCount(cat),
+    0
+  );
 
   const renderCategories = (categoriesList: Array<CategoryProps>) => {
     const parentCats = categoriesList.filter((cat) => cat.parent_id === null);
     return parentCats.map((category) => {
+      const displayCount = getParentCategoryItemCount(category);
       return (
         <button
           key={category.id}
@@ -118,7 +136,7 @@ export default function Catalog(): JSX.Element {
           onClick={() => setSearchParams({ category: String(category.slug) })}
         >
           {category.name}
-          {category.item_count > 0 && <span className='category-count'>{category.item_count}</span>}
+          {displayCount > 0 && <span className='category-count'>{displayCount}</span>}
         </button>
       );
     });
@@ -182,6 +200,16 @@ export default function Catalog(): JSX.Element {
             <>
               <p>{t('search.results', { num: items.length })}</p>
               {renderItems(items)}
+              {items.length === limit && (
+                <div className='catalog-load-more-container'>
+                  <button
+                    className='catalog-load-more-button'
+                    onClick={() => setLimit((prev) => prev + pageSize)}
+                  >
+                    {t('generic.loadMore')}
+                  </button>
+                </div>
+              )}
             </>
           ) : (
             <div className='catalog-no-results'>
@@ -199,6 +227,9 @@ export default function Catalog(): JSX.Element {
     );
   }
 
+  const activeCat = categorySlug ? categories.find(cat => cat.slug === categorySlug) : null;
+  const activeTotalCount = activeCat ? getParentCategoryItemCount(activeCat) : totalParentItemsCount;
+
   return (
     <div className='catalog-page'>
       {seoHead}
@@ -215,7 +246,23 @@ export default function Catalog(): JSX.Element {
           {renderCategories(categories)}
         </div>
         {categorySlug && renderSubcategoriesFilter(categories, categorySlug)}
-        {items.length ? renderItems(items) : renderSkeleton()}
+        {items.length ? (
+          <>
+            {renderItems(items)}
+            {items.length < activeTotalCount && (
+              <div className='catalog-load-more-container'>
+                <button
+                  className='catalog-load-more-button'
+                  onClick={() => setLimit((prev) => prev + pageSize)}
+                >
+                  {t('generic.loadMore')}
+                </button>
+              </div>
+            )}
+          </>
+        ) : (
+          renderSkeleton()
+        )}
       </div>
     </div>
   );

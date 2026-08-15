@@ -3,7 +3,8 @@
   "generic": {
     "noItems": "No items in this category",
     "allItems": "All Items",
-    "categoryNotFound": "Category not found"
+    "categoryNotFound": "Category not found",
+    "loadMore": "Load More"
   },
   "items": "Items: {{count}}",
   "breadcrumbs": {

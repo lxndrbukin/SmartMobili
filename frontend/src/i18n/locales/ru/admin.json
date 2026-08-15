@@ -8,7 +8,9 @@
     "category": "Категория",
     "images": "Изображения",
     "submitCreate": "Создать",
-    "submitEdit": "Обновить"
+    "submitEdit": "Обновить",
+    "existingImages": "Существующие изображения",
+    "noImages": "Нет загруженных изображений"
   },
   "category": {
     "headerCreate": "Новая категория",
@@ -19,7 +21,9 @@
     "submitEdit": "Обновить",
     "images": "Изображения",
     "parentCategory": "Основная категория (необязательно)",
-    "noneParent": "Нет (основная категория)"
+    "noneParent": "Нет (основная категория)",
+    "existingImages": "Существующие изображения",
+    "noImages": "Нет загруженных изображений"
   },
   "alerts": {
     "item": {
