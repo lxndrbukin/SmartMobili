@@ -11,7 +11,7 @@ from db_models.categories import Category, CategoryTranslation, CategoryImage
 from db_models.items import Item
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import func
-from cloud_storage import upload_image, delete_image
+from cloud_storage import handle_upload_image, handle_delete_image
 from utils import Language, get_translation
 
 categories_router = APIRouter(prefix="/categories", tags=["categories"])
@@ -173,7 +173,7 @@ def add_images(category_id: int, image: UploadFile = File(...), db: Session = De
     if not category:
         raise HTTPException(status_code=404, detail="Category not found")
     category = db.query(Category).get(category.id)
-    image_url = upload_image(image, category.slug)
+    image_url = handle_upload_image(image, category.slug)
     existing_count = db.query(CategoryImage).filter(CategoryImage.category_id == category_id).count()
     db_image = CategoryImage(
         category_id=category.id,
@@ -193,7 +193,7 @@ def delete_category_image(category_id: int, image_id: int, db: Session = Depends
     image = db.query(CategoryImage).get(image_id)
     if not image or image.category_id != category.id:
         raise HTTPException(status_code=404, detail="Category not found")
-    delete_image(image.image_url)
+    handle_delete_image(image.image_url)
     db.delete(image)
     db.commit()
     return None
