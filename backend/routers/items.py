@@ -15,7 +15,7 @@ from db_models.items import Item, ItemImage, ItemTranslation
 from db_models.auth import User
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import or_
-from cloud_storage import upload_image, delete_image
+from cloud_storage import handle_upload_image, handle_delete_image
 from utils import (
     get_translation, 
     Language, 
@@ -239,7 +239,7 @@ def add_images(item_id: int, image: UploadFile = File(...), db: Session = Depend
     if not item:
         raise HTTPException(status_code=404, detail="Item not found")
     category = db.query(Category).get(item.category_id)
-    image_url = upload_image(image, category.slug)
+    image_url = handle_upload_image(image, category.slug)
     existing_count = db.query(ItemImage).filter(ItemImage.item_id == item_id).count()
     db_image = ItemImage(
         item_id=item.id,
@@ -259,7 +259,7 @@ def delete_image(item_id: int, image_id: int, db: Session = Depends(get_db)):
     image = db.query(ItemImage).get(image_id)
     if not image or image.item_id != item.id:
         raise HTTPException(status_code=404, detail="Image not found")
-    delete_image(image.image_url)
+    handle_delete_image(image.image_url)
     db.delete(image)
     db.commit()
     return None

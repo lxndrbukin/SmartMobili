@@ -67,7 +67,8 @@ def get_category(category_id: int, lang: Language = Language.ro, db: Session = D
         "parent_slug": parent_category.slug if parent_category else None,
         "item_count": item_count,
         "name": translation.name,
-        "language": translation.language
+        "language": translation.language,
+        "images": category.images
     }
 
 @categories_router.post("/", status_code=status.HTTP_201_CREATED, response_model=CategoryResponse)
@@ -104,7 +105,8 @@ def create_category(data: CategoryCreate, db: Session = Depends(get_db)):
         "slug": category.slug,
         "item_count": item_count,
         "name": translation.name,
-        "language": translation.language
+        "language": translation.language,
+        "images": []
     }
 
 @categories_router.delete("/{category_id}", status_code=status.HTTP_204_NO_CONTENT)
@@ -118,7 +120,7 @@ def delete_category(category_id: int, db: Session = Depends(get_db)):
 
 @categories_router.put("/{category_id}", response_model=CategoryResponse)
 def update_category(category_id: int, data: CategoryUpdate, lang: Language = Language.ro, db: Session = Depends(get_db)):
-    category = db.query(Category).options(joinedload(Category.translations)).get(category_id)
+    category = db.query(Category).options(joinedload(Category.translations), joinedload(Category.images)).get(category_id)
     if not category:
         raise HTTPException(status_code=404, detail="Category not found")
     if data.slug is not None:
@@ -133,7 +135,8 @@ def update_category(category_id: int, data: CategoryUpdate, lang: Language = Lan
         "parent_id": category.parent_id,
         "item_count": item_count,
         "name": translation.name,
-        "language": translation.language
+        "language": translation.language,
+        "images": category.images
     }
 
 @categories_router.put("/{category_id}/translations")
@@ -183,12 +186,12 @@ def add_images(category_id: int, image: UploadFile = File(...), db: Session = De
     return db_image
 
 @categories_router.delete("/{category_id}/images/{image_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_image(category_id: int, image_id: int, db: Session = Depends(get_db)):
+def delete_category_image(category_id: int, image_id: int, db: Session = Depends(get_db)):
     category = db.query(Category).get(category_id)
     if not category:
         raise HTTPException(status_code=404, detail="Category not found")
     image = db.query(CategoryImage).get(image_id)
-    if not image or image.item_id != category.id:
+    if not image or image.category_id != category.id:
         raise HTTPException(status_code=404, detail="Category not found")
     delete_image(image.image_url)
     db.delete(image)
