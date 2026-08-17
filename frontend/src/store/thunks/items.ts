@@ -11,7 +11,7 @@ import { API_URL } from "../../api";
 
 export const getItems = createAsyncThunk(
   "items/getItems",
-  async ({ lang, categoryId, desc, categorySlug, searchQuery, limit }: ItemsRequest) => {
+  async ({ lang, categoryId, desc, categorySlug, searchQuery, limit, skip }: ItemsRequest) => {
     const params = new URLSearchParams();
     if (desc) {
       params.append("desc", desc.toString());
@@ -30,6 +30,9 @@ export const getItems = createAsyncThunk(
     }
     if (limit) {
       params.append("limit", limit.toString());
+    }
+    if (skip) {
+      params.append("skip", skip.toString())
     }
     const response = await axios.get(
       `${API_URL}/api/v1/items?${params}`,

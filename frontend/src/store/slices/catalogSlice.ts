@@ -14,20 +14,24 @@ const initialState: CatalogState = {
 const catalogSlice = createSlice({
   name: "catalog",
   initialState,
-  reducers: {},
+  reducers: {
+    clearItems: (state: CatalogState) => {
+      state.items = []
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(
       getItems.fulfilled,
       (state: CatalogState, action: PayloadAction<Array<ItemProps>>) => {
-        state.items = action.payload;
+        state.items = [...state.items, ...action.payload];
       },
     );
-    builder.addCase(
-      getItems.pending,
-      (state: CatalogState) => {
-        state.items = [];
-      },
-    );
+    // builder.addCase(
+    //   getItems.pending,
+    //   (state: CatalogState) => {
+    //     state.items = [];
+    //   },
+    // );
     builder.addCase(
       getItem.fulfilled,
       (state: CatalogState, action: PayloadAction<ItemProps>) => {
@@ -100,4 +104,5 @@ const catalogSlice = createSlice({
   },
 });
 
+export const { clearItems } = catalogSlice.actions;
 export default catalogSlice.reducer;

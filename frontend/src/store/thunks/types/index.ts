@@ -39,6 +39,7 @@ export type ItemsRequest = {
   categorySlug?: string;
   searchQuery?: string;
   limit?: number;
+  skip?: number;
 };
 
 export type CategoryTranslationProps = {

@@ -11,6 +11,7 @@ import {
   type CategoryProps,
   getItems,
   getCategories,
+  clearItems
 } from '../../store';
 import CatalogItem from './CatalogItem';
 import CatalogItemSkeleton from './CatalogItemSkeleton';
@@ -31,16 +32,12 @@ export default function Catalog(): JSX.Element {
   const categorySlug = searchParams.get('category');
   const searchQuery = searchParams.get('search');
 
-  const pageSize = categorySlug ? 10 : 5;
-  const [limit, setLimit] = useState<number>(pageSize);
+  const pageSize = 10;
+  const [skip, setSkip] = useState<number>(0);
 
   useEffect(() => {
     dispatch(getCategories(lang));
   }, [dispatch, lang]);
-
-  useEffect(() => {
-    setLimit(pageSize);
-  }, [categorySlug, searchQuery, pageSize]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,7 +48,8 @@ export default function Catalog(): JSX.Element {
             getItems({
               lang: lang || 'ro',
               categorySlug: String(categorySlug),
-              limit,
+              skip,
+              limit: 10,
               desc: true,
             }),
           ).unwrap();
@@ -59,18 +57,19 @@ export default function Catalog(): JSX.Element {
           await dispatch(
             getItems({
               lang: lang || 'ro',
-              limit,
+              skip,
+              limit: 10,
               desc: true,
             }),
           ).unwrap();
         }
       } else {
-        await dispatch(getItems({ lang: lang || 'ro', searchQuery, limit })).unwrap();
+        await dispatch(getItems({ lang: lang || 'ro', searchQuery, skip })).unwrap();
       }
       setIsLoading(false);
     };
     fetchData();
-  }, [dispatch, categorySlug, lang, searchQuery, limit]);
+  }, [dispatch, categorySlug, lang, searchQuery, skip]);
 
   const renderSkeleton = () => {
     if (isLoading) {
@@ -133,7 +132,10 @@ export default function Catalog(): JSX.Element {
               ? 'active'
               : ''
           }
-          onClick={() => setSearchParams({ category: String(category.slug) })}
+          onClick={() => {
+            setSearchParams({ category: String(category.slug) });
+            dispatch(clearItems());
+          }}
         >
           {category.name}
           {displayCount > 0 && <span className='category-count'>{displayCount}</span>}
@@ -200,11 +202,11 @@ export default function Catalog(): JSX.Element {
             <>
               <p>{t('search.results', { num: items.length })}</p>
               {renderItems(items)}
-              {items.length === limit && (
+              {items.length === skip && (
                 <div className='catalog-load-more-container'>
                   <button
                     className='catalog-load-more-button'
-                    onClick={() => setLimit((prev) => prev + pageSize)}
+                    onClick={() => setSkip((prev) => prev + pageSize)}
                   >
                     {t('generic.loadMore')}
                   </button>
@@ -238,7 +240,10 @@ export default function Catalog(): JSX.Element {
         <div className='catalog-categories'>
           <button
             className={!categorySlug ? 'active' : ''}
-            onClick={() => setSearchParams({})}
+            onClick={() => {
+              setSearchParams({});
+              dispatch(clearItems())
+            }}
           >
             {t('generic.allItems')}
             {totalParentItemsCount > 0 && <span className='category-count'>{totalParentItemsCount}</span>}
@@ -253,7 +258,7 @@ export default function Catalog(): JSX.Element {
               <div className='catalog-load-more-container'>
                 <button
                   className='catalog-load-more-button'
-                  onClick={() => setLimit((prev) => prev + pageSize)}
+                  onClick={() => setSkip((prev) => prev + pageSize)}
                 >
                   {t('generic.loadMore')}
                 </button>

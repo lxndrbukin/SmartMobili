@@ -1067,7 +1067,7 @@ img {
 .subcategory-filter-pill .category-count {
   font-size: 0.75rem;
   background-color: var(--bg-elevated);
-  color: var(--text-muted);
+  color: var(--white);
   padding: 2px 6px;
   border-radius: var(--radius-full);
   font-weight: 600;
