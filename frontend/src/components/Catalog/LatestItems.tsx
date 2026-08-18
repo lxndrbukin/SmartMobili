@@ -9,6 +9,7 @@ import {
   type AppDispatch,
   type ItemProps,
   getItems,
+  clearItems
 } from '../../store';
 import CatalogItem from './CatalogItem';
 import CatalogItemSkeleton from './CatalogItemSkeleton';
@@ -21,6 +22,7 @@ export default function LatestItems(): JSX.Element {
   const { lang } = useParams();
 
   useEffect(() => {
+    dispatch(clearItems());
     const fetchData = async () => {
       await dispatch(
         getItems({ limit: 4, lang: lang ?? 'ro', desc: true }),

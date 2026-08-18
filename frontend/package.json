@@ -21,6 +21,7 @@
     "react-markdown": "^10.1.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.13.0",
+    "react-simple-image-viewer": "^1.2.2",
     "remark-breaks": "^4.0.0"
   },
   "devDependencies": {

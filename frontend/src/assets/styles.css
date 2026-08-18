@@ -1676,6 +1676,7 @@ img {
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
   display: block;
+  cursor: zoom-in;
 }
 
 .catalog-item-page-no-image {

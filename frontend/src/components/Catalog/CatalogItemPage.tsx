@@ -1,4 +1,4 @@
-import { type JSX, useEffect, useState } from 'react';
+import { type JSX, useEffect, useState, useCallback } from 'react';
 import { useParams, Link, useSearchParams } from 'react-router-dom';
 import useLocalePath from '../../hooks/useLocalePath';
 import SeoHead from '../SeoHead';
@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 import ReactMarkdown from 'react-markdown';
 import remarkBreaks from 'remark-breaks';
 import CatalogItemPageSkeleton from './CatalogItemPageSkeleton';
+import ImageViewer from 'react-simple-image-viewer';
 
 export default function CatalogItemPage(): JSX.Element {
   const { t } = useTranslation('catalog');
@@ -24,6 +25,9 @@ export default function CatalogItemPage(): JSX.Element {
   const { currentItem, itemNotFound } = useSelector((state: RootState) => state.catalog);
   const [prevItemId, setPrevItemId] = useState<number | null>(null);
   const [currentImage, setCurrentImage] = useState<string>('');
+  const [currentImgIdx, setCurrentImgIdx] = useState<number>(0);
+  const [isViewerOpen, setIsViewerOpen] = useState<boolean>(false);
+  const images: Array<string> = []
 
   const handleImageSelection = (images: Array<ImageProps>) => {
     if (!images || images.length === 0) return undefined;
@@ -42,6 +46,15 @@ export default function CatalogItemPage(): JSX.Element {
     }
   }, [itemId, lang, dispatch]);
 
+  const openImageViewer = useCallback((index: number) => {
+    setCurrentImgIdx(index);
+    setIsViewerOpen(true);
+  }, []);
+
+  const closeImageViewer = () => {
+    setCurrentImgIdx(0);
+    setIsViewerOpen(false);
+  };
 
   if (itemNotFound) {
     return (
@@ -142,98 +155,117 @@ export default function CatalogItemPage(): JSX.Element {
     : `/catalog/${currentItem.category.slug}`);
 
   return (
-    <div className='catalog-item-page'>
-      <SeoHead
-        title={currentItem.title}
-        description={t('seo.itemDescription', { title: currentItem.title })}
-        lang={lang || 'ro'}
-        ogImage={firstImage}
-        jsonLd={itemJsonLd}
-      />
-      <div className='catalog-breadcrumbs'>
-        <Link to={to('/')}>{t('breadcrumbs.home')}</Link> /{' '}
-        <Link to={to('/catalog')}>{t('breadcrumbs.catalog')}</Link> /{' '}
-        {currentItem.category.parent_name && (
-          <>
-            <Link to={to(`/catalog/${currentItem.category.parent_slug}`)}>
-              {currentItem.category.parent_name}
-            </Link>
-            {' / '}
-          </>
-        )}
-        <Link to={categoryLinkTo}>
-          {currentItem.category.name}
-        </Link>{' '}
-        / <span>{currentItem.title}</span>
-      </div>
-      <div className='catalog-item-page-container'>
-        <div className='catalog-item-page-gallery'>
-          {currentImage ? (
-            <img
-              src={currentImage}
-              alt={currentItem.title}
-              className='catalog-item-page-main-image'
-            />
-          ) : (
-            <div className='catalog-item-page-no-image'>
-              <i className='fas fa-image'></i>
-            </div>
-          )}
-
-          {currentItem.images.length > 1 && (
-            <div className='catalog-item-page-thumbnails'>
-              {currentItem.images.map((image) => (
-                <img
-                  key={image.id}
-                  src={image.image_url}
-                  alt={`${currentItem.title} - ${image.order}`}
-                  className='catalog-item-page-thumbnail'
-                  onClick={() => setCurrentImage(image.image_url)}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-
-        <div className='catalog-item-page-info'>
-          <Link
-            className='catalog-item-page-category'
-            to={categoryLinkTo}
-          >
-            {currentItem.category.name}
-          </Link>
-          <h1 className='catalog-item-page-title'>{currentItem.title}</h1>
-          <div className='catalog-item-page-price'>
-            {currentItem.price
-              ? `${currentItem.price} MDL`
-              : t('itemPage.noPrice')}
-          </div>
-
-          <div className='catalog-item-page-description'>
-            {currentItem.description && 
+    <>
+      <div className='catalog-item-page'>
+        <SeoHead
+          title={currentItem.title}
+          description={t('seo.itemDescription', { title: currentItem.title })}
+          lang={lang || 'ro'}
+          ogImage={firstImage}
+          jsonLd={itemJsonLd}
+        />
+        <div className='catalog-breadcrumbs'>
+          <Link to={to('/')}>{t('breadcrumbs.home')}</Link> /{' '}
+          <Link to={to('/catalog')}>{t('breadcrumbs.catalog')}</Link> /{' '}
+          {currentItem.category.parent_name && (
             <>
-              <h3>{t('itemPage.description')}</h3>
-              <ReactMarkdown remarkPlugins={[remarkBreaks]}>
-                {currentItem.description}
-              </ReactMarkdown>
-            </>}
+              <Link to={to(`/catalog/${currentItem.category.parent_slug}`)}>
+                {currentItem.category.parent_name}
+              </Link>
+              {' / '}
+            </>
+          )}
+          <Link to={categoryLinkTo}>
+            {currentItem.category.name}
+          </Link>{' '}
+          / <span>{currentItem.title}</span>
+        </div>
+        <div className='catalog-item-page-container'>
+          <div className='catalog-item-page-gallery'>
+            {currentImage ? (
+              <img
+                src={currentImage}
+                alt={currentItem.title}
+                className='catalog-item-page-main-image'
+                onClick={() => openImageViewer(currentImgIdx)}
+              />
+            ) : (
+              <div className='catalog-item-page-no-image'>
+                <i className='fas fa-image'></i>
+              </div>
+            )}
+
+            {currentItem.images.length > 1 && (
+              <div className='catalog-item-page-thumbnails'>
+                {currentItem.images.map((image, idx) => {
+                  images.push(image.image_url);
+                  return (
+                    <img
+                      key={image.id}
+                      src={image.image_url}
+                      alt={`${currentItem.title} - ${image.order}`}
+                      className='catalog-item-page-thumbnail'
+                      onClick={() => {
+                        setCurrentImage(image.image_url)
+                        setCurrentImgIdx(idx)
+                      }}
+                    />
+                  )
+                })}
+              </div>
+            )}
           </div>
 
-          <div className='catalog-item-page-actions'>
-            <button
-              className='button'
-              onClick={() =>
-                setSearchParams({
-                  createInquiry: 'true',
-                  itemId: String(itemId),
-                })
-              }
+          <div className='catalog-item-page-info'>
+            <Link
+              className='catalog-item-page-category'
+              to={categoryLinkTo}
             >
-              {t('itemPage.call')}
-            </button>
+              {currentItem.category.name}
+            </Link>
+            <h1 className='catalog-item-page-title'>{currentItem.title}</h1>
+            <div className='catalog-item-page-price'>
+              {currentItem.price
+                ? `${currentItem.price} MDL`
+                : t('itemPage.noPrice')}
+            </div>
+
+            <div className='catalog-item-page-description'>
+              {currentItem.description && 
+              <>
+                <h3>{t('itemPage.description')}</h3>
+                <ReactMarkdown remarkPlugins={[remarkBreaks]}>
+                  {currentItem.description}
+                </ReactMarkdown>
+              </>}
+            </div>
+
+            <div className='catalog-item-page-actions'>
+              <button
+                className='button'
+                onClick={() =>
+                  setSearchParams({
+                    createInquiry: 'true',
+                    itemId: String(itemId),
+                  })
+                }
+              >
+                {t('itemPage.call')}
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      {isViewerOpen && (
+        <ImageViewer 
+          src={images}
+          currentIndex={currentImgIdx}
+          disableScroll={false}
+          closeOnClickOutside={true}
+          onClose={closeImageViewer}
+          backgroundStyle={{backgroundColor: 'rgba(0, 0, 0, 0.7)'}}
+        />
+      )}
+    </>
   );
 }
