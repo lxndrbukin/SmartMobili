@@ -1,4 +1,4 @@
-import { type JSX, useEffect, useState } from 'react';
+import { type JSX, useEffect, useState, useRef } from 'react';
 import { useParams, useSearchParams, useNavigate, Link } from 'react-router-dom';
 import useLocalePath from '../../hooks/useLocalePath';
 import SeoHead from '../SeoHead';
@@ -35,39 +35,93 @@ export default function Catalog(): JSX.Element {
   const pageSize = 10;
   const [skip, setSkip] = useState<number>(0);
 
+  const lastFetchedRef = useRef<{
+    categorySlug: string | null;
+    searchQuery: string | null;
+    lang: string | undefined;
+    skip: number;
+  }>({
+    categorySlug: undefined as any,
+    searchQuery: undefined as any,
+    lang: undefined,
+    skip: -1,
+  });
+
   useEffect(() => {
     dispatch(getCategories(lang));
   }, [dispatch, lang]);
 
   useEffect(() => {
+    const isQueryChanged =
+      lastFetchedRef.current.categorySlug !== categorySlug ||
+      lastFetchedRef.current.searchQuery !== searchQuery ||
+      lastFetchedRef.current.lang !== lang;
+
+    const targetSkip = isQueryChanged ? 0 : skip;
+
+    if (
+      lastFetchedRef.current.categorySlug === categorySlug &&
+      lastFetchedRef.current.searchQuery === searchQuery &&
+      lastFetchedRef.current.lang === lang &&
+      lastFetchedRef.current.skip === targetSkip
+    ) {
+      return;
+    }
+
     const fetchData = async () => {
       setIsLoading(true);
-      if (!searchQuery) {
-        if (categorySlug) {
-          await dispatch(
-            getItems({
-              lang: lang || 'ro',
-              categorySlug: String(categorySlug),
-              skip,
-              limit: 10,
-              desc: true,
-            }),
-          ).unwrap();
+
+      if (isQueryChanged) {
+        dispatch(clearItems());
+        setSkip(0);
+      }
+
+      lastFetchedRef.current = {
+        categorySlug,
+        searchQuery,
+        lang,
+        skip: targetSkip,
+      };
+
+      try {
+        if (!searchQuery) {
+          if (categorySlug) {
+            await dispatch(
+              getItems({
+                lang: lang || 'ro',
+                categorySlug: String(categorySlug),
+                skip: targetSkip,
+                limit: 10,
+                desc: true,
+              }),
+            ).unwrap();
+          } else {
+            await dispatch(
+              getItems({
+                lang: lang || 'ro',
+                skip: targetSkip,
+                limit: 10,
+                desc: true,
+              }),
+            ).unwrap();
+          }
         } else {
           await dispatch(
             getItems({
               lang: lang || 'ro',
-              skip,
+              searchQuery,
+              skip: targetSkip,
               limit: 10,
-              desc: true,
             }),
           ).unwrap();
         }
-      } else {
-        await dispatch(getItems({ lang: lang || 'ro', searchQuery, skip })).unwrap();
+      } catch (error) {
+        console.error('Error fetching catalog items:', error);
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     };
+
     fetchData();
   }, [dispatch, categorySlug, lang, searchQuery, skip]);
 
@@ -134,7 +188,6 @@ export default function Catalog(): JSX.Element {
           }
           onClick={() => {
             setSearchParams({ category: String(category.slug) });
-            dispatch(clearItems());
           }}
         >
           {category.name}
@@ -196,16 +249,15 @@ export default function Catalog(): JSX.Element {
           <p>
             {t('search.header')} <b>{searchQuery}</b>
           </p>
-          {isLoading ? (
-            renderSkeleton()
-          ) : items.length ? (
+          {items.length ? (
             <>
               <p>{t('search.results', { num: items.length })}</p>
               {renderItems(items)}
-              {items.length === skip && (
+              {items.length >= skip + pageSize && (
                 <div className='catalog-load-more-container'>
                   <button
                     className='catalog-load-more-button'
+                    disabled={isLoading}
                     onClick={() => setSkip((prev) => prev + pageSize)}
                   >
                     {t('generic.loadMore')}
@@ -213,6 +265,8 @@ export default function Catalog(): JSX.Element {
                 </div>
               )}
             </>
+          ) : isLoading ? (
+            renderSkeleton()
           ) : (
             <div className='catalog-no-results'>
               <div className='catalog-no-items'>{t('generic.noItems')}</div>
@@ -242,7 +296,6 @@ export default function Catalog(): JSX.Element {
             className={!categorySlug ? 'active' : ''}
             onClick={() => {
               setSearchParams({});
-              dispatch(clearItems())
             }}
           >
             {t('generic.allItems')}
@@ -258,6 +311,7 @@ export default function Catalog(): JSX.Element {
               <div className='catalog-load-more-container'>
                 <button
                   className='catalog-load-more-button'
+                  disabled={isLoading}
                   onClick={() => setSkip((prev) => prev + pageSize)}
                 >
                   {t('generic.loadMore')}
