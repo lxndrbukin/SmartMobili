@@ -11,6 +11,15 @@ from db_models.categories import Category, CategoryTranslation
 from db_models.inquiries import Inquiry
 from db_models.auth import User, UserData
 from sqlalchemy.orm import Session
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+ORIGIN_1 = os.getenv("ORIGIN_1")
+ORIGIN_2 = os.getenv("ORIGIN_2")
+ORIGIN_3 = os.getenv("ORIGIN_3")
+ORIGIN_4 = os.getenv("ORIGIN_4")
 
 Base.metadata.create_all(bind=engine)
 
@@ -26,7 +35,7 @@ app.include_router(v1_router)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "https://smartmobili.vercel.app"],
+    allow_origins=[ORIGIN_1, ORIGIN_2, ORIGIN_3, ORIGIN_4],
     allow_methods=["*"],
     allow_headers=["*"],
 )
