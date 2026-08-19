@@ -11,7 +11,8 @@ def send_message(text: str) -> bool:
     try:
         response = requests.post(
             f'https://api.telegram.org/bot{TOKEN}/sendMessage',
-            data={'chat_id': CHAT_ID, 'text': text}
+            data={'chat_id': CHAT_ID, 'text': text, 'parse_mode': 'HTML'},
+            
         )
         if response.json()['ok'] == False:
             return False

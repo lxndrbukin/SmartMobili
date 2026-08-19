@@ -25,12 +25,12 @@ def create_inquiry(data: InquiryCreate, background_tasks: BackgroundTasks, db: S
     db.commit()
     db.refresh(inquiry)
     message = f'''
-    Inquiry #{inquiry.id}\n\n
-    Name:\n {data.name}\n\n
-    Subject\n {data.subject}\n\n
-    Description: \n {data.description}\n\n
-    Phone:\n {data.phone}\n\n
-    Email:\n {data.email}\n\n
+    <b>Заявка #{inquiry.id}</b>\n
+    <b>Имя:</b> {data.name}
+    <b>Название:</b> {data.subject}
+    <b>Описание:</b>\n {data.description}
+    <b>Телефон:</b> {data.phone}
+    <b>Эл. почта:</b> {data.email}
     '''
     background_tasks.add_task(send_message, message)
     return inquiry
