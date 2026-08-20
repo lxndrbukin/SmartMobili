@@ -2,9 +2,10 @@ from fastapi import APIRouter, status, Depends, HTTPException, BackgroundTasks
 from models.inquiries import InquiryCreate, InquiryResponse, InquiryUpdate, PaginatedResponse
 from utils import Pagination
 from db_models.inquiries import Inquiry
-from bots.telegram_admin import send_message
+from bots.telegram_admin import notify_admin
 from sqlalchemy.orm import Session
 from db import get_db
+import html
 
 inquiries_router = APIRouter(prefix="/inquiries", tags=["inquiries"])
 
@@ -24,15 +25,25 @@ def create_inquiry(data: InquiryCreate, background_tasks: BackgroundTasks, db: S
     db.add(inquiry)
     db.commit()
     db.refresh(inquiry)
+
+    safe_name = html.escape(data.name)
+    safe_subject = html.escape(data.subject)
+    safe_description = html.escape(data.description)
+    safe_phone = html.escape(data.phone)
+    safe_email = html.escape(data.email)
+
     message = f'''
-    <b>Заявка #{inquiry.id}</b>\n
-    <b>Имя:</b> {data.name}
-    <b>Название:</b> {data.subject}
-    <b>Описание:</b>\n {data.description}
-    <b>Телефон:</b> {data.phone}
-    <b>Эл. почта:</b> {data.email}
+    <b>Заявка #{inquiry.id}</b>
+
+    <b>Имя:</b> {safe_name}
+    <b>Название:</b> {safe_subject}
+    <b>Описание:</b>
+    {safe_description}
+    <b>Телефон:</b> {safe_phone}
+    <b>Эл. почта:</b> {safe_email}
     '''
-    background_tasks.add_task(send_message, message)
+
+    background_tasks.add_task(notify_admin, message)
     return inquiry
 
 @inquiries_router.get("/", status_code=status.HTTP_200_OK, response_model=PaginatedResponse)
