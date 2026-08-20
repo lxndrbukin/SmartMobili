@@ -65,6 +65,16 @@ export default function Header(): JSX.Element {
       if (link.href === '/admin' && !isAdmin) {
         return null;
       }
+      if (link.name === 'order') {
+        return (
+          <li
+            onClick={() => setSearchParams({ createInquiry: 'true' })}
+            key={link.label}
+          >
+            <span>{link.label}</span>
+          </li>
+        );
+      }
       return (
         <Link key={link.label} to={to(link.href)}>
           {link.label}
