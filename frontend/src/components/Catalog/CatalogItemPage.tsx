@@ -31,7 +31,10 @@ export default function CatalogItemPage(): JSX.Element {
 
   const handleImageSelection = (images: Array<ImageProps>) => {
     if (!images || images.length === 0) return undefined;
-    const imageData = images.find((image) => image.order === 0) || images[0];
+    const imageData = images.find((image) => {
+      image.order === 0;
+    }) || images[0];
+    
     return imageData?.image_url;
   };
 
@@ -206,8 +209,8 @@ export default function CatalogItemPage(): JSX.Element {
                       alt={`${currentItem.title} - ${image.order}`}
                       className='catalog-item-page-thumbnail'
                       onClick={() => {
-                        setCurrentImage(image.image_url)
-                        setCurrentImgIdx(idx)
+                        setCurrentImage(image.image_url);
+                        setCurrentImgIdx(idx);
                       }}
                     />
                   )
@@ -215,7 +218,6 @@ export default function CatalogItemPage(): JSX.Element {
               </div>
             )}
           </div>
-
           <div className='catalog-item-page-info'>
             <Link
               className='catalog-item-page-category'
@@ -258,7 +260,7 @@ export default function CatalogItemPage(): JSX.Element {
       </div>
       {isViewerOpen && (
         <ImageViewer 
-          src={images}
+          src={images.length ? images : [currentImage]}
           currentIndex={currentImgIdx}
           disableScroll={false}
           closeOnClickOutside={true}
