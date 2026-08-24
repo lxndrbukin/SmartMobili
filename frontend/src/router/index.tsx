@@ -4,7 +4,6 @@ import HomePage from '../components/HomePage';
 import Catalog from '../components/Catalog/Catalog';
 import CatalogSection from '../components/Catalog/CatalogSection';
 import CatalogItemPage from '../components/Catalog/CatalogItemPage';
-import ContactForm from '../components/Contact/ContactForm';
 import Panel from '../components/Admin/Panel/Panel';
 import About from '../components/Static/About';
 import Services from '../components/Static/Services';
@@ -37,10 +36,6 @@ export const router = createBrowserRouter([
       {
         path: 'catalog/:catSlug/:subSlug?/item/:itemId',
         element: <CatalogItemPage />,
-      },
-      {
-        path: 'order',
-        element: <ContactForm />,
       },
       {
         path: 'admin',
