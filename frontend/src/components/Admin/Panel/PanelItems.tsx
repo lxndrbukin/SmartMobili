@@ -1,4 +1,4 @@
-import { type JSX, useEffect } from 'react';
+import { type JSX, useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,29 +11,63 @@ import {
 } from '../../../store';
 
 export default function PanelItems(): JSX.Element {
-  const { t } = useTranslation('admin');
+  const adminTranslation = useTranslation('admin');
+  const catalogTranslation = useTranslation('catalog')
+
   const HEADERS = [
     'ID',
-    t('panel.table.name'),
-    t('panel.table.category'),
-    `${t('panel.table.price')} (MDL)`,
-    t('panel.table.actions'),
+    adminTranslation.t('panel.table.name'),
+    adminTranslation.t('panel.table.category'),
+    `${adminTranslation.t('panel.table.price')} (MDL)`,
+    adminTranslation.t('panel.table.actions'),
   ];
 
   const dispatch = useDispatch<AppDispatch>();
   const { items } = useSelector((state: RootState) => state.catalog);
   const { lang } = useParams();
   const [, setSearchParams] = useSearchParams();
+  const [skip, setSkip] = useState<number>(0);
+  const pageSize = 10;
+
+  const lastFetchedRef = useRef<{
+    lang: string | undefined;
+    skip: number;
+  }>({
+    lang: undefined,
+    skip: -1,
+  });
 
   useEffect(() => {
-    dispatch(getItems({ lang: lang! }));
-  }, [lang]);
+    const isQueryChanged = lastFetchedRef.current.lang !== lang;
+    const targetSkip = isQueryChanged ? 0 : skip;
+    if (
+      lastFetchedRef.current.lang === lang &&
+      lastFetchedRef.current.skip === targetSkip
+    ) {
+      return;
+    }
+    if (isQueryChanged) {
+      setSkip(0);
+    }
+
+    const fetchData = async () => {
+      lastFetchedRef.current = {
+        lang,
+        skip: targetSkip,
+      };
+
+      dispatch(getItems({ lang: lang!, skip: targetSkip }));
+
+    }
+
+    fetchData()
+  }, [dispatch, lang, skip]);
 
   const handleDelete = (itemId: number, itemName: string) => {
-    const del = confirm(t('alerts.item.confirmDelete', { name: itemName }));
+    const del = confirm(adminTranslation.t('alerts.item.confirmDelete', { name: itemName }));
     if (del) {
       dispatch(deleteItem(itemId));
-      alert(t('alerts.item.deleted', { name: itemName }));
+      alert(adminTranslation.t('alerts.item.deleted', { name: itemName }));
     } else return;
   };
 
@@ -69,16 +103,16 @@ export default function PanelItems(): JSX.Element {
   return (
     <div className='admin-panel-table-container'>
       <div className='admin-panel-table-container-header'>
-        <h2>{t('panel.tabs.items')}</h2>
+        <h2>{adminTranslation.t('panel.tabs.items')}</h2>
         <button
           onClick={() => setSearchParams({ createItem: '1' })}
           className='button'
         >
-          {t('item.headerCreate')}
+          {adminTranslation.t('item.headerCreate')}
         </button>
       </div>
       <p className='admin-panel-scroll-hint'>
-        <i className='fa-solid fa-arrow-right-arrow-left'></i> {t('panel.scrollHint')}
+        <i className='fa-solid fa-arrow-right-arrow-left'></i> {adminTranslation.t('panel.scrollHint')}
       </p>
       <div className='admin-panel-table-wrapper'>
         <table className='admin-panel-table'>
@@ -88,6 +122,11 @@ export default function PanelItems(): JSX.Element {
           <tbody>{renderRows(items)}</tbody>
         </table>
       </div>
+      <button
+        onClick={() => setSkip((prev) => prev + pageSize)}
+      >
+        {catalogTranslation.t('generic.loadMore')}
+      </button>
     </div>
   );
 }
