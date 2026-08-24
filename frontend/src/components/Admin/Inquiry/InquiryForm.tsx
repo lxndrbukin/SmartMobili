@@ -1,9 +1,10 @@
 import { type JSX, type FormEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   type AppDispatch,
+  type RootState,
   getInquiry,
   submitInquiry,
   updateInquiry,
@@ -11,6 +12,8 @@ import {
 
 export default function InquiryForm(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
+  const { user } = useSelector((state: RootState) => state.auth)
+
   const [searchParams, setSearchParams] = useSearchParams();
   const { t } = useTranslation('contactForm');
 
@@ -79,6 +82,7 @@ export default function InquiryForm(): JSX.Element {
       telegram,
       viber,
       whatsapp,
+      user_id: user ? user.id : null
     };
     setIsLoading(true);
     if (isCreating) {

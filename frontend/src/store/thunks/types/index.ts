@@ -73,6 +73,7 @@ export type InquiryCreate = {
   telegram: boolean;
   viber: boolean;
   whatsapp: boolean;
+  user_id: number | null;
 };
 
 export type InquiryUpdate = {
