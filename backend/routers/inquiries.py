@@ -20,7 +20,8 @@ def create_inquiry(data: InquiryCreate, background_tasks: BackgroundTasks, db: S
         item_id=data.item_id,
         telegram=data.telegram,
         whatsapp=data.whatsapp,
-        viber=data.viber
+        viber=data.viber,
+        user_id=data.user_id
     )
     db.add(inquiry)
     db.commit()

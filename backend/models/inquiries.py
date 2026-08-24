@@ -13,6 +13,7 @@ class InquiryCreate(BaseModel):
     telegram: bool = False
     whatsapp: bool = False
     viber: bool = False
+    user_id: int | None = None
 
 class InquiryResponse(BaseModel):
     id: int
@@ -26,6 +27,7 @@ class InquiryResponse(BaseModel):
     telegram: bool = False
     whatsapp: bool = False
     viber: bool = False
+    user_id: int | None = None
 
     class Config:
         from_attributes = True
