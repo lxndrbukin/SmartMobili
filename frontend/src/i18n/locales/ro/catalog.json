@@ -2,7 +2,7 @@
   "header": "Catalog",
   "generic": {
     "noItems": "Nu există produse disponibile",
-    "allItems": "Toate Produsele",
+    "allItems": "Toate produsele",
     "categoryNotFound": "Categoria nu a fost găsită",
     "loadMore": "Mai mult"
   },
@@ -18,7 +18,7 @@
     "notFound": "Produsul nu a fost găsit"
   },
   "latest": {
-    "header": "Produse noi"
+    "header": "Ultimele lucrări"
   },
   "search": {
     "header": "Rezultate pentru:",
