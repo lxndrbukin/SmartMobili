@@ -64,7 +64,7 @@ export default function PanelItems(): JSX.Element {
 
       setLoading(true);
       try {
-        await dispatch(getItems({ lang: lang!, skip: targetSkip }));
+        await dispatch(getItems({ lang: lang!, skip: targetSkip, desc: true }));
       } finally {
         setLoading(false);
       }
@@ -145,7 +145,9 @@ export default function PanelItems(): JSX.Element {
             {loading ? (
               <>
                 <i className='fa-solid fa-spinner fa-spin'></i>{' '}
-                {adminTranslation.t('panel.loading', { defaultValue: 'Loading...' })}
+                {adminTranslation.t('panel.loading', {
+                  defaultValue: 'Loading...',
+                })}
               </>
             ) : (
               catalogTranslation.t('generic.loadMore')

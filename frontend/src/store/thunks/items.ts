@@ -1,47 +1,53 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import type {
   ItemCreate,
   ItemRequest,
   ItemUpdate,
   ItemsRequest,
   ItemImageUpdate,
-} from "./types";
-import axios from "axios";
-import { API_URL } from "../../api";
+} from './types';
+import axios from 'axios';
+import { API_URL } from '../../api';
 
 export const getItems = createAsyncThunk(
-  "items/getItems",
-  async ({ lang, categoryId, desc, categorySlug, searchQuery, limit, skip }: ItemsRequest) => {
+  'items/getItems',
+  async ({
+    lang,
+    categoryId,
+    desc,
+    categorySlug,
+    searchQuery,
+    limit,
+    skip,
+  }: ItemsRequest) => {
     const params = new URLSearchParams();
     if (desc) {
-      params.append("desc", desc.toString());
+      params.append('desc', desc.toString());
     }
     if (lang) {
-      params.append("lang", lang);
+      params.append('lang', lang);
     }
     if (categoryId) {
-      params.append("category_id", categoryId.toString());
+      params.append('category_id', categoryId.toString());
     }
     if (categorySlug) {
-      params.append("category_slug", categorySlug.toString());
+      params.append('category_slug', categorySlug.toString());
     }
     if (searchQuery) {
-      params.append("search_query", searchQuery.toString());
+      params.append('search_query', searchQuery.toString());
     }
     if (limit) {
-      params.append("limit", limit.toString());
+      params.append('limit', limit.toString());
     }
     if (skip) {
-      params.append("skip", skip.toString())
+      params.append('skip', skip.toString());
     }
-    const response = await axios.get(
-      `${API_URL}/api/v1/items?${params}`,
-    );
+    const response = await axios.get(`${API_URL}/api/v1/items?${params}`);
     return response.data.data;
   },
 );
 export const getItem = createAsyncThunk(
-  "items/getItem",
+  'items/getItem',
   async ({ itemId, lang }: ItemRequest) => {
     const response = await axios.get(
       `${API_URL}/api/v1/items/${itemId}?lang=${lang}`,
@@ -51,18 +57,15 @@ export const getItem = createAsyncThunk(
 );
 
 export const createItem = createAsyncThunk(
-  "items/createItem",
+  'items/createItem',
   async (data: ItemCreate) => {
-    const response = await axios.post(
-      `${API_URL}/api/v1/items`,
-      data,
-    );
+    const response = await axios.post(`${API_URL}/api/v1/items`, data);
     return response.data;
   },
 );
 
 export const updateItem = createAsyncThunk(
-  "items/updateItem",
+  'items/updateItem',
   async (data: ItemUpdate) => {
     await axios.put(`${API_URL}/api/v1/items/${data.id}`, {
       price: data.price,
@@ -78,7 +81,7 @@ export const updateItem = createAsyncThunk(
         );
       }
     }
-    const lang = localStorage.getItem("language") || "ro";
+    const lang = localStorage.getItem('language') || 'ro';
     const response = await axios.get(
       `${API_URL}/api/v1/items/${data.id}?lang=${lang}`,
     );
@@ -87,7 +90,7 @@ export const updateItem = createAsyncThunk(
 );
 
 export const deleteItem = createAsyncThunk(
-  "items/deleteItem",
+  'items/deleteItem',
   async (itemId: number) => {
     await axios.delete(`${API_URL}/api/v1/items/${itemId}`);
     return;
@@ -95,18 +98,18 @@ export const deleteItem = createAsyncThunk(
 );
 
 export const addItemImage = createAsyncThunk(
-  "items/updateImage",
+  'items/updateImage',
   async (data: ItemImageUpdate) => {
     await fetch(`${API_URL}/api/v1/items/${data.itemId}/images`, {
-      method: "POST",
+      method: 'POST',
       body: data.image,
     });
   },
 );
 
 export const deleteItemImage = createAsyncThunk(
-  "items/deleteImage",
-  async (data: { itemId: number; imageId: number; }) => {
+  'items/deleteImage',
+  async (data: { itemId: number; imageId: number }) => {
     await axios.delete(
       `${API_URL}/api/v1/items/${data.itemId}/images/${data.imageId}`,
     );
