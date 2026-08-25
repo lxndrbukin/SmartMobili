@@ -8,11 +8,12 @@ import {
   type ItemProps,
   getItems,
   deleteItem,
+  clearItems,
 } from '../../../store';
 
 export default function PanelItems(): JSX.Element {
   const adminTranslation = useTranslation('admin');
-  const catalogTranslation = useTranslation('catalog')
+  const catalogTranslation = useTranslation('catalog');
 
   const HEADERS = [
     'ID',
@@ -27,6 +28,7 @@ export default function PanelItems(): JSX.Element {
   const { lang } = useParams();
   const [, setSearchParams] = useSearchParams();
   const [skip, setSkip] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
   const pageSize = 10;
 
   const lastFetchedRef = useRef<{
@@ -36,6 +38,10 @@ export default function PanelItems(): JSX.Element {
     lang: undefined,
     skip: -1,
   });
+
+  useEffect(() => {
+    dispatch(clearItems());
+  }, [dispatch, lang]);
 
   useEffect(() => {
     const isQueryChanged = lastFetchedRef.current.lang !== lang;
@@ -56,15 +62,21 @@ export default function PanelItems(): JSX.Element {
         skip: targetSkip,
       };
 
-      dispatch(getItems({ lang: lang!, skip: targetSkip }));
+      setLoading(true);
+      try {
+        await dispatch(getItems({ lang: lang!, skip: targetSkip }));
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    }
-
-    fetchData()
+    fetchData();
   }, [dispatch, lang, skip]);
 
   const handleDelete = (itemId: number, itemName: string) => {
-    const del = confirm(adminTranslation.t('alerts.item.confirmDelete', { name: itemName }));
+    const del = confirm(
+      adminTranslation.t('alerts.item.confirmDelete', { name: itemName }),
+    );
     if (del) {
       dispatch(deleteItem(itemId));
       alert(adminTranslation.t('alerts.item.deleted', { name: itemName }));
@@ -72,16 +84,16 @@ export default function PanelItems(): JSX.Element {
   };
 
   const renderHeaders = (headers: Array<string>) => {
-    return headers.map((header) => {
-      return <th>{header}</th>;
+    return headers.map((header, idx) => {
+      return <th key={idx}>{header}</th>;
     });
   };
 
   const renderRows = (items: Array<ItemProps>) => {
     return items.map(({ id, title, category, price }) => {
       return (
-        <tr>
-          <td>{id}</td>
+        <tr key={id}>
+          <td className='cell-id'>#{id}</td>
           <td>{title}</td>
           <td>{category.name}</td>
           <td>{price}</td>
@@ -112,7 +124,8 @@ export default function PanelItems(): JSX.Element {
         </button>
       </div>
       <p className='admin-panel-scroll-hint'>
-        <i className='fa-solid fa-arrow-right-arrow-left'></i> {adminTranslation.t('panel.scrollHint')}
+        <i className='fa-solid fa-arrow-right-arrow-left'></i>{' '}
+        {adminTranslation.t('panel.scrollHint')}
       </p>
       <div className='admin-panel-table-wrapper'>
         <table className='admin-panel-table'>
@@ -122,11 +135,24 @@ export default function PanelItems(): JSX.Element {
           <tbody>{renderRows(items)}</tbody>
         </table>
       </div>
-      <button
-        onClick={() => setSkip((prev) => prev + pageSize)}
-      >
-        {catalogTranslation.t('generic.loadMore')}
-      </button>
+      {items.length >= skip + pageSize && (
+        <div className='admin-load-more-container'>
+          <button
+            className='admin-load-more-button'
+            disabled={loading}
+            onClick={() => setSkip((prev) => prev + pageSize)}
+          >
+            {loading ? (
+              <>
+                <i className='fa-solid fa-spinner fa-spin'></i>{' '}
+                {adminTranslation.t('panel.loading', { defaultValue: 'Loading...' })}
+              </>
+            ) : (
+              catalogTranslation.t('generic.loadMore')
+            )}
+          </button>
+        </div>
+      )}
     </div>
   );
 }

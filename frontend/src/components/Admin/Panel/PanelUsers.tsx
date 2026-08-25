@@ -38,18 +38,22 @@ export default function PanelUsers(): JSX.Element {
   };
 
   const renderHeaders = (headers: Array<string>) => {
-    return headers.map((header) => {
-      return <th>{header}</th>;
+    return headers.map((header, idx) => {
+      return <th key={idx}>{header}</th>;
     });
   };
 
   const renderRows = (users: Array<UserProps>) => {
     return users.map(({ id, username, user_role, signup_at }) => {
       return (
-        <tr>
-          <td>{id}</td>
+        <tr key={id}>
+          <td className='cell-id'>#{id}</td>
           <td>{username}</td>
-          <td style={{ textTransform: 'capitalize' }}>{user_role}</td>
+          <td>
+            <span className={`role-badge ${user_role}`}>
+              {user_role}
+            </span>
+          </td>
           <td>{new Date(signup_at).toLocaleDateString()}</td>
           <td className='actions'>
             <i

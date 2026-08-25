@@ -16,10 +16,10 @@ export default function PanelInquiries(): JSX.Element {
   const { t } = useTranslation('admin');
   const HEADERS = [
     'ID',
-    t('panel.table.name'),
+    t('panel.table.date'),
     t('panel.table.subject'),
     t('panel.table.description'),
-    t('panel.table.date'),
+    t('panel.table.name'),
     'Telegram',
     'WhatsApp',
     'Viber',
@@ -44,8 +44,8 @@ export default function PanelInquiries(): JSX.Element {
   };
 
   const renderHeaders = (headers: Array<string>) => {
-    return headers.map((header) => {
-      return <th>{header}</th>;
+    return headers.map((header, idx) => {
+      return <th key={idx}>{header}</th>;
     });
   };
 
@@ -62,31 +62,60 @@ export default function PanelInquiries(): JSX.Element {
         whatsapp,
       }) => {
         return (
-          <tr onClick={() => setSearchParams({ inquiry: String(id) })}>
-            <td>{id}</td>
-            <td>{name}</td>
-            <td>{subject}</td>
-            <td>{description}</td>
+          <tr
+            key={id}
+            className='clickable-row'
+            onClick={() => setSearchParams({ inquiry: String(id) })}
+          >
+            <td className='cell-id'>#{id}</td>
             <td>{new Date(created_at).toLocaleDateString()}</td>
+            <td>{subject}</td>
             <td>
-              <input type='checkbox' defaultChecked={telegram} />
+              {description && description.length > 20
+                ? `${description.substring(0, 20)}...`
+                : description}
+            </td>
+            <td>{name}</td>
+            <td>
+              {telegram ? (
+                <span className='contact-method-badge telegram'>
+                  <i className='fab fa-telegram-plane'></i> Yes
+                </span>
+              ) : (
+                <span className='contact-method-badge empty'>-</span>
+              )}
             </td>
             <td>
-              <input type='checkbox' defaultChecked={viber} />
+              {whatsapp ? (
+                <span className='contact-method-badge whatsapp'>
+                  <i className='fab fa-whatsapp'></i> Yes
+                </span>
+              ) : (
+                <span className='contact-method-badge empty'>-</span>
+              )}
             </td>
             <td>
-              <input type='checkbox' defaultChecked={whatsapp} />
+              {viber ? (
+                <span className='contact-method-badge viber'>
+                  <i className='fab fa-viber'></i> Yes
+                </span>
+              ) : (
+                <span className='contact-method-badge empty'>-</span>
+              )}
             </td>
             <td className='actions'>
               <i
                 onClick={(e) => {
                   e.stopPropagation();
-                  setSearchParams({ editInquiry: String(id) })
+                  setSearchParams({ editInquiry: String(id) });
                 }}
                 className='fa-regular fa-pen-to-square'
               ></i>
               <i
-                onClick={() => handleDelete(id)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDelete(id);
+                }}
                 className='fa-solid fa-trash-can'
               ></i>
             </td>
@@ -102,7 +131,8 @@ export default function PanelInquiries(): JSX.Element {
         <h2>{t('panel.tabs.inquiries')}</h2>
       </div>
       <p className='admin-panel-scroll-hint'>
-        <i className='fa-solid fa-arrow-right-arrow-left'></i> {t('panel.scrollHint')}
+        <i className='fa-solid fa-arrow-right-arrow-left'></i>{' '}
+        {t('panel.scrollHint')}
       </p>
       <div className='admin-panel-table-wrapper'>
         <table className='admin-panel-table'>

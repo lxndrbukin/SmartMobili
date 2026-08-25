@@ -38,8 +38,8 @@ export default function PanelCategories(): JSX.Element {
   };
 
   const renderHeaders = (headers: Array<string>) => {
-    return headers.map((header) => {
-      return <th>{header}</th>;
+    return headers.map((header, idx) => {
+      return <th key={idx}>{header}</th>;
     });
   };
 
@@ -65,7 +65,7 @@ export default function PanelCategories(): JSX.Element {
 
       return (
         <tr key={id} className={parent_id ? 'subcategory-row' : ''}>
-          <td>{parent_id ? '' : id}</td>
+          <td className='cell-id'>{parent_id ? '' : `#${id}`}</td>
           <td>
             {parent_id && <span className="subcategory-indent">↳ </span>}
             {name}

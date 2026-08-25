@@ -31,7 +31,9 @@ export default function Panel(): JSX.Element {
     return tabs.map((tab) => {
       return (
         <button
-          onClick={() => setCurrentTab(tab.name)}
+          onClick={() => {
+            setCurrentTab(tab.name);
+          }}
           className={tab.name === currentTab ? 'active' : ''}
           key={tab.name}
         >
@@ -50,8 +52,18 @@ export default function Panel(): JSX.Element {
 
   if (isAuthenticating) {
     return (
-      <div className="admin-panel-loading" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '300px', gap: 'var(--space-4)' }}>
-        <div className="loading-spinner"></div>
+      <div
+        className='admin-panel-loading'
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          minHeight: '300px',
+          gap: 'var(--space-4)',
+        }}
+      >
+        <div className='loading-spinner'></div>
         <span style={{ color: 'var(--text-secondary)', fontWeight: 500 }}>
           {t('panel.loading', { defaultValue: 'Loading...' })}
         </span>
