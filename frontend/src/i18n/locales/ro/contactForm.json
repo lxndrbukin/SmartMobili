@@ -4,7 +4,7 @@
   "namePlaceholder": "ex. Ion sau Ion Gutu",
   "subject": "Titlu",
   "subjectPlaceholder": "ex. Dulap în dormitor",
-  "desc": "Descriere",
+  "desc": "Descriere (opțional)",
   "descPlaceholder": "",
   "phoneNumber": "Numărul de telefon",
   "email": "E-mail (opțional)",
@@ -20,7 +20,7 @@
   "errorHeader": "Eroare",
   "errorMessage": "Ceva nu a mers bine. Vă rugăm să încercați din nou.",
   "subjectPrefill": "Detalii pentru {{name}}",
-  "descPrefill": "Bună ziua! Sunt interesat de \"{{name}}\" și aș dori să obțin detalii suplimentare, estimarea prețului și o consultație.",
+  "descPrefill": "ex. Bună ziua! Sunt interesat de \"{{name}}\" și aș dori să obțin detalii suplimentare, estimarea prețului și o consultație.",
   "errors": {
     "required": "Câmpul este obligatoriu"
   },

@@ -12,7 +12,7 @@ import {
 
 export default function InquiryForm(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
-  const { user } = useSelector((state: RootState) => state.auth)
+  const { user } = useSelector((state: RootState) => state.auth);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const { t } = useTranslation('contactForm');
@@ -82,7 +82,7 @@ export default function InquiryForm(): JSX.Element {
       telegram,
       viber,
       whatsapp,
-      user_id: user ? user.id : null
+      user_id: user ? user.id : null,
     };
     setIsLoading(true);
     if (isCreating) {
@@ -167,7 +167,7 @@ export default function InquiryForm(): JSX.Element {
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder={t('descPlaceholder')}
+              // placeholder={t('descPrefill')}
               name='description'
             />
           </div>

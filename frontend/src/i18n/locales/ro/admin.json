@@ -64,6 +64,7 @@
       "description": "Descriere",
       "date": "Data"
     },
-    "scrollHint": "Derulați pentru mai mult"
+    "scrollHint": "Derulați pentru mai mult",
+    "loading": "Se încarcă..."
   }
 }
