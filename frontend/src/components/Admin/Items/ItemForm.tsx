@@ -38,7 +38,9 @@ export default function ItemForm(): JSX.Element {
   const [itemPrice, setItemPrice] = useState<string>('');
   const [itemCategoryId, setItemCategoryId] = useState(0);
   const [selectedImages, setSelectedImages] = useState<Array<File>>([]);
-  const [existingImages, setExistingImages] = useState<Array<{ id: number; image_url: string }>>([]);
+  const [existingImages, setExistingImages] = useState<
+    Array<{ id: number; image_url: string }>
+  >([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -57,7 +59,6 @@ export default function ItemForm(): JSX.Element {
         setItemPrice(res.data.price);
         setExistingImages(res.data.images || []);
       });
-
       axios.get(`${API_URL}/api/v1/items/${itemId}?lang=ru`).then((res) => {
         setItemTitleRU(res.data.title);
         setItemDescRU(res.data.description);
@@ -69,7 +70,9 @@ export default function ItemForm(): JSX.Element {
     if (!confirm('Are you sure you want to delete this image?')) return;
     try {
       setIsLoading(true);
-      await dispatch(deleteItemImage({ itemId: Number(itemId), imageId })).unwrap();
+      await dispatch(
+        deleteItemImage({ itemId: Number(itemId), imageId }),
+      ).unwrap();
       setExistingImages(existingImages.filter((img) => img.id !== imageId));
       setIsLoading(false);
     } catch (err) {
@@ -181,7 +184,7 @@ export default function ItemForm(): JSX.Element {
             <div className='form-field'>
               <label>{t('item.title')}</label>
               <input
-                value={itemTitleRO}
+                value={itemTitleRO || ''}
                 onChange={(e) => setItemTitleRO(e.target.value)}
                 name='titleRO'
               />
@@ -189,7 +192,7 @@ export default function ItemForm(): JSX.Element {
             <div className='form-field'>
               <label>{t('item.description')}</label>
               <textarea
-                value={itemDescRO}
+                value={itemDescRO || ''}
                 onChange={(e) => setItemDescRO(e.target.value)}
                 name='descriptionRO'
               />
@@ -208,7 +211,7 @@ export default function ItemForm(): JSX.Element {
             <div className='form-field'>
               <label>{t('item.description')}</label>
               <textarea
-                value={itemDescRU}
+                value={itemDescRU || ''}
                 onChange={(e) => setItemDescRU(e.target.value)}
                 name='descriptionRU'
               />
@@ -217,7 +220,7 @@ export default function ItemForm(): JSX.Element {
           <div className='form-field'>
             <label>{t('item.price')}</label>
             <input
-              value={itemPrice}
+              value={itemPrice || ''}
               onChange={(e) => setItemPrice(e.target.value)}
               type='number'
               name='price'
@@ -271,7 +274,15 @@ export default function ItemForm(): JSX.Element {
                   ))}
                 </div>
               ) : (
-                <p style={{ fontSize: '13px', color: 'var(--text-muted)', margin: '4px 0 0' }}>{t('item.noImages')}</p>
+                <p
+                  style={{
+                    fontSize: '13px',
+                    color: 'var(--text-muted)',
+                    margin: '4px 0 0',
+                  }}
+                >
+                  {t('item.noImages')}
+                </p>
               )}
             </div>
           )}
