@@ -49,12 +49,12 @@ def create_inquiry(data: InquiryCreate, background_tasks: BackgroundTasks, db: S
 
 @inquiries_router.get("/", status_code=status.HTTP_200_OK, response_model=PaginatedResponse)
 def get_inquiries(user_id: int = None, desc: bool = True, skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
+    query = db.query(Inquiry)
     if user_id:
-        inquiries = db.query(Inquiry).filter(Inquiry).offset(skip).limit(limit).all()
-    else:
-        inquiries = db.query(Inquiry).offset(skip).limit(limit).all()
+        query = query.filter(Inquiry.user_id == user_id)
     if desc:
-        inquiries = inquiries.order_by(Inquiry.id.desc())
+        query = query.order_by(Inquiry.id.desc())
+    inquiries = query.offset(skip).limit(limit).all()
     return PaginatedResponse(
         data=inquiries,
         pagination=Pagination(skip=skip, limit=limit)
