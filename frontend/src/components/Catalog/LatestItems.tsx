@@ -1,15 +1,14 @@
-import { type JSX, useEffect } from 'react';
+import { type JSX, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import useLocalePath from '../../hooks/useLocalePath';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {
-  type RootState,
   type AppDispatch,
   type ItemProps,
   getItems,
-  clearItems
+  clearItems,
 } from '../../store';
 import CatalogItem from './CatalogItem';
 import CatalogItemSkeleton from './CatalogItemSkeleton';
@@ -18,22 +17,33 @@ export default function LatestItems(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
   const to = useLocalePath();
   const { t } = useTranslation('catalog');
-  const { items } = useSelector((state: RootState) => state.catalog);
+  const [latestItems, setLatestItems] = useState<ItemProps[]>([]);
+  const [itemsLoaded, setItemsLoaded] = useState<boolean>(false);
   const { lang } = useParams();
 
   useEffect(() => {
     dispatch(clearItems());
+    setItemsLoaded(false);
     const fetchData = async () => {
-      await dispatch(
-        getItems({ limit: 4, lang: lang ?? 'ro', desc: true }),
-      ).unwrap();
+      try {
+        const result = await dispatch(
+          getItems({ limit: 4, lang: lang ?? 'ro', desc: true }),
+        ).unwrap();
+        setLatestItems(Array.isArray(result) ? result : []);
+      } catch (error) {
+        console.error('Error fetching latest items:', error);
+      } finally {
+        setItemsLoaded(true);
+      }
     };
     fetchData();
-  }, [lang]);
+  }, [dispatch, lang]);
 
   const renderItems = (items: Array<ItemProps>) => {
     return items.map(({ images, title, id, price, category }) => {
-      const item_url = category.parent_slug ? `/catalog/${category.parent_slug}/${category.slug}/item/${id}` : `/catalog/${category.slug}/item/${id}`;
+      const item_url = category.parent_slug
+        ? `/catalog/${category.parent_slug}/${category.slug}/item/${id}`
+        : `/catalog/${category.slug}/item/${id}`;
       return (
         <CatalogItem
           key={id}
@@ -49,7 +59,7 @@ export default function LatestItems(): JSX.Element {
   };
 
   const renderSkeleton = () => {
-    return Array(3)
+    return Array(4)
       .fill('')
       .map((_, index) => {
         return <CatalogItemSkeleton key={index} />;
@@ -63,7 +73,7 @@ export default function LatestItems(): JSX.Element {
         <Link to={to('/catalog')}>{t('generic.allItems')} →</Link>
       </div>
       <div className='latest-items'>
-        {items.length ? renderItems(items) : renderSkeleton()}
+        {itemsLoaded ? renderItems(latestItems) : renderSkeleton()}
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { type JSX, useEffect, useState } from 'react';
+import { type JSX, useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
@@ -11,6 +11,7 @@ import {
   type CategoryProps,
   getItems,
   getCategories,
+  clearItems,
 } from '../../store';
 import CatalogItem from './CatalogItem';
 import CatalogItemSkeleton from './CatalogItemSkeleton';
@@ -22,11 +23,22 @@ export default function CatalogSection(): JSX.Element {
   const { categories, categoriesLoaded } = useSelector((state: RootState) => state.catalog);
   const [items, setItems] = useState<ItemProps[]>([]);
   const [itemsLoaded, setItemsLoaded] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [prevKey, setPrevKey] = useState<string>('');
   const { t } = useTranslation('catalog');
 
   const pageSize = 10;
   const [limit, setLimit] = useState<number>(pageSize);
+
+  const lastFetchedRef = useRef<{
+    categorySlug: string | undefined;
+    lang: string | undefined;
+    limit: number;
+  }>({
+    categorySlug: undefined,
+    lang: undefined,
+    limit: -1,
+  });
 
   const currentKey = `${catSlug || ''}-${subSlug || ''}-${lang || ''}`;
   if (currentKey !== prevKey) {
@@ -34,10 +46,18 @@ export default function CatalogSection(): JSX.Element {
     setItemsLoaded(false);
     setItems([]);
     setLimit(pageSize);
+    lastFetchedRef.current = {
+      categorySlug: undefined,
+      lang: undefined,
+      limit: -1,
+    };
   }
 
   useEffect(() => {
     dispatch(getCategories(lang));
+    return () => {
+      dispatch(clearItems());
+    };
   }, [dispatch, lang]);
 
   const activeCategory = subSlug
@@ -54,22 +74,46 @@ export default function CatalogSection(): JSX.Element {
   });
 
   useEffect(() => {
-    if (categories.length > 0 && activeCategory) {
-      dispatch(
-        getItems({
-          lang: lang || 'ro',
-          categorySlug: activeCategory.slug,
-          limit,
-          desc: true
-        }),
-      ).then((result) => {
-        setItems(Array.isArray(result.payload) ? result.payload : []);
-        setItemsLoaded(true);
-      });
-    } else if (categoriesLoaded && !activeCategory) {
-      setItemsLoaded(true);
+    if (!categoriesLoaded || !activeCategory) {
+      return;
     }
-  }, [categories, activeCategory, categoriesLoaded, lang, dispatch, limit]);
+
+    if (
+      lastFetchedRef.current.categorySlug === activeCategory.slug &&
+      lastFetchedRef.current.lang === lang &&
+      lastFetchedRef.current.limit === limit
+    ) {
+      return;
+    }
+
+    const fetchData = async () => {
+      setIsLoading(true);
+      lastFetchedRef.current = {
+        categorySlug: activeCategory.slug,
+        lang,
+        limit,
+      };
+
+      try {
+        const result = await dispatch(
+          getItems({
+            lang: lang || 'ro',
+            categorySlug: activeCategory.slug,
+            limit,
+            desc: true,
+          }),
+        ).unwrap();
+        setItems(Array.isArray(result) ? result : []);
+      } catch (error) {
+        console.error('Error fetching catalog section items:', error);
+      } finally {
+        setItemsLoaded(true);
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [categoriesLoaded, activeCategory, lang, dispatch, limit]);
 
   const renderSkeleton = () => {
     return Array(6)
@@ -244,9 +288,17 @@ export default function CatalogSection(): JSX.Element {
               <div className='catalog-load-more-container'>
                 <button
                   className='catalog-load-more-button'
+                  disabled={isLoading}
                   onClick={() => setLimit((prev) => prev + pageSize)}
                 >
-                  {t('generic.loadMore')}
+                  {isLoading ? (
+                    <>
+                      <i className='fa-solid fa-spinner fa-spin'></i>{' '}
+                      {t('generic.loading', { defaultValue: 'Loading...' })}
+                    </>
+                  ) : (
+                    t('generic.loadMore')
+                  )}
                 </button>
               </div>
             )}

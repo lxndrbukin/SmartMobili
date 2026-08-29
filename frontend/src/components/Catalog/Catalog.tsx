@@ -49,6 +49,9 @@ export default function Catalog(): JSX.Element {
 
   useEffect(() => {
     dispatch(getCategories(lang));
+    return () => {
+      dispatch(clearItems());
+    };
   }, [dispatch, lang]);
 
   useEffect(() => {
