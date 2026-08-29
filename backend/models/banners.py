@@ -1,5 +1,6 @@
 from pydantic import BaseModel, field_validator
-from utils import Language
+from typing import List
+from utils import Language, Pagination
 
 class BannerImageResponse(BaseModel):
     id: int
@@ -45,3 +46,7 @@ class BannerResponse(BaseModel):
     body: str | None
     language: Language
     images: list[BannerImageResponse] = []
+
+class PaginatedResponse(BaseModel):
+    data: List[BannerResponse]
+    pagination: Pagination
