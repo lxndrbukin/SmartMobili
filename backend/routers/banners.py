@@ -139,9 +139,9 @@ def add_images(
     if not banner:
         raise HTTPException(status_code=404, detail="Banner not found")
     image_url = handle_upload_image(image, "banner")
-    existing_count = db.query(BannerImage).filter(BannerImage.item_id == banner_id).count()
+    existing_count = db.query(BannerImage).filter(BannerImage.banner_id == banner_id).count()
     db_image = BannerImage(
-        item_id=banner.id,
+        banner_id=banner.id,
         image_url=image_url,
         order=existing_count
     )
@@ -152,11 +152,11 @@ def add_images(
 
 @banners_router.delete("/{banner_id}/images/{image_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_image(banner_id: int, image_id: int, db: Session = Depends(get_db)):
-    item = db.query(Banner).get(banner_id)
-    if not item:
+    banner = db.query(Banner).get(banner_id)
+    if not banner:
         raise HTTPException(status_code=404, detail="Banner not found")
     image = db.query(BannerImage).get(image_id)
-    if not image or image.item_id != item.id:
+    if not image or image.banner_id != banner.id:
         raise HTTPException(status_code=404, detail="Image not found")
     handle_delete_image(image.image_url)
     db.delete(image)
@@ -170,9 +170,9 @@ def update_translation(
         data: BannerTranslationUpdate,
         db: Session = Depends(get_db)
     ):
-    banner = db.query(Banner).filter(Banner.id == item_id).first()
+    banner = db.query(Banner).filter(Banner.id == banner_id).first()
     if not banner:
-        raise HTTPException(status_code=404, detail="Item not found")
+        raise HTTPException(status_code=404, detail="Banner not found")
     translation = db.query(BannerTranslation).filter(
                                     BannerTranslation.banner_id == banner_id,
                                             BannerTranslation.language == lang
