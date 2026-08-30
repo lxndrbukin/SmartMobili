@@ -25,6 +25,19 @@
     "existingImages": "Existing Images",
     "noImages": "No images uploaded yet"
   },
+  "banners": {
+    "headerCreate": "New Carousel Banner",
+    "headerEdit": "Update Carousel Banner",
+    "url": "Target Link / URL",
+    "urlPlaceholder": "e.g. /catalog/tables",
+    "header": "Header",
+    "body": "Body / Description",
+    "image": "Banner Image",
+    "submitCreate": "Create",
+    "submitEdit": "Update",
+    "existingImages": "Existing Image",
+    "noImages": "No image uploaded yet"
+  },
   "alerts": {
     "item": {
       "confirmDelete": "Do you want to delete item {{name}}?",
@@ -33,6 +46,10 @@
     "category": {
       "confirmDelete": "Do you want to delete category {{name}}?",
       "deleted": "Category {{name}} deleted"
+    },
+    "banner": {
+      "confirmDelete": "Do you want to delete banner {{name}}?",
+      "deleted": "Banner {{name}} deleted"
     },
     "user": {
       "confirmDelete": "Do you want to delete user {{name}}?",
@@ -48,6 +65,7 @@
     "tabs": {
       "items": "Items",
       "categories": "Categories",
+      "banners": "Banners",
       "users": "Users",
       "inquiries": "Orders"
     },
@@ -62,7 +80,10 @@
       "signedup": "Signed Up",
       "subject": "Subject",
       "description": "Description",
-      "date": "Date"
+      "date": "Date",
+      "image": "Image",
+      "header": "Header",
+      "url": "URL / Link"
     },
     "scrollHint": "Scroll to see more"
   }

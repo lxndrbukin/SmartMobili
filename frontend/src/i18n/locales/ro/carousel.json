@@ -1,18 +1,5 @@
 {
-  "banners": [
-    {
-      "img": "/banners/banner1.jpg",
-      "primaryText": "Mobilă la comandă de la SmartMobili",
-      "secondaryText": "Soluții de interior unice pentru casă și birou. Fabricarea de cabinete și produse încorporate este principala specializare a companiei noastre. Creăm compoziții pentru toate zonele rezidențiale.",
-      "url": "/catalog"
-    },
-    {
-      "img": "/banners/banner2.jpg",
-      "primaryText": "Dulapuri",
-      "secondaryText": "Dulapuri elegante și funcționale adaptate spațiului tău — modele încorporate, glisante sau walk-in, create pentru a maximiza depozitarea și a transforma orice cameră.",
-      "url": "/catalog/skhafy"
-    }
-  ],
+  "banners": [],
   "bannerLinks": {
     "order": "Comandă",
     "catalog": "Catalog"

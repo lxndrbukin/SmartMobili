@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { type RootState } from '../../../store';
 import PanelItems from './PanelItems';
 import PanelCategories from './PanelCategories';
+import PanelBanners from './PanelBanners';
 import PanelUsers from './PanelUsers';
 import PanelInquiries from './PanelInquiries';
 
@@ -13,6 +14,7 @@ export default function Panel(): JSX.Element {
   const TABS = [
     { name: 'items', component: <PanelItems /> },
     { name: 'categories', component: <PanelCategories /> },
+    { name: 'banners', component: <PanelBanners /> },
     { name: 'users', component: <PanelUsers /> },
     { name: 'inquiries', component: <PanelInquiries /> },
   ];

@@ -1,18 +1,5 @@
 {
-  "banners": [
-    {
-      "img": "/banners/banner1.jpg",
-      "primaryText": "Custom Furniture SmartMobili",
-      "secondaryText": "Unique interior solutions for home and office. Manufacture of cabinet and built-in products is the main specialization of our company. We create compositions for all residential areas.",
-      "url": "/catalog"
-    },
-    {
-      "img": "/banners/banner2.jpg",
-      "primaryText": "Wardrobes",
-      "secondaryText": "Stylish and functional wardrobes tailored to your space — built-in, sliding, or walk-in designs crafted to maximize storage and elevate any room.",
-      "url": "/catalog/shkafy"
-    }
-  ],
+  "banners": [],
   "bannerLinks": {
     "order": "Order",
     "catalog": "Catalog"

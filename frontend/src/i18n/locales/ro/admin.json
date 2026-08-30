@@ -25,6 +25,19 @@
     "existingImages": "Imagini existente",
     "noImages": "Nu există imagini încărcate"
   },
+  "banners": {
+    "headerCreate": "Banner Nou",
+    "headerEdit": "Actualizează Banner",
+    "url": "Link / URL Țintă",
+    "urlPlaceholder": "ex: /catalog/tables",
+    "header": "Titlu Banner (Header)",
+    "body": "Descriere / Text secundar",
+    "image": "Imagine Banner",
+    "submitCreate": "Creează",
+    "submitEdit": "Actualizează",
+    "existingImages": "Imagine curentă",
+    "noImages": "Nicio imagine încărcată"
+  },
   "alerts": {
     "item": {
       "confirmDelete": "Doriți să ștergeți produsul {{name}}?",
@@ -33,6 +46,10 @@
     "category": {
       "confirmDelete": "Doriți să ștergeți categoria {{name}}?",
       "deleted": "Categoria {{name}} a fost ștearsă"
+    },
+    "banner": {
+      "confirmDelete": "Doriți să ștergeți bannerul {{name}}?",
+      "deleted": "Bannerul {{name}} a fost șters"
     },
     "user": {
       "confirmDelete": "Doriți să ștergeți utilizatorul {{name}}?",
@@ -48,6 +65,7 @@
     "tabs": {
       "items": "Produse",
       "categories": "Categorii",
+      "banners": "Bannere",
       "users": "Utilizatori",
       "inquiries": "Comenzi"
     },
@@ -62,7 +80,10 @@
       "signedup": "Înregistrare",
       "subject": "Titlu",
       "description": "Descriere",
-      "date": "Data"
+      "date": "Data",
+      "image": "Imagine",
+      "header": "Titlu Banner",
+      "url": "URL / Link"
     },
     "scrollHint": "Derulați pentru mai mult",
     "loading": "Se încarcă..."

@@ -25,6 +25,19 @@
     "existingImages": "Существующие изображения",
     "noImages": "Нет загруженных изображений"
   },
+  "banners": {
+    "headerCreate": "Новый баннер",
+    "headerEdit": "Редактировать баннер",
+    "url": "Ссылка / URL",
+    "urlPlaceholder": "например: /catalog/tables",
+    "header": "Заголовок",
+    "body": "Описание / Текст",
+    "image": "Изображение баннера",
+    "submitCreate": "Создать",
+    "submitEdit": "Сохранить",
+    "existingImages": "Текущее изображение",
+    "noImages": "Изображение не загружено"
+  },
   "alerts": {
     "item": {
       "confirmDelete": "Вы хотите удалить товар {{name}}?",
@@ -33,6 +46,10 @@
     "category": {
       "confirmDelete": "Вы хотите удалить категорию {{name}}?",
       "deleted": "Категория {{name}} удалена"
+    },
+    "banner": {
+      "confirmDelete": "Вы хотите удалить баннер {{name}}?",
+      "deleted": "Баннер {{name}} удален"
     },
     "user": {
       "confirmDelete": "Вы хотите удалить пользователя {{name}}?",
@@ -48,6 +65,7 @@
     "tabs": {
       "items": "Товары",
       "categories": "Категории",
+      "banners": "Баннеры",
       "users": "Пользователи",
       "inquiries": "Заявки"
     },
@@ -62,7 +80,10 @@
       "signedup": "Зарегистрирован",
       "subject": "Заголовок",
       "description": "Описание",
-      "date": "Дата"
+      "date": "Дата",
+      "image": "Изображение",
+      "header": "Заголовок",
+      "url": "Ссылка / URL"
     },
     "scrollHint": "Прокрутите для просмотра",
     "loading": "Загрузка..."

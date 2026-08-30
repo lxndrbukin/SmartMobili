@@ -21,12 +21,30 @@ export type CategoryProps = {
   images: Array<ImageProps>;
 };
 
+export type BannerImageProps = {
+  id: number;
+  banner_id: number;
+  image_url: string;
+  order: number;
+};
+
+export type BannerProps = {
+  id: number;
+  url: string;
+  header: string;
+  body: string | null;
+  language: Language;
+  images: Array<BannerImageProps>;
+};
+
 export type CatalogState = {
   items: Array<ItemProps>;
   currentItem: ItemProps | null;
   itemNotFound: boolean;
   categories: Array<CategoryProps>;
   categoriesLoaded: boolean;
+  banners: Array<BannerProps>;
+  bannersLoaded: boolean;
 };
 
 export type ItemProps = {

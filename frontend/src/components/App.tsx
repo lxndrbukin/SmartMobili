@@ -9,6 +9,7 @@ import ScrollToTop from './ScrollToTop';
 import AuthForm from './Auth/AuthForm';
 import ItemForm from './Admin/Items/ItemForm';
 import CategoryForm from './Admin/Categories/CategoryForm';
+import BannerForm from './Admin/Banners/BannerForm';
 import InquiryForm from './Admin/Inquiry/InquiryForm';
 import PanelInquiry from './Admin/Panel/PanelInquiry';
 import UserForm from './Admin/Users/UserForm';
@@ -42,7 +43,7 @@ export default function App(): JSX.Element {
       {(isLogin || isSignup) && <AuthForm />}
       {(categoryId || searchParams.get('createCategory')) && <CategoryForm />}
       {(itemId || searchParams.get('createItem')) && <ItemForm />}
-      {(itemId || searchParams.get('createItem')) && <ItemForm />}
+      {(searchParams.get('createBanner') || searchParams.get('editBanner')) && <BannerForm />}
       {(inquiryId || searchParams.get('createInquiry')) && <InquiryForm />}
       {searchParams.get('inquiry') && <PanelInquiry />}
       {userId && <UserForm />}

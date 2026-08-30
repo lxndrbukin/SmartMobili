@@ -24,3 +24,4 @@ export * from "./thunks/items";
 export * from "./thunks/categories";
 export * from "./thunks/inquiries";
 export * from "./thunks/auth";
+export * from "./thunks/banners";

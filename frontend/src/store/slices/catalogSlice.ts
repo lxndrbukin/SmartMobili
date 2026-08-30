@@ -1,7 +1,8 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { CatalogState, ItemProps, CategoryProps } from "./types";
+import type { CatalogState, ItemProps, CategoryProps, BannerProps } from "./types";
 import { getItems, getItem, createItem, updateItem } from "../thunks/items";
 import { getCategories, createCategory, updateCategory } from "../thunks/categories";
+import { getBanners, createBanner, updateBanner, deleteBanner } from "../thunks/banners";
 
 const initialState: CatalogState = {
   items: [],
@@ -9,6 +10,8 @@ const initialState: CatalogState = {
   itemNotFound: false,
   categories: [],
   categoriesLoaded: false,
+  banners: [],
+  bannersLoaded: false,
 };
 
 const catalogSlice = createSlice({
@@ -100,6 +103,48 @@ const catalogSlice = createSlice({
           state.categories[ index ] = updatedCategory;
         }
       }
+    );
+    builder.addCase(
+      getBanners.fulfilled,
+      (state: CatalogState, action: PayloadAction<Array<BannerProps>>) => {
+        state.banners = action.payload;
+        state.bannersLoaded = true;
+      },
+    );
+    builder.addCase(
+      getBanners.pending,
+      (state: CatalogState) => {
+        state.banners = [];
+        state.bannersLoaded = false;
+      },
+    );
+    builder.addCase(
+      getBanners.rejected,
+      (state: CatalogState) => {
+        state.bannersLoaded = true;
+      },
+    );
+    builder.addCase(
+      createBanner.fulfilled,
+      (state: CatalogState, action: PayloadAction<BannerProps>) => {
+        state.banners.push(action.payload);
+      },
+    );
+    builder.addCase(
+      updateBanner.fulfilled,
+      (state: CatalogState, action: PayloadAction<BannerProps>) => {
+        const updatedBanner = action.payload;
+        const index = state.banners.findIndex(b => b.id === updatedBanner.id);
+        if (index !== -1) {
+          state.banners[index] = updatedBanner;
+        }
+      },
+    );
+    builder.addCase(
+      deleteBanner.fulfilled,
+      (state: CatalogState, action: PayloadAction<number>) => {
+        state.banners = state.banners.filter(b => b.id !== action.payload);
+      },
     );
   },
 });

@@ -95,3 +95,31 @@ export type UserUpdate = {
   password: string | null;
   user_role: string | null;
 };
+
+export type BannerTranslationCreateProps = {
+  language: string;
+  header: string;
+  body: string | null;
+};
+
+export type BannerCreate = {
+  url: string;
+  translations: Array<BannerTranslationCreateProps>;
+};
+
+export type BannerUpdate = {
+  id: number;
+  url: string;
+};
+
+export type BannerTranslationUpdateProps = {
+  bannerId: number;
+  language: string;
+  header: string;
+  body: string | null;
+};
+
+export type BannerImageUpdate = {
+  bannerId: number;
+  image: FormData;
+};
