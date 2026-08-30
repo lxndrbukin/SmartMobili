@@ -73,7 +73,15 @@ export default function LatestItems(): JSX.Element {
         <Link to={to('/catalog')}>{t('generic.allItems')} →</Link>
       </div>
       <div className='latest-items'>
-        {itemsLoaded ? renderItems(latestItems) : renderSkeleton()}
+        {itemsLoaded ? (
+          latestItems.length > 0 ? (
+            renderItems(latestItems)
+          ) : (
+            <div className='catalog-empty'>{t('generic.noItems')}</div>
+          )
+        ) : (
+          renderSkeleton()
+        )}
       </div>
     </div>
   );

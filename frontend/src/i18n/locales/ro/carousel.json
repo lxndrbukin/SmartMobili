@@ -10,31 +10,7 @@
       "img": "/banners/banner2.jpg",
       "primaryText": "Dulapuri",
       "secondaryText": "Dulapuri elegante și funcționale adaptate spațiului tău — modele încorporate, glisante sau walk-in, create pentru a maximiza depozitarea și a transforma orice cameră.",
-      "url": "/catalog/wardrobes"
-    },
-    {
-      "img": "/banners/banner3.jpg",
-      "primaryText": "Birouri",
-      "secondaryText": "Mobilier de birou modern, conceput pentru productivitate și confort — birouri, rafturi și soluții de depozitare realizate la specificațiile dumneavoastră.",
-      "url": "/catalog/office"
-    },
-    {
-      "img": "/banners/banner4.jpg",
-      "primaryText": "Mese",
-      "secondaryText": "Mese de dining și de lucru fabricate manual pentru a dura — alegeți dimensiunea, materialul și finisajul pentru o piesă care se potrivește perfect casei dumneavoastră.",
-      "url": "/catalog/tables"
-    },
-    {
-      "img": "/banners/banner5.jpg",
-      "primaryText": "Bucătării la comandă",
-      "secondaryText": "Bucătării moderne și ergonomice concepute pentru a îmbina stilul cu utilitatea — realizate din materiale premium cu sisteme de închidere silențioasă.",
-      "url": "/catalog/kitchens"
-    },
-    {
-      "img": "/banners/banner6.jpg",
-      "primaryText": "Mobilier pentru Living",
-      "secondaryText": "Sisteme TV suspendate, comode elegante și rafturi luminate — piese unice de mobilier care aduc confort și rafinament livingului tău.",
-      "url": "/catalog/living"
+      "url": "/catalog/skhafy"
     }
   ],
   "bannerLinks": {
