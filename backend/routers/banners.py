@@ -30,19 +30,20 @@ def get_banners(
         .options(
             joinedload(Banner.images),
             joinedload(Banner.translations)
-        ).order_by(Banner.id.desc()).offset(skip).limit(limit).all()
+        ).order_by(Banner.order.asc()).offset(skip).limit(limit).all()
     banners_list = []
     for banner in banners_query:
         translation = get_translation(banner.translations, lang)
-        banners_list.append({
-            "id": banner.id,
-            "url": banner.url,
-            "header": translation.header,
-            "body": translation.body,
-            "language": translation.language,
-            "images": banner.images,
-            "order": banner.order
-        })
+        if banner.is_active:
+            banners_list.append({
+                "id": banner.id,
+                "url": banner.url,
+                "header": translation.header,
+                "body": translation.body,
+                "language": translation.language,
+                "images": banner.images,
+                "order": banner.order
+            })
     return PaginatedResponse(
         data=banners_list,
         pagination=Pagination(skip=skip, limit=limit)
