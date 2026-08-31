@@ -19,6 +19,35 @@ from sqlalchemy.orm import Session, joinedload
 
 banners_router = APIRouter(prefix="/banners", tags=["banners"])
 
+@banners_router.get("/", status_code=status.HTTP_200_OK, response_model=PaginatedResponse)
+def get_banners(
+        skip: int = 0,
+        limit: int = 10,
+        lang: Language = Language.ro, 
+        db: Session = Depends(get_db)
+    ):
+    banners_query = db.query(Banner) \
+        .options(
+            joinedload(Banner.images),
+            joinedload(Banner.translations)
+        ).order_by(Banner.id.desc()).offset(skip).limit(limit).all()
+    banners_list = []
+    for banner in banners_query:
+        translation = get_translation(banner.translations, lang)
+        banners_list.append({
+            "id": banner.id,
+            "url": banner.url,
+            "header": translation.header,
+            "body": translation.body,
+            "language": translation.language,
+            "images": banner.images,
+            "order": banner.order
+        })
+    return PaginatedResponse(
+        data=banners_list,
+        pagination=Pagination(skip=skip, limit=limit)
+    )
+
 @banners_router.post("/", status_code=status.HTTP_201_CREATED, response_model=BannerResponse)
 def create_banner(data: BannerCreate, db: Session = Depends(get_db)):
     existing_count = db.query(Banner).count()
@@ -50,34 +79,6 @@ def create_banner(data: BannerCreate, db: Session = Depends(get_db)):
         "images": banner.images,
         "order": banner.order
     }
-
-@banners_router.get("/", status_code=status.HTTP_200_OK, response_model=PaginatedResponse)
-def get_banners(
-        skip: int = 0,
-        limit: int = 10,
-        lang: Language = Language.ro, 
-        db: Session = Depends(get_db)
-    ):
-    banners_query = db.query(Banner) \
-        .options(
-            joinedload(Banner.images),
-            joinedload(Banner.translations)
-        ).order_by(Banner.id.desc()).offset(skip).limit(limit).all()
-    banners_list = []
-    for banner in banners_query:
-        translation = get_translation(banner.translations, lang)
-        banners_list.append({
-            "id": banner.id,
-            "url": banner.url,
-            "header": translation.header,
-            "body": translation.body,
-            "language": translation.language,
-            "images": banner.images
-        })
-    return PaginatedResponse(
-        data=banners_list,
-        pagination=Pagination(skip=skip, limit=limit)
-    )
 
 @banners_router.get("/{banner_id}", status_code=status.HTTP_200_OK, response_model=BannerResponse)
 def get_banner(banner_id: int, lang: Language = Language.ro, db: Session = Depends(get_db)):
