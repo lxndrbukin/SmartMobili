@@ -21,8 +21,10 @@ banners_router = APIRouter(prefix="/banners", tags=["banners"])
 
 @banners_router.post("/", status_code=status.HTTP_201_CREATED, response_model=BannerResponse)
 def create_banner(data: BannerCreate, db: Session = Depends(get_db)):
+    existing_count = db.query(Banner).count()
     banner = Banner(
-        url=data.url
+        url=data.url,
+        order=existing_count
     )
     db.add(banner)
     db.commit()
@@ -37,6 +39,7 @@ def create_banner(data: BannerCreate, db: Session = Depends(get_db)):
         db.add(banner_translation)
     db.commit()
     db.refresh(banner)
+    
     translation = get_translation(banner.translations, Language.ro)
     return {
         "id": banner.id,
@@ -44,7 +47,8 @@ def create_banner(data: BannerCreate, db: Session = Depends(get_db)):
         "header": translation.header,
         "body": translation.body,
         "language": translation.language,
-        "images": []
+        "images": banner.images,
+        "order": banner.order
     }
 
 @banners_router.get("/", status_code=status.HTTP_200_OK, response_model=PaginatedResponse)

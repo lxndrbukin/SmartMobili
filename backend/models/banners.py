@@ -45,7 +45,8 @@ class BannerResponse(BaseModel):
     header: str
     body: str | None
     language: Language
-    images: list[BannerImageResponse] = []
+    images: list[BannerImageResponse] = [],
+    order: int
 
 class PaginatedResponse(BaseModel):
     data: List[BannerResponse]
