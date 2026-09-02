@@ -1,12 +1,12 @@
 {
   "header": "Catalog",
   "generic": {
-    "noItems": "Nu există produse disponibile",
-    "allItems": "Toate produsele",
+    "noItems": "Nu există lucrări disponibile",
+    "allItems": "Toate lucrările",
     "categoryNotFound": "Categoria nu a fost găsită",
     "loadMore": "Mai mult"
   },
-  "items": "Produse: {{count}}",
+  "items": "Lucrări: {{count}}",
   "breadcrumbs": {
     "home": "Acasă",
     "catalog": "Catalog"
@@ -15,7 +15,7 @@
     "description": "Descriere",
     "noPrice": "Fără preț",
     "call": "Comandă",
-    "notFound": "Produsul nu a fost găsit"
+    "notFound": "Lucrarea nu a fost găsită"
   },
   "latest": {
     "header": "Ultimele lucrări"
@@ -26,7 +26,7 @@
   },
   "seo": {
     "description": "Răsfoiți catalogul de mobilier la comandă SmartMobili — dulapuri, mobilier de birou, mese, piese de living și altele, toate fabricate la comandă în Moldova.",
-    "categoryDescription": "Mobilier {{category}} la comandă de la SmartMobili, Moldova. {{count}} produse disponibile. Consultație gratuită în design inclusă.",
+    "categoryDescription": "Mobilier {{category}} la comandă de la SmartMobili, Moldova. {{count}} lucrări disponibile. Consultație gratuită în design inclusă.",
     "itemDescription": "Comandați {{title}} personalizat de la SmartMobili, Moldova. Fabricat la specificațiile dumneavoastră exacte. Solicitați o consultație gratuită astăzi."
   }
 }

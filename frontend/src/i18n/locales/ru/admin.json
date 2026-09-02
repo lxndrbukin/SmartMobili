@@ -1,7 +1,7 @@
 {
   "item": {
-    "headerCreate": "Новый товар",
-    "headerEdit": "Обновить товар",
+    "headerCreate": "Новая работа",
+    "headerEdit": "Редактировать работу",
     "title": "Заголовок",
     "description": "Описание",
     "price": "Цена",
@@ -40,8 +40,8 @@
   },
   "alerts": {
     "item": {
-      "confirmDelete": "Вы хотите удалить товар {{name}}?",
-      "deleted": "Товар {{name}} удалён"
+      "confirmDelete": "Вы хотите удалить работу {{name}}?",
+      "deleted": "Работа {{name}} удалена"
     },
     "category": {
       "confirmDelete": "Вы хотите удалить категорию {{name}}?",
@@ -63,7 +63,7 @@
   "panel": {
     "header": "Панель управления",
     "tabs": {
-      "items": "Товары",
+      "items": "Работы",
       "categories": "Категории",
       "banners": "Баннеры",
       "users": "Пользователи",
@@ -74,7 +74,7 @@
       "category": "Категория",
       "price": "Цена",
       "actions": "Действия",
-      "items": "Товары",
+      "items": "Работы",
       "username": "Имя пользователя",
       "role": "Статус",
       "signedup": "Зарегистрирован",

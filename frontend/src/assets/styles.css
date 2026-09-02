@@ -3951,9 +3951,27 @@ img {
     gap: var(--space-5);
   }
 
-  .catalog-item-page-main-image,
+  .catalog-item-page-gallery {
+    align-items: center;
+  }
+
+  .catalog-item-page-thumbnails {
+    width: 100%;
+  }
+
+  .catalog-item-page-main-image {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 360px;
+    object-fit: contain;
+    margin: 0 auto;
+    display: block;
+  }
+
   .catalog-item-page-no-image {
-    height: 360px;
+    width: 100%;
+    height: 300px;
   }
 
   .callback {
@@ -4013,9 +4031,12 @@ img {
     display: flex;
   }
 
-  .catalog-item-page-main-image,
+  .catalog-item-page-main-image {
+    max-height: 320px;
+  }
+
   .catalog-item-page-no-image {
-    height: 320px;
+    height: 260px;
   }
 
   .admin-panel {
@@ -4236,9 +4257,12 @@ img {
     gap: var(--space-3);
   }
 
-  .catalog-item-page-main-image,
+  .catalog-item-page-main-image {
+    max-height: 280px;
+  }
+
   .catalog-item-page-no-image {
-    height: 260px;
+    height: 220px;
   }
 
   .telegram-banner {

@@ -1,12 +1,12 @@
 {
   "header": "Catalog",
   "generic": {
-    "noItems": "No items in this category",
-    "allItems": "All Items",
+    "noItems": "No works in this category",
+    "allItems": "All Works",
     "categoryNotFound": "Category not found",
     "loadMore": "Load More"
   },
-  "items": "Items: {{count}}",
+  "items": "Works: {{count}}",
   "breadcrumbs": {
     "home": "Home",
     "catalog": "Catalog"
@@ -15,10 +15,10 @@
     "description": "Description",
     "noPrice": "No Price",
     "call": "Order",
-    "notFound": "Item not found"
+    "notFound": "Work not found"
   },
   "latest": {
-    "header": "Latest Items"
+    "header": "Latest Works"
   },
   "search": {
     "header": "Results for:",
@@ -26,7 +26,7 @@
   },
   "seo": {
     "description": "Browse SmartMobili's custom furniture catalog — wardrobes, office furniture, tables, living room pieces, and more, all made to order in Moldova.",
-    "categoryDescription": "Custom {{category}} furniture made to order by SmartMobili in Moldova. {{count}} items available. Free design consultation included.",
+    "categoryDescription": "Custom {{category}} furniture made to order by SmartMobili in Moldova. {{count}} works available. Free design consultation included.",
     "itemDescription": "Order custom {{title}} from SmartMobili, Moldova. Handcrafted to your exact specifications. Request a free consultation today."
   }
 }

@@ -1,7 +1,7 @@
 {
   "item": {
-    "headerCreate": "New Item",
-    "headerEdit": "Update Item",
+    "headerCreate": "New Work",
+    "headerEdit": "Update Work",
     "title": "Title",
     "description": "Description",
     "price": "Price",
@@ -40,8 +40,8 @@
   },
   "alerts": {
     "item": {
-      "confirmDelete": "Do you want to delete item {{name}}?",
-      "deleted": "Item {{name}} deleted"
+      "confirmDelete": "Do you want to delete work {{name}}?",
+      "deleted": "Work {{name}} deleted"
     },
     "category": {
       "confirmDelete": "Do you want to delete category {{name}}?",
@@ -63,7 +63,7 @@
   "panel": {
     "header": "Admin Panel",
     "tabs": {
-      "items": "Items",
+      "items": "Works",
       "categories": "Categories",
       "banners": "Banners",
       "users": "Users",
@@ -74,7 +74,7 @@
       "category": "Category",
       "price": "Price",
       "actions": "Actions",
-      "items": "Items",
+      "items": "Works",
       "username": "Username",
       "role": "Role",
       "signedup": "Signed Up",
