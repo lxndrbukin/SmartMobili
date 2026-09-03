@@ -6,7 +6,7 @@ from fastapi.security import OAuth2PasswordBearer
 from pydantic import BaseModel
 from datetime import datetime, timedelta
 from jose import jwt, JWTError
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from db import get_db
 from db_models.auth import User
 from db_models.items import Item, ItemTranslation
@@ -78,7 +78,8 @@ dining tables ("столы-книжки" / mese pliante), wardrobes, and living 
 furniture. SmartMobili does NOT make or sell glass tables, sofas, chairs, or 
 other soft/upholstered furniture. If a customer asks about something outside 
 this scope, politely explain that SmartMobili doesn't offer that category, 
-and mention what the company does make instead.
+and mention what the company does make instead. When mentioning a specific item, 
+wrap its name in an HTML <a> tag using the provided URL.
 
 STAYING GROUNDED IN THE CATALOGUE
 Never describe, recommend, or invent specific products, materials, dimensions, 
@@ -118,19 +119,32 @@ def generate_embedding(text: str):
 
 def search_products(query: str, lang: str, db: Session):
     query_embedding = generate_embedding(query)
+    final_results = []
     results = (
-        db.query(ItemTranslation)
-        .join(Item, ItemTranslation.item_id == Item.id)
-        .filter(ItemTranslation.language == lang)
-        .order_by(ItemTranslation.embedding.cosine_distance(query_embedding))
-        .limit(5)
+        db.query(ItemTranslation) \
+        .join(Item, ItemTranslation.item_id == Item.id) \
+        .filter(ItemTranslation.language == lang) \
+        .order_by(ItemTranslation.embedding.cosine_distance(query_embedding)) \
+        .limit(5) \
         .all()
     )
-    return [
-        {
-            'title': r.title, 'description': r.description,  'price': r.item.price
-        } for r in results
-    ]
+    for result in results:
+        category = db.query(Category) \
+                    .options(joinedload(Category.translations)) \
+                    .filter(Category.id == result.item.category_id) \
+                    .first()
+        if category.parent_id is None:
+            url = f"https://smartmobili-md.com/{lang}/{category.slug}/{result.item.id}"
+        else:
+            url = f"https://smartmobili-md.com/{lang}/{category.parent.slug}/{category.slug}/{result.item.id}"
+        final_results.append({
+            "id": result.item.id,
+            "title": result.title,
+            "description": result.description,
+            "price": result.item.price,
+            "url": url
+        })
+    return final_results
 
 def get_category_and_children_ids(category_id: int, db: Session) -> list[int]:
     category = db.query(Category).get(category_id)
