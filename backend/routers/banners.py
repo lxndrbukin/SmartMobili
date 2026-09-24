@@ -95,7 +95,8 @@ def get_banner(banner_id: int, lang: Language = Language.ro, db: Session = Depen
         "header": translation.header,
         "body": translation.body,
         "language": translation.language,
-        "images": banner.images
+        "images": banner.images,
+        "order": banner.order
     }
 
 @banners_router.put("/{banner_id}", response_model=BannerResponse)
@@ -123,7 +124,8 @@ def update_banner(
         "header": translation.header,
         "body": translation.body,
         "language": translation.language,
-        "images": banner.images
+        "images": banner.images,
+        "order": banner.order
     }
 
 @banners_router.delete("/{banner_id}", status_code=status.HTTP_204_NO_CONTENT)
