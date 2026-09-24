@@ -3095,18 +3095,28 @@ img {
 }
 
 .logo {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   user-select: none;
   cursor: pointer;
   text-decoration: none;
+  transition: opacity var(--transition-fast);
+}
+
+.logo:hover {
+  opacity: 0.92;
+}
+
+.logo:hover .logo-badge {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(201, 122, 86, 0.4);
 }
 
 .logo-badge {
   flex-shrink: 0;
-  width: 36px;
-  height: 36px;
+  width: 35px;
+  height: 35px;
   background-color: var(--accent);
   border-radius: var(--radius-md);
   display: flex;
@@ -3114,25 +3124,31 @@ img {
   justify-content: center;
   color: #fff;
   font-size: 15px;
+  box-shadow: 0 2px 8px rgba(201, 122, 86, 0.25);
+  transition:
+    transform var(--transition-base),
+    box-shadow var(--transition-base);
 }
 
 .logo-badge img {
-  height: 30px;
+  width: 27px;
+  height: 27px;
+  object-fit: contain;
+  display: block;
 }
 
 .logo-text {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
+  align-items: center;
   line-height: 1;
 }
 
 .logo-name {
-  display: flex;
+  display: inline-flex;
   align-items: baseline;
   font-family: var(--font-display);
-  font-size: 1.3rem;
-  letter-spacing: -0.01em;
+  font-size: 1.45rem;
+  letter-spacing: -0.02em;
   line-height: 1;
 }
 
@@ -3144,14 +3160,7 @@ img {
 .logo-name-light {
   font-weight: 300;
   color: var(--accent-muted);
-}
-
-.logo-tagline {
-  font-family: var(--font-body);
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text-inverted-muted);
+  margin-left: 0.5px;
 }
 
 /* ─── MODAL ──────────────────────────────────────────────────────────── */
@@ -4385,8 +4394,22 @@ img {
     font-size: 2rem;
   }
 
-  .logo-tagline {
-    display: none;
+  .logo {
+    gap: 9px;
+  }
+
+  .logo-badge {
+    width: 34px;
+    height: 34px;
+  }
+
+  .logo-badge img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .logo-name {
+    font-size: 1.25rem;
   }
 }
 

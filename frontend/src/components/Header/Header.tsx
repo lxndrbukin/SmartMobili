@@ -95,7 +95,6 @@ export default function Header(): JSX.Element {
               <span className='logo-name-bold'>Smart</span>
               <span className='logo-name-light'>Mobili</span>
             </span>
-            <span className='logo-tagline'>{t('logo')}</span>
           </div>
         </Link>
         <div className='header-links'>
