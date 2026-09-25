@@ -211,8 +211,15 @@ def update_item(
             setattr(item, key, value)
     db.commit()
     db.refresh(item)
+    parent_category = None
+    parent_translation = None
     category = db.query(Category) \
         .options(joinedload(Category.translations)).filter(Category.id == item.category_id).first()
+    if category.parent_id is not None:
+        parent_category = db.query(Category) \
+            .options(joinedload(Category.translations)) \
+            .filter(Category.id == category.parent_id).first()
+        parent_translation = get_translation(parent_category.translations, lang)
     category_translation = get_translation(category.translations, lang)
     translation = get_translation(item.translations, lang)
     return {
@@ -221,13 +228,17 @@ def update_item(
         "category": ItemCategoryResponse(
             id=category.id,
             slug=category.slug,
-            name=category_translation.name
+            name=category_translation.name,
+            parent_slug=parent_category.slug if parent_category else None,
+            parent_name=parent_translation.name if parent_translation else None
+
         ),
         "created_at": item.created_at,
         "title": translation.title,
         "description": translation.description,
         "language": translation.language,
-        "images": item.images
+        "images": item.images,
+        "in_gallery": item.in_gallery
     }
 
 @items_router.delete("/{item_id}", status_code=status.HTTP_204_NO_CONTENT)
