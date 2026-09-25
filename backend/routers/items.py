@@ -89,7 +89,8 @@ def get_items(
             "title": item_translation.title,
             "description": item_translation.description,
             "language": item_translation.language,
-            "images": item.images
+            "images": item.images,
+            "in_gallery": item.in_gallery
         })
     return PaginatedResponse(
         data=result,
