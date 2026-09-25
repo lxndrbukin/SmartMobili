@@ -33,6 +33,7 @@ class ItemCreate(BaseModel):
     price: float | None = None
     category_id: int
     translations: list[ItemTranslationCreate]
+    in_gallery: bool = False
 
     @field_validator("translations")
     def romanian_required(cls, translations):
@@ -45,6 +46,7 @@ class ItemCreate(BaseModel):
 class ItemUpdate(BaseModel):
     price: float | None = None
     category_id: int | None = None
+    in_gallery: bool = False
 
 class ItemCategoryResponse(BaseModel):
     id: int
@@ -62,6 +64,7 @@ class ItemResponse(BaseModel):
     description: str | None
     language: Language
     images: list[ItemImageResponse] = []
+    in_gallery: bool
 
 class PaginatedResponse(BaseModel):
     data: List[ItemResponse]

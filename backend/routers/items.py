@@ -31,6 +31,7 @@ def get_items(
         skip: int = 0,
         limit: int = 10,
         desc: bool = False,
+        latest: bool = False,
         category_id: int | None = None,
         category_slug: str | None = None,
         search_query: str | None = None,
@@ -40,6 +41,8 @@ def get_items(
     category = None
     query = db.query(Item) \
         .options(joinedload(Item.images), joinedload(Item.translations))
+    if latest:
+        query = query.filter(Item.in_gallery == True)
     if desc:
         query = query.order_by(Item.id.desc())
     if category_id:
@@ -141,14 +144,16 @@ def get_item(item_id: int, lang: Language = Language.ro, db: Session = Depends(g
             "title": item_translation.title,
             "description": item_translation.description,
             "language": item_translation.language,
-            "images": item.images
+            "images": item.images,
+            "in_gallery": item.in_gallery
         }
 
 @items_router.post("/", status_code=status.HTTP_201_CREATED, response_model=ItemResponse)
 def create_item(item: ItemCreate, lang: Language = Language.ro, db: Session = Depends(get_db)):
     db_item = Item(
         price=item.price,
-        category_id=item.category_id
+        category_id=item.category_id,
+        in_gallery=item.in_gallery
     )
     db.add(db_item)
     db.commit()
@@ -185,7 +190,8 @@ def create_item(item: ItemCreate, lang: Language = Language.ro, db: Session = De
             "title": translation.title,
             "description": translation.description,
             "language": translation.language,
-            "images": db_item.images
+            "images": db_item.images,
+            "in_gallery": db_item.in_gallery
         }
 
 @items_router.put("/{item_id}", response_model=ItemResponse)

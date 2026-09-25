@@ -1,4 +1,13 @@
-from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, Float
+from sqlalchemy import (
+    Column, 
+    Integer, 
+    String, 
+    Boolean, 
+    Text, 
+    DateTime, 
+    ForeignKey, 
+    Float
+)
 from sqlalchemy.orm import relationship
 from pgvector.sqlalchemy import Vector
 from datetime import datetime
@@ -9,6 +18,7 @@ class Item(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     price = Column(Float)
+    in_gallery = Column(Boolean, default=False)
     category_id = Column(Integer, ForeignKey("categories.id"))
     created_at = Column(DateTime, default=datetime.utcnow)
 
