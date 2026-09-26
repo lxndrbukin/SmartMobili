@@ -56,7 +56,7 @@ export default function ItemForm(): JSX.Element {
       axios.get(`${API_URL}/api/v1/items/${itemId}?lang=ro`).then((res) => {
         setItemTitleRO(res.data.title);
         setItemDescRO(res.data.description);
-        setItemCategoryId(res.data.category_id);
+        setItemCategoryId(res.data.category.id);
         setItemPrice(res.data.price);
         setExistingImages(res.data.images || []);
         setInGallery(res.data.in_gallery);
