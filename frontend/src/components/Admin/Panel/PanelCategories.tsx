@@ -15,6 +15,7 @@ export default function PanelCategories(): JSX.Element {
   const HEADERS = [
     'ID',
     t('panel.table.name'),
+    t('panel.table.order'),
     'Slug',
     t('panel.table.items'),
     t('panel.table.actions'),
@@ -30,7 +31,9 @@ export default function PanelCategories(): JSX.Element {
   }, [lang]);
 
   const handleDelete = (categoryId: number, categoryName: string) => {
-    const del = confirm(t('alerts.category.confirmDelete', { name: categoryName }));
+    const del = confirm(
+      t('alerts.category.confirmDelete', { name: categoryName }),
+    );
     if (del) {
       dispatch(deleteCategory(categoryId));
       alert(t('alerts.category.deleted', { name: categoryName }));
@@ -52,14 +55,17 @@ export default function PanelCategories(): JSX.Element {
       const children = categories.filter((cat) => cat.parent_id === parent.id);
       sorted.push(...children);
     });
-  
+
     return sorted.map((category) => {
-      const { id, name, slug, parent_id, item_count } = category;
+      const { id, name, slug, parent_id, item_count, order } = category;
       let displayItemCount = item_count;
 
       if (!parent_id) {
         const children = categories.filter((cat) => cat.parent_id === id);
-        const childrenCount = children.reduce((sum, cat) => sum + cat.item_count, 0);
+        const childrenCount = children.reduce(
+          (sum, cat) => sum + cat.item_count,
+          0,
+        );
         displayItemCount = item_count + childrenCount;
       }
 
@@ -67,9 +73,10 @@ export default function PanelCategories(): JSX.Element {
         <tr key={id} className={parent_id ? 'subcategory-row' : ''}>
           <td className='cell-id'>{parent_id ? '' : `#${id}`}</td>
           <td>
-            {parent_id && <span className="subcategory-indent">↳ </span>}
+            {parent_id && <span className='subcategory-indent'>↳ </span>}
             {name}
           </td>
+          <td>{order}</td>
           <td>{slug}</td>
           <td>{displayItemCount}</td>
           <td className='actions'>
@@ -99,7 +106,8 @@ export default function PanelCategories(): JSX.Element {
         </button>
       </div>
       <p className='admin-panel-scroll-hint'>
-        <i className='fa-solid fa-arrow-right-arrow-left'></i> {t('panel.scrollHint')}
+        <i className='fa-solid fa-arrow-right-arrow-left'></i>{' '}
+        {t('panel.scrollHint')}
       </p>
       <div className='admin-panel-table-wrapper'>
         <table className='admin-panel-table'>

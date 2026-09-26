@@ -19,6 +19,7 @@ export type CategoryProps = {
   item_count: number;
   language: string;
   images: Array<ImageProps>;
+  order: number;
 };
 
 export type BannerImageProps = {

@@ -21,6 +21,7 @@
     "submitCreate": "Creează",
     "submitEdit": "Actualizează",
     "images": "Imagini",
+    "order": "Ordinea",
     "parentCategory": "Categorie principală (opțional)",
     "noneParent": "Niciuna",
     "existingImages": "Imagini existente",
@@ -84,7 +85,8 @@
       "date": "Data",
       "image": "Imagine",
       "header": "Titlu Banner",
-      "url": "URL / Link"
+      "url": "URL / Link",
+      "order": "Ordinea"
     },
     "scrollHint": "Derulați pentru mai mult",
     "loading": "Se încarcă..."

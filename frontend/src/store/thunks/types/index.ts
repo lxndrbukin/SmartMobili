@@ -53,12 +53,14 @@ export type CategoryTranslationProps = {
 export type CategoryCreate = {
   slug: string;
   translations: Array<CategoryTranslationProps>;
+  order: number;
 };
 
 export type CategoryUpdate = {
   id: number;
   slug: string | undefined;
   translations: Array<CategoryTranslationProps> | undefined;
+  order: number | undefined;
 };
 
 export type CategoryRequest = {

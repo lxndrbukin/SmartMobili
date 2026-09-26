@@ -27,15 +27,22 @@ export default function CategoryForm(): JSX.Element {
   const [categoryRO, setCategoryRO] = useState('');
   const [categoryRU, setCategoryRU] = useState('');
   const [slug, setSlug] = useState('');
+  const [order, setOrder] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedImages, setSelectedImages] = useState<Array<File>>([]);
-  const [existingImages, setExistingImages] = useState<Array<{ id: number; image_url: string }>>([]);
+  const [existingImages, setExistingImages] = useState<
+    Array<{ id: number; image_url: string }>
+  >([]);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const isCreating = searchParams.get('createCategory') === '1';
   const categoryId = searchParams.get('editCategory');
 
-  console.log('CategoryForm render:', { isCreating, categoryId, existingImages });
+  console.log('CategoryForm render:', {
+    isCreating,
+    categoryId,
+    existingImages,
+  });
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -56,11 +63,12 @@ export default function CategoryForm(): JSX.Element {
         .then((res) => {
           setCategoryRO(res.data.name);
           setSlug(res.data.slug);
+          setOrder(res.data.order);
           if (res.data.images && res.data.images.length > 0) {
             setExistingImages(res.data.images);
           }
         });
-  
+
       axios
         .get(`${API_URL}/api/v1/categories/${categoryId}?lang=ru`)
         .then((res) => setCategoryRU(res.data.name));
@@ -80,7 +88,9 @@ export default function CategoryForm(): JSX.Element {
     if (!confirm('Are you sure you want to delete this image?')) return;
     try {
       setIsLoading(true);
-      await dispatch(deleteCategoryImage({ itemId: Number(categoryId), imageId })).unwrap();
+      await dispatch(
+        deleteCategoryImage({ itemId: Number(categoryId), imageId }),
+      ).unwrap();
       setExistingImages(existingImages.filter((img) => img.id !== imageId));
       dispatch(getCategories('ro')); // Refresh categories lists
       setIsLoading(false);
@@ -98,6 +108,7 @@ export default function CategoryForm(): JSX.Element {
     const slug = formData.get('slug') as string;
     const parentId = formData.get('parentId') as string;
     const imageFiles = formData.getAll('images') as File[];
+    const order = formData.getAll('order');
     const data = {
       slug,
       parent_id: parentId ? parseInt(parentId) : null,
@@ -111,6 +122,7 @@ export default function CategoryForm(): JSX.Element {
           name: nameRU,
         },
       ],
+      order: Number(order),
     };
     setIsLoading(true);
     if (isCreating) {
@@ -189,15 +201,25 @@ export default function CategoryForm(): JSX.Element {
               name='slug'
             />
           </div>
+          <div className='form-field'>
+            <label>{t('category.order')}</label>
+            <input
+              value={order}
+              onChange={(e) => setOrder(Number(e.target.value))}
+              name='order'
+            />
+          </div>
           {isCreating && (
-            <div className="form-field">
+            <div className='form-field'>
               <label>{t('category.parentCategory')}</label>
-              <select name="parentId">
-                <option value="">{t('category.noneParent')}</option>
+              <select name='parentId'>
+                <option value=''>{t('category.noneParent')}</option>
                 {categories
-                  .filter(cat => !cat.parent_id)
-                  .map(cat => (
-                    <option value={cat.id} key={cat.id}>{cat.name}</option>
+                  .filter((cat) => !cat.parent_id)
+                  .map((cat) => (
+                    <option value={cat.id} key={cat.id}>
+                      {cat.name}
+                    </option>
                   ))}
               </select>
             </div>
@@ -238,7 +260,15 @@ export default function CategoryForm(): JSX.Element {
                   ))}
                 </div>
               ) : (
-                <p style={{ fontSize: '13px', color: 'var(--text-muted)', margin: '4px 0 0' }}>{t('category.noImages')}</p>
+                <p
+                  style={{
+                    fontSize: '13px',
+                    color: 'var(--text-muted)',
+                    margin: '4px 0 0',
+                  }}
+                >
+                  {t('category.noImages')}
+                </p>
               )}
             </div>
           )}
