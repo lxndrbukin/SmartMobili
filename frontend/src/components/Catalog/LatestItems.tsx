@@ -13,7 +13,7 @@ import {
 import CatalogItem from './CatalogItem';
 import CatalogItemSkeleton from './CatalogItemSkeleton';
 
-export default function LatestItems(): JSX.Element {
+export default function LatestItems(): JSX.Element | null {
   const dispatch = useDispatch<AppDispatch>();
   const to = useLocalePath();
   const { t } = useTranslation('catalog');
@@ -27,7 +27,12 @@ export default function LatestItems(): JSX.Element {
     const fetchData = async () => {
       try {
         const result = await dispatch(
-          getItems({ limit: 4, lang: lang ?? 'ro', desc: true }),
+          getItems({
+            limit: 4,
+            lang: lang ?? 'ro',
+            desc: true,
+            latest: true as boolean,
+          }),
         ).unwrap();
         setLatestItems(Array.isArray(result) ? result : []);
       } catch (error) {
@@ -65,6 +70,10 @@ export default function LatestItems(): JSX.Element {
         return <CatalogItemSkeleton key={index} />;
       });
   };
+
+  if (latestItems.length === 0) {
+    return null;
+  }
 
   return (
     <div className='latest-items-wrapper'>

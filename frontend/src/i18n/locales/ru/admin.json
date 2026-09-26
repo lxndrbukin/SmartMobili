@@ -10,7 +10,8 @@
     "submitCreate": "Создать",
     "submitEdit": "Обновить",
     "existingImages": "Существующие изображения",
-    "noImages": "Нет загруженных изображений"
+    "noImages": "Нет загруженных изображений",
+    "inGallery": "Галерея"
   },
   "category": {
     "headerCreate": "Новая категория",

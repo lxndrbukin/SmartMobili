@@ -8,6 +8,7 @@ export type ItemCreate = {
   price: number;
   category_id: number;
   translations: Array<ItemTranslationProps>;
+  in_gallery: boolean | undefined;
 };
 
 export type ItemUpdate = {
@@ -15,6 +16,7 @@ export type ItemUpdate = {
   price: number | undefined;
   category_id: number | undefined;
   translations: Array<ItemTranslationProps> | undefined;
+  in_gallery: boolean | undefined;
 };
 
 export type ItemImageUpdate = {
@@ -40,6 +42,7 @@ export type ItemsRequest = {
   searchQuery?: string;
   limit?: number;
   skip?: number;
+  latest?: boolean;
 };
 
 export type CategoryTranslationProps = {

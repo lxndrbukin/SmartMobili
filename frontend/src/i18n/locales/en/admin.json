@@ -10,7 +10,8 @@
     "submitCreate": "Create",
     "submitEdit": "Update",
     "existingImages": "Existing Images",
-    "noImages": "No images uploaded yet"
+    "noImages": "No images uploaded yet",
+    "inGallery": "Gallery"
   },
   "category": {
     "headerCreate": "New Category",

@@ -10,7 +10,8 @@
     "submitCreate": "Creează",
     "submitEdit": "Actualizează",
     "existingImages": "Imagini existente",
-    "noImages": "Nu există imagini încărcate"
+    "noImages": "Nu există imagini încărcate",
+    "inGallery": "Galerie"
   },
   "category": {
     "headerCreate": "Categorie nouă",

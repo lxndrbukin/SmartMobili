@@ -19,6 +19,7 @@ export const getItems = createAsyncThunk(
     searchQuery,
     limit,
     skip,
+    latest,
   }: ItemsRequest) => {
     const params = new URLSearchParams();
     if (desc) {
@@ -41,6 +42,9 @@ export const getItems = createAsyncThunk(
     }
     if (skip) {
       params.append('skip', skip.toString());
+    }
+    if (latest) {
+      params.append('latest', latest.toString());
     }
     const response = await axios.get(`${API_URL}/api/v1/items?${params}`);
     return response.data.data;
@@ -67,10 +71,7 @@ export const createItem = createAsyncThunk(
 export const updateItem = createAsyncThunk(
   'items/updateItem',
   async (data: ItemUpdate) => {
-    await axios.put(`${API_URL}/api/v1/items/${data.id}`, {
-      price: data.price,
-      category_id: data.category_id,
-    });
+    await axios.put(`${API_URL}/api/v1/items/${data.id}`, data);
 
     if (data.translations) {
       for (const translation of data.translations) {

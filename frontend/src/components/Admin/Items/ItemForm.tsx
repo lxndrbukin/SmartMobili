@@ -38,6 +38,7 @@ export default function ItemForm(): JSX.Element {
   const [itemPrice, setItemPrice] = useState<string>('');
   const [itemCategoryId, setItemCategoryId] = useState(0);
   const [selectedImages, setSelectedImages] = useState<Array<File>>([]);
+  const [inGallery, setInGallery] = useState(false);
   const [existingImages, setExistingImages] = useState<
     Array<{ id: number; image_url: string }>
   >([]);
@@ -58,6 +59,7 @@ export default function ItemForm(): JSX.Element {
         setItemCategoryId(res.data.category_id);
         setItemPrice(res.data.price);
         setExistingImages(res.data.images || []);
+        setInGallery(res.data.in_gallery);
       });
       axios.get(`${API_URL}/api/v1/items/${itemId}?lang=ru`).then((res) => {
         setItemTitleRU(res.data.title);
@@ -104,6 +106,7 @@ export default function ItemForm(): JSX.Element {
     const price = formData.get('price') as string;
     const categoryId = formData.get('categoryId') as string;
     const imageFiles = formData.getAll('images') as File[];
+    const inGallery = formData.get('inGallery') === 'on';
     const data = {
       translations: [
         {
@@ -119,6 +122,7 @@ export default function ItemForm(): JSX.Element {
       ],
       price: parseFloat(price),
       category_id: Number(categoryId),
+      in_gallery: inGallery,
     };
     setIsLoading(true);
     if (isCreating) {
@@ -237,6 +241,15 @@ export default function ItemForm(): JSX.Element {
             >
               {renderCategories(categories)}
             </select>
+          </div>
+          <div className='form-field'>
+            <label>{t('item.inGallery')}</label>
+            <input
+              type='checkbox'
+              checked={inGallery}
+              onChange={(e) => setInGallery(e.target.checked)}
+              name='inGallery'
+            />
           </div>
           <div className='form-field'>
             <label>{t('item.images')}</label>

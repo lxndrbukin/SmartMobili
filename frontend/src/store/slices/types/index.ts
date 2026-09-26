@@ -1,4 +1,4 @@
-export type Language = "en" | "ro" | "ru";
+export type Language = 'en' | 'ro' | 'ru';
 
 export type SystemState = {
   currentLang: Language;
@@ -62,6 +62,7 @@ export type ItemProps = {
   description: string;
   language: Language;
   images: Array<ImageProps>;
+  in_gallery: boolean;
 };
 
 export type ImageProps = {
@@ -109,7 +110,6 @@ export type PaginatedInquiriesResponse = {
   pagination: Pagination | null;
 };
 
-
 export type AuthResponse = {
   access_token: string;
   token_type: string;
@@ -127,4 +127,3 @@ export type AdminState = {
     currentInquiry: InquiryProps | null;
   };
 };
-
