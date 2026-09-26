@@ -244,6 +244,7 @@ export default function ItemForm(): JSX.Element {
                 name='currency'
                 className='currency'
               >
+                <option></option>
                 <option>MDL</option>
                 <option>€</option>
               </select>
