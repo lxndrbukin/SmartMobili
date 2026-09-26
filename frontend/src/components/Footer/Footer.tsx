@@ -59,12 +59,19 @@ export default function Footer(): JSX.Element {
             </Link>
             <div className='footer-socials'>
               <a
+                className='social-instagram'
                 target='_blank'
                 href='https://www.instagram.com/sm_smartmobili/'
+                title='Instagram'
               >
-                <i className='fab fa-instagram-square'></i>
+                <i className='fab fa-instagram'></i>
               </a>
-              <a target='_blank' href='https://t.me/SM_smartmobili'>
+              <a
+                className='social-telegram'
+                target='_blank'
+                href='https://t.me/SM_smartmobili'
+                title='Telegram'
+              >
                 <i className='fab fa-telegram-plane'></i>
               </a>
             </div>
