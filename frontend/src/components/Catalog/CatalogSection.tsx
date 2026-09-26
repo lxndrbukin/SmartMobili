@@ -19,8 +19,14 @@ import CatalogItemSkeleton from './CatalogItemSkeleton';
 export default function CatalogSection(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
   const to = useLocalePath();
-  const { catSlug, subSlug, lang } = useParams<{ catSlug: string; subSlug?: string; lang: string }>();
-  const { categories, categoriesLoaded } = useSelector((state: RootState) => state.catalog);
+  const { catSlug, subSlug, lang } = useParams<{
+    catSlug: string;
+    subSlug?: string;
+    lang: string;
+  }>();
+  const { categories, categoriesLoaded } = useSelector(
+    (state: RootState) => state.catalog,
+  );
   const [items, setItems] = useState<ItemProps[]>([]);
   const [itemsLoaded, setItemsLoaded] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -66,10 +72,14 @@ export default function CatalogSection(): JSX.Element {
 
   const parentCategory = activeCategory?.parent_slug
     ? categories.find((cat) => cat.slug === activeCategory.parent_slug)
-    : (subSlug ? categories.find((cat) => cat.slug === catSlug) : undefined);
+    : subSlug
+      ? categories.find((cat) => cat.slug === catSlug)
+      : undefined;
 
   const subcategories = categories.filter((cat) => {
-    const parentIdToMatch = parentCategory ? parentCategory.id : activeCategory?.id;
+    const parentIdToMatch = parentCategory
+      ? parentCategory.id
+      : activeCategory?.id;
     return cat.parent_id === parentIdToMatch;
   });
 
@@ -128,14 +138,19 @@ export default function CatalogSection(): JSX.Element {
       return category.item_count;
     }
     const children = categories.filter((cat) => cat.parent_id === category.id);
-    const childrenCount = children.reduce((sum, cat) => sum + cat.item_count, 0);
+    const childrenCount = children.reduce(
+      (sum, cat) => sum + cat.item_count,
+      0,
+    );
     return category.item_count + childrenCount;
   };
 
   const renderSubcategoryTabs = () => {
     if (subcategories.length === 0) return null;
 
-    const parentSlug = parentCategory ? parentCategory.slug : activeCategory?.slug;
+    const parentSlug = parentCategory
+      ? parentCategory.slug
+      : activeCategory?.slug;
     const parentCat = parentCategory || activeCategory;
     const parentCount = parentCat ? getAggregatedItemCount(parentCat) : 0;
 
@@ -146,7 +161,9 @@ export default function CatalogSection(): JSX.Element {
           className={`subcategory-tab ${!subSlug ? 'active' : ''}`}
         >
           {t('generic.allItems')}
-          {parentCount > 0 && <span className='subcategory-count'>{parentCount}</span>}
+          {parentCount > 0 && (
+            <span className='subcategory-count'>{parentCount}</span>
+          )}
         </Link>
         {subcategories.map((sub) => {
           const isActive = subSlug === sub.slug;
@@ -157,7 +174,9 @@ export default function CatalogSection(): JSX.Element {
               className={`subcategory-tab ${isActive ? 'active' : ''}`}
             >
               {sub.name}
-              {sub.item_count > 0 && <span className='subcategory-count'>{sub.item_count}</span>}
+              {sub.item_count > 0 && (
+                <span className='subcategory-count'>{sub.item_count}</span>
+              )}
             </Link>
           );
         })}
@@ -204,31 +223,67 @@ export default function CatalogSection(): JSX.Element {
     );
   }
 
-  const heroImage = activeCategory.images?.length ? activeCategory.images[0].image_url : null;
+  const heroImage = activeCategory.images?.length
+    ? activeCategory.images[0].image_url
+    : null;
 
-  const SITE_URL = (import.meta.env.VITE_SITE_URL as string | undefined) ?? 'https://smartmobili.md';
+  const SITE_URL =
+    (import.meta.env.VITE_SITE_URL as string | undefined) ??
+    'https://smartmobili.md';
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: t('breadcrumbs.home'), item: `${SITE_URL}/${lang}` },
-      { '@type': 'ListItem', position: 2, name: t('breadcrumbs.catalog'), item: `${SITE_URL}/${lang}/catalog` },
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: t('breadcrumbs.home'),
+        item: `${SITE_URL}/${lang}`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: t('breadcrumbs.catalog'),
+        item: `${SITE_URL}/${lang}/catalog`,
+      },
       ...(parentCategory
         ? [
-            { '@type': 'ListItem', position: 3, name: parentCategory.name, item: `${SITE_URL}/${lang}/catalog/${parentCategory.slug}` },
-            { '@type': 'ListItem', position: 4, name: activeCategory.name, item: `${SITE_URL}/${lang}/catalog/${parentCategory.slug}/${activeCategory.slug}` }
+            {
+              '@type': 'ListItem',
+              position: 3,
+              name: parentCategory.name,
+              item: `${SITE_URL}/${lang}/catalog/${parentCategory.slug}`,
+            },
+            {
+              '@type': 'ListItem',
+              position: 4,
+              name: activeCategory.name,
+              item: `${SITE_URL}/${lang}/catalog/${parentCategory.slug}/${activeCategory.slug}`,
+            },
           ]
-        : [{ '@type': 'ListItem', position: 3, name: activeCategory.name, item: `${SITE_URL}/${lang}/catalog/${activeCategory.slug}` }])
+        : [
+            {
+              '@type': 'ListItem',
+              position: 3,
+              name: activeCategory.name,
+              item: `${SITE_URL}/${lang}/catalog/${activeCategory.slug}`,
+            },
+          ]),
     ],
   };
 
-  const activeCategoryCount = activeCategory ? getAggregatedItemCount(activeCategory) : 0;
+  const activeCategoryCount = activeCategory
+    ? getAggregatedItemCount(activeCategory)
+    : 0;
 
   return (
     <div className='catalog-section-page'>
       <SeoHead
         title={activeCategory.name}
-        description={t('seo.categoryDescription', { category: activeCategory.name, count: activeCategoryCount })}
+        description={t('seo.categoryDescription', {
+          category: activeCategory.name,
+          count: activeCategoryCount,
+        })}
         lang={lang || 'ro'}
         ogImage={heroImage ?? undefined}
         jsonLd={breadcrumbJsonLd}
@@ -249,14 +304,20 @@ export default function CatalogSection(): JSX.Element {
                 {' / '}
               </>
             )}
-            <Link to={to(parentCategory ? `/catalog/${parentCategory.slug}/${activeCategory.slug}` : `/catalog/${activeCategory.slug}`)}>
+            <Link
+              to={to(
+                parentCategory
+                  ? `/catalog/${parentCategory.slug}/${activeCategory.slug}`
+                  : `/catalog/${activeCategory.slug}`,
+              )}
+            >
               {activeCategory.name}
             </Link>
           </div>
           <h1 className='catalog-section-hero-title'>{activeCategory.name}</h1>
-          <span className='catalog-section-hero-meta'>
+          {/* <span className='catalog-section-hero-meta'>
             {t('items', { count: activeCategoryCount })}
-          </span>
+          </span> */}
         </div>
       </div>
 

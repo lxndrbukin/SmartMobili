@@ -1,5 +1,10 @@
 import { type JSX, useEffect, useState, useRef } from 'react';
-import { useParams, useSearchParams, useNavigate, Link } from 'react-router-dom';
+import {
+  useParams,
+  useSearchParams,
+  useNavigate,
+  Link,
+} from 'react-router-dom';
 import useLocalePath from '../../hooks/useLocalePath';
 import SeoHead from '../SeoHead';
 import { useTranslation } from 'react-i18next';
@@ -8,13 +13,18 @@ import {
   type AppDispatch,
   type RootState,
   type ItemProps,
-  type CategoryProps,
   getItems,
-  getCategories,
-  clearItems
+  clearItems,
 } from '../../store';
 import CatalogItem from './CatalogItem';
 import CatalogItemSkeleton from './CatalogItemSkeleton';
+import Categories from './Categories';
+
+const PAGE_SIZE = 10;
+const HERO_IMAGE = '/banners/catalog-hero.jpg';
+const SITE_URL =
+  (import.meta.env.VITE_SITE_URL as string | undefined) ??
+  'https://smartmobili.md';
 
 export default function Catalog(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
@@ -22,48 +32,41 @@ export default function Catalog(): JSX.Element {
   const to = useLocalePath();
   const { t } = useTranslation('catalog');
   const { lang } = useParams<{ lang: string }>();
-  const { categories, items } = useSelector(
-    (state: RootState) => state.catalog,
-  );
+  const { items } = useSelector((state: RootState) => state.catalog);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const [searchParams, setSearchParams] = useSearchParams();
-  const categorySlug = searchParams.get('category');
+  const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get('search');
-
-  const pageSize = 10;
   const [skip, setSkip] = useState<number>(0);
 
   const lastFetchedRef = useRef<{
-    categorySlug: string | null;
     searchQuery: string | null;
     lang: string | undefined;
     skip: number;
   }>({
-    categorySlug: undefined as any,
     searchQuery: undefined as any,
     lang: undefined,
     skip: -1,
   });
 
   useEffect(() => {
-    dispatch(getCategories(lang));
     return () => {
       dispatch(clearItems());
     };
-  }, [dispatch, lang]);
+  }, [dispatch]);
 
   useEffect(() => {
+    if (!searchQuery) {
+      return;
+    }
+
     const isQueryChanged =
-      lastFetchedRef.current.categorySlug !== categorySlug ||
       lastFetchedRef.current.searchQuery !== searchQuery ||
       lastFetchedRef.current.lang !== lang;
 
     const targetSkip = isQueryChanged ? 0 : skip;
 
     if (
-      lastFetchedRef.current.categorySlug === categorySlug &&
       lastFetchedRef.current.searchQuery === searchQuery &&
       lastFetchedRef.current.lang === lang &&
       lastFetchedRef.current.skip === targetSkip
@@ -80,53 +83,29 @@ export default function Catalog(): JSX.Element {
       }
 
       lastFetchedRef.current = {
-        categorySlug,
         searchQuery,
         lang,
         skip: targetSkip,
       };
 
       try {
-        if (!searchQuery) {
-          if (categorySlug) {
-            await dispatch(
-              getItems({
-                lang: lang || 'ro',
-                categorySlug: String(categorySlug),
-                skip: targetSkip,
-                limit: 10,
-                desc: true,
-              }),
-            ).unwrap();
-          } else {
-            await dispatch(
-              getItems({
-                lang: lang || 'ro',
-                skip: targetSkip,
-                limit: 10,
-                desc: true,
-              }),
-            ).unwrap();
-          }
-        } else {
-          await dispatch(
-            getItems({
-              lang: lang || 'ro',
-              searchQuery,
-              skip: targetSkip,
-              limit: 10,
-            }),
-          ).unwrap();
-        }
+        await dispatch(
+          getItems({
+            lang: lang || 'ro',
+            searchQuery,
+            skip: targetSkip,
+            limit: PAGE_SIZE,
+          }),
+        ).unwrap();
       } catch (error) {
-        console.error('Error fetching catalog items:', error);
+        console.error('Error fetching catalog search items:', error);
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchData();
-  }, [dispatch, categorySlug, lang, searchQuery, skip]);
+  }, [dispatch, lang, searchQuery, skip]);
 
   const renderSkeleton = () => {
     if (isLoading) {
@@ -134,20 +113,22 @@ export default function Catalog(): JSX.Element {
         <div className='catalog-section-items'>
           {Array(3)
             .fill('')
-            .map((_, index) => {
-              return <CatalogItemSkeleton key={index} />;
-            })}
+            .map((_, index) => (
+              <CatalogItemSkeleton key={index} />
+            ))}
         </div>
       );
     }
     return <div className='catalog-no-items'>{t('generic.noItems')}</div>;
   };
 
-  const renderItems = (items: Array<ItemProps>) => {
+  const renderItems = (itemsList: Array<ItemProps>) => {
     return (
       <div className='catalog-section-items'>
-        {items.map((item) => {
-          const item_url = item.category.parent_slug ? `/catalog/${item.category.parent_slug}/${item.category.slug}/item/${item.id}` : `/catalog/${item.category.slug}/item/${item.id}`;
+        {itemsList.map((item) => {
+          const itemUrl = item.category.parent_slug
+            ? `/catalog/${item.category.parent_slug}/${item.category.slug}/item/${item.id}`
+            : `/catalog/${item.category.slug}/item/${item.id}`;
           return (
             <CatalogItem
               key={item.id}
@@ -156,7 +137,7 @@ export default function Catalog(): JSX.Element {
               title={item.title}
               price={item.price}
               images={item.images}
-              url={to(item_url)}
+              url={to(itemUrl)}
             />
           );
         })}
@@ -164,67 +145,11 @@ export default function Catalog(): JSX.Element {
     );
   };
 
-  const parentCategories = categories.filter((cat) => cat.parent_id === null);
-
-  const getParentCategoryItemCount = (parentCat: CategoryProps) => {
-    const subcategories = categories.filter((cat) => cat.parent_id === parentCat.id);
-    const subcategoriesCount = subcategories.reduce((sum, cat) => sum + cat.item_count, 0);
-    return parentCat.item_count + subcategoriesCount;
-  };
-
-  const totalParentItemsCount = parentCategories.reduce(
-    (sum, cat) => sum + getParentCategoryItemCount(cat),
-    0
-  );
-
-  const renderCategories = (categoriesList: Array<CategoryProps>) => {
-    const parentCats = categoriesList.filter((cat) => cat.parent_id === null);
-    return parentCats.map((category) => {
-      const displayCount = getParentCategoryItemCount(category);
-      return (
-        <button
-          key={category.id}
-          className={
-            categorySlug && String(categorySlug) === category.slug
-              ? 'active'
-              : ''
-          }
-          onClick={() => {
-            setSearchParams({ category: String(category.slug) });
-          }}
-        >
-          {category.name}
-          {displayCount > 0 && <span className='category-count'>{displayCount}</span>}
-        </button>
-      );
-    });
-  };
-
-  const renderSubcategoriesFilter = (categoriesList: Array<CategoryProps>, activeParentSlug: string) => {
-    const parentCategory = categoriesList.find((cat) => cat.slug === activeParentSlug);
-    if (!parentCategory) return null;
-    const subcats = categoriesList.filter((cat) => cat.parent_id === parentCategory.id);
-    if (subcats.length === 0) return null;
-
-    return (
-      <div className='catalog-subcategories-filter'>
-        {subcats.map((sub) => (
-          <button
-            key={sub.id}
-            onClick={() => navigate(to(`/catalog/${activeParentSlug}/${sub.slug}`))}
-            className='subcategory-filter-pill'
-          >
-            {sub.name}
-            {sub.item_count > 0 && <span className='category-count'>{sub.item_count}</span>}
-            <i className="fa-solid fa-arrow-right"></i>
-          </button>
-        ))}
-      </div>
-    );
-  };
-
   const hero = (
-    <div className='catalog-section-hero catalog-section-hero--no-image'>
+    <div
+      className='catalog-section-hero'
+      style={{ backgroundImage: `url(${HERO_IMAGE})` }}
+    >
       <div className='catalog-section-hero-content'>
         <div className='catalog-breadcrumbs'>
           <Link to={to('/')}>{t('breadcrumbs.home')}</Link> /{' '}
@@ -240,6 +165,7 @@ export default function Catalog(): JSX.Element {
       title={t('header')}
       description={t('seo.description')}
       lang={lang || 'ro'}
+      ogImage={`${SITE_URL}${HERO_IMAGE}`}
     />
   );
 
@@ -256,12 +182,12 @@ export default function Catalog(): JSX.Element {
             <>
               <p>{t('search.results', { num: items.length })}</p>
               {renderItems(items)}
-              {items.length >= skip + pageSize && (
+              {items.length >= skip + PAGE_SIZE && (
                 <div className='catalog-load-more-container'>
                   <button
                     className='catalog-load-more-button'
                     disabled={isLoading}
-                    onClick={() => setSkip((prev) => prev + pageSize)}
+                    onClick={() => setSkip((prev) => prev + PAGE_SIZE)}
                   >
                     {t('generic.loadMore')}
                   </button>
@@ -286,45 +212,12 @@ export default function Catalog(): JSX.Element {
     );
   }
 
-  const activeCat = categorySlug ? categories.find(cat => cat.slug === categorySlug) : null;
-  const activeTotalCount = activeCat ? getParentCategoryItemCount(activeCat) : totalParentItemsCount;
-
   return (
     <div className='catalog-page'>
       {seoHead}
       {hero}
       <div className='catalog'>
-        <div className='catalog-categories'>
-          <button
-            className={!categorySlug ? 'active' : ''}
-            onClick={() => {
-              setSearchParams({});
-            }}
-          >
-            {t('generic.allItems')}
-            {totalParentItemsCount > 0 && <span className='category-count'>{totalParentItemsCount}</span>}
-          </button>
-          {renderCategories(categories)}
-        </div>
-        {categorySlug && renderSubcategoriesFilter(categories, categorySlug)}
-        {items.length ? (
-          <>
-            {renderItems(items)}
-            {items.length < activeTotalCount && (
-              <div className='catalog-load-more-container'>
-                <button
-                  className='catalog-load-more-button'
-                  disabled={isLoading}
-                  onClick={() => setSkip((prev) => prev + pageSize)}
-                >
-                  {t('generic.loadMore')}
-                </button>
-              </div>
-            )}
-          </>
-        ) : (
-          renderSkeleton()
-        )}
+        <Categories showHeader={false} />
       </div>
     </div>
   );

@@ -11,10 +11,13 @@ import {
 } from '../../store';
 import CategorySkeleton from './CategorySkeleton';
 
-export default function Categories(): JSX.Element {
+export default function Categories({
+  showHeader,
+}: {
+  showHeader: boolean;
+}): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
   const { t } = useTranslation('categories');
-  // const [isLoading, setIsLoading] = useState<boolean>(false);
   const to = useLocalePath();
 
   const { categories } = useSelector((state: RootState) => state.catalog);
@@ -22,9 +25,7 @@ export default function Categories(): JSX.Element {
 
   useEffect(() => {
     const fetchData = async () => {
-      // setIsLoading(true);
       await dispatch(getCategories(lang)).unwrap();
-      // setIsLoading(false);
     };
     fetchData();
   }, [lang]);
@@ -63,9 +64,12 @@ export default function Categories(): JSX.Element {
   };
 
   return (
-    <div className='categories-wrapper'>
+    <div
+      className='categories-wrapper'
+      style={{ padding: showHeader ? '48px 0 48x 0' : '0' }}
+    >
       <div className='categories'>
-        <h3 className='categories-header'>{header}</h3>
+        {showHeader && <h3 className='categories-header'>{header}</h3>}
         <div className='categories-list'>
           {categories.length ? renderCategories(categories) : renderSkeleton()}
         </div>

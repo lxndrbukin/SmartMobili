@@ -8,7 +8,9 @@ import OrderSteps from './Static/OrderSteps';
 import Brands from './Static/Brands';
 import SeoHead from './SeoHead';
 
-const SITE_URL = (import.meta.env.VITE_SITE_URL as string | undefined) ?? 'https://smartmobili.md';
+const SITE_URL =
+  (import.meta.env.VITE_SITE_URL as string | undefined) ??
+  'https://smartmobili.md';
 
 const orgJsonLd = {
   '@context': 'https://schema.org',
@@ -33,7 +35,7 @@ export default function HomePage(): JSX.Element {
         jsonLd={orgJsonLd}
       />
       <Carousel />
-      <Categories />
+      <Categories showHeader={true} />
       <LatestItems />
       <OrderSteps />
       <Brands />
