@@ -16,7 +16,6 @@ def create_inquiry(data: InquiryCreate, background_tasks: BackgroundTasks, db: S
         subject=data.subject,
         description=data.description,
         phone=data.phone,
-        email=data.email,
         item_id=data.item_id,
         telegram=data.telegram,
         whatsapp=data.whatsapp,
@@ -31,8 +30,14 @@ def create_inquiry(data: InquiryCreate, background_tasks: BackgroundTasks, db: S
     safe_subject = html.escape(data.subject)
     safe_description = html.escape(data.description)
     safe_phone = html.escape(data.phone)
-    safe_email = html.escape(data.email)
-
+    methods = []
+    if data.viber:
+        methods.append("Viber")
+    if data.telegram:
+        methods.append("Telegram")
+    if data.whatsapp:
+        methods.append("WhatsApp")
+    contact_methods = ", ".join(methods) if methods else "не указано"
     message = f'''
     <b>Заявка #{inquiry.id}</b>
 
@@ -41,7 +46,7 @@ def create_inquiry(data: InquiryCreate, background_tasks: BackgroundTasks, db: S
     <b>Описание:</b>
     {safe_description}
     <b>Телефон:</b> {safe_phone}
-    <b>Эл. почта:</b> {safe_email}
+    <b>Связь:</b> {contact_methods}
     '''
 
     background_tasks.add_task(notify_admin, message)
