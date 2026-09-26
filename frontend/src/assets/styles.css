@@ -1748,6 +1748,10 @@ img {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
+.styles-module_image__2hdkJ {
+  max-height: 80vh !important;
+}
+
 .catalog-item-page-info {
   display: flex;
   flex-direction: column;
