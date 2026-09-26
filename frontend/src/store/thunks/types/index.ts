@@ -6,6 +6,7 @@ export type ItemTranslationProps = {
 
 export type ItemCreate = {
   price: number;
+  currency: string;
   category_id: number;
   translations: Array<ItemTranslationProps>;
   in_gallery: boolean | undefined;
@@ -14,6 +15,7 @@ export type ItemCreate = {
 export type ItemUpdate = {
   id: number;
   price: number | undefined;
+  currency: string | undefined;
   category_id: number | undefined;
   translations: Array<ItemTranslationProps> | undefined;
   in_gallery: boolean | undefined;

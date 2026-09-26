@@ -51,6 +51,7 @@ export type CatalogState = {
 export type ItemProps = {
   id: number;
   price: number;
+  currency: string;
   category: {
     id: number;
     slug: string;

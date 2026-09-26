@@ -36,6 +36,7 @@ export default function ItemForm(): JSX.Element {
   const [itemDescRU, setItemDescRU] = useState('');
   const [itemDescRO, setItemDescRO] = useState('');
   const [itemPrice, setItemPrice] = useState<string>('');
+  const [itemCurrency, setItemCurrency] = useState<string>('');
   const [itemCategoryId, setItemCategoryId] = useState(0);
   const [selectedImages, setSelectedImages] = useState<Array<File>>([]);
   const [inGallery, setInGallery] = useState(false);
@@ -58,6 +59,7 @@ export default function ItemForm(): JSX.Element {
         setItemDescRO(res.data.description);
         setItemCategoryId(res.data.category.id);
         setItemPrice(res.data.price);
+        setItemCurrency(res.data.currency);
         setExistingImages(res.data.images || []);
         setInGallery(res.data.in_gallery);
       });
@@ -104,6 +106,7 @@ export default function ItemForm(): JSX.Element {
     const titleRU = formData.get('titleRU') as string;
     const descriptionRU = formData.get('descriptionRU') as string;
     const price = formData.get('price') as string;
+    const currency = formData.get('currency') as string;
     const categoryId = formData.get('categoryId') as string;
     const imageFiles = formData.getAll('images') as File[];
     const inGallery = formData.get('inGallery') === 'on';
@@ -121,6 +124,7 @@ export default function ItemForm(): JSX.Element {
         },
       ],
       price: parseFloat(price),
+      currency,
       category_id: Number(categoryId),
       in_gallery: inGallery,
     };
@@ -221,15 +225,29 @@ export default function ItemForm(): JSX.Element {
               />
             </div>
           </div>
-          <div className='form-field'>
-            <label>{t('item.price')}</label>
-            <input
-              value={itemPrice || ''}
-              onChange={(e) => setItemPrice(e.target.value)}
-              type='number'
-              name='price'
-              className='price'
-            />
+          <div className='form-field price-currency'>
+            <div>
+              <label>{t('item.price')}</label>
+              <input
+                value={itemPrice || ''}
+                onChange={(e) => setItemPrice(e.target.value)}
+                type='number'
+                name='price'
+                className='price'
+              />
+            </div>
+            <div>
+              <label>{t('item.currency')}</label>
+              <select
+                value={itemCurrency}
+                onChange={(e) => setItemCurrency(e.target.value)}
+                name='currency'
+                className='currency'
+              >
+                <option>MDL</option>
+                <option>€</option>
+              </select>
+            </div>
           </div>
           <div className='form-field'>
             <label>{t('item.category')}</label>

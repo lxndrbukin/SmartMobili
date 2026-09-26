@@ -1488,11 +1488,24 @@ img {
   box-shadow: 0 0 0 3px rgba(201, 122, 86, 0.1);
 }
 
-.form-field .price,
+.form-field.price-currency {
+  display: flex;
+  flex-direction: row;
+}
+
+.form-field.price-currency div {
+  display: flex;
+  flex-direction: column;
+}
+
 .form-field .category-select,
 .form-field input[type='file'] {
   width: 100%;
   max-width: 250px;
+}
+
+.form-field .price {
+  max-width: 160px;
 }
 
 .catalog-item-form button[type='submit'],

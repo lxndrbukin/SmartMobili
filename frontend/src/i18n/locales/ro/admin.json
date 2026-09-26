@@ -5,6 +5,7 @@
     "title": "Titlu",
     "description": "Descriere",
     "price": "Preț",
+    "currency": "Valută",
     "category": "Categorie",
     "images": "Imagini",
     "submitCreate": "Creează",

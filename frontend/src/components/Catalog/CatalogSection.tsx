@@ -340,6 +340,7 @@ export default function CatalogSection(): JSX.Element {
                     title={item.title}
                     images={item.images}
                     price={item.price}
+                    currency={item.currency}
                     url={to(itemUrl)}
                   />
                 );

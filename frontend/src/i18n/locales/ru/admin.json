@@ -5,6 +5,7 @@
     "title": "Заголовок",
     "description": "Описание",
     "price": "Цена",
+    "currency": "Валюта",
     "category": "Категория",
     "images": "Изображения",
     "submitCreate": "Создать",

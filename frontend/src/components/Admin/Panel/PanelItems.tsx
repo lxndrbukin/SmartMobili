@@ -19,7 +19,7 @@ export default function PanelItems(): JSX.Element {
     'ID',
     adminTranslation.t('panel.table.name'),
     adminTranslation.t('panel.table.category'),
-    `${adminTranslation.t('panel.table.price')} (MDL)`,
+    adminTranslation.t('panel.table.price'),
     adminTranslation.t('panel.table.actions'),
   ];
 
@@ -90,13 +90,15 @@ export default function PanelItems(): JSX.Element {
   };
 
   const renderRows = (items: Array<ItemProps>) => {
-    return items.map(({ id, title, category, price }) => {
+    return items.map(({ id, title, category, price, currency }) => {
       return (
         <tr key={id}>
           <td className='cell-id'>#{id}</td>
           <td>{title}</td>
           <td>{category.name}</td>
-          <td>{price}</td>
+          <td>
+            {price} {currency}
+          </td>
           <td className='actions'>
             <i
               onClick={() => setSearchParams({ editItem: String(id) })}

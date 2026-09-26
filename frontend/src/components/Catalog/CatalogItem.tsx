@@ -9,6 +9,7 @@ type CatalogItemProps = {
   images: Array<ImageProps>;
   url: string;
   price?: number;
+  currency?: string;
 };
 
 export default function CatalogItem({
@@ -18,6 +19,7 @@ export default function CatalogItem({
   images,
   url,
   price,
+  currency,
 }: CatalogItemProps): JSX.Element {
   const navigate = useNavigate();
 
@@ -46,7 +48,11 @@ export default function CatalogItem({
       <div className='catalog-item-info'>
         <span>{categoryName}</span>
         <h3>{title}</h3>
-        {price ? <p>{price} MDL</p> : null}
+        {price ? (
+          <p>
+            {price} {currency}
+          </p>
+        ) : null}
       </div>
     </div>
   );
