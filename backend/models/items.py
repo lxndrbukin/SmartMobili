@@ -46,7 +46,7 @@ class ItemCreate(BaseModel):
 class ItemUpdate(BaseModel):
     price: float | None = None
     category_id: int | None = None
-    in_gallery: bool = False
+    in_gallery: bool | None = None
 
 class ItemCategoryResponse(BaseModel):
     id: int
