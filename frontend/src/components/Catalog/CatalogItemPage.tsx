@@ -22,19 +22,22 @@ export default function CatalogItemPage(): JSX.Element {
   const [, setSearchParams] = useSearchParams();
   const dispatch = useDispatch<AppDispatch>();
 
-  const { currentItem, itemNotFound } = useSelector((state: RootState) => state.catalog);
+  const { currentItem, itemNotFound } = useSelector(
+    (state: RootState) => state.catalog,
+  );
   const [prevItemId, setPrevItemId] = useState<number | null>(null);
   const [currentImage, setCurrentImage] = useState<string>('');
   const [currentImgIdx, setCurrentImgIdx] = useState<number>(0);
   const [isViewerOpen, setIsViewerOpen] = useState<boolean>(false);
-  const images: Array<string> = []
+  const images: Array<string> = [];
 
   const handleImageSelection = (images: Array<ImageProps>) => {
     if (!images || images.length === 0) return undefined;
-    const imageData = images.find((image) => {
-      image.order === 0;
-    }) || images[0];
-    
+    const imageData =
+      images.find((image) => {
+        image.order === 0;
+      }) || images[0];
+
     return imageData?.image_url;
   };
 
@@ -55,7 +58,6 @@ export default function CatalogItemPage(): JSX.Element {
   }, []);
 
   const closeImageViewer = () => {
-    setCurrentImgIdx(0);
     setIsViewerOpen(false);
   };
 
@@ -77,8 +79,12 @@ export default function CatalogItemPage(): JSX.Element {
     return <CatalogItemPageSkeleton />;
   }
 
-  const SITE_URL = (import.meta.env.VITE_SITE_URL as string | undefined) ?? 'https://smartmobili-md.com';
-  const firstImage = currentItem.images.find((img) => img.order === 0)?.image_url || currentItem.images[0]?.image_url;
+  const SITE_URL =
+    (import.meta.env.VITE_SITE_URL as string | undefined) ??
+    'https://smartmobili-md.com';
+  const firstImage =
+    currentItem.images.find((img) => img.order === 0)?.image_url ||
+    currentItem.images[0]?.image_url;
 
   const productJsonLd: Record<string, unknown> = {
     '@context': 'https://schema.org',
@@ -106,8 +112,18 @@ export default function CatalogItemPage(): JSX.Element {
     : `${SITE_URL}/${lang}/catalog/${currentItem.category.slug}/item/${itemId}`;
 
   const breadcrumbElements = [
-    { '@type': 'ListItem', position: 1, name: t('breadcrumbs.home'), item: `${SITE_URL}/${lang}` },
-    { '@type': 'ListItem', position: 2, name: t('breadcrumbs.catalog'), item: `${SITE_URL}/${lang}/catalog` },
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: t('breadcrumbs.home'),
+      item: `${SITE_URL}/${lang}`,
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: t('breadcrumbs.catalog'),
+      item: `${SITE_URL}/${lang}/catalog`,
+    },
   ];
 
   if (currentItem.category.parent_name && currentItem.category.parent_slug) {
@@ -153,9 +169,11 @@ export default function CatalogItemPage(): JSX.Element {
     },
   ];
 
-  const categoryLinkTo = to(currentItem.category.parent_slug
-    ? `/catalog/${currentItem.category.parent_slug}/${currentItem.category.slug}`
-    : `/catalog/${currentItem.category.slug}`);
+  const categoryLinkTo = to(
+    currentItem.category.parent_slug
+      ? `/catalog/${currentItem.category.parent_slug}/${currentItem.category.slug}`
+      : `/catalog/${currentItem.category.slug}`,
+  );
 
   return (
     <>
@@ -178,10 +196,8 @@ export default function CatalogItemPage(): JSX.Element {
               {' / '}
             </>
           )}
-          <Link to={categoryLinkTo}>
-            {currentItem.category.name}
-          </Link>{' '}
-          / <span>{currentItem.title}</span>
+          <Link to={categoryLinkTo}>{currentItem.category.name}</Link> /{' '}
+          <span>{currentItem.title}</span>
         </div>
         <div className='catalog-item-page-container'>
           <div className='catalog-item-page-gallery'>
@@ -197,7 +213,6 @@ export default function CatalogItemPage(): JSX.Element {
                 <i className='fas fa-image'></i>
               </div>
             )}
-
             {currentItem.images.length > 1 && (
               <div className='catalog-item-page-thumbnails'>
                 {currentItem.images.map((image, idx) => {
@@ -213,35 +228,32 @@ export default function CatalogItemPage(): JSX.Element {
                         setCurrentImgIdx(idx);
                       }}
                     />
-                  )
+                  );
                 })}
               </div>
             )}
           </div>
           <div className='catalog-item-page-info'>
-            <Link
-              className='catalog-item-page-category'
-              to={categoryLinkTo}
-            >
+            <Link className='catalog-item-page-category' to={categoryLinkTo}>
               {currentItem.category.name}
             </Link>
             <h1 className='catalog-item-page-title'>{currentItem.title}</h1>
-            <div className='catalog-item-page-price'>
-              {currentItem.price
-                ? `${currentItem.price} MDL`
-                : t('itemPage.noPrice')}
-            </div>
+            {currentItem.price ? (
+              <div className='catalog-item-page-price'>
+                {currentItem.price} MDL
+              </div>
+            ) : null}
 
             <div className='catalog-item-page-description'>
-              {currentItem.description && 
-              <>
-                <h3>{t('itemPage.description')}</h3>
-                <ReactMarkdown remarkPlugins={[remarkBreaks]}>
-                  {currentItem.description}
-                </ReactMarkdown>
-              </>}
+              {currentItem.description && (
+                <>
+                  <h3>{t('itemPage.description')}</h3>
+                  <ReactMarkdown remarkPlugins={[remarkBreaks]}>
+                    {currentItem.description}
+                  </ReactMarkdown>
+                </>
+              )}
             </div>
-
             <div className='catalog-item-page-actions'>
               <button
                 className='button'
@@ -259,13 +271,13 @@ export default function CatalogItemPage(): JSX.Element {
         </div>
       </div>
       {isViewerOpen && (
-        <ImageViewer 
+        <ImageViewer
           src={images.length ? images : [currentImage]}
           currentIndex={currentImgIdx}
           disableScroll={false}
           closeOnClickOutside={true}
           onClose={closeImageViewer}
-          backgroundStyle={{backgroundColor: 'rgba(0, 0, 0, 0.7)'}}
+          backgroundStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }}
         />
       )}
     </>
