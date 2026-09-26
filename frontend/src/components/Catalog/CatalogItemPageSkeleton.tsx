@@ -3,6 +3,19 @@ import { type JSX } from 'react';
 export default function CatalogItemPageSkeleton(): JSX.Element {
   return (
     <div className='catalog-item-page'>
+      <div className='catalog-breadcrumbs'>
+        <div
+          style={{
+            width: '240px',
+            height: '18px',
+            borderRadius: 'var(--radius-sm)',
+            background:
+              'linear-gradient(90deg, rgba(203, 213, 225, 0.5) 25%, var(--bg-surface) 50%, rgba(203, 213, 225, 0.5) 75%)',
+            backgroundSize: '200% 100%',
+            animation: 'skeleton-shimmer 1.5s ease-in-out infinite',
+          }}
+        />
+      </div>
       <div className='catalog-item-page-container'>
         <div className='catalog-item-page-gallery'>
           <div className='skeleton-main-image' />
