@@ -28,6 +28,7 @@ class CategoryCreate(BaseModel):
     slug: str
     parent_id: int | None = None
     translations: list[CategoryTranslationCreate]
+    order: int
 
     @field_validator("translations")
     def romanian_required(cls, translations):
@@ -38,6 +39,7 @@ class CategoryCreate(BaseModel):
 
 class CategoryUpdate(BaseModel):
     slug: str | None = None
+    order: int | None = None
 
 class CategoryResponse(BaseModel):
     id: int
@@ -49,3 +51,4 @@ class CategoryResponse(BaseModel):
     name: str
     language: Language
     images: list[CategoryImageResponse] = []
+    order: int

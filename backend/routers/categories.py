@@ -19,7 +19,8 @@ categories_router = APIRouter(prefix="/categories", tags=["categories"])
 @categories_router.get("/", status_code=status.HTTP_200_OK, response_model=list[CategoryResponse])
 def get_categories(lang: Language = Language.ro , db: Session = Depends(get_db)):
     categories = db.query(Category) \
-        .options(joinedload(Category.translations), joinedload(Category.images)).all()
+        .options(joinedload(Category.translations), joinedload(Category.images)) \
+        .order_by(Category.order.asc()).all()
     result = []
     for category in categories:
         parent_category = None
@@ -40,7 +41,8 @@ def get_categories(lang: Language = Language.ro , db: Session = Depends(get_db))
             "item_count": item_count,
             "name": translation.name,
             "language": translation.language,
-            "images": category.images
+            "images": category.images,
+            "order": category.order
         })
     return result
 
@@ -68,7 +70,8 @@ def get_category(category_id: int, lang: Language = Language.ro, db: Session = D
         "item_count": item_count,
         "name": translation.name,
         "language": translation.language,
-        "images": category.images
+        "images": category.images,
+        "order": category.order
     }
 
 @categories_router.post("/", status_code=status.HTTP_201_CREATED, response_model=CategoryResponse)
@@ -82,9 +85,11 @@ def create_category(data: CategoryCreate, db: Session = Depends(get_db)):
                 status_code=400, 
                 detail="Cannot create a subcategory of a subcategory"
             )
+    existing_count = db.query(Category).count()
     category = Category(
         slug=data.slug,
-        parent_id=data.parent_id
+        parent_id=data.parent_id,
+        order=data.order or existing_count
     )
     db.add(category)
     db.commit()
@@ -98,15 +103,28 @@ def create_category(data: CategoryCreate, db: Session = Depends(get_db)):
         db.add(db_translation)
     db.commit()
     db.refresh(category)
+
+    parent_category = None
+    parent_translation = None
+    if category.parent_id is not None:
+        parent_category = db.query(Category) \
+            .options(joinedload(Category.translations)) \
+            .filter(Category.id == category.parent_id).first()
+        parent_translation = get_translation(parent_category.translations, Language.ro)
+
     translation = get_translation(category.translations, Language.ro)
     item_count = db.query(func.count(Item.id)).filter(Item.category_id == category.id).scalar()
     return {
         "id": category.id,
         "slug": category.slug,
+        "parent_id": category.parent_id,
+        "parent_name": parent_translation.name if parent_translation else None,
+        "parent_slug": parent_category.slug if parent_category else None,
         "item_count": item_count,
         "name": translation.name,
         "language": translation.language,
-        "images": []
+        "images": [],
+        "order": category.order
     }
 
 @categories_router.delete("/{category_id}", status_code=status.HTTP_204_NO_CONTENT)
@@ -125,18 +143,32 @@ def update_category(category_id: int, data: CategoryUpdate, lang: Language = Lan
         raise HTTPException(status_code=404, detail="Category not found")
     if data.slug is not None:
         category.slug = data.slug
+    if data.order is not None:
+        category.order = data.order
     db.commit()
     db.refresh(category)
+
+    parent_category = None
+    parent_translation = None
+    if category.parent_id is not None:
+        parent_category = db.query(Category) \
+            .options(joinedload(Category.translations)) \
+            .filter(Category.id == category.parent_id).first()
+        parent_translation = get_translation(parent_category.translations, lang)
+
     translation = get_translation(category.translations, lang)
     item_count = db.query(func.count(Item.id)).filter(Item.category_id == category.id).scalar()
     return {
         "id": category.id,
         "slug": category.slug,
         "parent_id": category.parent_id,
+        "parent_name": parent_translation.name if parent_translation else None,
+        "parent_slug": parent_category.slug if parent_category else None,
         "item_count": item_count,
         "name": translation.name,
         "language": translation.language,
-        "images": category.images
+        "images": category.images,
+        "order": category.order
     }
 
 @categories_router.put("/{category_id}/translations")

@@ -8,6 +8,7 @@ class Category(Base):
     id = Column(Integer, primary_key=True, index=True)
     slug = Column(String(100), nullable=False)
     parent_id = Column(Integer, ForeignKey("categories.id"), nullable=True)
+    order = Column(Integer, default=0)
 
     images = relationship("CategoryImage", back_populates="category", cascade="all, delete-orphan")
     items = relationship("Item", back_populates="category", cascade="all, delete-orphan")
