@@ -14,6 +14,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkBreaks from 'remark-breaks';
 import CatalogItemPageSkeleton from './CatalogItemPageSkeleton';
 import ImageViewer from 'react-simple-image-viewer';
+import { optimizeCloudinaryImage } from '../../assets/utils';
 
 export default function CatalogItemPage(): JSX.Element {
   const { t } = useTranslation('catalog');
@@ -203,7 +204,7 @@ export default function CatalogItemPage(): JSX.Element {
           <div className='catalog-item-page-gallery'>
             {currentImage ? (
               <img
-                src={currentImage}
+                src={optimizeCloudinaryImage(currentImage)}
                 alt={currentItem.title}
                 className='catalog-item-page-main-image'
                 onClick={() => openImageViewer(currentImgIdx)}
@@ -220,7 +221,7 @@ export default function CatalogItemPage(): JSX.Element {
                   return (
                     <img
                       key={image.id}
-                      src={image.image_url}
+                      src={optimizeCloudinaryImage(image.image_url, 'icon')}
                       alt={`${currentItem.title} - ${image.order}`}
                       className='catalog-item-page-thumbnail'
                       onClick={() => {

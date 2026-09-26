@@ -10,6 +10,7 @@ import {
   getCategories,
 } from '../../store';
 import CategorySkeleton from './CategorySkeleton';
+import { optimizeCloudinaryImage } from '../../assets/utils';
 
 export default function Categories({
   showHeader,
@@ -50,7 +51,11 @@ export default function Categories({
           className={`category ${slug}`}
         >
           {images.length ? (
-            <img className='category-bg' alt={name} src={images[0].image_url} />
+            <img
+              className='category-bg'
+              alt={name}
+              src={optimizeCloudinaryImage(images[0].image_url, 'thumbnail')}
+            />
           ) : (
             <div className='catalog-item-no-image'>
               <i className='fas fa-image'></i>

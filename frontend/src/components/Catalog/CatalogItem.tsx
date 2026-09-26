@@ -1,6 +1,7 @@
 import { type JSX } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { type ImageProps } from '../../store';
+import { optimizeCloudinaryImage } from '../../assets/utils';
 
 type CatalogItemProps = {
   id: number;
@@ -35,7 +36,10 @@ export default function CatalogItem({
     <div onClick={() => navigate(url)} className='catalog-item'>
       <div className='catalog-item-image-wrapper'>
         {imageUrl ? (
-          <img src={imageUrl} alt={`${title} ${id}`} />
+          <img
+            src={optimizeCloudinaryImage(imageUrl, 'thumbnail')}
+            alt={`${title} ${id}`}
+          />
         ) : (
           <div className='catalog-item-no-image'>
             <i className='fas fa-image'></i>
