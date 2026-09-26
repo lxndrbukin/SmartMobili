@@ -31,6 +31,7 @@ class ItemTranslationResponse(BaseModel):
 
 class ItemCreate(BaseModel):
     price: float | None = None
+    currency: str | None = None
     category_id: int
     translations: list[ItemTranslationCreate]
     in_gallery: bool = False
@@ -45,6 +46,7 @@ class ItemCreate(BaseModel):
 
 class ItemUpdate(BaseModel):
     price: float | None = None
+    currency: str | None = None
     category_id: int | None = None
     in_gallery: bool | None = None
 
@@ -58,6 +60,7 @@ class ItemCategoryResponse(BaseModel):
 class ItemResponse(BaseModel):
     id: int
     price: float | None = None
+    currency: str | None = None
     category: ItemCategoryResponse
     created_at: datetime
     title: str

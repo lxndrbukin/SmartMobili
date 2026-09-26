@@ -78,6 +78,7 @@ def get_items(
         result.append({
             "id": item.id,
             "price": item.price,
+            "currency": item.currency,
             "category": ItemCategoryResponse(
                 id=category.id,
                 slug=category.slug,
@@ -134,6 +135,7 @@ def get_item(item_id: int, lang: Language = Language.ro, db: Session = Depends(g
     return {
             "id": item.id,
             "price": item.price,
+            "currency": item.currency,
             "category": ItemCategoryResponse(
                 id=category.id,
                 slug=category.slug,
@@ -153,6 +155,7 @@ def get_item(item_id: int, lang: Language = Language.ro, db: Session = Depends(g
 def create_item(item: ItemCreate, lang: Language = Language.ro, db: Session = Depends(get_db)):
     db_item = Item(
         price=item.price,
+        currency=item.currency,
         category_id=item.category_id,
         in_gallery=item.in_gallery
     )
@@ -182,6 +185,7 @@ def create_item(item: ItemCreate, lang: Language = Language.ro, db: Session = De
     return {
             "id": db_item.id,
             "price": db_item.price,
+            "currency": db_item.currency,
             "category": ItemCategoryResponse(
                 id=category.id,
                 slug=category.slug,
@@ -225,6 +229,7 @@ def update_item(
     return {
         "id": item.id,
         "price": item.price,
+        "currency": item.currency,
         "category": ItemCategoryResponse(
             id=category.id,
             slug=category.slug,

@@ -18,6 +18,7 @@ class Item(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     price = Column(Float)
+    currency = Column(String(50), default="MDL")
     in_gallery = Column(Boolean, default=False)
     category_id = Column(Integer, ForeignKey("categories.id"))
     created_at = Column(DateTime, default=datetime.utcnow)
