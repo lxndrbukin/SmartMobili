@@ -1469,6 +1469,11 @@ img {
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
 }
 
+.form-field input[type='checkbox'] {
+  width: 100%;
+  max-width: 15px;
+}
+
 .form-field input:focus,
 .form-field select:focus,
 .form-field textarea:focus {
