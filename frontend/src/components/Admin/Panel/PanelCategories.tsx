@@ -27,7 +27,7 @@ export default function PanelCategories(): JSX.Element {
   const [, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    dispatch(getCategories(lang));
+    dispatch(getCategories({ lang, limit: undefined }));
   }, [lang]);
 
   const handleDelete = (categoryId: number, categoryName: string) => {

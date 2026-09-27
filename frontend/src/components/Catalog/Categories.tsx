@@ -26,7 +26,7 @@ export default function Categories({
 
   useEffect(() => {
     const fetchData = async () => {
-      await dispatch(getCategories(lang)).unwrap();
+      await dispatch(getCategories({ lang, limit: 6 })).unwrap();
     };
     fetchData();
   }, [lang]);
@@ -61,7 +61,6 @@ export default function Categories({
               <i className='fas fa-image'></i>
             </div>
           )}
-
           <span className='category-header'>{name.toUpperCase()}</span>
         </Link>
       );

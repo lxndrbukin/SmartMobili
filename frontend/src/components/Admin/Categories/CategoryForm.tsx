@@ -92,7 +92,7 @@ export default function CategoryForm(): JSX.Element {
         deleteCategoryImage({ itemId: Number(categoryId), imageId }),
       ).unwrap();
       setExistingImages(existingImages.filter((img) => img.id !== imageId));
-      dispatch(getCategories('ro')); // Refresh categories lists
+      dispatch(getCategories({ lang: 'ro', limit: undefined }));
       setIsLoading(false);
     } catch (err) {
       console.error(err);

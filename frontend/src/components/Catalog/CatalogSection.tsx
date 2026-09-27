@@ -60,7 +60,7 @@ export default function CatalogSection(): JSX.Element {
   }
 
   useEffect(() => {
-    dispatch(getCategories(lang));
+    dispatch(getCategories({ lang, limit: undefined }));
     return () => {
       dispatch(clearItems());
     };
