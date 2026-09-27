@@ -136,6 +136,7 @@ export default function Catalog(): JSX.Element {
               categoryName={item.category.name}
               title={item.title}
               price={item.price}
+              currency={item.currency}
               images={item.images}
               url={to(itemUrl)}
             />

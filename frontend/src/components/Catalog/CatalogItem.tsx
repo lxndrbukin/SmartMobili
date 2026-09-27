@@ -50,11 +50,12 @@ export default function CatalogItem({
         </div>
       </div>
       <div className='catalog-item-info'>
-        <span>{categoryName}</span>
+        <span className='catalog-item-category'>{categoryName}</span>
         <h3>{title}</h3>
         {price ? (
-          <p>
-            {price} {currency}
+          <p className='catalog-item-price'>
+            <span className='catalog-item-price-value'>{price}</span>{' '}
+            <span className='catalog-item-price-currency'>{currency}</span>
           </p>
         ) : null}
       </div>

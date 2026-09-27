@@ -241,7 +241,12 @@ export default function CatalogItemPage(): JSX.Element {
             <h1 className='catalog-item-page-title'>{currentItem.title}</h1>
             {currentItem.price ? (
               <div className='catalog-item-page-price'>
-                {currentItem.price} {currentItem.currency}
+                <span className='catalog-item-page-price-value'>
+                  {currentItem.price}
+                </span>{' '}
+                <span className='catalog-item-page-price-currency'>
+                  {currentItem.currency || 'MDL'}
+                </span>
               </div>
             ) : null}
 

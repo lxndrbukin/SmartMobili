@@ -1235,7 +1235,7 @@ img {
   flex-grow: 1;
 }
 
-.catalog-item .catalog-item-info span {
+.catalog-item .catalog-item-info .catalog-item-category {
   background-color: transparent;
   color: var(--accent);
   padding: 0;
@@ -1259,11 +1259,32 @@ img {
   letter-spacing: 0.01em;
 }
 
-.catalog-item .catalog-item-info p {
+.catalog-item .catalog-item-info .catalog-item-price {
   margin: var(--space-2) 0 0;
-  font-size: 14px;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  width: fit-content;
+}
+
+.catalog-item-price-value {
+  font-family: var(--font-body);
+  font-size: 1.15rem;
   font-weight: 700;
-  color: var(--text-primary);
+  color: var(--accent);
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+.catalog-item-price-currency {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  opacity: 0.9;
+  line-height: 1;
 }
 
 .catalog-item:hover {
@@ -1815,17 +1836,31 @@ img {
 
 .catalog-item-page-price {
   font-family: var(--font-body);
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--accent);
-  padding: var(--space-2) var(--space-4);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: var(--space-2) var(--space-5);
   background-color: rgba(201, 122, 86, 0.1);
   border-radius: var(--radius-lg);
   border: 1px solid rgba(201, 122, 86, 0.2);
   width: fit-content;
-  height: 2.5rem;
-  display: flex;
-  align-items: center;
+}
+
+.catalog-item-page-price-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+.catalog-item-page-price-currency {
+  font-size: 1.05rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  line-height: 1;
 }
 
 .catalog-item-page-description h3 {
@@ -1953,9 +1988,9 @@ img {
 }
 
 .skeleton-price {
-  width: 140px;
-  height: 2.2rem;
-  border-radius: var(--radius-md);
+  width: 160px;
+  height: 2.8rem;
+  border-radius: var(--radius-lg);
   border: 1px solid var(--border);
   background: linear-gradient(
     90deg,
@@ -4235,7 +4270,7 @@ img {
     padding: var(--space-3);
   }
 
-  .catalog-item .catalog-item-info span {
+  .catalog-item .catalog-item-info .catalog-item-category {
     font-size: 9px;
     letter-spacing: 0.05em;
   }
@@ -4245,9 +4280,16 @@ img {
     margin: var(--space-1) 0 0;
   }
 
-  .catalog-item .catalog-item-info p {
-    font-size: 13px;
+  .catalog-item .catalog-item-info .catalog-item-price {
     margin-top: var(--space-1);
+  }
+
+  .catalog-item-price-value {
+    font-size: 1.05rem;
+  }
+
+  .catalog-item-price-currency {
+    font-size: 0.75rem;
   }
 
   .catalog-item-skeleton {

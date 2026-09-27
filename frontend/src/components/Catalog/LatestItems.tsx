@@ -45,7 +45,7 @@ export default function LatestItems(): JSX.Element | null {
   }, [dispatch, lang]);
 
   const renderItems = (items: Array<ItemProps>) => {
-    return items.map(({ images, title, id, price, category }) => {
+    return items.map(({ images, title, id, price, currency, category }) => {
       const item_url = category.parent_slug
         ? `/catalog/${category.parent_slug}/${category.slug}/item/${id}`
         : `/catalog/${category.slug}/item/${id}`;
@@ -56,6 +56,7 @@ export default function LatestItems(): JSX.Element | null {
           url={to(item_url)}
           images={images}
           price={price}
+          currency={currency}
           categoryName={category.name}
           title={title}
         />
