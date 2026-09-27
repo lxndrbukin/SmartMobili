@@ -86,7 +86,7 @@ export default function ItemForm(): JSX.Element {
   };
 
   useEffect(() => {
-    dispatch(getCategories(lang));
+    dispatch(getCategories({ lang, limit: undefined }));
   }, [lang]);
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
