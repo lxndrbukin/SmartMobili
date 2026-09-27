@@ -218,7 +218,7 @@ export default function Catalog(): JSX.Element {
       {seoHead}
       {hero}
       <div className='catalog'>
-        <Categories showHeader={false} />
+        <Categories showHeader={false} limit={undefined} />
       </div>
     </div>
   );

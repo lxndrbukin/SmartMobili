@@ -14,8 +14,10 @@ import { optimizeCloudinaryImage } from '../../assets/utils';
 
 export default function Categories({
   showHeader,
+  limit,
 }: {
   showHeader: boolean;
+  limit: number | undefined;
 }): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
   const { t } = useTranslation('categories');
@@ -26,7 +28,7 @@ export default function Categories({
 
   useEffect(() => {
     const fetchData = async () => {
-      await dispatch(getCategories({ lang, limit: 6 })).unwrap();
+      await dispatch(getCategories({ lang, limit })).unwrap();
     };
     fetchData();
   }, [lang]);
