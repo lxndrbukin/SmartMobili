@@ -35,7 +35,7 @@ export default function HomePage(): JSX.Element {
         jsonLd={orgJsonLd}
       />
       <Carousel />
-      <Categories showHeader={true} />
+      <Categories showHeader={true} limit={6} />
       <LatestItems />
       <OrderSteps />
       <Brands />
