@@ -24,7 +24,7 @@ class Item(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
     category = relationship("Category", back_populates="items")
-    images = relationship("ItemImage", back_populates="item", cascade="all, delete-orphan")
+    images = relationship("ItemImage", back_populates="item", cascade="all, delete-orphan", order_by="ItemImage.order")
     translations = relationship("ItemTranslation", back_populates="item", cascade="all, delete-orphan")
     inquiries = relationship("Inquiry", back_populates="item")
 

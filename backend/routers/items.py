@@ -14,7 +14,7 @@ from db import get_db
 from db_models.items import Item, ItemImage, ItemTranslation
 from db_models.auth import User
 from sqlalchemy.orm import Session, joinedload
-from sqlalchemy import or_
+from sqlalchemy import or_, func
 from cloud_storage import handle_upload_image, handle_delete_image
 from utils import (
     get_translation, 
@@ -263,11 +263,13 @@ def add_images(item_id: int, image: UploadFile = File(...), db: Session = Depend
         raise HTTPException(status_code=404, detail="Item not found")
     category = db.query(Category).get(item.category_id)
     image_url = handle_upload_image(image, category.slug)
-    existing_count = db.query(ItemImage).filter(ItemImage.item_id == item_id).count()
+    max_order = db.query(func.max(ItemImage.order)).filter(ItemImage.item_id == item_id).scalar()
+    next_order = (max_order + 1) if max_order is not None else 0
+
     db_image = ItemImage(
         item_id=item.id,
         image_url=image_url,
-        order=existing_count
+        order=next_order
     )
     db.add(db_image)
     db.commit()
