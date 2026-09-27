@@ -17,10 +17,17 @@ from utils import Language, get_translation
 categories_router = APIRouter(prefix="/categories", tags=["categories"])
 
 @categories_router.get("/", status_code=status.HTTP_200_OK, response_model=list[CategoryResponse])
-def get_categories(lang: Language = Language.ro , db: Session = Depends(get_db)):
+def get_categories(
+        lang: Language = Language.ro, 
+        limit: int | None = None, 
+        db: Session = Depends(get_db)
+    ):
     categories = db.query(Category) \
         .options(joinedload(Category.translations), joinedload(Category.images)) \
-        .order_by(Category.order.asc()).all()
+        .order_by(Category.order.asc())
+    if limit is not None:
+        categories = categories.limit(limit)
+    categories = categories.all()
     result = []
     for category in categories:
         parent_category = None
