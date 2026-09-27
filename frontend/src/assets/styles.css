@@ -1433,6 +1433,11 @@ img {
   border: 1px solid var(--border);
 }
 
+.catalog-item-form-section input,
+.catalog-item-form-section textarea {
+  background-color: var(--white) !important;
+}
+
 .form-field {
   display: flex;
   flex-direction: column;
