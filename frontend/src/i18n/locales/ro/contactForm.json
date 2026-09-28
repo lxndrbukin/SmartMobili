@@ -1,10 +1,10 @@
 {
   "header": "Comandă",
   "name": "Numele",
-  "namePlaceholder": "ex. Ion sau Ion Gutu",
+  "namePlaceholder": "ex. Ion sau Ion Guțu",
   "subject": "Titlu",
   "subjectPlaceholder": "ex. Dulap în dormitor",
-  "desc": "Descriere (opțional)",
+  "desc": "Descriere",
   "descPlaceholder": "",
   "phoneNumber": "Numărul de telefon",
   "email": "E-mail (opțional)",
@@ -20,7 +20,7 @@
   "errorHeader": "Eroare",
   "errorMessage": "Ceva nu a mers bine. Vă rugăm să încercați din nou.",
   "subjectPrefill": "Detalii pentru {{name}}",
-  "descPrefill": "ex. Bună ziua! Sunt interesat de \"{{name}}\" și aș dori să obțin detalii suplimentare, estimarea prețului și o consultație.",
+  "descPrefill": "ex. \nDulap în dormitor\nDimensiune: 2000/2300/520 mm\nCuloare: Gri / Alb",
   "errors": {
     "required": "Câmpul este obligatoriu"
   },

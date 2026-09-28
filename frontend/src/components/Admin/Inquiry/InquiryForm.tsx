@@ -167,8 +167,9 @@ export default function InquiryForm(): JSX.Element {
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              // placeholder={t('descPrefill')}
+              placeholder={t('descPrefill')}
               name='description'
+              className={formErrors['name'] ? 'input-error' : ''}
             />
           </div>
           <div className='input-field'>
@@ -185,15 +186,6 @@ export default function InquiryForm(): JSX.Element {
             {formErrors['phone'] && (
               <p className='error'>{formErrors['phone']}</p>
             )}
-          </div>
-          <div className='input-field'>
-            <label>{t('email')}</label>
-            <input
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              type='email'
-              name='email'
-            />
           </div>
           <div className='input-field'>
             <label>{t('communication')}</label>
