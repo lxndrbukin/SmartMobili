@@ -23,7 +23,6 @@ export default function InquiryForm(): JSX.Element {
   const [subject, setSubject] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [phone, setPhone] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
   const [telegram, setTelegram] = useState<boolean>(false);
   const [whatsapp, setWhatsapp] = useState<boolean>(false);
   const [viber, setViber] = useState<boolean>(false);
@@ -46,7 +45,6 @@ export default function InquiryForm(): JSX.Element {
         setSubject(res.subject);
         setDescription(res.description);
         setPhone(res.phone);
-        setEmail(res.email);
         setTelegram(res.telegram);
         setWhatsapp(res.whatsapp);
         setViber(res.viber);
@@ -67,7 +65,6 @@ export default function InquiryForm(): JSX.Element {
     const subject = formData.get('subject') as string;
     const description = formData.get('description') as string;
     const phone = formData.get('phone') as string;
-    const email = formData.get('email') as string;
     const telegram = formData.get('telegram') === 'on';
     const viber = formData.get('viber') === 'on';
     const whatsapp = formData.get('whatsapp') === 'on';
@@ -77,7 +74,7 @@ export default function InquiryForm(): JSX.Element {
       subject,
       description,
       phone,
-      email,
+      email: '',
       item_id: itemId ? parseInt(itemId) : null,
       telegram,
       viber,
