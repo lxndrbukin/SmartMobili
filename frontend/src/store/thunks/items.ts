@@ -101,10 +101,11 @@ export const deleteItem = createAsyncThunk(
 export const addItemImage = createAsyncThunk(
   'items/updateImage',
   async (data: ItemImageUpdate) => {
-    await fetch(`${API_URL}/api/v1/items/${data.itemId}/images`, {
-      method: 'POST',
-      body: data.image,
-    });
+    const response = await axios.post(
+      `${API_URL}/api/v1/items/${data.itemId}/images`,
+      data.image,
+    );
+    return response.data;
   },
 );
 

@@ -1,35 +1,43 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import type { CategoryCreate, CategoryUpdate, CategoryImageUpdate } from "./types";
-import axios from "axios";
-import { API_URL } from "../../api";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import type {
+  CategoryCreate,
+  CategoryUpdate,
+  CategoryImageUpdate,
+} from './types';
+import axios from 'axios';
+import { API_URL } from '../../api';
 
 export const getCategories = createAsyncThunk(
-  "categories/getCategories",
-  async (lang: string | undefined) => {
+  'categories/getCategories',
+  async ({
+    lang,
+    limit,
+  }: {
+    lang: string | undefined;
+    limit: number | undefined;
+  }) => {
     const params = new URLSearchParams();
     if (lang) {
-      params.append("lang", lang);
+      params.append('lang', lang);
     }
-    const response = await axios.get(
-      `${API_URL}/api/v1/categories?${params}`,
-    );
+    if (limit) {
+      params.append('limit', limit.toString());
+    }
+    const response = await axios.get(`${API_URL}/api/v1/categories?${params}`);
     return response.data;
   },
 );
 
 export const createCategory = createAsyncThunk(
-  "catalog/createCategory",
+  'catalog/createCategory',
   async (data: CategoryCreate) => {
-    const response = await axios.post(
-      `${API_URL}/api/v1/categories`,
-      data,
-    );
+    const response = await axios.post(`${API_URL}/api/v1/categories`, data);
     return response.data;
   },
 );
 
 export const updateCategory = createAsyncThunk(
-  "categories/updateCategory",
+  'categories/updateCategory',
   async (data: CategoryUpdate) => {
     await axios.put(`${API_URL}/api/v1/categories/${data.id}`, data);
     if (data.translations) {
@@ -41,7 +49,7 @@ export const updateCategory = createAsyncThunk(
         );
       }
     }
-    const lang = localStorage.getItem("language") || "ro";
+    const lang = localStorage.getItem('language') || 'ro';
     const response = await axios.get(
       `${API_URL}/api/v1/categories/${data.id}?lang=${lang}`,
     );
@@ -50,7 +58,7 @@ export const updateCategory = createAsyncThunk(
 );
 
 export const deleteCategory = createAsyncThunk(
-  "categories/deleteCategory",
+  'categories/deleteCategory',
   async (categoryId: number) => {
     await axios.delete(`${API_URL}/api/v1/categories/${categoryId}`);
     return;
@@ -58,18 +66,18 @@ export const deleteCategory = createAsyncThunk(
 );
 
 export const addCategoryImage = createAsyncThunk(
-  "categories/updateImage",
+  'categories/updateImage',
   async ({ categoryId, image }: CategoryImageUpdate) => {
     await fetch(`${API_URL}/api/v1/categories/${categoryId}/images`, {
-      method: "POST",
+      method: 'POST',
       body: image,
     });
   },
 );
 
 export const deleteCategoryImage = createAsyncThunk(
-  "categories/deleteImage",
-  async ({ itemId, imageId }: { itemId: number; imageId: number; }) => {
+  'categories/deleteImage',
+  async ({ itemId, imageId }: { itemId: number; imageId: number }) => {
     await axios.delete(
       `${API_URL}/api/v1/categories/${itemId}/images/${imageId}`,
     );
