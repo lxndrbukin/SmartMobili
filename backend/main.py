@@ -6,11 +6,19 @@ from routers.inquiries import inquiries_router
 from routers.auth import  auth_router
 from routers.chatbot import chatbot_router
 from routers.banners import banners_router
+from routers.services import services_router
+from routers.service_categories import service_categories_router
 from db import engine, Base, get_db
 from db_models.items import Item, ItemTranslation, ItemImage
 from db_models.categories import Category, CategoryTranslation
 from db_models.inquiries import Inquiry
 from db_models.auth import User, UserData
+from db_models.services import Service, ServiceTranslation, ServiceImage
+from db_models.service_categories import (
+    ServiceCategory, 
+    ServiceCatImage, 
+    ServiceCatTranslation
+)
 from sqlalchemy.orm import Session
 from dotenv import load_dotenv
 import os
@@ -30,6 +38,8 @@ v1_router = APIRouter(prefix="/api/v1")
 v1_router.include_router(auth_router)
 v1_router.include_router(items_router)
 v1_router.include_router(categories_router)
+v1_router.include_router(services_router)
+v1_router.include_router(service_categories_router)
 v1_router.include_router(inquiries_router)
 v1_router.include_router(chatbot_router)
 v1_router.include_router(banners_router)
