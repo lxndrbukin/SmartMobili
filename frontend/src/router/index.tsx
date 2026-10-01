@@ -4,9 +4,11 @@ import HomePage from '../components/HomePage';
 import Catalog from '../components/Catalog/Catalog';
 import CatalogSection from '../components/Catalog/CatalogSection';
 import CatalogItemPage from '../components/Catalog/CatalogItemPage';
+import Services from '../components/Services/Services';
+import ServiceSection from '../components/Services/ServiceSection';
+import ServiceItemPage from '../components/Services/ServiceItemPage';
 import Panel from '../components/Admin/Panel/Panel';
 import About from '../components/Static/About';
-import Services from '../components/Static/Services';
 
 export const router = createBrowserRouter([
   {
@@ -38,6 +40,26 @@ export const router = createBrowserRouter([
         element: <CatalogItemPage />,
       },
       {
+        path: 'services',
+        element: <Services />,
+      },
+      {
+        path: 'services/:catSlug',
+        element: <ServiceSection />,
+      },
+      {
+        path: 'services/:catSlug/:subSlug',
+        element: <ServiceSection />,
+      },
+      {
+        path: 'services/:catSlug/:subSlug?/service/:serviceId',
+        element: <ServiceItemPage />,
+      },
+      {
+        path: 'services/:catSlug/:subSlug?/item/:itemId',
+        element: <ServiceItemPage />,
+      },
+      {
         path: 'admin',
         element: <Panel />,
       },
@@ -45,10 +67,7 @@ export const router = createBrowserRouter([
         path: 'about',
         element: <About />,
       },
-      {
-        path: 'services',
-        element: <Services />,
-      },
     ],
   },
 ]);
+
