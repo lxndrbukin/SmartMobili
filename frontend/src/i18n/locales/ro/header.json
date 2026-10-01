@@ -3,6 +3,7 @@
   "nav": [
     { "name": "home", "label": "Acasă", "href": "/" },
     { "name": "catalog", "label": "Catalog", "href": "/catalog" },
+    { "name": "services", "label": "Servicii", "href": "/services" },
     { "name": "order", "label": "Comandă" },
     { "name": "admin", "label": "Admin", "href": "/admin" }
   ],

@@ -1,42 +1,32 @@
 {
-  "hero": {
-    "title": "Serviciile Noastre",
-    "subtitle": "De la concept până la instalare — tot ce aveți nevoie pentru un spațiu perfect mobilat."
+  "header": "Servicii",
+  "generic": {
+    "noItems": "Nu există servicii disponibile",
+    "allItems": "Toate serviciile",
+    "categoryNotFound": "Categoria nu a fost găsită",
+    "loadMore": "Mai mult"
   },
-  "items": [
-    {
-      "icon": "fa-solid fa-door-open",
-      "title": "Dulapuri",
-      "text": "Dulapuri încorporate, glisante și walk-in, proiectate pentru a maximiza depozitarea în orice cameră. Dimensiuni, finisaje și accesorii interioare personalizate."
-    },
-    {
-      "icon": "fa-solid fa-briefcase",
-      "title": "Mobilier de Birou",
-      "text": "Soluții de birou funcționale și elegante — birouri, biblioteci, dulapuri și configurații complete de lucru adaptate spațiului dumneavoastră."
-    },
-    {
-      "icon": "fa-solid fa-table-cells-large",
-      "title": "Mese",
-      "text": "Mese de dining, mese de cafea și birouri de lucru lucrate manual, în diverse materiale și dimensiuni. Durabile și impresionante."
-    },
-    {
-      "icon": "fa-solid fa-couch",
-      "title": "Mobilier de Living",
-      "text": "Comode TV, sisteme de rafturi și compoziții de depozitare care aduc stil și ordine în spațiul dumneavoastră de zi."
-    },
-    {
-      "icon": "fa-solid fa-pencil-ruler",
-      "title": "Consultanță în Design",
-      "text": "Nu știți de unde să începeți? Echipa noastră vă vizitează acasă, ia măsurătorile și lucrează cu dumneavoastră pentru a concepe soluția ideală."
-    },
-    {
-      "icon": "fa-solid fa-screwdriver-wrench",
-      "title": "Fabricare și Instalare",
-      "text": "Gestionăm întregul proces — fabricare de precizie în atelierul nostru, urmată de asamblare și instalare profesională la fața locului."
-    }
-  ],
-  "cta": {
-    "text": "Sunteți gata să începeți proiectul? Contactați-ne și vom stabili o consultație gratuită.",
-    "button": "Solicitați o Consultație"
+  "items": "Servicii: {{count}}",
+  "breadcrumbs": {
+    "home": "Acasă",
+    "services": "Servicii"
+  },
+  "itemPage": {
+    "description": "Descriere",
+    "noPrice": "Fără preț",
+    "call": "Comandă",
+    "notFound": "Serviciul nu a fost găsit"
+  },
+  "latest": {
+    "header": "Ultimele servicii"
+  },
+  "search": {
+    "header": "Rezultate pentru:",
+    "results": "Rezultate găsite: {{num}}"
+  },
+  "seo": {
+    "description": "Descoperiți gama completă de servicii de mobilier și design personalizat SmartMobili în Moldova — de la proiectare 3D la execuție și montaj.",
+    "categoryDescription": "Servicii {{category}} de la SmartMobili în Moldova. {{count}} oferte disponibile. Consultație gratuită inclusă.",
+    "itemDescription": "Comandați {{title}} de la SmartMobili, Moldova. Servicii profesionale realizate conform cerințelor dumneavoastră."
   }
 }

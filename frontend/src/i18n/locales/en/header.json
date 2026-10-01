@@ -3,6 +3,7 @@
   "nav": [
     { "name": "home", "label": "Home", "href": "/" },
     { "name": "catalog", "label": "Catalog", "href": "/catalog" },
+    { "name": "services", "label": "Services", "href": "/services" },
     { "name": "order", "label": "Order" },
     { "name": "admin", "label": "Admin", "href": "/admin" }
   ],

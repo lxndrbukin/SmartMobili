@@ -28,6 +28,34 @@
     "existingImages": "Imagini existente",
     "noImages": "Nu există imagini încărcate"
   },
+  "service": {
+    "headerCreate": "Serviciu nou",
+    "headerEdit": "Actualizare serviciu",
+    "title": "Titlu",
+    "description": "Descriere",
+    "price": "Preț",
+    "currency": "Valută",
+    "category": "Categorie",
+    "images": "Imagini",
+    "submitCreate": "Creează",
+    "submitEdit": "Actualizează",
+    "existingImages": "Imagini existente",
+    "noImages": "Nu există imagini încărcate"
+  },
+  "serviceCategory": {
+    "headerCreate": "Categorie serviciu nouă",
+    "headerEdit": "Actualizare categorie serviciu",
+    "title": "Titlu",
+    "url": "Slug",
+    "submitCreate": "Creează",
+    "submitEdit": "Actualizează",
+    "images": "Imagini",
+    "order": "Ordinea",
+    "parentCategory": "Categorie principală (opțional)",
+    "noneParent": "Niciuna",
+    "existingImages": "Imagini existente",
+    "noImages": "Nu există imagini încărcate"
+  },
   "banners": {
     "headerCreate": "Banner Nou",
     "headerEdit": "Actualizează Banner",
@@ -50,6 +78,14 @@
       "confirmDelete": "Doriți să ștergeți categoria {{name}}?",
       "deleted": "Categoria {{name}} a fost ștearsă"
     },
+    "service": {
+      "confirmDelete": "Doriți să ștergeți serviciul {{name}}?",
+      "deleted": "Serviciul {{name}} a fost șters"
+    },
+    "serviceCategory": {
+      "confirmDelete": "Doriți să ștergeți categoria de servicii {{name}}?",
+      "deleted": "Categoria de servicii {{name}} a fost ștearsă"
+    },
     "banner": {
       "confirmDelete": "Doriți să ștergeți bannerul {{name}}?",
       "deleted": "Bannerul {{name}} a fost șters"
@@ -68,6 +104,8 @@
     "tabs": {
       "items": "Lucrări",
       "categories": "Categorii",
+      "services": "Servicii",
+      "serviceCategories": "Categorii Servicii",
       "banners": "Bannere",
       "users": "Utilizatori",
       "inquiries": "Comenzi"
@@ -78,6 +116,7 @@
       "price": "Preț",
       "actions": "Acțiuni",
       "items": "Lucrări",
+      "services": "Servicii",
       "username": "Utilizator",
       "role": "Rolul",
       "signedup": "Înregistrare",

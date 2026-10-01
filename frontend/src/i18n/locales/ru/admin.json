@@ -28,6 +28,34 @@
     "existingImages": "Существующие изображения",
     "noImages": "Нет загруженных изображений"
   },
+  "service": {
+    "headerCreate": "Новая услуга",
+    "headerEdit": "Редактировать услугу",
+    "title": "Заголовок",
+    "description": "Описание",
+    "price": "Цена",
+    "currency": "Валюта",
+    "category": "Категория",
+    "images": "Изображения",
+    "submitCreate": "Создать",
+    "submitEdit": "Обновить",
+    "existingImages": "Существующие изображения",
+    "noImages": "Нет загруженных изображений"
+  },
+  "serviceCategory": {
+    "headerCreate": "Новая категория услуг",
+    "headerEdit": "Обновить категорию услуг",
+    "title": "Заголовок",
+    "url": "Slug",
+    "submitCreate": "Создать",
+    "submitEdit": "Обновить",
+    "images": "Изображения",
+    "order": "Порядок",
+    "parentCategory": "Основная категория (необязательно)",
+    "noneParent": "Нет (основная категория)",
+    "existingImages": "Существующие изображения",
+    "noImages": "Нет загруженных изображений"
+  },
   "banners": {
     "headerCreate": "Новый баннер",
     "headerEdit": "Редактировать баннер",
@@ -50,6 +78,14 @@
       "confirmDelete": "Вы хотите удалить категорию {{name}}?",
       "deleted": "Категория {{name}} удалена"
     },
+    "service": {
+      "confirmDelete": "Вы хотите удалить услугу {{name}}?",
+      "deleted": "Услуга {{name}} удалена"
+    },
+    "serviceCategory": {
+      "confirmDelete": "Вы хотите удалить категорию услуг {{name}}?",
+      "deleted": "Категория услуг {{name}} удалена"
+    },
     "banner": {
       "confirmDelete": "Вы хотите удалить баннер {{name}}?",
       "deleted": "Баннер {{name}} удален"
@@ -68,6 +104,8 @@
     "tabs": {
       "items": "Работы",
       "categories": "Категории",
+      "services": "Услуги",
+      "serviceCategories": "Категории услуг",
       "banners": "Баннеры",
       "users": "Пользователи",
       "inquiries": "Заявки"
@@ -78,6 +116,7 @@
       "price": "Цена",
       "actions": "Действия",
       "items": "Работы",
+      "services": "Услуги",
       "username": "Имя пользователя",
       "role": "Статус",
       "signedup": "Зарегистрирован",

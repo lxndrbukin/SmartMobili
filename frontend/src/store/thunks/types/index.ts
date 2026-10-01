@@ -130,3 +130,75 @@ export type BannerImageUpdate = {
   bannerId: number;
   image: FormData;
 };
+
+export type ServiceTranslationProps = {
+  language: string;
+  title: string;
+  description: string | null;
+};
+
+export type ServiceCreate = {
+  price?: number;
+  currency?: string;
+  category_id: number;
+  translations: Array<ServiceTranslationProps>;
+};
+
+export type ServiceUpdate = {
+  id: number;
+  price?: number;
+  currency?: string;
+  category_id?: number;
+  translations?: Array<ServiceTranslationProps>;
+  in_gallery?: boolean;
+};
+
+export type ServiceImageUpdate = {
+  serviceId: number;
+  image: FormData;
+};
+
+export type ServiceCategoryTranslationProps = {
+  language: string;
+  name: string;
+};
+
+export type ServiceCategoryCreate = {
+  slug: string;
+  parent_id?: number | null;
+  translations: Array<ServiceCategoryTranslationProps>;
+  order: number;
+};
+
+export type ServiceCategoryUpdate = {
+  id: number;
+  slug?: string;
+  parent_id?: number | null;
+  translations?: Array<ServiceCategoryTranslationProps>;
+  order?: number;
+};
+
+export type ServiceCategoryImageUpdate = {
+  categoryId: number;
+  image: FormData;
+};
+
+export type ServiceRequest = {
+  serviceId: number;
+  lang: string | undefined;
+};
+
+export type ServicesRequest = {
+  lang: string | null;
+  desc?: boolean;
+  categoryId?: number;
+  categorySlug?: string;
+  searchQuery?: string;
+  limit?: number;
+  skip?: number;
+};
+
+export type ServiceCategoryRequest = {
+  id: number;
+  lang?: string;
+};

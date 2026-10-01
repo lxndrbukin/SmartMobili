@@ -129,3 +129,50 @@ export type AdminState = {
     currentInquiry: InquiryProps | null;
   };
 };
+
+export type ServiceImageProps = {
+  id: number;
+  image_url: string;
+  order: number;
+};
+
+export type ServiceCategoryProps = {
+  id: number;
+  slug: string;
+  name: string;
+  parent_id: number | null;
+  parent_slug: string | null;
+  parent_name: string | null;
+  item_count?: number;
+  service_count?: number;
+  language: string;
+  images: Array<ServiceImageProps>;
+  order: number;
+};
+
+export type ServiceProps = {
+  id: number;
+  price: number | null;
+  currency: string;
+  category: {
+    id: number;
+    slug: string;
+    parent_slug: string | null;
+    parent_name: string | null;
+    name: string;
+  };
+  created_at: string;
+  title: string;
+  description: string | null;
+  language: Language;
+  images: Array<ServiceImageProps>;
+  in_gallery?: boolean;
+};
+
+export type ServicesState = {
+  services: Array<ServiceProps>;
+  currentService: ServiceProps | null;
+  serviceNotFound: boolean;
+  categories: Array<ServiceCategoryProps>;
+  categoriesLoaded: boolean;
+};

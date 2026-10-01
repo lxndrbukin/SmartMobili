@@ -22,6 +22,35 @@
     "submitCreate": "Create",
     "submitEdit": "Update",
     "images": "Images",
+    "order": "Order",
+    "parentCategory": "Parent Category (optional)",
+    "noneParent": "None (top-level category)",
+    "existingImages": "Existing Images",
+    "noImages": "No images uploaded yet"
+  },
+  "service": {
+    "headerCreate": "New Service",
+    "headerEdit": "Update Service",
+    "title": "Title",
+    "description": "Description",
+    "price": "Price",
+    "currency": "Currency",
+    "category": "Category",
+    "images": "Images",
+    "submitCreate": "Create",
+    "submitEdit": "Update",
+    "existingImages": "Existing Images",
+    "noImages": "No images uploaded yet"
+  },
+  "serviceCategory": {
+    "headerCreate": "New Service Category",
+    "headerEdit": "Update Service Category",
+    "title": "Title",
+    "url": "URL",
+    "submitCreate": "Create",
+    "submitEdit": "Update",
+    "images": "Images",
+    "order": "Order",
     "parentCategory": "Parent Category (optional)",
     "noneParent": "None (top-level category)",
     "existingImages": "Existing Images",
@@ -49,6 +78,14 @@
       "confirmDelete": "Do you want to delete category {{name}}?",
       "deleted": "Category {{name}} deleted"
     },
+    "service": {
+      "confirmDelete": "Do you want to delete service {{name}}?",
+      "deleted": "Service {{name}} deleted"
+    },
+    "serviceCategory": {
+      "confirmDelete": "Do you want to delete service category {{name}}?",
+      "deleted": "Service category {{name}} deleted"
+    },
     "banner": {
       "confirmDelete": "Do you want to delete banner {{name}}?",
       "deleted": "Banner {{name}} deleted"
@@ -67,6 +104,8 @@
     "tabs": {
       "items": "Works",
       "categories": "Categories",
+      "services": "Services",
+      "serviceCategories": "Service Categories",
       "banners": "Banners",
       "users": "Users",
       "inquiries": "Orders"
@@ -77,6 +116,7 @@
       "price": "Price",
       "actions": "Actions",
       "items": "Works",
+      "services": "Services",
       "username": "Username",
       "role": "Role",
       "signedup": "Signed Up",
@@ -85,8 +125,10 @@
       "date": "Date",
       "image": "Image",
       "header": "Header",
-      "url": "URL / Link"
+      "url": "URL / Link",
+      "order": "Order"
     },
-    "scrollHint": "Scroll to see more"
+    "scrollHint": "Scroll to see more",
+    "loading": "Loading..."
   }
 }

@@ -1,0 +1,368 @@
+import {
+  type JSX,
+  type SubmitEvent,
+  type ChangeEvent,
+  useEffect,
+  useState,
+} from 'react';
+import { useParams, useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  type RootState,
+  type AppDispatch,
+  type ServiceCategoryProps,
+  getServiceCategories,
+  createService,
+  updateService,
+  addServiceImage,
+  deleteServiceImage,
+} from '../../../store';
+import axios from 'axios';
+import { API_URL } from '../../../api';
+
+export default function ServiceForm(): JSX.Element {
+  const dispatch = useDispatch<AppDispatch>();
+  const { t } = useTranslation('admin');
+  const { lang } = useParams<{ lang: string }>();
+  const { categories } = useSelector((state: RootState) => state.services);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const isCreating = searchParams.get('createService') === '1';
+  const serviceId = searchParams.get('editService');
+
+  const [serviceTitleRU, setServiceTitleRU] = useState('');
+  const [serviceTitleRO, setServiceTitleRO] = useState('');
+  const [serviceDescRU, setServiceDescRU] = useState('');
+  const [serviceDescRO, setServiceDescRO] = useState('');
+  const [servicePrice, setServicePrice] = useState<string>('');
+  const [serviceCurrency, setServiceCurrency] = useState<string>('MDL');
+  const [serviceCategoryId, setServiceCategoryId] = useState<number>(0);
+  const [selectedImages, setSelectedImages] = useState<Array<File>>([]);
+  const [existingImages, setExistingImages] = useState<
+    Array<{ id: number; image_url: string }>
+  >([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, []);
+
+  useEffect(() => {
+    if (serviceId) {
+      axios
+        .get(`${API_URL}/api/v1/services/${serviceId}?lang=ro`)
+        .then((res) => {
+          setServiceTitleRO(res.data.title || '');
+          setServiceDescRO(res.data.description || '');
+          if (res.data.category) {
+            setServiceCategoryId(res.data.category.id);
+          }
+          setServicePrice(
+            res.data.price !== null ? String(res.data.price) : '',
+          );
+          setServiceCurrency(res.data.currency || 'MDL');
+          setExistingImages(res.data.images || []);
+        });
+      axios
+        .get(`${API_URL}/api/v1/services/${serviceId}?lang=ru`)
+        .then((res) => {
+          setServiceTitleRU(res.data.title || '');
+          setServiceDescRU(res.data.description || '');
+        });
+    }
+  }, [serviceId]);
+
+  const handleDeleteImage = async (imageId: number) => {
+    if (!confirm('Are you sure you want to delete this image?')) return;
+    try {
+      setIsLoading(true);
+      await dispatch(
+        deleteServiceImage({ serviceId: Number(serviceId), imageId }),
+      ).unwrap();
+      setExistingImages(existingImages.filter((img) => img.id !== imageId));
+      setIsLoading(false);
+    } catch (err) {
+      console.error(err);
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    dispatch(getServiceCategories({ lang, limit: undefined }));
+  }, [lang, dispatch]);
+
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const images = Array.from(e.target.files || []);
+    setSelectedImages(images);
+  };
+
+  const handleClose = () => {
+    setSearchParams({});
+  };
+
+  const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const titleRO = formData.get('titleRO') as string;
+    const descriptionRO = formData.get('descriptionRO') as string;
+    const titleRU = formData.get('titleRU') as string;
+    const descriptionRU = formData.get('descriptionRU') as string;
+    const price = formData.get('price') as string;
+    const currency = formData.get('currency') as string;
+    const categoryId = formData.get('categoryId') as string;
+    const imageFiles = formData.getAll('images') as File[];
+
+    const data = {
+      translations: [
+        {
+          language: 'ro',
+          title: titleRO,
+          description: descriptionRO,
+        },
+        {
+          language: 'ru',
+          title: titleRU,
+          description: descriptionRU,
+        },
+      ],
+      price: price ? parseFloat(price) : undefined,
+      currency: currency || 'MDL',
+      category_id: Number(categoryId),
+    };
+
+    setIsLoading(true);
+    if (isCreating) {
+      const result = await dispatch(createService(data)).unwrap();
+      const createdServiceId = result.id;
+      for (const imageFile of imageFiles) {
+        if (imageFile && imageFile.size > 0) {
+          const imageFormData = new FormData();
+          imageFormData.append('image', imageFile);
+          await dispatch(
+            addServiceImage({
+              serviceId: createdServiceId,
+              image: imageFormData,
+            }),
+          );
+        }
+      }
+    } else {
+      await dispatch(
+        updateService({
+          id: parseInt(serviceId!),
+          ...data,
+        }),
+      ).unwrap();
+
+      for (const imageFile of imageFiles) {
+        if (imageFile && imageFile.size > 0) {
+          const imageFormData = new FormData();
+          imageFormData.append('image', imageFile);
+          await dispatch(
+            addServiceImage({
+              serviceId: parseInt(serviceId!),
+              image: imageFormData,
+            }),
+          );
+        }
+      }
+      setIsLoading(false);
+    }
+    handleClose();
+  };
+
+  const renderCategories = (catList: Array<ServiceCategoryProps>) => {
+    if (!catList) return null;
+    return catList.map((category) => {
+      return (
+        <option value={category.id} key={category.id}>
+          {category.name}
+        </option>
+      );
+    });
+  };
+
+  return (
+    <div className='modal-backdrop' onClick={handleClose}>
+      <div className='modal' onClick={(e) => e.stopPropagation()}>
+        <form onSubmit={handleSubmit} className='catalog-item-form'>
+          <button
+            className='modal-close-btn'
+            type='button'
+            onClick={handleClose}
+          >
+            <i className='fa-solid fa-xmark'></i>
+          </button>
+          <h3>
+            {isCreating
+              ? t('service.headerCreate', {
+                  defaultValue: t('item.headerCreate'),
+                })
+              : t('service.headerEdit', { defaultValue: t('item.headerEdit') })}
+          </h3>
+          <div className='catalog-item-form-section'>
+            <h4>Română</h4>
+            <div className='form-field'>
+              <label>
+                {t('service.title', { defaultValue: t('item.title') })}
+              </label>
+              <input
+                value={serviceTitleRO || ''}
+                onChange={(e) => setServiceTitleRO(e.target.value)}
+                name='titleRO'
+                required
+              />
+            </div>
+            <div className='form-field'>
+              <label>
+                {t('service.description', {
+                  defaultValue: t('item.description'),
+                })}
+              </label>
+              <textarea
+                value={serviceDescRO || ''}
+                onChange={(e) => setServiceDescRO(e.target.value)}
+                name='descriptionRO'
+              />
+            </div>
+          </div>
+          <div className='catalog-item-form-section'>
+            <h4>Русский</h4>
+            <div className='form-field'>
+              <label>
+                {t('service.title', { defaultValue: t('item.title') })}
+              </label>
+              <input
+                value={serviceTitleRU}
+                onChange={(e) => setServiceTitleRU(e.target.value)}
+                name='titleRU'
+                required
+              />
+            </div>
+            <div className='form-field'>
+              <label>
+                {t('service.description', {
+                  defaultValue: t('item.description'),
+                })}
+              </label>
+              <textarea
+                value={serviceDescRU || ''}
+                onChange={(e) => setServiceDescRU(e.target.value)}
+                name='descriptionRU'
+              />
+            </div>
+          </div>
+          <div className='form-field price-currency'>
+            <div>
+              <label>
+                {t('service.price', { defaultValue: t('item.price') })}
+              </label>
+              <input
+                value={servicePrice || ''}
+                onChange={(e) => setServicePrice(e.target.value)}
+                type='number'
+                name='price'
+                className='price'
+              />
+            </div>
+            <div>
+              <label>
+                {t('service.currency', { defaultValue: t('item.currency') })}
+              </label>
+              <select
+                value={serviceCurrency}
+                onChange={(e) => setServiceCurrency(e.target.value)}
+                name='currency'
+                className='currency'
+              >
+                <option></option>
+                <option value='MDL'>MDL</option>
+                <option value='€'>€</option>
+              </select>
+            </div>
+          </div>
+          <div className='form-field'>
+            <label>
+              {t('service.category', { defaultValue: t('item.category') })}
+            </label>
+            <select
+              value={serviceCategoryId}
+              onChange={(e) => setServiceCategoryId(Number(e.target.value))}
+              className='category-select'
+              name='categoryId'
+              required
+            >
+              <option value=''>--</option>
+              {renderCategories(categories)}
+            </select>
+          </div>
+          <div className='form-field'>
+            <label>
+              {t('service.images', { defaultValue: t('item.images') })}
+            </label>
+            <input
+              onChange={handleImageChange}
+              type='file'
+              name='images'
+              accept='image/*'
+              multiple
+            />
+            {selectedImages.length > 0 && (
+              <div className='selected-files'>
+                {selectedImages.map((img, index) => (
+                  <span key={index}>{img.name}</span>
+                ))}
+              </div>
+            )}
+          </div>
+          {!isCreating && (
+            <div className='form-field'>
+              <label>
+                {t('service.existingImages', {
+                  defaultValue: t('item.existingImages'),
+                })}
+              </label>
+              {existingImages.length > 0 ? (
+                <div className='form-existing-images'>
+                  {existingImages.map((img) => (
+                    <div key={img.id} className='form-existing-image-card'>
+                      <img src={img.image_url} alt='Service image' />
+                      <button
+                        type='button'
+                        onClick={() => handleDeleteImage(img.id)}
+                        className='form-existing-image-delete-btn'
+                      >
+                        <i className='fa-solid fa-trash'></i>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p
+                  style={{
+                    fontSize: '13px',
+                    color: 'var(--text-muted)',
+                    margin: '4px 0 0',
+                  }}
+                >
+                  {t('service.noImages', { defaultValue: t('item.noImages') })}
+                </p>
+              )}
+            </div>
+          )}
+          <button disabled={isLoading} type='submit'>
+            {isCreating
+              ? t('service.submitCreate', {
+                  defaultValue: t('item.submitCreate'),
+                })
+              : t('service.submitEdit', { defaultValue: t('item.submitEdit') })}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}

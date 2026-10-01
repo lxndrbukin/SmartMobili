@@ -9,6 +9,8 @@ import ScrollToTop from './ScrollToTop';
 import AuthForm from './Auth/AuthForm';
 import ItemForm from './Admin/Items/ItemForm';
 import CategoryForm from './Admin/Categories/CategoryForm';
+import ServiceForm from './Admin/Services/ServiceForm';
+import ServiceCategoryForm from './Admin/ServiceCategories/ServiceCategoryForm';
 import BannerForm from './Admin/Banners/BannerForm';
 import InquiryForm from './Admin/Inquiry/InquiryForm';
 import PanelInquiry from './Admin/Panel/PanelInquiry';
@@ -22,6 +24,8 @@ export default function App(): JSX.Element {
   const isSignup = searchParams.get('signup') === 'true';
   const itemId = searchParams.get('editItem');
   const categoryId = searchParams.get('editCategory');
+  const serviceId = searchParams.get('editService');
+  const serviceCategoryId = searchParams.get('editServiceCategory');
   const inquiryId = searchParams.get('editInquiry');
   const userId = searchParams.get('editUser');
 
@@ -43,6 +47,10 @@ export default function App(): JSX.Element {
       {(isLogin || isSignup) && <AuthForm />}
       {(categoryId || searchParams.get('createCategory')) && <CategoryForm />}
       {(itemId || searchParams.get('createItem')) && <ItemForm />}
+      {(serviceCategoryId || searchParams.get('createServiceCategory')) && (
+        <ServiceCategoryForm />
+      )}
+      {(serviceId || searchParams.get('createService')) && <ServiceForm />}
       {(searchParams.get('createBanner') || searchParams.get('editBanner')) && <BannerForm />}
       {(inquiryId || searchParams.get('createInquiry')) && <InquiryForm />}
       {searchParams.get('inquiry') && <PanelInquiry />}
