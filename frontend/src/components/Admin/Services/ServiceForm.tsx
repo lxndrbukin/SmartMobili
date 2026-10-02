@@ -36,7 +36,7 @@ export default function ServiceForm(): JSX.Element {
   const [serviceDescRU, setServiceDescRU] = useState('');
   const [serviceDescRO, setServiceDescRO] = useState('');
   const [servicePrice, setServicePrice] = useState<string>('');
-  const [serviceCurrency, setServiceCurrency] = useState<string>('MDL');
+  const [serviceCurrency, setServiceCurrency] = useState<string>('');
   const [serviceCategoryId, setServiceCategoryId] = useState<number>(0);
   const [selectedImages, setSelectedImages] = useState<Array<File>>([]);
   const [existingImages, setExistingImages] = useState<
