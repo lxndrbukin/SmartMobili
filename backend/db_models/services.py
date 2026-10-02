@@ -17,7 +17,7 @@ class Service(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     price = Column(Float)
-    currency = Column(String(50), default="MDL")
+    currency = Column(String(50))
     category_id = Column(Integer, ForeignKey("service_categories.id"))
     created_at = Column(DateTime, default=datetime.utcnow)
 
@@ -41,7 +41,7 @@ class ServiceImage(Base):
     __tablename__ = "service_images"
 
     id = Column(Integer, primary_key=True, index=True)
-    item_id = Column(Integer, ForeignKey("services.id"))
+    service_id = Column(Integer, ForeignKey("services.id"))
     image_url = Column(String(500), nullable=False)
     order = Column(Integer, default=0)
 
