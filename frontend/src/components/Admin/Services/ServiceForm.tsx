@@ -64,7 +64,7 @@ export default function ServiceForm(): JSX.Element {
           setServicePrice(
             res.data.price !== null ? String(res.data.price) : '',
           );
-          setServiceCurrency(res.data.currency || 'MDL');
+          setServiceCurrency(res.data.currency || '');
           setExistingImages(res.data.images || []);
         });
       axios
