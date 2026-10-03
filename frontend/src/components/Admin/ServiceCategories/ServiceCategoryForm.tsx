@@ -68,6 +68,11 @@ export default function ServiceCategoryForm(): JSX.Element {
       axios
         .get(`${API_URL}/api/v1/service_categories/${categoryId}?lang=ru`)
         .then((res) => setCategoryRU(res.data.name || ''));
+    } else if (categories.length) {
+      const catWithMaxOrder = categories.reduce((max, cat) =>
+        cat.order > max.order ? cat : max,
+      );
+      setOrder(catWithMaxOrder.order + 1);
     }
   }, [categoryId, isCreating, categories]);
 
@@ -186,7 +191,9 @@ export default function ServiceCategoryForm(): JSX.Element {
           </h3>
           <div className='form-field'>
             <label>
-              {t('serviceCategory.title', { defaultValue: t('category.title') })}{' '}
+              {t('serviceCategory.title', {
+                defaultValue: t('category.title'),
+              })}{' '}
               (RO)
             </label>
             <input
@@ -198,7 +205,9 @@ export default function ServiceCategoryForm(): JSX.Element {
           </div>
           <div className='form-field'>
             <label>
-              {t('serviceCategory.title', { defaultValue: t('category.title') })}{' '}
+              {t('serviceCategory.title', {
+                defaultValue: t('category.title'),
+              })}{' '}
               (RU)
             </label>
             <input
@@ -221,7 +230,9 @@ export default function ServiceCategoryForm(): JSX.Element {
           </div>
           <div className='form-field'>
             <label>
-              {t('serviceCategory.order', { defaultValue: t('category.order') })}
+              {t('serviceCategory.order', {
+                defaultValue: t('category.order'),
+              })}
             </label>
             <input
               value={order}
@@ -249,7 +260,8 @@ export default function ServiceCategoryForm(): JSX.Element {
               {categories
                 .filter(
                   (cat) =>
-                    !cat.parent_id && (!categoryId || cat.id !== Number(categoryId)),
+                    !cat.parent_id &&
+                    (!categoryId || cat.id !== Number(categoryId)),
                 )
                 .map((cat) => (
                   <option value={cat.id} key={cat.id}>
@@ -260,7 +272,9 @@ export default function ServiceCategoryForm(): JSX.Element {
           </div>
           <div className='form-field'>
             <label>
-              {t('serviceCategory.images', { defaultValue: t('category.images') })}
+              {t('serviceCategory.images', {
+                defaultValue: t('category.images'),
+              })}
             </label>
             <input
               onChange={handleImageChange}
