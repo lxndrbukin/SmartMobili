@@ -202,7 +202,7 @@ export default function ServiceItemPage(): JSX.Element {
           <Link to={categoryLinkTo}>{currentService.category.name}</Link> /{' '}
           <span>{currentService.title}</span>
         </div>
-        <div className='catalog-item-page-container'>
+        <div className='catalog-item-page-container service-item-page-container'>
           <div className='catalog-item-page-gallery'>
             {currentImage ? (
               <img

@@ -16,7 +16,7 @@ export default function ServiceItemPageSkeleton(): JSX.Element {
           }}
         />
       </div>
-      <div className='catalog-item-page-container'>
+      <div className='catalog-item-page-container service-item-page-container'>
         <div className='catalog-item-page-gallery'>
           <div className='skeleton-main-image' />
           <div className='skeleton-thumbnails'>
