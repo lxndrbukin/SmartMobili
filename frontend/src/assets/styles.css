@@ -1854,7 +1854,7 @@ img {
 
 .catalog-item-page-title {
   font-family: var(--font-display);
-  font-size: clamp(1.6rem, 3vw, 2.8rem);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
   font-weight: 600;
   color: var(--text-primary);
   margin: 0;
@@ -4983,29 +4983,43 @@ img {
 }
 
 .catalog-load-more-button {
-  padding: var(--space-3) var(--space-8);
-  font-size: var(--font-size-md);
-  font-weight: var(--font-weight-semibold);
-  color: var(--text-contrast);
-  background-color: var(--bg-surface-contrast);
-  border: none;
-  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  background-color: var(--white);
+  color: var(--text-primary);
+  border: 1px solid var(--border-strong);
+  padding: var(--space-3) var(--space-6);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: var(--radius-md);
   cursor: pointer;
+  user-select: none;
+  height: 40px;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+}
+
+.catalog-load-more-button:hover:not(:disabled) {
+  background-color: var(--accent-subtle);
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
   box-shadow: var(--shadow-md);
-  transition:
-    background-color var(--transition-base),
-    transform var(--transition-base),
-    box-shadow var(--transition-base);
 }
 
-.catalog-load-more-button:hover {
-  background-color: var(--brand-strong);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-}
-
-.catalog-load-more-button:active {
+.catalog-load-more-button:active:not(:disabled) {
   transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+.catalog-load-more-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 /* ─── LATEST WORKS ───────────────────────────────────────────────────── */
