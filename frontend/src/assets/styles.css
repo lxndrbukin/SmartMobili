@@ -1821,6 +1821,12 @@ img {
     grid-template-columns: repeat(auto-fit, 96px);
     justify-content: center;
   }
+
+  .service-item-page-container .catalog-item-page-info {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+  }
 }
 
 .service-item-page-container .catalog-item-page-actions {
@@ -4004,6 +4010,382 @@ img {
 .admin-load-more-button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+/* ─── ADMIN ANALYTICS ────────────────────────────────────────────────── */
+.panel-analytics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5);
+  align-items: start;
+}
+
+.analytics-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  min-height: 300px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* Cards */
+.analytics-card {
+  background-color: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-5);
+  min-width: 0;
+}
+
+.analytics-card--wide {
+  grid-column: 1 / -1;
+}
+
+.analytics-card-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-5);
+}
+
+.analytics-card-header h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.analytics-card-subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.analytics-empty {
+  margin: 0;
+  padding: var(--space-6) 0;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+/* Stat tiles */
+.analytics-stats {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-5);
+}
+
+.analytics-stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-5);
+  background-color: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.analytics-stat-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.analytics-stat-value {
+  font-family: var(--font-body);
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--text-primary);
+}
+
+.analytics-stat-meta {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* Weekly bar chart */
+.analytics-chart {
+  --analytics-gutter: 40px;
+  padding-top: var(--space-5);
+}
+
+.analytics-chart-plot {
+  position: relative;
+  height: 220px;
+  margin-left: var(--analytics-gutter);
+}
+
+.analytics-chart-gridline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 0;
+  border-top: 1px solid var(--border);
+}
+
+.analytics-chart-gridline span {
+  position: absolute;
+  right: calc(100% + var(--space-2));
+  top: 0;
+  transform: translateY(-50%);
+  font-size: 11px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.analytics-chart-bars {
+  position: absolute;
+  inset: 0;
+  display: flex;
+}
+
+.analytics-chart-column {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  border-radius: var(--radius-sm);
+  outline: none;
+  cursor: default;
+  transition: background-color var(--transition-fast);
+}
+
+.analytics-chart-column:hover,
+.analytics-chart-column:focus-visible {
+  background-color: var(--bg-tertiary);
+}
+
+.analytics-chart-column:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.analytics-chart-bar {
+  position: relative;
+  width: 100%;
+  max-width: 24px;
+  background-color: var(--accent);
+  border-radius: 4px 4px 0 0;
+}
+
+.analytics-chart-value {
+  position: absolute;
+  bottom: calc(100% + var(--space-1));
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.analytics-chart-tooltip {
+  position: absolute;
+  bottom: calc(100% + var(--space-2));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-2) var(--space-3);
+  background-color: var(--bg-primary);
+  color: var(--text-inverted);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  font-size: 12px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-fast);
+}
+
+.analytics-chart-tooltip strong {
+  font-weight: 600;
+}
+
+.analytics-chart-tooltip span {
+  color: var(--text-inverted-muted);
+}
+
+.analytics-chart-column:hover .analytics-chart-tooltip,
+.analytics-chart-column:focus-visible .analytics-chart-tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* The tooltip replaces the peak label while it is open */
+.analytics-chart-column:hover .analytics-chart-value,
+.analytics-chart-column:focus-visible .analytics-chart-value {
+  visibility: hidden;
+}
+
+/* Keep edge tooltips inside the card */
+.analytics-chart-column:first-child .analytics-chart-tooltip {
+  left: 0;
+  transform: none;
+}
+
+.analytics-chart-column:last-child .analytics-chart-tooltip {
+  left: auto;
+  right: 0;
+  transform: none;
+}
+
+.analytics-chart-axis {
+  display: flex;
+  margin-left: var(--analytics-gutter);
+  padding-top: var(--space-2);
+}
+
+.analytics-chart-axis span {
+  flex: 1 1 0;
+  min-width: 0;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Breakdown tables */
+.analytics-table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0 calc(-1 * var(--space-5)) calc(-1 * var(--space-5));
+}
+
+.analytics-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.analytics-table th,
+.analytics-table td {
+  padding: var(--space-3) var(--space-5);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.analytics-table th {
+  background-color: var(--bg-surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.analytics-table tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background-color var(--transition-fast);
+}
+
+.analytics-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.analytics-table tbody tr:hover {
+  background-color: rgba(42, 40, 37, 0.02);
+}
+
+.analytics-table .analytics-table-num {
+  text-align: right;
+  width: 1%;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.analytics-table td.analytics-table-num {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.analytics-table-label {
+  max-width: 0;
+  width: 100%;
+}
+
+.analytics-table-name {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-primary);
+}
+
+.analytics-table-share {
+  display: block;
+  height: 4px;
+  margin-top: 6px;
+  border-radius: var(--radius-full);
+  background-color: var(--bg-secondary);
+  overflow: hidden;
+}
+
+.analytics-table-share span {
+  display: block;
+  height: 100%;
+  border-radius: var(--radius-full);
+  background-color: var(--accent);
+}
+
+@media screen and (max-width: 1024px) {
+  .panel-analytics {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .panel-analytics,
+  .analytics-stats {
+    gap: var(--space-3);
+  }
+
+  .analytics-card,
+  .analytics-stat {
+    padding: var(--space-4);
+  }
+
+  .analytics-table-wrapper {
+    margin: 0 calc(-1 * var(--space-4)) calc(-1 * var(--space-4));
+  }
+
+  .analytics-table th,
+  .analytics-table td {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .analytics-stat-value {
+    font-size: 1.6rem;
+  }
+
+  .analytics-chart {
+    --analytics-gutter: 32px;
+  }
+
+  .analytics-chart-plot {
+    height: 180px;
+  }
+
+  .analytics-chart-axis span {
+    font-size: 11px;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
