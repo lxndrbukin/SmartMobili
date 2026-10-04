@@ -202,3 +202,37 @@ export type ServiceCategoryRequest = {
   id: number;
   lang?: string;
 };
+
+export type LatestWorkTranslationProps = {
+  language: string;
+  title: string;
+  description: string | null;
+};
+
+export type LatestWorkCreate = {
+  is_active: boolean;
+  translations: Array<LatestWorkTranslationProps>;
+};
+
+export type LatestWorkUpdate = {
+  id: number;
+  is_active?: boolean;
+  translations?: Array<LatestWorkTranslationProps>;
+};
+
+export type LatestWorkImageUpdate = {
+  latestWorkId: number;
+  image: FormData;
+};
+
+export type LatestWorkRequest = {
+  latestWorkId: number;
+  lang: string | undefined;
+};
+
+export type LatestWorksRequest = {
+  lang: string | null;
+  limit?: number;
+  skip?: number;
+  includeInactive?: boolean;
+};

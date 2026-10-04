@@ -1,0 +1,20 @@
+{
+  "header": "Our Works",
+  "subheader": "Real projects built and installed by the SmartMobili team.",
+  "viewAll": "All works",
+  "noItems": "No works published yet",
+  "loadMore": "Load more",
+  "notFound": "Work not found",
+  "breadcrumbs": {
+    "home": "Home"
+  },
+  "seo": {
+    "description": "SmartMobili portfolio: custom furniture projects built and installed in Moldova.",
+    "itemDescription": "{{title}} by SmartMobili in Moldova. Custom furniture designed and installed by our team."
+  },
+  "description": "Description",
+  "call": "Order similar",
+  "latest": {
+    "header": "Latest Works"
+  }
+}

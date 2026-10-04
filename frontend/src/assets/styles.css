@@ -5145,6 +5145,23 @@ img {
 }
 
 /* ─── LATEST WORKS ───────────────────────────────────────────────────── */
+.latest-works-preview .latest-items-header a {
+  font-size: 17px;
+}
+
+@media screen and (max-width: 400px) {
+  .latest-works-preview .latest-items-header a {
+    font-size: 16px;
+  }
+}
+
+.latest-works-arrow {
+  display: inline-block;
+  font-size: 1.25em;
+  line-height: 1;
+  vertical-align: -0.05em;
+}
+
 .latest-works-subheader {
   color: var(--text-secondary);
   margin: 0 0 var(--space-6);

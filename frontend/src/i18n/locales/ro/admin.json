@@ -1,7 +1,7 @@
 {
   "item": {
-    "headerCreate": "Lucrare nouă",
-    "headerEdit": "Actualizare lucrare",
+    "headerCreate": "Model nou",
+    "headerEdit": "Actualizare model",
     "title": "Titlu",
     "description": "Descriere",
     "price": "Preț",
@@ -71,8 +71,8 @@
   },
   "alerts": {
     "item": {
-      "confirmDelete": "Doriți să ștergeți lucrarea {{name}}?",
-      "deleted": "Lucrarea {{name}} a fost ștearsă"
+      "confirmDelete": "Doriți să ștergeți modelul {{name}}?",
+      "deleted": "Modelul {{name}} a fost șters"
     },
     "category": {
       "confirmDelete": "Doriți să ștergeți categoria {{name}}?",
@@ -99,14 +99,14 @@
       "deleted": "Comanda #{{id}} a fost ștearsă"
     },
     "latestWork": {
-      "confirmDelete": "Doriți să ștergeți lucrarea {{name}} din Lucrările noastre?",
-      "deleted": "Lucrarea {{name}} a fost ștearsă din Lucrările noastre"
+      "confirmDelete": "Doriți să ștergeți lucrarea {{name}}?",
+      "deleted": "Lucrarea {{name}} a fost ștearsă"
     }
   },
   "panel": {
     "header": "Panou Admin",
     "tabs": {
-      "items": "Lucrări",
+      "items": "Modele",
       "categories": "Categorii",
       "services": "Servicii",
       "serviceCategories": "Categorii Servicii",
@@ -121,7 +121,7 @@
       "category": "Categorie",
       "price": "Preț",
       "actions": "Acțiuni",
-      "items": "Lucrări",
+      "items": "Modele",
       "services": "Servicii",
       "username": "Utilizator",
       "role": "Rolul",
@@ -147,8 +147,8 @@
     "sections": "Secțiuni"
   },
   "latestWork": {
-    "headerCreate": "Lucrare nouă (Lucrările noastre)",
-    "headerEdit": "Actualizare lucrare (Lucrările noastre)",
+    "headerCreate": "Lucrare nouă",
+    "headerEdit": "Actualizare lucrare",
     "title": "Titlu",
     "description": "Descriere",
     "images": "Imagini",

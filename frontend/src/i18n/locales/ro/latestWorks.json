@@ -1,0 +1,20 @@
+{
+  "header": "Lucrările noastre",
+  "subheader": "Proiecte reale realizate și montate de echipa SmartMobili.",
+  "viewAll": "Toate lucrările",
+  "noItems": "Nu există lucrări publicate încă",
+  "loadMore": "Mai mult",
+  "notFound": "Lucrarea nu a fost găsită",
+  "breadcrumbs": {
+    "home": "Acasă"
+  },
+  "seo": {
+    "description": "Portofoliul SmartMobili: proiecte de mobilier la comandă realizate și montate în Moldova.",
+    "itemDescription": "Lucrarea {{title}} realizată de SmartMobili în Moldova. Mobilier la comandă, proiectat și montat de echipa noastră."
+  },
+  "description": "Descriere",
+  "call": "Comandă similar",
+  "latest": {
+    "header": "Lucrări recente"
+  }
+}

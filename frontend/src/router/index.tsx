@@ -9,6 +9,8 @@ import ServiceSection from '../components/Services/ServiceSection';
 import ServiceItemPage from '../components/Services/ServiceItemPage';
 import Panel from '../components/Admin/Panel/Panel';
 import About from '../components/Static/About';
+import LatestWorks from '../components/LatestWorks/LatestWorks';
+import LatestWorkPage from '../components/LatestWorks/LatestWorkPage';
 
 export const router = createBrowserRouter([
   {
@@ -58,6 +60,14 @@ export const router = createBrowserRouter([
       {
         path: 'services/:catSlug/:subSlug?/item/:itemId',
         element: <ServiceItemPage />,
+      },
+      {
+        path: 'latest-works',
+        element: <LatestWorks />,
+      },
+      {
+        path: 'latest-works/:workId',
+        element: <LatestWorkPage />,
       },
       {
         path: 'admin',

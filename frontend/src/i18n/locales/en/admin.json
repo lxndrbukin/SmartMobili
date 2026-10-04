@@ -1,7 +1,7 @@
 {
   "item": {
-    "headerCreate": "New Work",
-    "headerEdit": "Update Work",
+    "headerCreate": "New Model",
+    "headerEdit": "Update Model",
     "title": "Title",
     "description": "Description",
     "price": "Price",
@@ -71,8 +71,8 @@
   },
   "alerts": {
     "item": {
-      "confirmDelete": "Do you want to delete work {{name}}?",
-      "deleted": "Work {{name}} deleted"
+      "confirmDelete": "Do you want to delete model {{name}}?",
+      "deleted": "Model {{name}} deleted"
     },
     "category": {
       "confirmDelete": "Do you want to delete category {{name}}?",
@@ -99,14 +99,14 @@
       "deleted": "Inquiry #{{id}} deleted"
     },
     "latestWork": {
-      "confirmDelete": "Delete {{name}} from Our Works?",
-      "deleted": "{{name}} was deleted from Our Works"
+      "confirmDelete": "Do you want to delete work {{name}}?",
+      "deleted": "Work {{name}} deleted"
     }
   },
   "panel": {
     "header": "Admin Panel",
     "tabs": {
-      "items": "Works",
+      "items": "Models",
       "categories": "Categories",
       "services": "Services",
       "serviceCategories": "Service Categories",
@@ -121,7 +121,7 @@
       "category": "Category",
       "price": "Price",
       "actions": "Actions",
-      "items": "Works",
+      "items": "Models",
       "services": "Services",
       "username": "Username",
       "role": "Role",
@@ -147,8 +147,8 @@
     "sections": "Sections"
   },
   "latestWork": {
-    "headerCreate": "New work (Our Works)",
-    "headerEdit": "Edit work (Our Works)",
+    "headerCreate": "New Work",
+    "headerEdit": "Update Work",
     "title": "Title",
     "description": "Description",
     "images": "Images",

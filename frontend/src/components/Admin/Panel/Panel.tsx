@@ -9,7 +9,7 @@ import PanelCategories from './PanelCategories';
 import PanelServices from './PanelServices';
 import PanelServiceCategories from './PanelServiceCategories';
 import PanelBanners from './PanelBanners';
-// import PanelLatestWorks from './PanelLatestWorks';
+import PanelLatestWorks from './PanelLatestWorks';
 import PanelUsers from './PanelUsers';
 import PanelInquiries from './PanelInquiries';
 // import MyDashboard from '../Analytics/Analytics';
@@ -57,11 +57,11 @@ export default function Panel(): JSX.Element {
       name: 'content',
       tabs: [
         { name: 'banners', icon: 'fa-image', component: <PanelBanners /> },
-        // {
-        //   name: 'latestWorks',
-        //   icon: 'fa-images',
-        //   component: <PanelLatestWorks />,
-        // },
+        {
+          name: 'latestWorks',
+          icon: 'fa-images',
+          component: <PanelLatestWorks />,
+        },
       ],
     },
     {

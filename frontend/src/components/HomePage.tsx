@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import Carousel from './Carousel/Carousel';
 import Categories from './Catalog/Categories';
 import LatestItems from './Catalog/LatestItems';
+import LatestWorksPreview from './LatestWorks/LatestWorksPreview';
 import OrderSteps from './Static/OrderSteps';
 import Brands from './Static/Brands';
 import SeoHead from './SeoHead';
@@ -37,6 +38,7 @@ export default function HomePage(): JSX.Element {
       <Carousel />
       <Categories showHeader={true} limit={6} />
       <LatestItems />
+      <LatestWorksPreview />
       <OrderSteps />
       <Brands />
     </>

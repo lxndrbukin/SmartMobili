@@ -3,6 +3,7 @@ import system from "./slices/systemSlice";
 import auth from "./slices/authSlice";
 import catalog from "./slices/catalogSlice";
 import services from "./slices/servicesSlice";
+import latestWorks from "./slices/latestWorksSlice";
 import admin from "./slices/adminSlice";
 
 export const store = configureStore({
@@ -12,6 +13,7 @@ export const store = configureStore({
     auth,
     catalog,
     services,
+    latestWorks,
   },
 });
 
@@ -23,6 +25,7 @@ export * from "./slices/systemSlice";
 export * from "./slices/authSlice";
 export * from "./slices/catalogSlice";
 export * from "./slices/servicesSlice";
+export * from "./slices/latestWorksSlice";
 export * from "./thunks/items";
 export * from "./thunks/categories";
 export * from "./thunks/services";
@@ -30,3 +33,4 @@ export * from "./thunks/serviceCategories";
 export * from "./thunks/inquiries";
 export * from "./thunks/auth";
 export * from "./thunks/banners";
+export * from "./thunks/latestWorks";

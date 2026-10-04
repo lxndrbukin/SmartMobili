@@ -176,3 +176,25 @@ export type ServicesState = {
   categories: Array<ServiceCategoryProps>;
   categoriesLoaded: boolean;
 };
+
+export type LatestWorkImageProps = {
+  id: number;
+  image_url: string;
+  order: number;
+};
+
+export type LatestWorkProps = {
+  id: number;
+  is_active: boolean;
+  created_at: string;
+  title: string;
+  description: string | null;
+  language: Language;
+  images: Array<LatestWorkImageProps>;
+};
+
+export type LatestWorksState = {
+  latestWorks: Array<LatestWorkProps>;
+  currentLatestWork: LatestWorkProps | null;
+  latestWorkNotFound: boolean;
+};

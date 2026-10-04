@@ -1,7 +1,7 @@
 {
   "item": {
-    "headerCreate": "Новая работа",
-    "headerEdit": "Редактировать работу",
+    "headerCreate": "Новая модель",
+    "headerEdit": "Редактировать модель",
     "title": "Заголовок",
     "description": "Описание",
     "price": "Цена",
@@ -71,8 +71,8 @@
   },
   "alerts": {
     "item": {
-      "confirmDelete": "Вы хотите удалить работу {{name}}?",
-      "deleted": "Работа {{name}} удалена"
+      "confirmDelete": "Вы хотите удалить модель {{name}}?",
+      "deleted": "Модель {{name}} удалена"
     },
     "category": {
       "confirmDelete": "Вы хотите удалить категорию {{name}}?",
@@ -99,14 +99,14 @@
       "deleted": "Заявка #{{id}} удалена"
     },
     "latestWork": {
-      "confirmDelete": "Удалить работу {{name}} из «Наших работ»?",
-      "deleted": "Работа {{name}} удалена из «Наших работ»"
+      "confirmDelete": "Удалить работу {{name}}?",
+      "deleted": "Работа {{name}} удалена"
     }
   },
   "panel": {
     "header": "Панель управления",
     "tabs": {
-      "items": "Работы",
+      "items": "Модели",
       "categories": "Категории",
       "services": "Услуги",
       "serviceCategories": "Категории услуг",
@@ -121,7 +121,7 @@
       "category": "Категория",
       "price": "Цена",
       "actions": "Действия",
-      "items": "Работы",
+      "items": "Модели",
       "services": "Услуги",
       "username": "Имя пользователя",
       "role": "Статус",
@@ -147,8 +147,8 @@
     "sections": "Разделы"
   },
   "latestWork": {
-    "headerCreate": "Новая работа (Наши работы)",
-    "headerEdit": "Редактировать работу (Наши работы)",
+    "headerCreate": "Новая работа",
+    "headerEdit": "Редактировать работу",
     "title": "Заголовок",
     "description": "Описание",
     "images": "Изображения",
