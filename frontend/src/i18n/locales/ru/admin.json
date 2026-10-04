@@ -97,6 +97,10 @@
     "inquiry": {
       "confirmDelete": "Вы хотите удалить заявку #{{id}}?",
       "deleted": "Заявка #{{id}} удалена"
+    },
+    "latestWork": {
+      "confirmDelete": "Удалить работу {{name}} из «Наших работ»?",
+      "deleted": "Работа {{name}} удалена из «Наших работ»"
     }
   },
   "panel": {
@@ -108,7 +112,9 @@
       "serviceCategories": "Категории услуг",
       "banners": "Баннеры",
       "users": "Пользователи",
-      "inquiries": "Заявки"
+      "inquiries": "Заявки",
+      "latestWorks": "Наши работы",
+      "analytics": "Аналитика"
     },
     "table": {
       "name": "Название",
@@ -126,9 +132,55 @@
       "image": "Изображение",
       "header": "Заголовок",
       "url": "Ссылка / URL",
-      "order": "Порядок"
+      "order": "Порядок",
+      "status": "Статус"
     },
     "scrollHint": "Прокрутите для просмотра",
-    "loading": "Загрузка..."
+    "loading": "Загрузка...",
+    "groups": {
+      "catalog": "Каталог",
+      "services": "Услуги",
+      "content": "Контент",
+      "customers": "Клиенты",
+      "insights": "Статистика"
+    },
+    "sections": "Разделы"
+  },
+  "latestWork": {
+    "headerCreate": "Новая работа (Наши работы)",
+    "headerEdit": "Редактировать работу (Наши работы)",
+    "title": "Заголовок",
+    "description": "Описание",
+    "images": "Изображения",
+    "isActive": "Опубликована",
+    "active": "Опубликована",
+    "hidden": "Скрыта",
+    "submitCreate": "Создать",
+    "submitEdit": "Обновить",
+    "existingImages": "Существующие изображения",
+    "noImages": "Нет изображений",
+    "confirmDeleteImage": "Удалить это изображение?",
+    "loadMore": "Ещё"
+  },
+  "analytics": {
+    "loading": "Загрузка статистики...",
+    "empty": "Данных пока нет",
+    "visitors": "Посетители",
+    "pageviews": "Просмотры",
+    "lastWeek": "Последние 7 дней",
+    "weeklyVisits": "Посещения за неделю",
+    "weeklyVisitsSubtitle": "Уникальные посетители по дням",
+    "byCountry": "Посетители по странам",
+    "byPage": "Посетители по страницам",
+    "country": "Страна",
+    "page": "Страница",
+    "visitorsCount_one": "{{value}} посетитель",
+    "visitorsCount_few": "{{value}} посетителя",
+    "visitorsCount_many": "{{value}} посетителей",
+    "visitorsCount_other": "{{value}} посетителя",
+    "pageviewsCount_one": "{{value}} просмотр",
+    "pageviewsCount_few": "{{value}} просмотра",
+    "pageviewsCount_many": "{{value}} просмотров",
+    "pageviewsCount_other": "{{value}} просмотра"
   }
 }

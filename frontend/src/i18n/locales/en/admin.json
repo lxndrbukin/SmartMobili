@@ -97,6 +97,10 @@
     "inquiry": {
       "confirmDelete": "Do you want to delete inquiry #{{id}}?",
       "deleted": "Inquiry #{{id}} deleted"
+    },
+    "latestWork": {
+      "confirmDelete": "Delete {{name}} from Our Works?",
+      "deleted": "{{name}} was deleted from Our Works"
     }
   },
   "panel": {
@@ -108,7 +112,9 @@
       "serviceCategories": "Service Categories",
       "banners": "Banners",
       "users": "Users",
-      "inquiries": "Orders"
+      "inquiries": "Orders",
+      "latestWorks": "Our Works",
+      "analytics": "Analytics"
     },
     "table": {
       "name": "Name",
@@ -126,9 +132,51 @@
       "image": "Image",
       "header": "Header",
       "url": "URL / Link",
-      "order": "Order"
+      "order": "Order",
+      "status": "Status"
     },
     "scrollHint": "Scroll to see more",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "groups": {
+      "catalog": "Catalog",
+      "services": "Services",
+      "content": "Content",
+      "customers": "Customers",
+      "insights": "Insights"
+    },
+    "sections": "Sections"
+  },
+  "latestWork": {
+    "headerCreate": "New work (Our Works)",
+    "headerEdit": "Edit work (Our Works)",
+    "title": "Title",
+    "description": "Description",
+    "images": "Images",
+    "isActive": "Published",
+    "active": "Published",
+    "hidden": "Hidden",
+    "submitCreate": "Create",
+    "submitEdit": "Update",
+    "existingImages": "Existing images",
+    "noImages": "No images",
+    "confirmDeleteImage": "Are you sure you want to delete this image?",
+    "loadMore": "Load more"
+  },
+  "analytics": {
+    "loading": "Loading analytics...",
+    "empty": "No data yet",
+    "visitors": "Visitors",
+    "pageviews": "Pageviews",
+    "lastWeek": "Last 7 days",
+    "weeklyVisits": "Weekly visits",
+    "weeklyVisitsSubtitle": "Unique visitors per day",
+    "byCountry": "Visitors by country",
+    "byPage": "Visitors by page",
+    "country": "Country",
+    "page": "Page",
+    "visitorsCount_one": "{{value}} visitor",
+    "visitorsCount_other": "{{value}} visitors",
+    "pageviewsCount_one": "{{value}} pageview",
+    "pageviewsCount_other": "{{value}} pageviews"
   }
 }

@@ -3678,31 +3678,163 @@ img {
   margin: 0 auto;
 }
 
-.admin-panel-sections {
-  display: flex;
-  gap: 5px;
-  background-color: var(--white);
-  padding: 4px;
-  width: fit-content;
-  border: 1px solid rgba(148, 163, 184, 0.3);
-  border-radius: var(--radius-md);
-  margin-bottom: var(--spacing-lg);
-  flex-wrap: wrap;
+/* Admin navigation – grouped sidebar on desktop, dropdown on smaller screens */
+.admin-panel-layout {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: var(--space-6);
+  align-items: start;
 }
 
-.admin-panel-sections button {
-  padding: var(--spacing-sm) var(--spacing-md);
+.admin-panel-content {
+  min-width: 0;
+}
+
+.admin-panel-nav {
+  position: sticky;
+  top: calc(70px + var(--space-4));
+}
+
+.admin-panel-nav-menu {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-3);
+  background-color: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.admin-panel-nav-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.admin-panel-nav-group-label {
+  padding: 0 var(--space-3) var(--space-1);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.admin-panel-nav-group button,
+.admin-panel-nav-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
   border: none;
   border-radius: var(--radius-md);
-  font-weight: 600;
-  font-family: 'Inter';
   background-color: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
   cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast);
 }
 
-.admin-panel-sections button.active {
-  background-color: var(--accent);
-  color: var(--white);
+.admin-panel-nav-group button i,
+.admin-panel-nav-toggle i {
+  width: 18px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-muted);
+  transition: color var(--transition-fast);
+}
+
+.admin-panel-nav-group button span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-panel-nav-group button:hover {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.admin-panel-nav-group button.active {
+  background-color: var(--accent-subtle);
+  color: var(--accent);
+}
+
+.admin-panel-nav-group button.active i {
+  color: var(--accent);
+}
+
+.admin-panel-nav-group button:focus-visible,
+.admin-panel-nav-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Only shown on smaller screens, where the menu becomes a dropdown */
+.admin-panel-nav-toggle {
+  display: none;
+}
+
+@media screen and (max-width: 900px) {
+  .admin-panel-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-5);
+  }
+
+  .admin-panel-nav {
+    position: relative;
+    top: auto;
+    z-index: 20;
+  }
+
+  .admin-panel-nav-toggle {
+    display: flex;
+    padding: var(--space-3) var(--space-4);
+    background-color: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    color: var(--text-primary);
+  }
+
+  .admin-panel-nav-toggle i:first-child {
+    color: var(--accent);
+  }
+
+  .admin-panel-nav-chevron {
+    margin-left: auto;
+    transition: transform var(--transition-base);
+  }
+
+  .admin-panel-nav.open .admin-panel-nav-chevron {
+    transform: rotate(180deg);
+  }
+
+  .admin-panel-nav-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + var(--space-2));
+    left: 0;
+    right: 0;
+    max-height: min(70vh, 520px);
+    overflow-y: auto;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .admin-panel-nav.open .admin-panel-nav-menu {
+    display: flex;
+  }
+
+  .admin-panel-nav-group button {
+    padding: var(--space-3);
+  }
 }
 
 .admin-panel-table-wrapper {
@@ -4584,16 +4716,6 @@ img {
 
   .admin-panel {
     padding: var(--space-4) var(--space-3);
-  }
-
-  .admin-panel-sections {
-    width: 100%;
-  }
-
-  .admin-panel-sections button {
-    flex: 1;
-    font-size: 13px;
-    padding: var(--space-2) var(--space-3);
   }
 
   .admin-panel-scroll-hint {

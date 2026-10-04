@@ -97,6 +97,10 @@
     "inquiry": {
       "confirmDelete": "Doriți să ștergeți comanda #{{id}}?",
       "deleted": "Comanda #{{id}} a fost ștearsă"
+    },
+    "latestWork": {
+      "confirmDelete": "Doriți să ștergeți lucrarea {{name}} din Lucrările noastre?",
+      "deleted": "Lucrarea {{name}} a fost ștearsă din Lucrările noastre"
     }
   },
   "panel": {
@@ -108,7 +112,9 @@
       "serviceCategories": "Categorii Servicii",
       "banners": "Bannere",
       "users": "Utilizatori",
-      "inquiries": "Comenzi"
+      "inquiries": "Comenzi",
+      "latestWorks": "Lucrările noastre",
+      "analytics": "Analytics"
     },
     "table": {
       "name": "Denumire",
@@ -126,9 +132,53 @@
       "image": "Imagine",
       "header": "Titlu Banner",
       "url": "URL / Link",
-      "order": "Ordinea"
+      "order": "Ordinea",
+      "status": "Status"
     },
     "scrollHint": "Derulați pentru mai mult",
-    "loading": "Se încarcă..."
+    "loading": "Se încarcă...",
+    "groups": {
+      "catalog": "Catalog",
+      "services": "Servicii",
+      "content": "Conținut",
+      "customers": "Clienți",
+      "insights": "Statistici"
+    },
+    "sections": "Secțiuni"
+  },
+  "latestWork": {
+    "headerCreate": "Lucrare nouă (Lucrările noastre)",
+    "headerEdit": "Actualizare lucrare (Lucrările noastre)",
+    "title": "Titlu",
+    "description": "Descriere",
+    "images": "Imagini",
+    "isActive": "Publicată",
+    "active": "Publicată",
+    "hidden": "Ascunsă",
+    "submitCreate": "Creează",
+    "submitEdit": "Actualizează",
+    "existingImages": "Imagini existente",
+    "noImages": "Fără imagini",
+    "confirmDeleteImage": "Doriți să ștergeți această imagine?",
+    "loadMore": "Mai mult"
+  },
+  "analytics": {
+    "loading": "Se încarcă statisticile...",
+    "empty": "Nu există date încă",
+    "visitors": "Vizitatori",
+    "pageviews": "Vizualizări",
+    "lastWeek": "Ultimele 7 zile",
+    "weeklyVisits": "Vizite săptămânale",
+    "weeklyVisitsSubtitle": "Vizitatori unici pe zi",
+    "byCountry": "Vizitatori după țară",
+    "byPage": "Vizitatori după pagină",
+    "country": "Țara",
+    "page": "Pagina",
+    "visitorsCount_one": "{{value}} vizitator",
+    "visitorsCount_few": "{{value}} vizitatori",
+    "visitorsCount_other": "{{value}} de vizitatori",
+    "pageviewsCount_one": "{{value}} vizualizare",
+    "pageviewsCount_few": "{{value}} vizualizări",
+    "pageviewsCount_other": "{{value}} de vizualizări"
   }
 }
