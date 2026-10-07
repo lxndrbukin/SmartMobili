@@ -12,7 +12,7 @@ import PanelBanners from './PanelBanners';
 import PanelLatestWorks from './PanelLatestWorks';
 import PanelUsers from './PanelUsers';
 import PanelInquiries from './PanelInquiries';
-// import MyDashboard from '../Analytics/Analytics';
+import MyDashboard from '../Analytics/Analytics';
 
 type PanelTab = {
   name: string;
@@ -75,16 +75,16 @@ export default function Panel(): JSX.Element {
         { name: 'users', icon: 'fa-users', component: <PanelUsers /> },
       ],
     },
-    // {
-    //   name: 'insights',
-    //   tabs: [
-    //     {
-    //       name: 'analytics',
-    //       icon: 'fa-chart-column',
-    //       component: <MyDashboard />,
-    //     },
-    //   ],
-    // },
+    {
+      name: 'insights',
+      tabs: [
+        {
+          name: 'analytics',
+          icon: 'fa-chart-column',
+          component: <MyDashboard />,
+        },
+      ],
+    },
   ];
   const TABS = GROUPS.flatMap((group) => group.tabs);
 

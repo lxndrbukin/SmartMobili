@@ -4357,13 +4357,11 @@ img {
   visibility: visible;
 }
 
-/* The tooltip replaces the peak label while it is open */
 .analytics-chart-column:hover .analytics-chart-value,
 .analytics-chart-column:focus-visible .analytics-chart-value {
   visibility: hidden;
 }
 
-/* Keep edge tooltips inside the card */
 .analytics-chart-column:first-child .analytics-chart-tooltip {
   left: 0;
   transform: none;
@@ -4392,7 +4390,6 @@ img {
   text-overflow: ellipsis;
 }
 
-/* Breakdown tables */
 .analytics-table-wrapper {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
