@@ -8,7 +8,7 @@ A full-stack **furniture e-commerce platform** built with Python and React. Feat
 
 ## Features
 
-- **Multilingual Support**: Full UI and product data in Romanian, Russian, and English via i18next and URL-based language routing (`/:lang`)
+- **Multilingual Support**: Full UI and product data in Romanian and Russian via i18next and URL-based language routing (`/:lang`)
 - **Product Catalog**: Browse products by category with images, descriptions, and pricing
 - **Admin Panel**: Manage products, categories, users, and customer inquiries
 - **JWT Authentication**: Secure login and registration with role-based access (`user` / `admin`)
