@@ -9,7 +9,7 @@ from routers.banners import banners_router
 from routers.services import services_router
 from routers.service_categories import service_categories_router
 from routers.latest_works import latest_works_router
-# from routers.analytics import analytics_router
+from routers.analytics import analytics_router
 from db import engine, Base, get_db
 from db_models.items import Item, ItemTranslation, ItemImage
 from db_models.categories import Category, CategoryTranslation
@@ -47,7 +47,7 @@ v1_router.include_router(inquiries_router)
 v1_router.include_router(chatbot_router)
 v1_router.include_router(banners_router)
 v1_router.include_router(latest_works_router)
-# v1_router.include_router(analytics_router)
+v1_router.include_router(analytics_router)
 app.include_router(v1_router)
 
 app.add_middleware(

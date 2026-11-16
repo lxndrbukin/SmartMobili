@@ -24,7 +24,7 @@ const PAGE_SIZE = 10;
 const HERO_IMAGE = '/banners/catalog-hero.jpg';
 const SITE_URL =
   (import.meta.env.VITE_SITE_URL as string | undefined) ??
-  'https://smartmobili.md';
+  'https://smartmobili-md.com';
 
 export default function Catalog(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();

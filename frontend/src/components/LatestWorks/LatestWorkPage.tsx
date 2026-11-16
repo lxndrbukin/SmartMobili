@@ -81,14 +81,15 @@ export default function LatestWorkPage(): JSX.Element {
 
   const SITE_URL =
     (import.meta.env.VITE_SITE_URL as string | undefined) ??
-    'https://smartmobili.md';
+    'https://smartmobili-md.com';
   const images = currentLatestWork.images.map((image) => image.image_url);
   const firstImage = handleImageSelection(currentLatestWork.images);
   const workUrl = `${SITE_URL}/${lang}/latest-works/${workId}`;
-  const date = new Date(currentLatestWork.created_at).toLocaleDateString(
-    lang,
-    { year: 'numeric', month: 'long', day: 'numeric' },
-  );
+  const date = new Date(currentLatestWork.created_at).toLocaleDateString(lang, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
 
   const workJsonLd: Record<string, unknown> = {
     '@context': 'https://schema.org',

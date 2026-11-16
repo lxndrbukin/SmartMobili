@@ -33,7 +33,7 @@ export default function CatalogSection(): JSX.Element {
   const [prevKey, setPrevKey] = useState<string>('');
   const { t } = useTranslation('catalog');
 
-  const pageSize = 10;
+  const pageSize = 12;
   const [limit, setLimit] = useState<number>(pageSize);
 
   const lastFetchedRef = useRef<{
@@ -126,7 +126,7 @@ export default function CatalogSection(): JSX.Element {
   }, [categoriesLoaded, activeCategory, lang, dispatch, limit]);
 
   const renderSkeleton = () => {
-    return Array(6)
+    return Array(12)
       .fill('')
       .map((_, index) => {
         return <CatalogItemSkeleton key={index} />;
