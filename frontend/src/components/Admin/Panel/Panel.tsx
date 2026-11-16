@@ -12,7 +12,7 @@ import PanelBanners from './PanelBanners';
 import PanelLatestWorks from './PanelLatestWorks';
 import PanelUsers from './PanelUsers';
 import PanelInquiries from './PanelInquiries';
-import MyDashboard from '../Analytics/Analytics';
+import Analytics from './PanelAnalytics';
 
 type PanelTab = {
   name: string;
@@ -81,7 +81,7 @@ export default function Panel(): JSX.Element {
         {
           name: 'analytics',
           icon: 'fa-chart-column',
-          component: <MyDashboard />,
+          component: <Analytics />,
         },
       ],
     },
