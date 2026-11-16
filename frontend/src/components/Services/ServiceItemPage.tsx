@@ -39,8 +39,7 @@ export default function ServiceItemPage(): JSX.Element {
 
   const handleImageSelection = (imgs: Array<ServiceImageProps>) => {
     if (!imgs || imgs.length === 0) return undefined;
-    const imageData =
-      imgs.find((image) => image.order === 0) || imgs[0];
+    const imageData = imgs.find((image) => image.order === 0) || imgs[0];
 
     return imageData?.image_url;
   };
@@ -85,7 +84,7 @@ export default function ServiceItemPage(): JSX.Element {
 
   const SITE_URL =
     (import.meta.env.VITE_SITE_URL as string | undefined) ??
-    'https://smartmobili.md';
+    'https://smartmobili-md.com';
   const firstImage =
     currentService.images.find((img) => img.order === 0)?.image_url ||
     currentService.images[0]?.image_url;
@@ -94,7 +93,8 @@ export default function ServiceItemPage(): JSX.Element {
     '@context': 'https://schema.org',
     '@type': 'Service',
     name: currentService.title,
-    description: currentService.description?.slice(0, 300) || currentService.title,
+    description:
+      currentService.description?.slice(0, 300) || currentService.title,
     provider: { '@type': 'LocalBusiness', name: 'SmartMobili' },
   };
   if (firstImage) serviceJsonLd.image = firstImage;
@@ -129,7 +129,10 @@ export default function ServiceItemPage(): JSX.Element {
     },
   ];
 
-  if (currentService.category.parent_name && currentService.category.parent_slug) {
+  if (
+    currentService.category.parent_name &&
+    currentService.category.parent_slug
+  ) {
     breadcrumbElements.push({
       '@type': 'ListItem',
       position: 3,
@@ -183,7 +186,9 @@ export default function ServiceItemPage(): JSX.Element {
       <div className='catalog-item-page'>
         <SeoHead
           title={currentService.title}
-          description={t('seo.itemDescription', { title: currentService.title })}
+          description={t('seo.itemDescription', {
+            title: currentService.title,
+          })}
           lang={lang || 'ro'}
           ogImage={firstImage}
           jsonLd={fullJsonLd}
