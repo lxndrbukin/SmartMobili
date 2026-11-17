@@ -16,7 +16,7 @@ from db_models.services import Service
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import func
 from cloud_storage import handle_upload_image, handle_delete_image
-from utils import Language, get_translation
+from utils import Language, get_translation, require_admin
 
 service_categories_router = APIRouter(prefix="/service_categories", tags=["service_categories"])
 
@@ -87,7 +87,12 @@ def get_category(category_id: int, lang: Language = Language.ro, db: Session = D
         "order": category.order
     }
 
-@service_categories_router.post("/", status_code=status.HTTP_201_CREATED, response_model=ServiceCatResponse)
+@service_categories_router.post(
+    "/", 
+    status_code=status.HTTP_201_CREATED, 
+    response_model=ServiceCatResponse,
+    dependencies=[Depends(require_admin)]
+)
 def create_category(data: ServiceCatCreate, db: Session = Depends(get_db)):
     if data.parent_id:
         parent = db.query(ServiceCategory).get(data.parent_id)
@@ -141,7 +146,11 @@ def create_category(data: ServiceCatCreate, db: Session = Depends(get_db)):
         "order": category.order
     }
 
-@service_categories_router.delete("/{category_id}", status_code=status.HTTP_204_NO_CONTENT)
+@service_categories_router.delete(
+    "/{category_id}", 
+    status_code=status.HTTP_204_NO_CONTENT,
+    dependencies=[Depends(require_admin)]
+)
 def delete_category(category_id: int, db: Session = Depends(get_db)):
     category = db.query(ServiceCategory).filter(ServiceCategory.id == category_id).first()
     if not category:
@@ -150,7 +159,11 @@ def delete_category(category_id: int, db: Session = Depends(get_db)):
     db.commit()
     return None
 
-@service_categories_router.put("/{category_id}", response_model=ServiceCatResponse)
+@service_categories_router.put(
+    "/{category_id}", 
+    response_model=ServiceCatResponse,
+    dependencies=[Depends(require_admin)]
+)
 def update_category(category_id: int, data: ServiceCatUpdate, lang: Language = Language.ro, db: Session = Depends(get_db)):
     category = db.query(ServiceCategory) \
         .options(
@@ -189,7 +202,10 @@ def update_category(category_id: int, data: ServiceCatUpdate, lang: Language = L
         "order": category.order
     }
 
-@service_categories_router.put("/{category_id}/translations")
+@service_categories_router.put(
+    "/{category_id}/translations",
+    dependencies=[Depends(require_admin)]
+)
 def update_translation(
         category_id: int,
         lang: Language,
@@ -217,7 +233,11 @@ def update_translation(
         db.commit()
         return {"message": f"Created {lang} translation"}
 
-@service_categories_router.post("/{category_id}/images", response_model=ServiceCatImageResponse)
+@service_categories_router.post(
+    "/{category_id}/images", 
+    response_model=ServiceCatImageResponse,
+    dependencies=[Depends(require_admin)]
+)
 def add_images(category_id: int, image: UploadFile = File(...), db: Session = Depends(get_db)):
     category = db.query(ServiceCategory).get(category_id)
     if not category:
@@ -235,7 +255,11 @@ def add_images(category_id: int, image: UploadFile = File(...), db: Session = De
     db.refresh(db_image)
     return db_image
 
-@service_categories_router.delete("/{category_id}/images/{image_id}", status_code=status.HTTP_204_NO_CONTENT)
+@service_categories_router.delete(
+    "/{category_id}/images/{image_id}", 
+    status_code=status.HTTP_204_NO_CONTENT,
+    dependencies=[Depends(require_admin)]
+)
 def delete_category_image(category_id: int, image_id: int, db: Session = Depends(get_db)):
     category = db.query(ServiceCategory).get(category_id)
     if not category:

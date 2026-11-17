@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from dotenv import load_dotenv
-from utils import get_current_user
+from utils import require_admin
 from db_models.auth import User
 from datetime import datetime, timedelta
 import httpx
@@ -21,8 +21,11 @@ def get_date_range(days: int):
         until.strftime("%Y-%m-%dT00:00:00.000Z"),
     )
 
-@analytics_router.get("/views_for_week")
-async def get_week_analytics(days: int, current_user: User = Depends(get_current_user)):
+@analytics_router.get(
+    "/views_for_week",
+    dependencies=[Depends(require_admin)]
+)
+async def get_week_analytics(days: int):
     until = datetime.utcnow()
     since = until - timedelta(days=days)
     
@@ -39,8 +42,11 @@ async def get_week_analytics(days: int, current_user: User = Depends(get_current
         )
         return response.json()
 
-@analytics_router.get("/views_per_country")
-async def get_country_analytics(days: int, current_user: User = Depends(get_current_user)):
+@analytics_router.get(
+    "/views_per_country",
+    dependencies=[Depends(require_admin)]
+)
+async def get_country_analytics(days: int):
     since, until = get_date_range(days)
     
     params = {
@@ -59,8 +65,11 @@ async def get_country_analytics(days: int, current_user: User = Depends(get_curr
         )
         return response.json()
 
-@analytics_router.get("/views_per_page")
-async def get_page_analytics(days: int, current_user: User = Depends(get_current_user)):
+@analytics_router.get(
+    "/views_per_page",
+    dependencies=[Depends(require_admin)]
+)
+async def get_page_analytics(days: int):
     since, until = get_date_range(days)
     
     async with httpx.AsyncClient() as client:

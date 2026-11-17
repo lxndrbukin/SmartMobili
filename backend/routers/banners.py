@@ -13,7 +13,7 @@ from models.banners import (
     PaginatedResponse
 )
 from db import get_db
-from utils import Language, Pagination, get_translation
+from utils import Language, Pagination, get_translation, require_admin
 from cloud_storage import handle_upload_image, handle_delete_image
 from sqlalchemy.orm import Session, joinedload
 
@@ -49,7 +49,12 @@ def get_banners(
         pagination=Pagination(skip=skip, limit=limit)
     )
 
-@banners_router.post("/", status_code=status.HTTP_201_CREATED, response_model=BannerResponse)
+@banners_router.post(
+    "/", 
+    status_code=status.HTTP_201_CREATED, 
+    response_model=BannerResponse,
+    dependencies=[Depends(require_admin)]
+)
 def create_banner(data: BannerCreate, db: Session = Depends(get_db)):
     existing_count = db.query(Banner).count()
     banner = Banner(
@@ -99,7 +104,11 @@ def get_banner(banner_id: int, lang: Language = Language.ro, db: Session = Depen
         "order": banner.order
     }
 
-@banners_router.put("/{banner_id}", response_model=BannerResponse)
+@banners_router.put(
+    "/{banner_id}", 
+    response_model=BannerResponse,
+    dependencies=[Depends(require_admin)]
+)
 def update_banner(
         banner_id: int, 
         data: BannerUpdate, 
@@ -128,7 +137,11 @@ def update_banner(
         "order": banner.order
     }
 
-@banners_router.delete("/{banner_id}", status_code=status.HTTP_204_NO_CONTENT)
+@banners_router.delete(
+    "/{banner_id}", 
+    status_code=status.HTTP_204_NO_CONTENT,
+    dependencies=[Depends(require_admin)]
+)
 def delete_banner(banner_id: int, db: Session = Depends(get_db)):
     banner = db.query(Banner).filter(Banner.id == banner_id).first()
     if not banner:
@@ -137,7 +150,11 @@ def delete_banner(banner_id: int, db: Session = Depends(get_db)):
     db.commit()
     return None
 
-@banners_router.post("/{banner_id}/images", response_model=BannerImageResponse)
+@banners_router.post(
+    "/{banner_id}/images", 
+    response_model=BannerImageResponse,
+    dependencies=[Depends(require_admin)]
+)
 def add_images(
         banner_id: int, 
         image: UploadFile = File(...),
@@ -158,7 +175,11 @@ def add_images(
     db.refresh(db_image)
     return db_image
 
-@banners_router.delete("/{banner_id}/images/{image_id}", status_code=status.HTTP_204_NO_CONTENT)
+@banners_router.delete(
+    "/{banner_id}/images/{image_id}", 
+    status_code=status.HTTP_204_NO_CONTENT,
+    dependencies=[Depends(require_admin)]
+)
 def delete_image(banner_id: int, image_id: int, db: Session = Depends(get_db)):
     banner = db.query(Banner).get(banner_id)
     if not banner:
@@ -171,7 +192,10 @@ def delete_image(banner_id: int, image_id: int, db: Session = Depends(get_db)):
     db.commit()
     return None
 
-@banners_router.put("/{banner_id}/translations")
+@banners_router.put(
+    "/{banner_id}/translations",
+    dependencies=[Depends(require_admin)]
+)
 def update_translation(
         banner_id: int,
         lang: Language,

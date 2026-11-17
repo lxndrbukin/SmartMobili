@@ -20,7 +20,7 @@ from utils import (
     get_translation, 
     Language, 
     generate_embedding, 
-    get_current_user
+    require_admin
 )
 
 services_router = APIRouter(prefix="/services", tags=["services"])
@@ -106,11 +106,11 @@ def get_services(
     )
 
 
-@services_router.put("/translation_embeddings")
-def add_embeddings(
-        db: Session = Depends(get_db),
-        current_user: User = Depends(get_current_user)
-    ):
+@services_router.put(
+    "/translation_embeddings",
+    dependencies=[Depends(require_admin)]
+)
+def add_embeddings(db: Session = Depends(get_db)):
     translations = db.query(ServiceTranslation).filter(ServiceTranslation.embedding.is_(None)).all()
     for translation in translations:
         if translation.description == '' or translation.description is None:
@@ -123,7 +123,12 @@ def add_embeddings(
     return {"message": f"Translations updated"}
 
 
-@services_router.get("/{service_id}", status_code=status.HTTP_200_OK, response_model=ServiceResponse)
+@services_router.get(
+    "/{service_id}", 
+    status_code=status.HTTP_200_OK, 
+    response_model=ServiceResponse,
+    dependencies=[Depends(require_admin)]
+)
 def get_service(service_id: int, lang: Language = Language.ro, db: Session = Depends(get_db)):
     service = db.query(Service).options(joinedload(Service.images), joinedload(Service.translations)).get(service_id)
     if not service:
@@ -158,7 +163,12 @@ def get_service(service_id: int, lang: Language = Language.ro, db: Session = Dep
         }
 
 
-@services_router.post("/", status_code=status.HTTP_201_CREATED, response_model=ServiceResponse)
+@services_router.post(
+    "/", 
+    status_code=status.HTTP_201_CREATED, 
+    response_model=ServiceResponse,
+    dependencies=[Depends(require_admin)]
+)
 def create_service(service: ServiceCreate, lang: Language = Language.ro, db: Session = Depends(get_db)):
     db_service = Service(
         price=service.price,
@@ -205,7 +215,11 @@ def create_service(service: ServiceCreate, lang: Language = Language.ro, db: Ses
         }
 
 
-@services_router.put("/{service_id}", response_model=ServiceResponse)
+@services_router.put(
+    "/{service_id}", 
+    response_model=ServiceResponse,
+    dependencies=[Depends(require_admin)]
+)
 def update_service(
         service_id: int,
         data: ServiceUpdate,
@@ -251,7 +265,11 @@ def update_service(
     }
 
 
-@services_router.delete("/{service_id}", status_code=status.HTTP_204_NO_CONTENT)
+@services_router.delete(
+    "/{service_id}", 
+    status_code=status.HTTP_204_NO_CONTENT,
+    dependencies=[Depends(require_admin)]
+)
 def delete_service(service_id: int, db: Session = Depends(get_db)):
     service = db.query(Service).filter(Service.id == service_id).first()
     if not service:
@@ -261,7 +279,11 @@ def delete_service(service_id: int, db: Session = Depends(get_db)):
     return None
 
 
-@services_router.post("/{service_id}/images", response_model=ServiceImageResponse)
+@services_router.post(
+    "/{service_id}/images", 
+    response_model=ServiceImageResponse,
+    dependencies=[Depends(require_admin)]
+)
 def add_images(service_id: int, image: UploadFile = File(...), db: Session = Depends(get_db)):
     service = db.query(Service).get(service_id)
     if not service:
@@ -281,7 +303,11 @@ def add_images(service_id: int, image: UploadFile = File(...), db: Session = Dep
     return db_image
 
 
-@services_router.delete("/{service_id}/images/{image_id}", status_code=status.HTTP_204_NO_CONTENT)
+@services_router.delete(
+    "/{service_id}/images/{image_id}", 
+    status_code=status.HTTP_204_NO_CONTENT,
+    dependencies=[Depends(require_admin)]
+)
 def delete_image(service_id: int, image_id: int, db: Session = Depends(get_db)):
     service = db.query(Service).get(service_id)
     if not service:
@@ -295,7 +321,10 @@ def delete_image(service_id: int, image_id: int, db: Session = Depends(get_db)):
     return None
 
 
-@services_router.put("/{service_id}/translations")
+@services_router.put(
+    "/{service_id}/translations",
+    dependencies=[Depends(require_admin)]
+)
 def update_translation(
         service_id: int,
         lang: Language,

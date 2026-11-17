@@ -12,11 +12,15 @@ from db_models.items import Item
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import func
 from cloud_storage import handle_upload_image, handle_delete_image
-from utils import Language, get_translation
+from utils import Language, get_translation, require_admin
 
 categories_router = APIRouter(prefix="/categories", tags=["categories"])
 
-@categories_router.get("/", status_code=status.HTTP_200_OK, response_model=list[CategoryResponse])
+@categories_router.get(
+    "/", 
+    status_code=status.HTTP_200_OK, 
+    response_model=list[CategoryResponse]
+)
 def get_categories(
         lang: Language = Language.ro, 
         limit: int | None = None, 
@@ -53,7 +57,11 @@ def get_categories(
         })
     return result
 
-@categories_router.get("/{category_id}", status_code=status.HTTP_200_OK, response_model=CategoryResponse)
+@categories_router.get(
+    "/{category_id}", 
+    status_code=status.HTTP_200_OK, 
+    response_model=CategoryResponse
+)
 def get_category(category_id: int, lang: Language = Language.ro, db: Session = Depends(get_db)):
     parent_category = None
     parent_translation = None
@@ -81,7 +89,12 @@ def get_category(category_id: int, lang: Language = Language.ro, db: Session = D
         "order": category.order
     }
 
-@categories_router.post("/", status_code=status.HTTP_201_CREATED, response_model=CategoryResponse)
+@categories_router.post(
+    "/", 
+    status_code=status.HTTP_201_CREATED, 
+    response_model=CategoryResponse,
+    dependencies=[Depends(require_admin)]
+)
 def create_category(data: CategoryCreate, db: Session = Depends(get_db)):
     if data.parent_id:
         parent = db.query(Category).get(data.parent_id)
@@ -134,7 +147,11 @@ def create_category(data: CategoryCreate, db: Session = Depends(get_db)):
         "order": category.order
     }
 
-@categories_router.delete("/{category_id}", status_code=status.HTTP_204_NO_CONTENT)
+@categories_router.delete(
+    "/{category_id}", 
+    status_code=status.HTTP_204_NO_CONTENT,
+    dependencies=[Depends(require_admin)]
+)
 def delete_category(category_id: int, db: Session = Depends(get_db)):
     category = db.query(Category).filter(Category.id == category_id).first()
     if not category:
@@ -143,7 +160,11 @@ def delete_category(category_id: int, db: Session = Depends(get_db)):
     db.commit()
     return None
 
-@categories_router.put("/{category_id}", response_model=CategoryResponse)
+@categories_router.put(
+    "/{category_id}", 
+    response_model=CategoryResponse,
+    dependencies=[Depends(require_admin)]
+)
 def update_category(category_id: int, data: CategoryUpdate, lang: Language = Language.ro, db: Session = Depends(get_db)):
     category = db.query(Category).options(joinedload(Category.translations), joinedload(Category.images)).get(category_id)
     if not category:
@@ -178,7 +199,10 @@ def update_category(category_id: int, data: CategoryUpdate, lang: Language = Lan
         "order": category.order
     }
 
-@categories_router.put("/{category_id}/translations")
+@categories_router.put(
+    "/{category_id}/translations",
+    dependencies=[Depends(require_admin)]
+)
 def update_translation(
         category_id: int,
         lang: Language,
@@ -206,7 +230,11 @@ def update_translation(
         db.commit()
         return {"message": f"Created {lang} translation"}
 
-@categories_router.post("/{category_id}/images", response_model=CategoryImageResponse)
+@categories_router.post(
+    "/{category_id}/images", 
+    response_model=CategoryImageResponse,
+    dependencies=[Depends(require_admin)]
+)
 def add_images(category_id: int, image: UploadFile = File(...), db: Session = Depends(get_db)):
     category = db.query(Category).get(category_id)
     if not category:
@@ -224,7 +252,11 @@ def add_images(category_id: int, image: UploadFile = File(...), db: Session = De
     db.refresh(db_image)
     return db_image
 
-@categories_router.delete("/{category_id}/images/{image_id}", status_code=status.HTTP_204_NO_CONTENT)
+@categories_router.delete(
+    "/{category_id}/images/{image_id}", 
+    status_code=status.HTTP_204_NO_CONTENT,
+    dependencies=[Depends(require_admin)]
+)
 def delete_category_image(category_id: int, image_id: int, db: Session = Depends(get_db)):
     category = db.query(Category).get(category_id)
     if not category:
