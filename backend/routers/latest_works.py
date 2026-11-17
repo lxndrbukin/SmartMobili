@@ -21,18 +21,10 @@ from utils import (
     get_translation,
     Language,
     Pagination,
-    UserRole,
-    get_current_user
+    require_admin
 )
 
 latest_works_router = APIRouter(prefix="/latest_works", tags=["latest_works"])
-
-
-def require_admin(current_user: User = Depends(get_current_user)):
-    if current_user.user_role != UserRole.admin:
-        raise HTTPException(status_code=403, detail="Admin access required")
-    return current_user
-
 
 def serialize_latest_work(latest_work: LatestWork, lang: Language):
     translation = get_translation(latest_work.translations, lang)
@@ -47,7 +39,7 @@ def serialize_latest_work(latest_work: LatestWork, lang: Language):
     }
 
 
-def get_latest_work_or_404(latest_work_id: int, db: Session) -> LatestWork:
+def get_latest_work_or_404(latest_work_id: int, db: Session):
     latest_work = db.query(LatestWork) \
         .options(joinedload(LatestWork.images), joinedload(LatestWork.translations)) \
         .filter(LatestWork.id == latest_work_id).first()
@@ -56,7 +48,11 @@ def get_latest_work_or_404(latest_work_id: int, db: Session) -> LatestWork:
     return latest_work
 
 
-@latest_works_router.get("/", status_code=status.HTTP_200_OK, response_model=PaginatedResponse)
+@latest_works_router.get(
+    "/", 
+    status_code=status.HTTP_200_OK, 
+    response_model=PaginatedResponse
+)
 def get_latest_works(
         skip: int = 0,
         limit: int = 12,
@@ -76,17 +72,25 @@ def get_latest_works(
     )
 
 
-@latest_works_router.get("/{latest_work_id}", status_code=status.HTTP_200_OK, response_model=LatestWorkResponse)
+@latest_works_router.get(
+    "/{latest_work_id}", 
+    status_code=status.HTTP_200_OK, 
+    response_model=LatestWorkResponse
+)
 def get_latest_work(latest_work_id: int, lang: Language = Language.ro, db: Session = Depends(get_db)):
     latest_work = get_latest_work_or_404(latest_work_id, db)
     return serialize_latest_work(latest_work, lang)
 
 
-@latest_works_router.post("/", status_code=status.HTTP_201_CREATED, response_model=LatestWorkResponse)
+@latest_works_router.post(
+    "/", 
+    status_code=status.HTTP_201_CREATED, 
+    response_model=LatestWorkResponse,
+    dependencies=[Depends(require_admin)]
+)
 def create_latest_work(
         data: LatestWorkCreate,
-        db: Session = Depends(get_db),
-        current_user: User = Depends(require_admin)
+        db: Session = Depends(get_db)
     ):
     latest_work = LatestWork(is_active=data.is_active)
     db.add(latest_work)
@@ -105,13 +109,16 @@ def create_latest_work(
     return serialize_latest_work(latest_work, Language.ro)
 
 
-@latest_works_router.put("/{latest_work_id}", response_model=LatestWorkResponse)
+@latest_works_router.put(
+    "/{latest_work_id}", 
+    response_model=LatestWorkResponse,
+    dependencies=[Depends(require_admin)]
+)
 def update_latest_work(
         latest_work_id: int,
         data: LatestWorkUpdate,
         lang: Language = Language.ro,
-        db: Session = Depends(get_db),
-        current_user: User = Depends(require_admin)
+        db: Session = Depends(get_db)
     ):
     latest_work = get_latest_work_or_404(latest_work_id, db)
     update_data = data.model_dump(exclude_unset=True)
@@ -123,11 +130,14 @@ def update_latest_work(
     return serialize_latest_work(latest_work, lang)
 
 
-@latest_works_router.delete("/{latest_work_id}", status_code=status.HTTP_204_NO_CONTENT)
+@latest_works_router.delete(
+    "/{latest_work_id}", 
+    status_code=status.HTTP_204_NO_CONTENT,
+    dependencies=[Depends(require_admin)]
+)
 def delete_latest_work(
         latest_work_id: int,
-        db: Session = Depends(get_db),
-        current_user: User = Depends(require_admin)
+        db: Session = Depends(get_db)
     ):
     latest_work = get_latest_work_or_404(latest_work_id, db)
     for image in latest_work.images:
@@ -137,12 +147,15 @@ def delete_latest_work(
     return None
 
 
-@latest_works_router.post("/{latest_work_id}/images", response_model=LatestWorkImageResponse)
+@latest_works_router.post(
+    "/{latest_work_id}/images", 
+    response_model=LatestWorkImageResponse,
+    dependencies=[Depends(require_admin)]
+)
 def add_image(
         latest_work_id: int,
         image: UploadFile = File(...),
-        db: Session = Depends(get_db),
-        current_user: User = Depends(require_admin)
+        db: Session = Depends(get_db)
     ):
     latest_work = db.query(LatestWork).get(latest_work_id)
     if not latest_work:
@@ -162,12 +175,15 @@ def add_image(
     return db_image
 
 
-@latest_works_router.delete("/{latest_work_id}/images/{image_id}", status_code=status.HTTP_204_NO_CONTENT)
+@latest_works_router.delete(
+    "/{latest_work_id}/images/{image_id}", 
+    status_code=status.HTTP_204_NO_CONTENT,
+    dependencies=[Depends(require_admin)]
+)
 def delete_image(
         latest_work_id: int,
         image_id: int,
-        db: Session = Depends(get_db),
-        current_user: User = Depends(require_admin)
+        db: Session = Depends(get_db)
     ):
     latest_work = db.query(LatestWork).get(latest_work_id)
     if not latest_work:
@@ -181,13 +197,15 @@ def delete_image(
     return None
 
 
-@latest_works_router.put("/{latest_work_id}/translations")
+@latest_works_router.put(
+    "/{latest_work_id}/translations",
+    dependencies=[Depends(require_admin)]
+)
 def update_translation(
         latest_work_id: int,
         lang: Language,
         data: LatestWorkTranslationUpdate,
-        db: Session = Depends(get_db),
-        current_user: User = Depends(require_admin)
+        db: Session = Depends(get_db)
     ):
     latest_work = db.query(LatestWork).filter(LatestWork.id == latest_work_id).first()
     if not latest_work:

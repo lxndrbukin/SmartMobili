@@ -20,7 +20,7 @@ from utils import (
     get_translation, 
     Language, 
     generate_embedding, 
-    get_current_user,
+    require_admin,
     get_category_and_children_ids
 )
 
@@ -67,7 +67,8 @@ def get_items(
         parent_category = None
         parent_translation = None
         category = db.query(Category) \
-            .options(joinedload(Category.translations)).filter(Category.id == item.category_id).first()  
+            .options(joinedload(Category.translations)) \
+            .filter(Category.id == item.category_id).first()  
         if category.parent_id is not None:
             parent_category = db.query(Category) \
                 .options(joinedload(Category.translations)) \
@@ -98,10 +99,9 @@ def get_items(
         pagination=Pagination(skip=skip, limit=limit)
     )
 
-@items_router.put("/translation_embeddings")
+@items_router.put("/translation_embeddings", dependencies=[Depends(require_admin)])
 def add_embeddings(
-        db: Session = Depends(get_db),
-        current_user: User = Depends(get_current_user)
+        db: Session = Depends(get_db)
     ):
     translations = db.query(ItemTranslation).filter(ItemTranslation.embedding.is_(None)).all()
     for translation in translations:
@@ -116,15 +116,21 @@ def add_embeddings(
     db.commit()
     return {"message": f"Translations updated"}
 
-@items_router.get("/{item_id}", status_code=status.HTTP_200_OK, response_model=ItemResponse)
+@items_router.get(
+    "/{item_id}", 
+    status_code=status.HTTP_200_OK, 
+    response_model=ItemResponse
+)
 def get_item(item_id: int, lang: Language = Language.ro, db: Session = Depends(get_db)):
-    item = db.query(Item).options(joinedload(Item.images), joinedload(Item.translations)).get(item_id)
+    item = db.query(Item) \
+        .options(joinedload(Item.images), joinedload(Item.translations)).get(item_id)
     if not item:
         raise HTTPException(status_code=404, detail="Item not found")
     parent_category = None
     parent_translation = None
     category = db.query(Category) \
-        .options(joinedload(Category.translations)).filter(Category.id == item.category_id).first()
+        .options(joinedload(Category.translations)) \
+        .filter(Category.id == item.category_id).first()
     if category.parent_id is not None:
         parent_category = db.query(Category) \
             .options(joinedload(Category.translations)) \
@@ -151,8 +157,17 @@ def get_item(item_id: int, lang: Language = Language.ro, db: Session = Depends(g
             "in_gallery": item.in_gallery
         }
 
-@items_router.post("/", status_code=status.HTTP_201_CREATED, response_model=ItemResponse)
-def create_item(item: ItemCreate, lang: Language = Language.ro, db: Session = Depends(get_db)):
+@items_router.post(
+    "/", 
+    status_code=status.HTTP_201_CREATED, 
+    response_model=ItemResponse,
+    dependencies=[Depends(require_admin)]
+)
+def create_item(
+            item: ItemCreate, 
+            lang: Language = Language.ro, 
+            db: Session = Depends(get_db)
+        ):
     db_item = Item(
         price=item.price,
         currency=item.currency,
@@ -179,7 +194,8 @@ def create_item(item: ItemCreate, lang: Language = Language.ro, db: Session = De
     db.commit()
     db.refresh(db_item)
     category = db.query(Category) \
-        .options(joinedload(Category.translations)).filter(Category.id == item.category_id).first()
+        .options(joinedload(Category.translations)) \
+        .filter(Category.id == item.category_id).first()
     category_translation = get_translation(category.translations, lang)
     translation = get_translation(db_item.translations, Language.ro)
     return {
@@ -199,14 +215,20 @@ def create_item(item: ItemCreate, lang: Language = Language.ro, db: Session = De
             "in_gallery": db_item.in_gallery
         }
 
-@items_router.put("/{item_id}", response_model=ItemResponse)
+@items_router.put(
+    "/{item_id}", 
+    response_model=ItemResponse, 
+    dependencies=[Depends(require_admin)]
+)
 def update_item(
         item_id: int,
         data: ItemUpdate,
         lang: Language = Language.ro,
         db: Session = Depends(get_db)
     ):
-    item = db.query(Item).options(joinedload(Item.translations), joinedload(Item.images)).filter(Item.id == item_id).first()
+    item = db.query(Item) \
+        .options(joinedload(Item.translations), joinedload(Item.images)) \
+        .filter(Item.id == item_id).first()
     if not item:
         raise HTTPException(status_code=404, detail="Item not found")
     update_data = data.model_dump(exclude_unset=True)
@@ -218,7 +240,8 @@ def update_item(
     parent_category = None
     parent_translation = None
     category = db.query(Category) \
-        .options(joinedload(Category.translations)).filter(Category.id == item.category_id).first()
+        .options(joinedload(Category.translations)) \
+        .filter(Category.id == item.category_id).first()
     if category.parent_id is not None:
         parent_category = db.query(Category) \
             .options(joinedload(Category.translations)) \
@@ -246,7 +269,11 @@ def update_item(
         "in_gallery": item.in_gallery
     }
 
-@items_router.delete("/{item_id}", status_code=status.HTTP_204_NO_CONTENT)
+@items_router.delete(
+    "/{item_id}", 
+    status_code=status.HTTP_204_NO_CONTENT, 
+    dependencies=[Depends(require_admin)]
+)
 def delete_item(item_id: int, db: Session = Depends(get_db)):
     item = db.query(Item).filter(Item.id == item_id).first()
     if not item:
@@ -256,7 +283,11 @@ def delete_item(item_id: int, db: Session = Depends(get_db)):
 
     return None
 
-@items_router.post("/{item_id}/images", response_model=ItemImageResponse)
+@items_router.post(
+    "/{item_id}/images", 
+    response_model=ItemImageResponse, 
+    dependencies=[Depends(require_admin)]
+)
 def add_images(item_id: int, image: UploadFile = File(...), db: Session = Depends(get_db)):
     item = db.query(Item).get(item_id)
     if not item:
@@ -276,7 +307,11 @@ def add_images(item_id: int, image: UploadFile = File(...), db: Session = Depend
     db.refresh(db_image)
     return db_image
 
-@items_router.delete("/{item_id}/images/{image_id}", status_code=status.HTTP_204_NO_CONTENT)
+@items_router.delete(
+    "/{item_id}/images/{image_id}", 
+    status_code=status.HTTP_204_NO_CONTENT,
+    dependencies=[Depends(require_admin)]
+)
 def delete_image(item_id: int, image_id: int, db: Session = Depends(get_db)):
     item = db.query(Item).get(item_id)
     if not item:
@@ -289,7 +324,7 @@ def delete_image(item_id: int, image_id: int, db: Session = Depends(get_db)):
     db.commit()
     return None
 
-@items_router.put("/{item_id}/translations")
+@items_router.put("/{item_id}/translations", dependencies=[Depends(require_admin)])
 def update_translation(
         item_id: int,
         lang: Language,
